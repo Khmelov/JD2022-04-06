@@ -13,4 +13,7 @@ Sum = 60
 class TaskC1 {
 
 
+
+
+
 }

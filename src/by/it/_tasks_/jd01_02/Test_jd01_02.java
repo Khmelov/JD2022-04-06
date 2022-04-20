@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 @SuppressWarnings("all")
 
 //поставьте курсор на следующую строку и нажмите Ctrl+Shift+F10
-public class Test_jd01_02 extends HomeWork {
+public class Test_jd01_02  extends HomeWork {
 
     @Test(timeout = 5000)
     public void testTaskA() throws Exception {
