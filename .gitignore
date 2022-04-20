@@ -1,0 +1,41 @@
+#InteliJ files and dirs
+.idea
+out
+*.class
+*.DS_Store
+/*.xml
+/*/*.xml
+*.iml
+
+#Standart .gitignore
+*.jar
+*.war
+*.ear
+*.log
+*.ipr
+*.iws
+
+#HomeWork check
+Estimates.java
+estimates.txt
+estimates.bin
+
+# Output files
+dataTaskA.bin
+dataTaskB.bin
+dataTaskC.bin
+
+resultTaskA.txt
+resultTaskB.txt
+resultTaskC.txt
+
+matrix.txt
+
+TaskA.txt
+TaskB.txt
+TaskC.txt
+
+# Log file
+log.txt
+logs.txt
+
