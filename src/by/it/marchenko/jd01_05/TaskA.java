@@ -37,7 +37,7 @@ public class TaskA {
         System.out.println("-".repeat(MINUS_AMOUNT));
         for (double a = aStart; aEnd >= a; a += aDelta) {
             double f = exp(a * x) - 3.45 * a;
-            System.out.printf("| %10.2f | %10.4g |%n", a, f);
+            System.out.printf("| %10.2f | %13.5g |%n", a, f);
         }
         System.out.println("-".repeat(MINUS_AMOUNT));
     }
