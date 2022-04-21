@@ -2,12 +2,12 @@ package by.it.machuga.jd01_05;
 
 public class TaskA {
     public static void main(String[] args) {
-        step1();
-        step2();
-        step3();
+        task1();
+        task2();
+        task3();
     }
 
-    private static void step3() {
+    private static void task3() {
         String line = "-".repeat(29);
         String nameVariable = "|" + " ".repeat(6) + "I" + " ".repeat(5) + "|" + " ".repeat(7) + "F" + " ".repeat(6) + "|";
         double x = 12.1;
@@ -25,14 +25,14 @@ public class TaskA {
         System.out.println(line);
     }
 
-    private static void step2() {
+    private static void task2() {
         double a = 1.21;
         double b = 0.371;
         double y = Math.tan(Math.pow(a + b, 2)) - Math.cbrt(a + 1.5) + a * Math.pow(b, 5) - b / Math.log(a * a);
         System.out.println(y);
     }
 
-    private static void step1() {
+    private static void task1() {
         double a = 756.13;
         double x = 0.3;
         double part1 = Math.cos(Math.pow(Math.pow(x, 2) + Math.PI / 6.0, 5));
