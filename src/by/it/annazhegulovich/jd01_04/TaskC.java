@@ -69,7 +69,7 @@ public class TaskC {
         //  static void mergeSort(double[ ] array) {}
 
         static int binarySearch(double[] array, double start) {
-            int l=1;
+            int l=0;
             int r=array.length;
             while (l<=r) {
                 int m = (l + r) / 2;
@@ -79,12 +79,11 @@ public class TaskC {
                              r = m - 1;
                             }
                                 else l = m + 1;
-                                return -1;
             }
             return binarySearch(array,start);
         }
         static int binarySearch2(double[] array, double stop) {
-            int l=1;
+            int l=0;
             int r=array.length;
             while (l<=r) {
                 int m = (l + r) / 2;
@@ -94,7 +93,6 @@ public class TaskC {
                         r = m - 1;
                         }
                             else l = m + 1;
-                            return -1;
             }
             return binarySearch2(array,stop);
         }
