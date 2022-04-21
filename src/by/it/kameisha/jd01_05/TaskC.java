@@ -49,7 +49,7 @@ public class TaskC {
         System.out.println(result);
     }
     private static void printArray (char A, int i , double[] array) {
-        System.out.printf("%1c[ %-2d] = %8.5f    ", A, i, array[i]);
+        System.out.printf("%1c[ %-2d] =%8.5f    ", A, i, array[i]);
         if (i + 1 == array.length || (i + 1) % 5 == 0) {
             System.out.println();
         }
