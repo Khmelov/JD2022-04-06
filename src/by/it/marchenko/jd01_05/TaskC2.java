@@ -62,7 +62,7 @@ public class TaskC2 {
         final int MAXIMUM_COLUMN = 5;
         int rowsQuantity = (int) Math.ceil((double) array.length / MAXIMUM_COLUMN);
         int columnQuantity = (int) Math.ceil((double) array.length / rowsQuantity);
-        int[] arrayDimension = {rowsQuantity,columnQuantity};
+        int[] arrayDimension = {rowsQuantity, columnQuantity};
         System.out.println(rowsQuantity + " x " + columnQuantity);
         return arrayDimension;
     }
@@ -146,7 +146,7 @@ public class TaskC2 {
         for (int index = 0; index < indexArray.length; index++) {
             if (indexArray[index] != maxIndex) {
                 line = line.concat(String.format(" %s[%3d ] = %-4d ║",
-                                    name, indexArray[index], valueArray[index]));
+                        name, indexArray[index], valueArray[index]));
             } else {
                 line = line.concat(" ".repeat(COLUMN_WIDTH) + "║");
             }

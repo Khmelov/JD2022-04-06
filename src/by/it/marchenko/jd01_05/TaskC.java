@@ -16,10 +16,10 @@ public class TaskC {
         final int INPUT_ARRAY_COLUMN = 6;
         final int OUTPUT_ARRAY_COLUMN = 5;
         final double MIN_VALUE = 3.5;
-        
+
         double xStart = 5.33;
         double xEnd = 9.0;
-        
+
         double xDelta = getRandomDelta(xStart, xEnd);
 
         double[] inputArray = getArray(xStart, xEnd, xDelta);
@@ -46,7 +46,7 @@ public class TaskC {
 
         return (xEnd - xStart) / (stepNumber - 1);
     }
-    
+
     private static double[] getArray(double xStart, double xEnd, double xDelta) {
         int stepNumber = (int) ((xEnd - xStart) / xDelta);
         double[] array = new double[stepNumber + 1];
@@ -85,6 +85,6 @@ public class TaskC {
         for (double element : array) {
             value *= element;
         }
-        return pow(value, 1d/array.length);
+        return pow(value, 1d / array.length);
     }
 }
