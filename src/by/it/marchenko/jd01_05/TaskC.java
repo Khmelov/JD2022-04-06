@@ -7,6 +7,7 @@ import static java.lang.Math.*;
 public class TaskC {
     public static void main(String[] args) {
         step6();
+        TaskC2.main(args);
     }
 
     private static void step6() {
@@ -26,7 +27,7 @@ public class TaskC {
         System.out.printf("Массив %s[]%n", INPUT_ARRAY_NAME);
         printArray(inputArray, INPUT_ARRAY_NAME, INPUT_ARRAY_COLUMN);
 
-        double[] outputArray = createArrayWithMinValue(inputArray, MIN_VALUE);
+        double[] outputArray = createArrayWithMinValue(inputArray);
         System.out.printf("%n Массив %s[] из элементов массива %s > %.1f%n",
                 OUTPUT_ARRAY_NAME, INPUT_ARRAY_NAME, MIN_VALUE);
         printArray(outputArray, OUTPUT_ARRAY_NAME, OUTPUT_ARRAY_COLUMN);
@@ -70,9 +71,10 @@ public class TaskC {
         }
     }
 
-    private static double[] createArrayWithMinValue(double[] inputArray, double min) {
+    private static double[] createArrayWithMinValue(double[] inputArray) {
+        final double MIN_VALUE = 3.5;
         Arrays.sort(inputArray);
-        int minIndex = -Arrays.binarySearch(inputArray, min) - 1;
+        int minIndex = -Arrays.binarySearch(inputArray, MIN_VALUE) - 1;
         double[] outputArray = new double[inputArray.length - minIndex];
         System.arraycopy(inputArray, minIndex, outputArray, 0, outputArray.length);
         return outputArray;

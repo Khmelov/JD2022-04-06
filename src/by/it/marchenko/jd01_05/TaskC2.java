@@ -62,8 +62,8 @@ public class TaskC2 {
         final int MAXIMUM_COLUMN = 5;
         int rowsQuantity = (int) Math.ceil((double) array.length / MAXIMUM_COLUMN);
         int columnQuantity = (int) Math.ceil((double) array.length / rowsQuantity);
-        System.out.println(rowsQuantity + " x " + columnQuantity);
         int[] arrayDimension = {rowsQuantity,columnQuantity};
+        System.out.println(rowsQuantity + " x " + columnQuantity);
         return arrayDimension;
     }
 
@@ -87,7 +87,8 @@ public class TaskC2 {
         } else {
             for (int i = 0; i < column; i++) {
                 for (int j = 0; j < rows; j++) {
-                    int currentIndex = i * column + j;
+                    //int currentIndex = i * column + j;
+                    int currentIndex = i * rows + j;
                     if (currentIndex < array.length) {
                         indexArrayToPrint[j][i] = currentIndex;
                         valueArrayToPrint[j][i] = array[currentIndex];
@@ -130,11 +131,11 @@ public class TaskC2 {
                     default -> "╣";
                 };
             } else {
-                line += "═".repeat(COLUMN_WIDTH) + switch (position) {
+                line = line.concat("═".repeat(COLUMN_WIDTH) + switch (position) {
                     case 0 -> "╦";
                     case 2 -> "╩";
                     default -> "╬";
-                };
+                });
             }
         }
         System.out.println(line);
@@ -144,10 +145,10 @@ public class TaskC2 {
         String line = "║";
         for (int index = 0; index < indexArray.length; index++) {
             if (indexArray[index] != maxIndex) {
-                line += String.format(" %s[%3d ] = %-4d ║",
-                        name, indexArray[index], valueArray[index]);
+                line = line.concat(String.format(" %s[%3d ] = %-4d ║",
+                                    name, indexArray[index], valueArray[index]));
             } else {
-                line += " ".repeat(COLUMN_WIDTH) + "║";
+                line = line.concat(" ".repeat(COLUMN_WIDTH) + "║");
             }
 
         }
