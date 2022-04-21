@@ -7,23 +7,25 @@ import static java.lang.Math.*;
 public class TaskC2 {
     private static final String INPUT_ARRAY_NAME = "A";
     private static final String OUTPUT_ARRAY_NAME = "B";
+    private static final int COLUMN_WIDTH = 16;
 
     public static void main(String[] args) {
 
         int[] inputArray = getRandomArray();
-        System.out.println(Arrays.toString(inputArray));
+        //System.out.println(Arrays.toString(inputArray));
 
         int[] inputArrayDimension = calculateOutputDimension(inputArray);
         boolean indexByRow = true;
         System.out.printf("Array %s <index to rows>%n", INPUT_ARRAY_NAME);
-        printArray(inputArray, INPUT_ARRAY_NAME, inputArrayDimension, indexByRow);
+        get2DArray(inputArray, INPUT_ARRAY_NAME, inputArrayDimension, indexByRow);
+
 
         int[] outputArray = createPercentRangeArray(inputArray);
-        System.out.println(Arrays.toString(outputArray));
+        //System.out.println(Arrays.toString(outputArray));
         int[] outputArrayDimension = calculateOutputDimension(outputArray);
         System.out.printf("Array %s <index to columns>%n", OUTPUT_ARRAY_NAME);
 
-        printArray(outputArray, OUTPUT_ARRAY_NAME, outputArrayDimension, !indexByRow);
+        get2DArray(outputArray, OUTPUT_ARRAY_NAME, outputArrayDimension, !indexByRow);
     }
 
     private static int[] getRandomArray() {
@@ -60,18 +62,16 @@ public class TaskC2 {
         final int MAXIMUM_COLUMN = 5;
         int rowsQuantity = (int) Math.ceil((double) array.length / MAXIMUM_COLUMN);
         int columnQuantity = (int) Math.ceil((double) array.length / rowsQuantity);
-        int[] arrayDimension = {rowsQuantity, columnQuantity};
         System.out.println(rowsQuantity + " x " + columnQuantity);
+        int[] arrayDimension = {rowsQuantity,columnQuantity};
         return arrayDimension;
     }
 
-    private static void printArray(int[] array, String name, int[] arrayDimension, boolean indexByRow) {
+    private static void get2DArray(int[] array, String name, int[] arrayDimension, boolean indexByRow) {
         int rows = arrayDimension[0];
         int column = arrayDimension[1];
         int[][] valueArrayToPrint = new int[rows][column];
         int[][] indexArrayToPrint = new int[rows][column];
-
-        //printFirstLine(column);
         if (indexByRow) {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < column; j++) {
@@ -97,18 +97,61 @@ public class TaskC2 {
                 }
             }
         }
+        printPseudoGraphArray(name, indexArrayToPrint, valueArrayToPrint, array.length);
+    }
 
+    private static void printPseudoGraphArray(String name, int[][] indexArray, int[][] valueArray, int maxIndex) {
+        int row = indexArray.length;
+        int column = indexArray[0].length;
+        printSymbolLine(column, 0);
+        for (int i = 0; i < row; i++) {
+            printIntermediateLine(name, indexArray[i], valueArray[i], maxIndex);
+            if (i != row - 1) {
+                printSymbolLine(indexArray[i].length, 1);
+            } else {
+                printSymbolLine(indexArray[i].length, 2);
+            }
+        }
+    }
 
-        System.out.println(Arrays.deepToString(indexArrayToPrint));
-        System.out.println(Arrays.deepToString(valueArrayToPrint));
+    private static void printSymbolLine(int column, int position) {
+        String line = "";
+        for (int index = 0; index <= column; index++) {
+            if (index == 0) {
+                line += switch (position) {
+                    case 0 -> "╔";
+                    case 2 -> "╚";
+                    default -> "╠";
+                };
+            } else if (index == column) {
+                line += "═".repeat(COLUMN_WIDTH) + switch (position) {
+                    case 0 -> "╗";
+                    case 2 -> "╝";
+                    default -> "╣";
+                };
+            } else {
+                line += "═".repeat(COLUMN_WIDTH) + switch (position) {
+                    case 0 -> "╦";
+                    case 2 -> "╩";
+                    default -> "╬";
+                };
+            }
+        }
+        System.out.println(line);
+    }
 
+    private static void printIntermediateLine(String name, int[] indexArray, int[] valueArray, int maxIndex) {
+        String line = "║";
+        for (int index = 0; index < indexArray.length; index++) {
+            if (indexArray[index] != maxIndex) {
+                line += String.format(" %s[%3d ] = %-4d ║",
+                        name, indexArray[index], valueArray[index]);
+            } else {
+                line += " ".repeat(COLUMN_WIDTH) + "║";
+            }
 
-        //       for (int i = 0; i < indexArrayToPrint.length; i++) {
-        //           for (int j = 0; j < indexArrayToPrint[i].length; j++) {
-        //               System.out.printf("%s[%3d ] = %-8d", name, indexArrayToPrint[i][j], valueArrayToPrint[j][i]);
-        //           }
-        //           System.out.println();
-        //       }
+        }
+        System.out.println(line);
 
 
     }
