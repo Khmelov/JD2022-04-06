@@ -51,25 +51,22 @@ public class TaskC {
             }
         }
         arrayB.sort((Integer::compareTo));
-        String firstA  = "╔===========╦===========╦===========╦===========╦===========╗";
-        String middleA = "╠===========╬===========╬===========╬===========╬===========╣";
-        String lastA   = "╚===========╩===========╩===========╩===========╩===========╝";
-        String firstB  = "╔===========╦===========╗";
-        String middleB = "╠===========╬===========╣";
-        String lastB   = "╚===========╩===========╝";
+        String first  = "╔===========╦===========╦===========╦===========╦===========╗";
+        String middle = "╠===========╬===========╬===========╬===========╬===========╣";
+        String last   = "╚===========╩===========╩===========╩===========╩===========╝";
 
         for (int i = 1; i <= arrayA.length; i++) {
             if (i == 1) {
-                System.out.println(firstA);
+                System.out.println(first);
             }
             System.out.printf("║ %s[%2d]=%3d ", "A", i - 1, arrayA[i - 1]); // 1 + 1 + 9 + 1 + 1
             if (i % 5 == 0) {
                 System.out.println("║");
-                System.out.println(middleA);
+                System.out.println(middle);
             }
             if (i == arrayA.length) {
                 System.out.println("║           ║           ║           ║           ║");
-                System.out.println(lastA);
+                System.out.println(last);
             }
         }
         System.out.println();
@@ -80,22 +77,22 @@ public class TaskC {
         int remain = arrayB.size() % 5;
         for (int i = 0; i < countFullRows; i++) {
             if (i == 0) {
-                System.out.println(firstA);
+                System.out.println(first);
             }
             System.out.printf("║ %s[%2d]=%3d ║ %s[%2d]=%3d ║ %s[%2d]=%3d ║ %s[%2d]=%3d ║ %s[%2d]=%3d ║%n",
                     "B", j, arrayB.get(j), "B", j + 1, arrayB.get(j + 1), "B", j + 2, arrayB.get(j + 2), "B", j + 3,
                     arrayB.get(j + 3), "B", j + 4, arrayB.get(j + 4));
             if (i != countFullRows - 1) {
-                System.out.println(middleA);
+                System.out.println(middle);
             }
 
             j = j + 5;
         }
         if (remain == 0) {
-            System.out.println(lastA);
+            System.out.println(last);
         }
         else {
-            System.out.println(middleA);
+            System.out.println(middle);
             for (int i = countFullRows * 5; i < arrayB.size(); i++) {
                 System.out.printf("║ %s[%2d]=%3d ", "B", i, arrayB.get(i));
             }
@@ -103,11 +100,8 @@ public class TaskC {
                 System.out.printf("║           ");
             }
             System.out.print("║\n");
-            System.out.println(lastA);
+            System.out.println(last);
         }
-
-
-
     }
 
     private static int rnd() {
