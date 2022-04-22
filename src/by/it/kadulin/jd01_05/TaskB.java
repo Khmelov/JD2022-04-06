@@ -38,7 +38,7 @@ public class TaskB {
                 continue;
             }
             double a = Math.log10(Math.abs(b + 2.74));
-            System.out.printf("При x/2=%.2f a=%5.5g%n", temp, a);
+            System.out.printf("При x/2=%.2f a=%g%n", temp, a);
 
         }
     }
