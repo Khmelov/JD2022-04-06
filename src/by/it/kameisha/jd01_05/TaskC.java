@@ -112,20 +112,21 @@ public class TaskC {
             }
         }
         System.out.println("╔" + "══════════════╦".repeat(columns - 1) + "═".repeat(14) + "╗");
-        for (int i = 0; i < array.length-array.length%columns; i++) {
+        for (int i = 0; i < array.length - array.length % columns; i++) {
             System.out.printf("║%2c[ %-2d] = %3d ", 'A', i, array[i]);
             if (i == array.length - 1 || (i + 1) % columns == 0) {
                 System.out.println("║");
                 System.out.println("╠" + "══════════════╬".repeat(columns - 1) + "═".repeat(14) + "╣");
             }
         }
-        for (int i = array.length- array.length%columns; i < array.length ; i++) {
+        for (int i = array.length - array.length % columns; i < array.length; i++) {
             System.out.printf("║%2c[ %-2d] = %3d ", 'A', i, array[i]);
         }
         System.out.println("║" + "              ║".repeat(columns - array.length % columns));
         System.out.println("╚" + "══════════════╩".repeat(columns - 1) + "═".repeat(14) + "╝");
         System.out.print("");
     }
+
     private static void printStep2newArray(int[] array) {
         int columns = 0;
         int min = 5;
@@ -137,19 +138,16 @@ public class TaskC {
         }
         System.out.println("╔" + "══════════════╦".repeat(columns - 1) + "═".repeat(14) + "╗");
         int count;
-        for (int i = 0; i < array.length/columns ; i++) {
-            count=0;
-            for (int j = 0+i; j < array.length - array.length % columns; j+=array.length/columns) {
+        for (int i = 0; i < array.length / columns; i++) {
+            count = 0;
+            for (int j = i; j < array.length-array.length%columns; j += array.length / columns) {
                 count++;
-                System.out.printf("║%2c[ %-2d] = %3d ", 'A', j, array[j]);
-                if (j == array.length - 1 || count==columns) {
+                System.out.printf("║%2c[ %-2d] = %3d ", 'B', j, array[j]);
+                if (j == array.length - 1 || count == columns) {
                     System.out.println("║");
                     System.out.println("╠" + "══════════════╬".repeat(columns - 1) + "═".repeat(14) + "╣");
                 }
             }
-        }
-        for (int i = array.length- array.length%columns; i < array.length ; i++) {
-            System.out.printf("║%2c[ %-2d] = %3d ", 'A', i, array[i]);
         }
         System.out.println("║" + "              ║".repeat(columns - array.length % columns));
         System.out.println("╚" + "══════════════╩".repeat(columns - 1) + "═".repeat(14) + "╝");
