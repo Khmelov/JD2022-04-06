@@ -138,10 +138,19 @@ public class TaskC {
         }
         System.out.println("╔" + "══════════════╦".repeat(columns - 1) + "═".repeat(14) + "╗");
         int count;
+        int temporary;
+        int remainder = array.length % columns;
         for (int i = 0; i < array.length / columns; i++) {
             count = 0;
-            for (int j = i; j < array.length-array.length%columns; j += array.length / columns) {
+            temporary = columns - remainder;
+            for (int j = i; j < array.length; j += array.length / columns) {
                 count++;
+                if (temporary == 0) {
+                    j++;
+                }
+                if (temporary > 0) {
+                    temporary--;
+                }
                 System.out.printf("║%2c[ %-2d] = %3d ", 'B', j, array[j]);
                 if (j == array.length - 1 || count == columns) {
                     System.out.println("║");
@@ -149,7 +158,12 @@ public class TaskC {
                 }
             }
         }
-        System.out.println("║" + "              ║".repeat(columns - array.length % columns));
+        if (remainder > 0) {
+            for (int i = array.length / columns; i < array.length- remainder; i += array.length / columns + 1) {
+                System.out.printf("║%2c[ %-2d] = %3d ", 'A', i, array[i]);
+            }
+        }
+        System.out.println("║" + "              ║".repeat(columns - remainder));
         System.out.println("╚" + "══════════════╩".repeat(columns - 1) + "═".repeat(14) + "╝");
         System.out.print("");
     }
