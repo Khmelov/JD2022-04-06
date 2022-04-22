@@ -8,9 +8,6 @@ public class TaskC {
     public static void main(String[] args) {
         step1();
         step2();
-        System.out.println("╗");
-        System.out.println("║");
-        System.out.println("╝");
     }
 
     private static void step1() {
@@ -19,7 +16,7 @@ public class TaskC {
         double[] array = new double[length];
         System.out.println("Массив A[]");
         int count = 0;
-        for (double i = 5.33 ; i <= 9.0; i+=(9-5.33)/(length-1)) {
+        for (double i = 5.33; i <= 9.0; i += (9 - 5.33) / (length - 1)) {
             array[count] = cbrt(pow(i, 2) + 4.5);
             printArray('A', count, array);
             count++;
@@ -63,6 +60,8 @@ public class TaskC {
             array[i] = randomElement.nextInt(103, 450);
         }
         int[] newArray = getNewArray(array);
+        printStep2Array(array);
+        printStep2newArray(newArray);
 
     }
 
@@ -84,6 +83,7 @@ public class TaskC {
         sort(newArray);
         return newArray;
     }
+
     private static void sort(int[] array) {
         for (int i = 0; i < array.length; i++) {
             int minElement = array[i];
@@ -100,6 +100,60 @@ public class TaskC {
                 array[minElementIndex] = temporary;
             }
         }
+    }
+
+    private static void printStep2Array(int[] array) {
+        int columns = 0;
+        int min = 5;
+        for (int i = 2; i < 5; i++) {
+            if (i - array.length % i <= min) {
+                min = i - array.length % i;
+                columns = i;
+            }
+        }
+        System.out.println("╔" + "══════════════╦".repeat(columns - 1) + "═".repeat(14) + "╗");
+        for (int i = 0; i < array.length-array.length%columns; i++) {
+            System.out.printf("║%2c[ %-2d] = %3d ", 'A', i, array[i]);
+            if (i == array.length - 1 || (i + 1) % columns == 0) {
+                System.out.println("║");
+                System.out.println("╠" + "══════════════╬".repeat(columns - 1) + "═".repeat(14) + "╣");
+            }
+        }
+        for (int i = array.length- array.length%columns; i < array.length ; i++) {
+            System.out.printf("║%2c[ %-2d] = %3d ", 'A', i, array[i]);
+        }
+        System.out.println("║" + "              ║".repeat(columns - array.length % columns));
+        System.out.println("╚" + "══════════════╩".repeat(columns - 1) + "═".repeat(14) + "╝");
+        System.out.print("");
+    }
+    private static void printStep2newArray(int[] array) {
+        int columns = 0;
+        int min = 5;
+        for (int i = 2; i < 5; i++) {
+            if (i - array.length % i <= min) {
+                min = i - array.length % i;
+                columns = i;
+            }
+        }
+        System.out.println("╔" + "══════════════╦".repeat(columns - 1) + "═".repeat(14) + "╗");
+        int count;
+        for (int i = 0; i < array.length/columns ; i++) {
+            count=0;
+            for (int j = 0+i; j < array.length - array.length % columns; j+=array.length/columns) {
+                count++;
+                System.out.printf("║%2c[ %-2d] = %3d ", 'A', j, array[j]);
+                if (j == array.length - 1 || count==columns) {
+                    System.out.println("║");
+                    System.out.println("╠" + "══════════════╬".repeat(columns - 1) + "═".repeat(14) + "╣");
+                }
+            }
+        }
+        for (int i = array.length- array.length%columns; i < array.length ; i++) {
+            System.out.printf("║%2c[ %-2d] = %3d ", 'A', i, array[i]);
+        }
+        System.out.println("║" + "              ║".repeat(columns - array.length % columns));
+        System.out.println("╚" + "══════════════╩".repeat(columns - 1) + "═".repeat(14) + "╝");
+        System.out.print("");
     }
 }
 
