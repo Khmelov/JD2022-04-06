@@ -55,8 +55,8 @@ public class TaskB {
         for (int i = 0; i < persons.length; i++) {
             System.out.printf("%n%9s ", persons[i].concat(":"));
             for (int j = 0; j <= salaries[i].length; j++) {
-                if(j == STATEMENT_LENGTH) {
-                    System.out.printf("%-10s%n",total[i]);
+                if (j == STATEMENT_LENGTH) {
+                    System.out.printf("%-10s%n", total[i]);
                 } else {
                     System.out.printf("%-10s", salaries[i][j]);
                 }
@@ -74,7 +74,7 @@ public class TaskB {
             totalSalary += annualSalary;
         }
         System.out.printf("%-10s%-10d%n", TOTAL, totalSalary);
-        double averageSalary = (double)totalSalary / annualSalaries.length / QUARTER_QUANTITY;
+        double averageSalary = (double) totalSalary / annualSalaries.length / QUARTER_QUANTITY;
         System.out.printf("%-10s%-10.6f%n", AVERAGE, averageSalary);
 
 
