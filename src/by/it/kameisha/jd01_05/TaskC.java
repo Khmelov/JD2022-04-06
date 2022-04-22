@@ -15,17 +15,14 @@ public class TaskC {
         int length = randomX.nextInt(20, 41);
         double[] array = new double[length];
         System.out.println("Массив A[]");
-        double randomDouble;
-        for (int i = 0; i < array.length; i++) {
-            randomDouble = 0;
-            while (randomDouble < 5.33 || randomDouble > 9) {
-                randomDouble = randomX.nextDouble(5.33, 9.01);
-            }
-            array[i] = cbrt(pow(randomDouble, 2) + 4.5);
-            printArray('A', i, array);
+        int count = 0;
+        for (double i = 5.33 ; i <= 9.0; i+=(9-5.33)/(length-1)) {
+            array[count] = cbrt(pow(i, 2) + 4.5);
+            printArray('A', count, array);
+            count++;
         }
         System.out.println();
-        int count = 0;
+        count = 0;
         for (int i = 0; i < array.length; i++) {
             if (array[i] > 3.5) {
                 count++;
