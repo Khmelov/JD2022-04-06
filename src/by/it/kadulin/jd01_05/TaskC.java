@@ -12,18 +12,12 @@ public class TaskC {
         int countOfSteps = 20 + (int) (Math.random() * (20 + 1));
         double step = (9 - 5.33) / countOfSteps;
         ArrayList<Double> list = new ArrayList<>();
-//        double[] array = new double[countOfSteps];
-//        int countArray = 0;
         for (double x = 5.33; x <= 9; x += step) {
             double z = Math.pow(Math.pow(x, 2) + 4.5, 1.0/3);
             list.add(z);
-//            array[countArray] = z;
-//            countArray++;
         }
-//        System.out.println(list.size());
-//        System.out.println(countOfSteps);
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%s[%4d]=%-10.3f", "A", i, list.get(i));
+            System.out.printf("%s[%4d]=%-10.5f", "A", i, list.get(i));
             if ((i + 1) % 5 == 0) {
                 System.out.println();
             }
@@ -41,16 +35,7 @@ public class TaskC {
                 mlt *= list.get(i);
                 countNumbers++;
             }
-
-
         }
         System.out.printf("%nСреднее геометрическое чисел = %.5f", Math.pow(mlt, 1.0 / countNumbers));
-
-//        for (int i = 0; i < countOfSteps; i++) {
-//            System.out.printf("%s[%4d]=%-10.3f", "A", i, array[i]);
-//            if ((i + 1) % 5 == 0) {
-//                System.out.println();
-//            }
-//        }
     }
 }
