@@ -47,5 +47,14 @@ public class TaskB {
             System.out.println();
         }
         System.out.println("-".repeat(50));
+
+        int sum = 0;
+        double average = 0;
+        for (int i = 0; i < total.length; i++) {
+            sum += total[i];
+            average = (double) sum/(4*n);
+        }
+        System.out.printf("%-9s%-8d\n", "Итого", sum);
+        System.out.printf("%-9s%-8.4f\n", "Средняя", average);
     }
 }
