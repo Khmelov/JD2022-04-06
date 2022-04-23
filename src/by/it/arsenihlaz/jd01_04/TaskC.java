@@ -1,6 +1,5 @@
 package by.it.arsenihlaz.jd01_04;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class TaskC {
@@ -10,6 +9,61 @@ public class TaskC {
         buildOneDimArray(line);
 
     }
+
+    static void mergeSort(double[] array) {
+        if (array.length > 1) {
+            int left = 0;
+            int right = array.length - 1;
+            int midle = right / 2;
+            double[] arrayLeft = getPart(array, left, midle);
+            double[] arrayRight = getPart(array, midle + 1, right);
+            mergeSort(arrayLeft);
+            mergeSort(arrayRight);
+            System.arraycopy(merge(arrayLeft, arrayRight), 0, array, 0, array.length);
+        }
+    }
+
+    private static double[] getPart(double[] array, int left, int right) {
+        double[] part = new double[(right - left) + 1];
+        for (int i = 0; i < part.length; i++) {
+            part[i] = array[left];
+            left++;
+        }
+        return part;
+    }
+
+
+    private static double[] merge(double[] arrayLeft, double[] arrayRight) {
+        double[] arraySort = new double[arrayLeft.length + arrayRight.length];
+
+        int positionLeft = 0;
+        int positionRight = 0;
+        for (int i = 0; i < arraySort.length; i++) {
+            if (positionLeft == arrayLeft.length) {
+                arraySort[i] = arrayRight[positionRight];
+                positionRight++;
+                continue;
+            }
+            if (positionRight == arrayRight.length) {
+                arraySort[i] = arrayLeft[positionLeft];
+                positionLeft++;
+                continue;
+            }
+            if (arrayLeft[positionLeft] < arrayRight[positionRight]) {
+                arraySort[i] = arrayLeft[positionLeft];
+                positionLeft++;
+            } else if (arrayLeft[positionLeft] > arrayRight[positionRight]) {
+                arraySort[i] = arrayRight[positionRight];
+                positionRight++;
+            }
+
+        }
+        for (int i = 0; i < arraySort.length; i++) {
+            System.out.printf("%1s[% -3d]=%-1.3f ", "V", i, arraySort[i]);
+        }
+        return arraySort;
+    }
+
 
     static void buildOneDimArray(String line) {
         String name = "V";
@@ -46,55 +100,6 @@ public class TaskC {
         }
         System.out.println("Index of first element" + "=" + firstIndex);
         System.out.println("Index of last element" + "=" + lastIndex);
-    }
-
-    static void mergeSort(double[] array) {
-        getPart(array, array.length / 2, array.length - array.length / 2);
-        merge(new double[]{}, new double[]{});
-    }
-
-    private static double[] getPart(double[] array, int left, int right) {
-        if (array == null) {
-            return null;
-        }
-        if (array.length < 2) {
-            return array;
-        }
-        double[] arrayLeft = new double[left];
-        System.arraycopy(array, 0, arrayLeft, 0, left);
-        double[] arrayRight = new double[right];
-        System.arraycopy(array, arrayLeft.length, arrayRight, 0, right);
-        arrayLeft = getPart(arrayLeft, left, right);
-        arrayRight = getPart(arrayRight, left, right);
-        System.out.print(Arrays.toString(merge(arrayLeft, arrayRight)));
-        return merge(arrayLeft, arrayRight);
-    }
-
-    private static double[] merge(double[] arrayLeft, double[] arrayRight) {
-        double[] arraySort = new double[arrayLeft.length + arrayRight.length];
-        System.arraycopy(arrayLeft, 0, arraySort, 0, arrayLeft.length);
-        System.arraycopy(arrayRight, arrayLeft.length, arraySort, 0, arrayRight.length);
-        int positionLeft = 0;
-        int positionRight = 0;
-        for (int i = 0; i < arrayLeft.length; i++) {
-            if (arrayLeft[i - positionLeft] <= arrayRight[i - positionRight]) {
-                arraySort[i] = arrayLeft[i];
-                positionLeft++;
-            } else if (positionLeft == arrayLeft.length) {
-                arraySort[i] = arrayRight[i];
-                positionRight++;
-            } else if (positionRight == arrayRight.length) {
-                arraySort[i] = arrayLeft[i];
-                positionLeft++;
-            } else
-                arraySort[i] = arrayRight[i];
-            positionRight++;
-
-        }
-        for (int i = 0; i < arraySort.length; i++) {
-            System.out.printf("%1s[% -3d]=%-1.3f ", "V", i, arraySort[i]);
-        }
-        return arraySort;
     }
 }
 
