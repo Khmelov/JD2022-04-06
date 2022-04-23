@@ -24,6 +24,7 @@ public class TaskC {
 
         double[] array = new double[count];
         int i = 0;
+        int rate=0;
         System.out.println("Массив A[]");
         for (double x = start; x <= stop; x = x + step) {
             array[i] = cbrt(pow(x, 2) + 4.5);
@@ -31,10 +32,33 @@ public class TaskC {
             i++;
             if (i % 5 == 0) {
                 System.out.println();
+
+
             }
+        }
+
+        double [] array2 = new double [array.length];
+        i = 0;
+        System.out.println("Массив B[] из элементов > 3.5");
+        for (i = 0; i < array.length; i++) {
+            if (array[i]>3.5){
+                array2[i] = array[i];
+                System.out.printf("B[% -3d ]=%-9.4f", i, array2[i]);
+                if (i % 5 == 0) {
+                    System.out.println();
+                i++;
+              }
+            }
+
+
+
+
         }
     }
 }
+
+
+
 
 
 
