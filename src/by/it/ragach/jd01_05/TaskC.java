@@ -24,16 +24,22 @@ public class TaskC {
         double z = 0;
 
 
-        double[] array = new double[(int) count];
 
-                for (double x = start; x < stop; x += step) {
+            for (double x = start; x < stop; x += step) {
                     z = cbrt(pow(x, 2) + 4.5);
                     System.out.println(z);
+            }
 
-                }
+        double[] array = new double[(int) count];
+        for (int i = 0; i < count; i++) {
+            System.out.println(i);
+            }
         }
-
     }
+
+
+
+
 
 
 
