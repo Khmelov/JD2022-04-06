@@ -16,26 +16,30 @@ public class TaskC {
 
 
         double start = 5.33;
-        double stop = 9;
-        double count = (int) (Math.random() * ((40 - 20) + 1) + 20);
+        double stop = 9.0;
+        int count = (int) (Math.random() * ((40 - 20) + 1) + 20);
         System.out.println(count);
         double step = (stop - start) / (count - 1);
+
+
+        double[] array = new double[count];
+        int i = 0;
         System.out.println("Массив A[]");
-        double z = 0;
-
-
-
-            for (double x = start; x < stop; x += step) {
-                    z = cbrt(pow(x, 2) + 4.5);
-                    System.out.println(z);
-            }
-
-        double[] array = new double[(int) count];
-        for (int i = 0; i < count; i++) {
-            System.out.println(i);
+        for (double x = start; x <= stop; x = x + step) {
+            array[i] = cbrt(pow(x, 2) + 4.5);
+            System.out.printf("А[% -3d ]=%-9.4f", i, array[i]);
+            i++;
+            if (i % 5 == 0) {
+                System.out.println();
             }
         }
     }
+}
+
+
+
+
+
 
 
 
