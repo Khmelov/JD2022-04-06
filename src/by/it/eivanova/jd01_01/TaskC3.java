@@ -1,7 +1,12 @@
 package by.it.eivanova.jd01_01;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Scanner;
+
+import static java.lang.String.format;
 
 /*
 Ускорение свободного падения на Земле и Марсе таково:
@@ -36,14 +41,28 @@ import java.util.Scanner;
 */
 class TaskC3 {
 
-    public static void main(final String[] args) {
-        final Scanner scanner = new Scanner(System.in);
-        final int weight = scanner.nextInt();
 
-       System.out.format(Locale.ROOT, "%.2f%n", getWeight(weight));
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int weight = scanner.nextInt();
+        // System.out.println(getWeight(scanner.nextInt()));
+        //System.out.format(Locale.ROOT, "%.2f%n", getWeight(weight));
+        System.out.println(getWeight(weight));
     }
 
-    public static double getWeight(final int weight) {
-        return weight * 3.86 / 9.81;
-    }
+    //}
+
+    public static double getWeight(int weight) {
+      double Mars = weight * 3.86 / 9.81;
+
+
+        Mars = new BigDecimal(Mars).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+
+
+
+
+       // String format = format(Locale.ROOT, "%.2f%n", getWeight(weight));
+        return Mars;
+  }
+
 }
