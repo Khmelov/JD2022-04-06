@@ -22,7 +22,7 @@ public class TaskA2 {
 
     private static void printResult() {
         for (int i = 0; i < words.length; i++) {
-            System.out.println(words[i] + " = " + counts[i]);
+            System.out.println(words[i] + "=" + counts[i]);
         }
     }
 

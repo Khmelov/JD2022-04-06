@@ -6,11 +6,15 @@ import java.util.regex.Pattern;
 public class TaskB1 {
 
     private static final String[] vowels = {"А", "а", "И", "и", "Е", "е", "Ё", "ё", "О", "о", "У", "у", "Ы", "ы", "Э", "э", "Ю", "ю", "Я", "я"};
-    private static final String[] consonants = {"Б", "б", "В", "в", "Г", "г", "Д", "д", "Ж", "ж", "З", "з ", "Й", "й", "К", "к", "Л", "л", "М", "м", "Н", "н", "П", "п", "Р", "р", "С", "с", "Т", "т", "Ф", "ф", "Х", "х", "Ц", "ц", "Ч", "ч", "Ш", "ш", "Щ", "щ"} ;
+    private static final String[] consonants = {"Б", "б", "В", "в", "Г", "г", "Д", "д", "Ж", "ж", "З", "з", "Й", "й", "К", "к", "Л", "л", "М", "м", "Н", "н", "П", "п", "Р", "р", "С", "с", "Т", "т", "Ф", "ф", "Х", "х", "Ц", "ц", "Ч", "ч", "Ш", "ш", "Щ", "щ"} ;
 
     public static void main(String[] args) {
+        wordsFinder(Poem.text);
+    }
+
+    private static void wordsFinder(String poem) {
         Pattern pattern = Pattern.compile("[А-Яа-яЁё]{2,}");
-        Matcher matcher = pattern.matcher(Poem.text);
+        Matcher matcher = pattern.matcher(poem);
         while (matcher.find()) {
             String str = matcher.group();
             boolean startAtConsonants = false;
@@ -28,10 +32,6 @@ public class TaskB1 {
                     }
                 }
             }
-
-
-
         }
-
     }
 }
