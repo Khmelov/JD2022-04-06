@@ -9,13 +9,12 @@ public class TaskC1 {
     private static String[] str = {};
 
     public static void main(String[] args) {
+//        long currentTimeMillis = System.currentTimeMillis();
         Pattern pattern = Pattern.compile("[^\\n]+");
         Matcher matcher = pattern.matcher(Poem.text);
-        int counter = 0;
         while (matcher.find()) {
             str = Arrays.copyOf(str, str.length + 1);
-            str[counter] = matcher.group();
-            counter++;
+            str[str.length - 1] = matcher.group();
         }
         int maxLength = 0;
         for (int i = 0; i < str.length; i++) {
@@ -28,6 +27,7 @@ public class TaskC1 {
             str[i] = spaceAdd(str[i], maxLength);
             System.out.println(str[i]);
         }
+//        System.out.println(System.currentTimeMillis() - currentTimeMillis);
     }
 
     private static String spaceAdd(String in, int maxLength) {
