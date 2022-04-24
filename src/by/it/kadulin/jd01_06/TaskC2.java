@@ -16,29 +16,55 @@ public class TaskC2 {
             stringBuilder.append(arrayForTest[i]).append(" ");
         }
         long startSlow = System.nanoTime();
-        String slowText = slow(stringBuilder.toString().trim());
+        String slowText = "";
+        for (int i = 0; i < arrayForTest.length; i++) {
+            slowText = slowText.concat(slow(arrayForTest[i]));
+        }
         System.out.printf("%s %d%n", "slow", (System.nanoTime() - startSlow) / 1_000_000);
+
+
         long startFast = System.nanoTime();
-        String fastText = fast(stringBuilder.toString().trim());
+        String fastText = "";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < arrayForTest.length; i++) {
+            sb.append(fast(arrayForTest[i]));
+        }
+        fastText = sb.toString();
         System.out.printf("%s %d%n", "fast", (System.nanoTime() - startFast) / 1_000_000);
+
+//        long startSlow = System.nanoTime();
+//        String slowText = slow(stringBuilder.toString().trim());
+//        System.out.printf("%s %d%n", "slow", (System.nanoTime() - startSlow) / 1_000_000);
+//        long startFast = System.nanoTime();
+//        String fastText = fast(stringBuilder.toString().trim());
+//        System.out.printf("%s %d%n", "fast", (System.nanoTime() - startFast) / 1_000_000);
     }
+
+//    static String slow(String text) {
+//        String[] array = text.split(" ");
+//        String resultConcatText = "";
+//        for (int i = 0; i < array.length; i++) {
+//            resultConcatText = resultConcatText.concat(array[i]).concat(" ");
+//        }
+//        return resultConcatText;
+//    }
 
     static String slow(String text) {
-        String[] array = text.split(" ");
-        String resultConcatText = "";
-        for (int i = 0; i < array.length; i++) {
-            resultConcatText = resultConcatText.concat(array[i]).concat(" ");
-        }
-        return resultConcatText;
+        return text.concat(" ");
     }
 
+//    static String fast(String text) {
+//        String[] array = text.split(" ");
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0; i < array.length; i++) {
+//            sb.append(array[i]).append(" ");
+//        }
+//        return sb.toString();
+//    }
+
     static String fast(String text) {
-        String[] array = text.split(" ");
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < array.length; i++) {
-            sb.append(array[i]).append(" ");
-        }
-        return sb.toString();
+        StringBuilder sb = new StringBuilder(text);
+        return sb.append(" ").toString();
     }
 
     private static void arraysPrepare() {
