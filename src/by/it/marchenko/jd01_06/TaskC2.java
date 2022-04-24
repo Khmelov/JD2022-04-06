@@ -7,30 +7,28 @@ import java.util.regex.Pattern;
 public class TaskC2 {
     private static final String RUS_WORD_PATTERN = "[а-яА-ЯёЁ]+";
     private static final String SEPARATOR = " ";
-    private static final int length = 100*2;
+    private static final int length = 100000;
     private static String[] words = {};
+    private static String sequence = "";
 
 
     public static void main(String[] args) {
         String[] words = createWordsPull(Poem.text);
-        String sequence = getRandomWordSequence(words, length);
+        sequence = getRandomWordSequence(words, length);
+
         long slowStart = System.nanoTime();
-        String slowString = slow(sequence);
+        String slowString = slow(Poem.text);
         long slowFinish = System.nanoTime();
         long slowTime = slowFinish - slowStart;
         System.out.println(slowString);
         System.out.println(slowTime);
+
         long fastStart = System.nanoTime();
-        String fastString = fast(sequence);
+        String fastString = fast(Poem.text);
         long fastFinish = System.nanoTime();
         long fastTime = fastFinish - fastStart;
         System.out.println(fastString);
         System.out.println(fastTime);
-        System.out.println(slowString.equals(fastString));
-        System.out.println(slowString.length());
-
-        System.out.printf("Slow/Fast: %4.2f%n", (double)slowTime/fastTime);
-
     }
 
     private static String[] createWordsPull(String text) {
@@ -62,12 +60,11 @@ public class TaskC2 {
             sequence.append(currentWordIndex);
             sequence.append(SEPARATOR);
             currentLength += words[currentWordIndex].length() + 1;
-
         }
         return sequence.toString();
     }
 
-    private static String slow(String sequence) {
+    private static String slow(String text) {
         String line = "";
         String[] sequenceArray = sequence.split(SEPARATOR);
         for (int i = 0; i < sequenceArray.length; i++) {
@@ -81,7 +78,7 @@ public class TaskC2 {
         return line;
     }
 
-    private static String fast(String sequence) {
+    private static String fast(String text) {
         StringBuilder fastLine = new StringBuilder();
         String[] sequenceArray = sequence.split(SEPARATOR);
         for (int i = 0; i < sequenceArray.length; i++) {
