@@ -35,12 +35,7 @@ public class TaskB2 {
         return sentences;
     }
 
-    public static Comparator<String> LengthComparator = new Comparator<String>() {
-        @Override
-        public int compare(String o1, String o2) {
-            return o1.length() - o2.length();
-        }
-    };
+    public static Comparator<String> LengthComparator = Comparator.comparingInt(String::length);
 
     private static void printSentences(String[] sentences) {
         for (String sentence : sentences) {
