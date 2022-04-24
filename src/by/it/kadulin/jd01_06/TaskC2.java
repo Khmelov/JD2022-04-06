@@ -11,17 +11,17 @@ public class TaskC2 {
 
     public static void main(String[] args) {
         arraysPrepare();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < arrayForTest.length; i++) {
-            stringBuilder.append(arrayForTest[i]).append(" ");
-        }
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for (int i = 0; i < arrayForTest.length; i++) {
+//            stringBuilder.append(arrayForTest[i]).append(" ");
+//        }
         long startSlow = System.nanoTime();
         String slowText = "";
         for (int i = 0; i < arrayForTest.length; i++) {
             slowText = slowText.concat(slow(arrayForTest[i]));
         }
+        System.out.println(slowText);
         System.out.printf("%s %d%n", "slow", (System.nanoTime() - startSlow) / 1_000_000);
-
 
         long startFast = System.nanoTime();
         String fastText = "";
@@ -30,6 +30,7 @@ public class TaskC2 {
             sb.append(fast(arrayForTest[i]));
         }
         fastText = sb.toString();
+        System.out.println(fastText);
         System.out.printf("%s %d%n", "fast", (System.nanoTime() - startFast) / 1_000_000);
 
 //        long startSlow = System.nanoTime();
