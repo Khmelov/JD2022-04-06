@@ -1,6 +1,5 @@
 package by.it.marchenko.jd01_04;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class TaskC {
@@ -25,9 +24,10 @@ public class TaskC {
         double lastElement = inputArray[inputArray.length - 1];
         mergeSort(inputArray);
         InOut.printArray(inputArray, OUTPUT_ARRAY_NAME, OUTPUT_ARRAY_COLUMN);
-        int indexFirst = Arrays.binarySearch(inputArray, firstElement);
+
+        int indexFirst = binarySearch(inputArray, firstElement);
         System.out.println("Index of first element=" + indexFirst);
-        int indexLast = Arrays.binarySearch(inputArray, lastElement);
+        int indexLast = binarySearch(inputArray, lastElement);
         System.out.println("Index of last element=" + indexLast);
     }
 
@@ -35,12 +35,10 @@ public class TaskC {
         if (array.length > 1) {
             int indexLeft = 0;
             int indexRight = array.length;
-            int indexMiddle = (indexRight - indexLeft) / 2;
+            int indexMiddle = (indexRight - indexLeft) >> 1;
             double[] partLeft = getPart(array, indexLeft, indexMiddle);
-            //System.arraycopy(array, indexLeft, partLeft, 0, indexMiddle);
             mergeSort(partLeft);
             double[] partRight = getPart(array, indexMiddle, indexRight);
-            //System.arraycopy(array, indexMiddle, partRight, 0, indexRight);
             mergeSort(partRight);
             double[] result = merge(partLeft, partRight);
             System.arraycopy(result, 0, array, 0, array.length);
@@ -64,5 +62,23 @@ public class TaskC {
             }
         }
         return resultArray;
+    }
+
+    static int binarySearch(double[] array, double value) {
+        int indexStart = 0;
+        int indexEnd = array.length;
+        int indexMiddle;
+        do {
+            indexMiddle = ((indexEnd - indexStart) >> 1) + indexStart;
+            if (value == array[indexMiddle]) {
+                return indexMiddle;
+            }
+            if (value > array[indexMiddle]) {
+                indexStart = indexMiddle + 1;
+            } else {
+                indexEnd = indexMiddle - 1;
+            }
+        } while (indexEnd >= indexStart);
+        return -indexMiddle;
     }
 }
