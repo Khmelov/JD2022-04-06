@@ -36,7 +36,7 @@ public class TaskA2 {
                 counts[i]++;
                 return;
             }
-            
+
         }
         words=Arrays.copyOf(words,words.length+1);
         words[words.length-1]=word;
@@ -51,11 +51,13 @@ public class TaskA2 {
 
         for (int i = 0; i < words.length; i++) {
             System.out.printf("%s=%d%n",words[i],counts[i]);
-            
+
         }
 
 
     }
 }
+
+
 
 

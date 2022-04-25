@@ -12,7 +12,7 @@ public class TaskB1 {
     public static void main(String[] args) {
 
         String text = Poem.text;
-        Pattern pattern = Pattern.compile("[а-яА-яёЁ]{2,}");
+        Pattern pattern = Pattern.compile("[а-яА-ЯёЁ]{2,}");
         Matcher matcher = pattern.matcher(Poem.text);
         while (matcher.find()){
             String word = matcher.group();

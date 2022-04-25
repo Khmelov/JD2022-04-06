@@ -7,7 +7,7 @@ public class TaskA1 {
     public static void main(String[] args) {
         System.out.println(Poem.text);
         StringBuilder dynText = new StringBuilder(Poem.text);
-       Pattern pattern = Pattern.compile ("[а-яА-яёЁ]{4,}");
+       Pattern pattern = Pattern.compile ("[а-яА-ЯёЁ]{4,}");
        Matcher matcher = pattern.matcher(dynText);
        while (matcher.find()) {
            int startPosition = matcher.start();
