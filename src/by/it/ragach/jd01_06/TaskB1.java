@@ -24,7 +24,6 @@ public class TaskB1 {
     }
 
 }
-
     private static boolean checkLetters(String word) {
         char firstLetter = word.charAt(0);
         char lastLetter = word.charAt(word.length()-1);
