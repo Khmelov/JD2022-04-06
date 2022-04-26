@@ -1,86 +1,77 @@
 package by.it.kadulin.jd01_06;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TaskC2 {
-
-    private static String[] words = {};
-    private static String[] arrayForTest = {};
-
+    public static final int seed = 100;
     public static void main(String[] args) {
-        arraysPrepare();
-//        StringBuilder stringBuilder = new StringBuilder();
-//        for (int i = 0; i < arrayForTest.length; i++) {
-//            stringBuilder.append(arrayForTest[i]).append(" ");
-//        }
+
         long startSlow = System.nanoTime();
-        String slowText = "";
-        for (int i = 0; i < arrayForTest.length; i++) {
-            slowText = slowText.concat(slow(arrayForTest[i]));
-        }
+        String slowText = slow(Poem.text);
         System.out.println(slowText);
         System.out.printf("%s %d%n", "slow", (System.nanoTime() - startSlow) / 1_000_000);
 
         long startFast = System.nanoTime();
-        String fastText = "";
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < arrayForTest.length; i++) {
-            sb.append(fast(arrayForTest[i]));
-        }
-        fastText = sb.toString();
+        String fastText = fast(Poem.text);
         System.out.println(fastText);
         System.out.printf("%s %d%n", "fast", (System.nanoTime() - startFast) / 1_000_000);
-
-//        long startSlow = System.nanoTime();
-//        String slowText = slow(stringBuilder.toString().trim());
-//        System.out.printf("%s %d%n", "slow", (System.nanoTime() - startSlow) / 1_000_000);
-//        long startFast = System.nanoTime();
-//        String fastText = fast(stringBuilder.toString().trim());
-//        System.out.printf("%s %d%n", "fast", (System.nanoTime() - startFast) / 1_000_000);
     }
-
-//    static String slow(String text) {
-//        String[] array = text.split(" ");
-//        String resultConcatText = "";
-//        for (int i = 0; i < array.length; i++) {
-//            resultConcatText = resultConcatText.concat(array[i]).concat(" ");
-//        }
-//        return resultConcatText;
-//    }
 
     static String slow(String text) {
-        return text.concat(" ");
+        String[] words = poemToArray(text);
+        String result = "";
+        int length = 0;
+        Random random = new Random();
+        random.setSeed(seed);
+        while (length < 100_000) {
+            int indexWordArray = random.nextInt(words.length);
+            result = result.concat(words[indexWordArray]).concat(" ");
+            length += result.length();
+        }
+        return result;
     }
-
-//    static String fast(String text) {
-//        String[] array = text.split(" ");
-//        StringBuilder sb = new StringBuilder();
-//        for (int i = 0; i < array.length; i++) {
-//            sb.append(array[i]).append(" ");
-//        }
-//        return sb.toString();
-//    }
 
     static String fast(String text) {
-        StringBuilder sb = new StringBuilder(text);
-        return sb.append(" ").toString();
+        String[] words = poemToArray(text);
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        random.setSeed(seed);
+        int length = 0;
+        while (length < 100_000) {
+            int indexWordArray = random.nextInt(words.length);
+//            System.out.print(indexWordArray + " ");
+            sb.append(words[indexWordArray]).append(" ");
+            length += sb.length();
+        }
+        return sb.toString();
     }
 
-    private static void arraysPrepare() {
+    private static String[] poemToArray(String text) {
         Pattern pattern = Pattern.compile("[А-Яа-яЁё]+");
-        Matcher matcher = pattern.matcher(Poem.text);
+        Matcher matcher = pattern.matcher(text);
+        String[] words = {};
         while (matcher.find()) {
+            if (words.length != 0) {
+                boolean flag = false;
+                for (int i = 0; i < words.length; i++) {
+                    if (words[i].equals(matcher.group())) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag) {
+                    continue;
+                }
+            }
             words = Arrays.copyOf(words, words.length + 1);
             words[words.length - 1] = matcher.group();
         }
-        int length = 0;
-        while (length < 100_000) {
-            int indexWordArray = (int) (Math.random() * words.length);
-            arrayForTest = Arrays.copyOf(arrayForTest, arrayForTest.length + 1);
-            arrayForTest[arrayForTest.length - 1] = words[indexWordArray];
-            length += words[indexWordArray].length();
-        }
+//        System.out.println(words.length);
+        return words;
     }
+
+
 }
