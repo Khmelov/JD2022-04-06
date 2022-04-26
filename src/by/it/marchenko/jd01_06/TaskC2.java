@@ -1,30 +1,30 @@
 package by.it.marchenko.jd01_06;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TaskC2 {
     private static final String RUS_WORD_PATTERN = "[а-яА-ЯёЁ]+";
     private static final String SEPARATOR = " ";
-    private static final int length = 100000;
+    private static final int REQUIRED_LENGTH = 100000;
     private static String[] words = {};
-    private static String sequence = "";
+    private static final long SEED = 1034531413;
 
 
     public static void main(String[] args) {
-        String[] words = createWordsPull(Poem.text);
-        sequence = getRandomWordSequence(words, length);
+        String inputText = Poem.text;
 
         long slowStart = System.nanoTime();
-        String slowString = slow(Poem.text);
+        String slowString = slow(inputText);
         long slowFinish = System.nanoTime();
         long slowTime = slowFinish - slowStart;
         System.out.println(slowString);
         System.out.println(slowTime);
 
         long fastStart = System.nanoTime();
-        String fastString = fast(Poem.text);
+        String fastString = fast(inputText);
         long fastFinish = System.nanoTime();
         long fastTime = fastFinish - fastStart;
         System.out.println(fastString);
@@ -51,44 +51,34 @@ public class TaskC2 {
         words[words.length - 1] = word;
     }
 
-    private static String getRandomWordSequence(String[] words, int length) {
-        StringBuilder sequence = new StringBuilder();
-        int maxWordIndex = words.length;
-        int currentLength = sequence.length();
-        while (length > currentLength - 1) {
-            int currentWordIndex = (int) (Math.random() * maxWordIndex);
-            sequence.append(currentWordIndex);
-            sequence.append(SEPARATOR);
-            currentLength += words[currentWordIndex].length() + 1;
-        }
-        return sequence.toString();
-    }
-
     private static String slow(String text) {
+        String[] words = createWordsPull(text);
         String line = "";
-        String[] sequenceArray = sequence.split(SEPARATOR);
-        for (int i = 0; i < sequenceArray.length; i++) {
-            int wordPullIndex = Integer.parseInt(sequenceArray[i]);
-            line = line.concat(words[wordPullIndex]);
-            if (i != sequenceArray.length - 1) {
+
+        Random randomSlow = new Random(SEED);
+        while (REQUIRED_LENGTH > line.length()) {
+            String wordToSlowAdd = words[randomSlow.nextInt(words.length)];
+            line = line.concat(wordToSlowAdd);
+            if (line.length() < REQUIRED_LENGTH) {
                 line = line.concat(SEPARATOR);
             }
         }
-        //System.out.println("Slow: "+ line.length());
         return line;
     }
 
     private static String fast(String text) {
+        String[] words = createWordsPull(text);
         StringBuilder fastLine = new StringBuilder();
-        String[] sequenceArray = sequence.split(SEPARATOR);
-        for (int i = 0; i < sequenceArray.length; i++) {
-            int wordPullIndex = Integer.parseInt(sequenceArray[i]);
-            fastLine.append(words[wordPullIndex]);
-            if (i != sequenceArray.length - 1) {
+
+
+        Random randomFast = new Random(SEED);
+        while (REQUIRED_LENGTH > fastLine.length()) {
+            String wordToFastAdd = words[randomFast.nextInt(words.length)];
+            fastLine.append(wordToFastAdd);
+            if (fastLine.length() < REQUIRED_LENGTH) {
                 fastLine.append(SEPARATOR);
             }
         }
-        //System.out.println("Fast: "+ fastLine.length());
         return fastLine.toString();
 
     }
