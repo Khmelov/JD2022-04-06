@@ -10,9 +10,9 @@ public class TaskB2 {
         for (int i = 0; i < sentence.length; i++) {
             for (int j = 0; j < sentence.length - 1; j++) {
                 if(sentence[j].length() > sentence[j + 1].length()) {
-                    String helper = sentence[j];
+                    String temp = sentence[j];
                     sentence[j] = sentence[j + 1];
-                    sentence[j + 1] = helper;
+                    sentence[j + 1] = temp;
                 }
             }
         }
