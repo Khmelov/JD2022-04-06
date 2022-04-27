@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 public class TaskC {
     public static void main(String[] args) {
-//        step1();
+        step1();
         step2();
     }
 
