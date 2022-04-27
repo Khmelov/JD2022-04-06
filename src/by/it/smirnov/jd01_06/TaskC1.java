@@ -1,52 +1,34 @@
 package by.it.smirnov.jd01_06;
 
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TaskC1 {
     public static void main(String[] args) {
-        StringBuilder sb = new StringBuilder(Poem.text);
+        String sb = Poem.text;
+        StringBuilder newText = new StringBuilder("");
         int longest = getLength();
-        System.out.println(longest);
-        sb = formater(longest, sb);
-
-        System.out.println(sb);
+        String[] poem = sb.split("\\n");
+        for (int i = 0; i < poem.length; i++) {
+            String line = formater(longest, poem[i]);
+            newText.append(line).append("\n");
+        }
+        System.out.println(newText);
     }
 
-    private static StringBuilder formater(int longest, StringBuilder sb) {
-        Pattern pattern = Pattern.compile("[^\\n]+");
+    private static String formater(int longest, String line) {
+        StringBuilder sb = new StringBuilder(line);
+        Pattern pattern = Pattern.compile("[а-яА-ЯёЁ\\p{Punct}]+");
         Matcher matcher = pattern.matcher(sb);
-        while (matcher.find()) {
-            String line = matcher.group().replaceFirst("\\s", "  ");
-
-            /*
-            String line = matcher.group();
-            StringBuilder line1 = line;
-            Pattern pattern1 = Pattern.compile("[а-яА-ЯёЁ]+");
-            Matcher matcher1 = pattern1.matcher(line);
-            while (matcher1.find() && matcher.group().length() < longest) {
-                line.
-            }
-
-             */
-
+        int pos = 0;
+        while (matcher.find(pos) && sb.length() < longest) {
+            if (matcher.end() < sb.length() - 1) sb.insert(matcher.end(), " ");
+            pos = matcher.end() + 1;
+            if (matcher.end() == sb.length()) pos = 0;
         }
-        return sb;
-
+       return sb.toString();
     }
-
-    /*private static String doMagic (){
-        while (matcher.group().length() < longest) {
-            for (int i = 0; matcher.group().length() < longest; i++) {
-                String space = " ".repeat(i + 1);
-                int index = 0;
-                while (index >= 0 && index < (matcher.group().length() - 1)) {
-                    index = (matcher.group()).indexOf(space, index + 1);
-                    sb.insert(index, " ");
-        }
-
-     */
-
 
     private static int getLength() {
         Pattern pattern = Pattern.compile("[^\\n]+");
