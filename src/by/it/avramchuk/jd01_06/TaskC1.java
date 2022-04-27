@@ -5,9 +5,9 @@ import java.util.regex.Pattern;
 
 public class TaskC1 {
     public static void main(String[] args) {
-        String[] eachNewLine = Poem.text.split("\\n");
-        int max= findMaxLengt(eachNewLine);
-       formatWidth(eachNewLine, max);
+
+      String newText =  formatWidth(Poem.text);
+        System.out.println(newText);
         }
 
 
@@ -21,7 +21,10 @@ public class TaskC1 {
         return max;
     }
 
-    private static void formatWidth(String[] eachNewLine, int max) {
+    private static String formatWidth(String sourceText) {
+        String[] eachNewLine = sourceText.split("\\n");
+        int max= findMaxLengt(eachNewLine);
+        String newText = new String();
 
         for (int i = 0; i < eachNewLine.length; i++) {
             StringBuilder str = new StringBuilder(eachNewLine[i]);
@@ -37,7 +40,8 @@ public class TaskC1 {
 
            String newStr = str.toString();
            newStr = newStr.replace('#',' ');
-            System.out.println(newStr);
+           newText = newText.concat(newStr) +"\n";
         }
+        return newText;
     }
 }
