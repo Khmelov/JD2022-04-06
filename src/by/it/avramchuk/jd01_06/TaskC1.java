@@ -5,11 +5,29 @@ import java.util.regex.Pattern;
 
 public class TaskC1 {
     public static void main(String[] args) {
-
-      String newText =  formatWidth(Poem.text);
-        System.out.println(newText);
+        String strB = Poem.text;
+        StringBuilder newText = new StringBuilder("");
+        String[] eachNewLine = strB.split("\\n");
+        int max = findMaxLengt(eachNewLine);
+        for (int i = 0; i < eachNewLine.length; i++) {
+            String line = formatWidth(max, eachNewLine[i]);
+            newText.append(line).append("\n");
         }
+        System.out.println(newText);
+    }
 
+    private static String formatWidth(int max, String line) {
+        StringBuilder strB = new StringBuilder(line);
+        Pattern pattern = Pattern.compile("[а-яА-ЯёЁ\\p{Punct}]+");
+        Matcher matcher = pattern.matcher(strB);
+        int position = 0;
+        while (matcher.find(position) && strB.length() < max) {
+            if (matcher.end() < strB.length() - 1) strB.insert(matcher.end(), " ");
+            position = matcher.end() + 1;
+            if (matcher.end() == strB.length()) position = 0;
+        }
+        return strB.toString();
+    }
 
     private static int findMaxLengt(String[] eachNewLine) {
         int max = 0;
@@ -21,27 +39,4 @@ public class TaskC1 {
         return max;
     }
 
-    private static String formatWidth(String sourceText) {
-        String[] eachNewLine = sourceText.split("\\n");
-        int max= findMaxLengt(eachNewLine);
-        String newText = new String();
-
-        for (int i = 0; i < eachNewLine.length; i++) {
-            StringBuilder str = new StringBuilder(eachNewLine[i]);
-           while (str.length()<max){
-               Pattern pattern = Pattern.compile("\s+");
-               Matcher matcher = pattern.matcher(str);
-               while (matcher.find()){
-                   if (str.length()<max){
-                       str = str.insert(matcher.start()+1, '#');
-                   } else {break;}
-               }
-           }
-
-           String newStr = str.toString();
-           newStr = newStr.replace('#',' ');
-           newText = newText.concat(newStr) +"\n";
-        }
-        return newText;
-    }
 }
