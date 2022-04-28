@@ -13,5 +13,8 @@ public class Runner {
         double d = myVar4.getValue();
 
 
+        //Vector myVector1 = new Vector({1, 2, 3, 4});
+
+
     }
 }
