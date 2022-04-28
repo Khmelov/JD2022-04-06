@@ -9,11 +9,8 @@ class Vector extends Var {
     }
 
     Vector(String strVector) {
-        //strVector.replace('{', "");
-        String buffer = strVector.replaceAll("\\{", "");
-        buffer = buffer.replaceAll("}", "");
-        buffer = buffer.replaceAll("\\s", "");
-                String[] fromString = buffer.split(",");
+        strVector = strVector.replaceAll("\\{", "").replaceAll("}", "").replaceAll("\\s", "");
+                String[] fromString = strVector.split(",");
         double[] toDouble = new double[fromString.length];
         for (int i = 0; i < toDouble.length; i++) {
             toDouble[i] = Double.parseDouble(fromString[i]);
