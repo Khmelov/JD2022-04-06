@@ -8,8 +8,8 @@ private final double value;
         this.value = value;
     }
 
-    Scalar(String str) {
-        this.value = Double.parseDouble(str);
+    Scalar(String strScalar) {
+        this.value = Double.parseDouble(strScalar);
     }
 
     Scalar(Scalar scalar) {
