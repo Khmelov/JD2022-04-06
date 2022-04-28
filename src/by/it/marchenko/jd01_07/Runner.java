@@ -12,6 +12,17 @@ public class Runner {
         System.out.println(myVar4);
         double d = myVar4.getValue();
 
+        double[] myArrayVector = {1,2,3,4};
+        Vector myVector0 = new Vector(myArrayVector);
+        Vector myVector1 = new Vector(myVector0);
+        Vector myVector2 = new Vector("{1    ,2,                 3.1}");
+
+        System.out.println(myVector0);
+        System.out.println(myVector1);
+        System.out.println(myVector2);
+
+
+
 
         //Vector myVector1 = new Vector({1, 2, 3, 4});
 
