@@ -7,8 +7,8 @@ public class Runner {
         String line = "{1,2,4}";
         double[] vector = {1.0, 2.0, 4.0};
         Var v2 = new Vector(line);
-        Var v3 = new Matrix();
-        System.out.println(v2);
+        Var v3 = new Matrix(new double[][] {{1.0, 2.0}, {3.0, 4.0}});
+        System.out.println(v3);
 
     }
 }
