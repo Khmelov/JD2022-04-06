@@ -21,7 +21,14 @@ class Matrix extends Var {
 
     private double[][] changeStringtoMatrix(String strMatrix) {
 
+        strMatrix = strMatrix.replaceAll("\\{\\{\\}}","" );
+        String []array = strMatrix.split("},\\{");
+        String [][]matrix = new String[array.length][];
+        double [][]matrix2 = new double[array.length][];
         
+
+
+
         return new double[0][];
     }
 
