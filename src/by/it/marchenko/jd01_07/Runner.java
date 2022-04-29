@@ -21,6 +21,10 @@ public class Runner {
         System.out.println(myVector1);
         System.out.println(myVector2);
 
+        double[][] myArrayMatrix = {{1,2,3},{4,5,6},{7,8,9}};
+        Matrix myMatrix0 = new Matrix(myArrayMatrix);
+        System.out.println(myMatrix0);
+
 
 
 
