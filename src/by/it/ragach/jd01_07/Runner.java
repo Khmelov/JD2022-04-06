@@ -7,6 +7,10 @@ public class Runner {
         System.out.println(var1);
         System.out.println(var2);
 
+        Var var3 = new Matrix(new double[][]{{1.0,2.0},{3.0,4.0}});
+        System.out.println(var3);
+
+
 
     }
 }
