@@ -23,8 +23,10 @@ public class Runner {
 
         double[][] myArrayMatrix = {{1,2,3},{4,5,6},{7,8,9}};
         Matrix myMatrix0 = new Matrix(myArrayMatrix);
-        System.out.println(myMatrix0);
+        Matrix myMatrix1 = new Matrix(myMatrix0);
 
+        System.out.println(myMatrix0);
+        System.out.println(myMatrix1);
 
 
 

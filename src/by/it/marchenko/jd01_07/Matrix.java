@@ -22,6 +22,19 @@ public class Matrix extends Var {
         }
     }
 
+    public Matrix(Matrix matrix) {
+        if (checkInputMatrix(matrix.matrixValue)) {
+            double[][] tempMatrix = new double[matrix.matrixValue.length][matrix.matrixValue[0].length];
+            for (int i = 0; i < matrix.matrixValue.length; i++) {
+                System.arraycopy(matrix.matrixValue[i], 0, tempMatrix[i],
+                        0, matrix.matrixValue[i].length);
+            }
+            this.matrixValue = tempMatrix;
+        } else {
+            this.matrixValue = null;
+        }
+    }
+
     @Override
     public String toString() {
         String stringMatrix = Arrays.deepToString(matrixValue);
