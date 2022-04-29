@@ -19,5 +19,14 @@ public class Runner {
 
         Var vectorString = new Vector("{1.0, 2.0, 4.0}");
         System.out.println(vectorString);
+
+        Var matrixDouble = new Matrix(new double[][]{{1.0, 2.0}, {3.0, 4.0}});
+        System.out.println(matrixDouble);
+
+        Var matrixMatrix = new Matrix((Matrix) matrixDouble);
+        System.out.println(matrixMatrix);
+
+        Var matrixString = new Matrix("{ { 1.0, 2.0 }, { 3.0, 4.0 } }");
+        System.out.println(matrixString);
     }
 }
