@@ -6,7 +6,9 @@ abstract class Var {
     public static final String OPEN_SQUARE_BRACKET = "\\[";
     public static final String CLOSE_SQUARE_BRACKET = "]";
 
-    public static final String SEPARATOR = ", *";
+    public static final String VECTOR_SEPARATOR = ", *";
+    public static final String MATRIX_SEPARATOR = "} *, *\\{";
+
 
 
 

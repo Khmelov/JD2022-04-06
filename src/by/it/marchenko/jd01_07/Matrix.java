@@ -5,10 +5,10 @@ import java.util.Arrays;
 public class Matrix extends Var {
     final String INCORRECT_INPUT_MESSAGE = "Incorrect matrix input";
     final String EMPTY_MATRIX_MESSAGE = "Matrix is empty";
+    final String ROW_SEPARATOR = "},\\{";
+    final String ELEMENT_SEPARATOR = ",";
+    final int MATRIX_MEASURE = 2;
     private final double[][] matrixValue;
-    //private int length;
-    //private int height;
-
 
     public Matrix(double[][] matrixValue) {
         if (checkInputMatrix(matrixValue)) {
@@ -35,6 +35,31 @@ public class Matrix extends Var {
         }
     }
 
+    public Matrix(String stringMatrix) {
+        stringMatrix = stringMatrix.replaceAll("\s", "");
+        int startDoubleCurvePosition = stringMatrix.indexOf(OPEN_CURVE_BRACKET.repeat(MATRIX_MEASURE));
+        int endDoubleCurvePosition = stringMatrix.indexOf(CLOSE_CURVE_BRACKET.repeat(MATRIX_MEASURE));
+        int endDoubleCurveCorrectPosition = stringMatrix.length() - MATRIX_MEASURE;
+        if (stringMatrix.length() > 0 && startDoubleCurvePosition == 0 &&
+                endDoubleCurvePosition == endDoubleCurveCorrectPosition) {
+            stringMatrix = stringMatrix.substring(MATRIX_MEASURE, endDoubleCurveCorrectPosition);
+            String[] stringRowArray = stringMatrix.split(ROW_SEPARATOR);
+            String[] stringValueArray = stringRowArray[0].split(ELEMENT_SEPARATOR);
+            // TODO check that length of all rows is the same
+            double[][] tempArray = new double[stringRowArray.length][stringValueArray.length];
+            for (int i = 0; i < stringRowArray.length; i++) {
+                stringValueArray = stringRowArray[i].split(ELEMENT_SEPARATOR);
+                for (int j = 0; j < stringValueArray.length; j++) {
+                    tempArray[i][j] = Double.parseDouble(stringValueArray[j]);
+                }
+            }
+            this.matrixValue = tempArray;
+        } else {
+            System.out.println(INCORRECT_INPUT_MESSAGE);
+            this.matrixValue = null;
+        }
+    }
+
     @Override
     public String toString() {
         String stringMatrix = Arrays.deepToString(matrixValue);
@@ -57,6 +82,5 @@ public class Matrix extends Var {
         }
         return true;
     }
-
 
 }

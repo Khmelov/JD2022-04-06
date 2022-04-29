@@ -24,9 +24,15 @@ public class Runner {
         double[][] myArrayMatrix = {{1,2,3},{4,5,6},{7,8,9}};
         Matrix myMatrix0 = new Matrix(myArrayMatrix);
         Matrix myMatrix1 = new Matrix(myMatrix0);
+        String s = "     { {    2.0, 3.0,  4.0            }  ,   {  4.0,  5.0  , 6.0 } ,  {   7.0, 8.0, 9.0  }    }   ";
+        Matrix myMatrix2 = new Matrix(s);
+
+
+
 
         System.out.println(myMatrix0);
         System.out.println(myMatrix1);
+        System.out.println(myMatrix2);
 
 
 
