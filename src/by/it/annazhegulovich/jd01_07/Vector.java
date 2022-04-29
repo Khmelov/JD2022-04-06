@@ -10,16 +10,25 @@ public class Vector extends Var {
     public Vector(double[] values) {
         this.values = values.clone();
     }
+    public Vector(Vector vector){
+        this.values=vector.values;
+    }
+
+
+
+//     public Vector(String strVector){}
+
+
+
+
 
     public double[] getValues() {
         return values;
     }
-    /*public void StringArr (String[] strValues) {
-        strValues = new String[values.length];
-        for (int i = 0; i < values.length; i++) {
-            strValues[i] = String.join( ", ", strValues[i]);
-        }
-    }*/
+
+//public void StringArr (String[] strValues) {}
+
+
     @Override
     public String toString() {
         String[] strValues = new String[values.length];
