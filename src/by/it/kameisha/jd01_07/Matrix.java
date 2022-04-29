@@ -15,20 +15,31 @@ public class Matrix extends Var {
     }
 
     public Matrix(Matrix matrix){
-        double[][] array = new double[matrix.value.length][];
+        double[][] newMatrix = new double[matrix.value.length][];
         for (int i = 0; i < matrix.value.length; i++) {
-            array[i] = matrix.value[i].clone();
+            newMatrix[i] = matrix.value[i].clone();
+        }
+        this.value = newMatrix;
+    }
+
+    public Matrix(String strMatrix){
+        String[] strings = strMatrix.split("},");
+        double[][] array = new double[strings.length][strings.length];
+        for (int i = 0; i < strings.length; i++) {
+            String arrayString = strings[i];
+            arrayString = arrayString.replace("{","");
+            arrayString = arrayString.replace("}","");
+            String[] tempString = arrayString.split(",");
+            for (int j = 0; j < tempString.length; j++) {
+                array[i][j] = Double.parseDouble(tempString[j]);
+            }
         }
         this.value = array;
     }
 
-    public Matrix(String strMatrix){
-
-    }
-
     @Override
     public String toString() {
-        StringBuilder strValue = new StringBuilder("{");;
+        StringBuilder strValue = new StringBuilder("{");
         for (int i = 0; i < value.length; i++) {
             String splitter = "";
             strValue.append("{");
