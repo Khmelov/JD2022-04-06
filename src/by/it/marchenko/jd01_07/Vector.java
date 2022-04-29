@@ -4,6 +4,12 @@ import java.util.Arrays;
 
 public class Vector extends Var {
     final String INCORRECT_INPUT_MESSAGE = "Incorrect vector input";
+    private final String OPEN_CURVE_BRACKET = "{";
+    private final String CLOSE_CURVE_BRACKET = "}";
+    final String OPEN_SQUARE_BRACKET = "\\[";
+    final String CLOSE_SQUARE_BRACKET = "]";
+    final String VECTOR_SEPARATOR = ", *";
+
     private final double[] value;
 
     public Vector(double[] value) {

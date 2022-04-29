@@ -8,6 +8,11 @@ public class Matrix extends Var {
     final String ROW_SEPARATOR = "},\\{";
     final String ELEMENT_SEPARATOR = ",";
     final int MATRIX_MEASURE = 2;
+    final String OPEN_CURVE_BRACKET = "{";
+    final String CLOSE_CURVE_BRACKET = "}";
+    final String OPEN_SQUARE_BRACKET = "\\[";
+    final String CLOSE_SQUARE_BRACKET = "]";
+
     private final double[][] matrixValue;
 
     public Matrix(double[][] matrixValue) {
@@ -40,20 +45,36 @@ public class Matrix extends Var {
         int startDoubleCurvePosition = stringMatrix.indexOf(OPEN_CURVE_BRACKET.repeat(MATRIX_MEASURE));
         int endDoubleCurvePosition = stringMatrix.indexOf(CLOSE_CURVE_BRACKET.repeat(MATRIX_MEASURE));
         int endDoubleCurveCorrectPosition = stringMatrix.length() - MATRIX_MEASURE;
+
         if (stringMatrix.length() > 0 && startDoubleCurvePosition == 0 &&
                 endDoubleCurvePosition == endDoubleCurveCorrectPosition) {
+
             stringMatrix = stringMatrix.substring(MATRIX_MEASURE, endDoubleCurveCorrectPosition);
             String[] stringRowArray = stringMatrix.split(ROW_SEPARATOR);
             String[] stringValueArray = stringRowArray[0].split(ELEMENT_SEPARATOR);
-            // TODO check that length of all rows is the same
-            double[][] tempArray = new double[stringRowArray.length][stringValueArray.length];
+
+            int tempRowLength = stringValueArray.length;
+            boolean isTheSameLength = true;
+
+            double[][] tempArray = new double[stringRowArray.length][tempRowLength];
             for (int i = 0; i < stringRowArray.length; i++) {
                 stringValueArray = stringRowArray[i].split(ELEMENT_SEPARATOR);
-                for (int j = 0; j < stringValueArray.length; j++) {
-                    tempArray[i][j] = Double.parseDouble(stringValueArray[j]);
+                if (tempRowLength == stringValueArray.length) {
+                    for (int j = 0; j < stringValueArray.length; j++) {
+                        tempArray[i][j] = Double.parseDouble(stringValueArray[j]);
+                    }
+                } else {
+                    System.out.println(INCORRECT_INPUT_MESSAGE);
+                    isTheSameLength = false;
+                    break;
                 }
+
             }
-            this.matrixValue = tempArray;
+            if (isTheSameLength){
+                this.matrixValue = tempArray;
+            } else {
+                this.matrixValue = null;
+            }
         } else {
             System.out.println(INCORRECT_INPUT_MESSAGE);
             this.matrixValue = null;

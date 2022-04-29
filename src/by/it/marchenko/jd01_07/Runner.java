@@ -11,6 +11,7 @@ public class Runner {
         Scalar myVar4 = new Scalar(myVar3);
         System.out.println(myVar4);
         double d = myVar4.getValue();
+        System.out.println(d);
 
         double[] myArrayVector = {1,2,3,4};
         Vector myVector0 = new Vector(myArrayVector);
@@ -24,20 +25,11 @@ public class Runner {
         double[][] myArrayMatrix = {{1,2,3},{4,5,6},{7,8,9}};
         Matrix myMatrix0 = new Matrix(myArrayMatrix);
         Matrix myMatrix1 = new Matrix(myMatrix0);
-        String s = "     { {    2.0, 3.0,  4.0            }  ,   {  4.0,  5.0  , 6.0 } ,  {   7.0, 8.0, 9.0  }    }   ";
+        String s = "     { {    2.0, 3.0, 5          }  ,   {  4.0,  5.0  , 6.0 } ,  {   7.0, 8.0, 9.0  }    }   ";
         Matrix myMatrix2 = new Matrix(s);
-
-
-
 
         System.out.println(myMatrix0);
         System.out.println(myMatrix1);
         System.out.println(myMatrix2);
-
-
-
-        //Vector myVector1 = new Vector({1, 2, 3, 4});
-
-
     }
 }
