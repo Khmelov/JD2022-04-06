@@ -90,4 +90,19 @@ public class Vector extends Var {
             } else {return super.mul(other);}
         } else {return super.mul(other);}
     }
+
+    @Override
+    public Var div(Var other) {
+        if (other instanceof Scalar scalar){
+            if (scalar.getValue()==0){
+                return super.div(other);
+            } else {
+                double [] result = new double[this.values.length];
+                for (int i = 0; i < result.length; i++) {
+                    result[i] = this.values[i] / scalar.getValue();
+                }
+                return new Vector(result);
+            }
+        } else {return super.div(other);}
+    }
 }
