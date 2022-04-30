@@ -33,4 +33,24 @@ public class Vector extends Var {
                 replaceAll("\\[","{").
                 replaceAll("]","}");
     }
+
+    @Override
+    public Var add(Var other) {
+        if ( other instanceof Scalar scalar){
+            double [] result = new double[this.values.length];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = this.values[i] + scalar.getValue();
+            }
+            return new Vector(result);
+        } else if (other instanceof Vector otherVector){
+            if (this.values.length==otherVector.values.length){
+                double [] result = new double[this.values.length];
+                for (int i = 0; i < result.length; i++) {
+                    result[i] = this.values[i] + otherVector.values[i];
+                }
+                return new Vector(result);
+            } else {return super.add(other);}
+        } else {return super.add(other);}
+    }
+
 }
