@@ -59,4 +59,50 @@ public class Matrix extends Var {
         str= str+"}";
         return str;
     }
+
+    @Override
+    public Var add(Var other) {
+        if (other instanceof Scalar scalar){
+            double[][] result = new double [this.value.length] [this.value[0].length];
+            for (int i = 0; i < result.length; i++) {
+                for (int j = 0; j < result[0].length; j++) {
+                    result[i][j] = this.value[i][j]+ scalar.getValue();
+                }
+            }
+            return new Matrix(result);
+        } else if (other instanceof Matrix otherMatrix){
+            if (this.value.length==otherMatrix.value.length && this.value[0].length==otherMatrix.value[0].length){
+                double[][] result = new double [this.value.length] [this.value[0].length];
+                for (int i = 0; i < result.length; i++) {
+                    for (int j = 0; j < result[0].length; j++) {
+                        result[i][j] = this.value[i][j]+ otherMatrix.value[i][j];
+                    }
+                }
+                return new Matrix(result);
+            } else {return super.add(other);}
+        } else {return super.add(other);}
+    }
+
+    @Override
+    public Var sub(Var other) {
+        if (other instanceof Scalar scalar){
+            double[][] result = new double [this.value.length] [this.value[0].length];
+            for (int i = 0; i < result.length; i++) {
+                for (int j = 0; j < result[0].length; j++) {
+                    result[i][j] = this.value[i][j]- scalar.getValue();
+                }
+            }
+            return new Matrix(result);
+        } else if (other instanceof Matrix otherMatrix){
+            if (this.value.length==otherMatrix.value.length && this.value[0].length==otherMatrix.value[0].length){
+                double[][] result = new double [this.value.length] [this.value[0].length];
+                for (int i = 0; i < result.length; i++) {
+                    for (int j = 0; j < result[0].length; j++) {
+                        result[i][j] = this.value[i][j]- otherMatrix.value[i][j];
+                    }
+                }
+                return new Matrix(result);
+            } else {return super.sub(other);}
+        } else {return super.sub(other);}
+    }
 }
