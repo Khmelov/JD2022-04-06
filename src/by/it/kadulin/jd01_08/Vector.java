@@ -1,6 +1,4 @@
-package by.it.kadulin.jd01_07;
-
-import java.util.Arrays;
+package by.it.kadulin.jd01_08;
 
 class Vector extends Var {
 
@@ -10,6 +8,17 @@ class Vector extends Var {
 
     public Vector(Vector values) {
         this.values = values.values;
+    }
+
+    @Override
+    public Var add(Var other) {
+        if (other instanceof Scalar scalar) {
+            double[] result = values.clone();
+            for (int i = 0; i < result.length; i++) {
+                result[i] = result[i] + scalar.getValue();
+            }
+        }
+        return super.add(other);
     }
 
     public Vector(String values) {
