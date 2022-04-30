@@ -4,6 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Matrix extends Var {
+    public double[][] getMatrix() {
+        return matrix.clone();
+    }
+
     private final double[][] matrix;
 
     public Matrix(double[][] matrix) {

@@ -28,7 +28,6 @@ class Scalar extends Var {
         else {
             return other.add(this);
         }
-
     }
 
     @Override

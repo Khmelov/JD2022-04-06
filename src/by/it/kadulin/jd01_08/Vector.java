@@ -10,6 +10,15 @@ class Vector extends Var {
         this.values = values.values;
     }
 
+    public Vector(String values) {
+        String edited = values.replaceAll("[{} ]", "");
+        String[] temp = edited.split(",");
+        this.values = new double[temp.length];
+        for (int i = 0; i < temp.length; i++) {
+            this.values[i] = Double.parseDouble(temp[i]);
+        }
+    }
+
     @Override
     public Var add(Var other) {
         if (other instanceof Scalar scalar) {
@@ -21,13 +30,19 @@ class Vector extends Var {
         return super.add(other);
     }
 
-    public Vector(String values) {
-        String edited = values.replaceAll("[{} ]", "");
-        String[] temp = edited.split(",");
-        this.values = new double[temp.length];
-        for (int i = 0; i < temp.length; i++) {
-            this.values[i] = Double.parseDouble(temp[i]);
-        }
+    @Override
+    public Var sub(Var other) {
+        return super.sub(other);
+    }
+
+    @Override
+    public Var mul(Var other) {
+        return super.mul(other);
+    }
+
+    @Override
+    public Var div(Var other) {
+        return super.div(other);
     }
 
     public double[] getValues() {
