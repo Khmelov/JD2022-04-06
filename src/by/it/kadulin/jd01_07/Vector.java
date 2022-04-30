@@ -38,7 +38,6 @@ class Vector extends Var {
             else {
                 sb.append(values[i]);
             }
-
         }
         sb.append("}");
         return sb.toString();
