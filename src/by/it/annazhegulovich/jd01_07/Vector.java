@@ -1,6 +1,7 @@
 package by.it.annazhegulovich.jd01_07;
 
 import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Vector extends Var {
 
@@ -10,23 +11,27 @@ public class Vector extends Var {
     public Vector(double[] values) {
         this.values = values.clone();
     }
+
     public Vector(Vector vector){
         this.values=vector.values;
     }
 
 
 
-//     public Vector(String strVector){}
-
-
-
-
-
-    public double[] getValues() {
-        return values;
+     public Vector(String strVector) {
+        strVector = strVector.replace("{", "")
+                             .replace("}", "");
+         StringTokenizer tokenizer = new StringTokenizer(strVector, ", ");
+         int size = tokenizer.countTokens();
+         values = new double[size];
+         for (int i = 0; i < values.length; i++) {
+             values [i] = Double.parseDouble(tokenizer.nextToken());
+         }
     }
 
-//public void StringArr (String[] strValues) {}
+    public double[] getValues() {
+        return this.values.clone();
+    }
 
 
     @Override
