@@ -46,7 +46,7 @@ public class Vector extends Var {
                 result[i] = result[i] + scalar.getValue();
             }
             return new Vector(result);
-        } else if (other instanceof Vector vector) {
+        } else if (other instanceof Vector vector && value.length == ((Vector) other).value.length) {
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
                 result[i] = result[i] + vector.value[i];
@@ -65,7 +65,7 @@ public class Vector extends Var {
                 result[i] = result[i] - scalar.getValue();
             }
             return new Vector(result);
-        } else if (other instanceof Vector vector) {
+        } else if (other instanceof Vector vector && value.length == ((Vector) other).value.length) {
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
                 result[i] = result[i] - vector.value[i];
@@ -84,7 +84,7 @@ public class Vector extends Var {
                 result[i] = result[i] * scalar.getValue();
             }
             return new Vector(result);
-        } else if (other instanceof Vector vector) {
+        } else if (other instanceof Vector vector && value.length == ((Vector) other).value.length) {
             double[] result = value.clone();
             double scalarResult = 0;
             for (int i = 0; i < result.length; i++) {
