@@ -40,13 +40,13 @@ public class Vector extends Var {
 
     @Override
     public Var add(Var other) {
-        if(other instanceof Scalar scalar){
+        if (other instanceof Scalar scalar) {
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
                 result[i] = result[i] + scalar.getValue();
             }
             return new Vector(result);
-        } else if (other instanceof  Vector vector) {
+        } else if (other instanceof Vector vector) {
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
                 result[i] = result[i] + vector.value[i];
@@ -59,16 +59,52 @@ public class Vector extends Var {
 
     @Override
     public Var sub(Var other) {
-        return null;
+        if (other instanceof Scalar scalar) {
+            double[] result = value.clone();
+            for (int i = 0; i < result.length; i++) {
+                result[i] = result[i] - scalar.getValue();
+            }
+            return new Vector(result);
+        } else if (other instanceof Vector vector) {
+            double[] result = value.clone();
+            for (int i = 0; i < result.length; i++) {
+                result[i] = result[i] - vector.value[i];
+            }
+            return new Vector(result);
+        } else {
+            return super.sub(other);
+        }
     }
 
     @Override
     public Var mul(Var other) {
-        return null;
+        if (other instanceof Scalar scalar) {
+            double[] result = value.clone();
+            for (int i = 0; i < result.length; i++) {
+                result[i] = result[i] * scalar.getValue();
+            }
+            return new Vector(result);
+        } else if (other instanceof Vector vector) {
+            double[] result = value.clone();
+            double scalarResult = 0;
+            for (int i = 0; i < result.length; i++) {
+                scalarResult = scalarResult + result[i] * vector.value[i];
+            }
+            return new Scalar(scalarResult);
+        } else {
+            return super.mul(other);
+        }
     }
 
     @Override
     public Var div(Var other) {
-        return null;
+        if (other instanceof Scalar scalar){
+            double[] result = value.clone();
+            for (int i = 0; i < result.length; i++) {
+                result[i] = result[i]/ scalar.getValue();
+            }
+            return new Vector(result);
+        }
+        return super.div(other);
     }
 }
