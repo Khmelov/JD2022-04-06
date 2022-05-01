@@ -11,9 +11,13 @@ public class Vector extends Var {
         this.value = vector.value.clone();
     }
 
+    public double[] getValue() {
+        return value;
+    }
+
     public Vector(String strVector) {
-        strVector = strVector.replace("{","");
-        strVector = strVector.replace("}","");
+        strVector = strVector.replace("{", "");
+        strVector = strVector.replace("}", "");
         String[] strings = strVector.split(",");
         double[] value = new double[strings.length];
         for (int i = 0; i < strings.length; i++) {
@@ -36,7 +40,21 @@ public class Vector extends Var {
 
     @Override
     public Var add(Var other) {
-        return null;
+        if(other instanceof Scalar scalar){
+            double[] result = value.clone();
+            for (int i = 0; i < result.length; i++) {
+                result[i] = result[i] + scalar.getValue();
+            }
+            return new Vector(result);
+        } else if (other instanceof  Vector vector) {
+            double[] result = value.clone();
+            for (int i = 0; i < result.length; i++) {
+                result[i] = result[i] + vector.value[i];
+            }
+            return new Vector(result);
+        } else {
+            return super.add(other);
+        }
     }
 
     @Override
