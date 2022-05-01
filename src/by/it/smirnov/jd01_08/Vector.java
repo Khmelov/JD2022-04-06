@@ -6,6 +6,10 @@ class Vector extends Var {
 
     private final double[] values;
 
+    public double[] getValues() {
+        return values;
+    }
+
     Vector(double[] values) {
         this.values = values.clone();
     }
