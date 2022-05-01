@@ -1,6 +1,4 @@
-package by.it.ragach.jd01_07;
-
-import java.util.Arrays;
+package by.it.ragach.jd01_08;
 
 class Matrix extends Var {
     private final double[][] value;
