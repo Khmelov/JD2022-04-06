@@ -15,6 +15,28 @@ class Matrix extends Var {
             }
         }
     }
+    public Matrix(Matrix matrix){
+        this.value2= matrix.value2;
+    }
+    public Matrix(String strMatrix){
+strMatrix = strMatrix.replace("{"," ")
+                     .replace("}"," ")
+                     .replace("  ", " ")
+                     .replace(" , ", ", ");
+strMatrix = strMatrix.trim();
+        String [] res= strMatrix.split("[, ]");
+        String [][] strM= new String[res.length][];
+        for (int i = 0; i <strM.length ; i++) {
+                strM[i]=res [i].split(", ");
+        }
+        double[][] strM2=new double[strM.length][];
+        for (int i = 0; i <strM2.length ; i++) {
+            for (int j = 0; j < strM[0].length; j++) {
+                strM2[i][j] = Double.parseDouble(strM[i][j]);
+            }
+        }
+        this.value2=strM2;
+    }
 
     @Override
     public String toString() {
