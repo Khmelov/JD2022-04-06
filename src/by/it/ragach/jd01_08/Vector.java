@@ -95,6 +95,20 @@ class Vector extends Var {
     }
 
 
+    @Override
+    public Var div(Var other) {
+        if (other instanceof Scalar scalar){
+            double[]result = value.clone();
+            for (int i = 0; i < result.length; i++) {
+                result[i] = result[i]/scalar.getValue();
+
+            }return new Vector(result);
+        }else {
+            if (other instanceof Vector vector);
+        }
+        return super.div(other);
+    }
+
     public double[] getValue() {
         return this.value.clone();
     }
