@@ -70,7 +70,7 @@ public class Matrix extends Var {
                 }
 
             }
-            if (isTheSameLength){
+            if (isTheSameLength) {
                 this.matrixValue = tempArray;
             } else {
                 this.matrixValue = null;
@@ -81,12 +81,84 @@ public class Matrix extends Var {
         }
     }
 
+    public double[][] getMatrixValue() {
+        Matrix tempMatrix = new Matrix(this);
+        return tempMatrix.matrixValue;
+    }
+
     @Override
     public String toString() {
         String stringMatrix = Arrays.deepToString(matrixValue);
         stringMatrix = stringMatrix.replaceAll(OPEN_SQUARE_BRACKET, OPEN_CURVE_BRACKET);
         stringMatrix = stringMatrix.replaceAll(CLOSE_SQUARE_BRACKET, CLOSE_CURVE_BRACKET);
         return stringMatrix;
+    }
+
+    @Override
+    public Var add(Var other) {
+        if (other instanceof Scalar otherScalar) {
+            double[][] tempMatrix = this.getMatrixValue();
+            for (int i = 0; i < tempMatrix.length; i++) {
+                for (int j = 0; j < tempMatrix[i].length; j++) {
+                    tempMatrix[i][j] += otherScalar.getValue();
+                }
+            }
+            return new Matrix(tempMatrix);
+        } else if (other instanceof Matrix otherMatrix) {
+            double[][] tempMatrix = this.getMatrixValue();
+            for (int i = 0; i < tempMatrix.length; i++) {
+                for (int j = 0; j < tempMatrix[i].length; j++) {
+                    tempMatrix[i][j] += otherMatrix.matrixValue[i][j];
+                }
+            }
+            return new Matrix(tempMatrix);
+        } else {
+            return super.add(other);
+        }
+    }
+
+    @Override
+    public Var sub(Var other) {
+        if (other instanceof Scalar otherScalar) {
+            double[][] tempMatrix = this.getMatrixValue();
+            for (int i = 0; i < tempMatrix.length; i++) {
+                for (int j = 0; j < tempMatrix[i].length; j++) {
+                    tempMatrix[i][j] -= otherScalar.getValue();
+                }
+            }
+            return new Matrix(tempMatrix);
+        } else if (other instanceof Matrix otherMatrix) {
+            double[][] tempMatrix = this.getMatrixValue();
+            for (int i = 0; i < tempMatrix.length; i++) {
+                for (int j = 0; j < tempMatrix[i].length; j++) {
+                    tempMatrix[i][j] -= otherMatrix.matrixValue[i][j];
+                }
+            }
+            return new Matrix(tempMatrix);
+        } else {
+            return super.sub(other);
+        }
+    }
+
+    @Override
+    public Var mul(Var other) {
+        if (other instanceof Scalar otherScalar) {
+            double[][] tempMatrix = this.getMatrixValue();
+            for (int i = 0; i < tempMatrix.length; i++) {
+                for (int j = 0; j < tempMatrix[i].length; j++) {
+                    tempMatrix[i][j] *= otherScalar.getValue();
+                }
+            }
+            return new Matrix(tempMatrix);
+        } else if (other instanceof Vector otherVector) {
+            double[][] tempMatrix = this.getMatrixValue();
+            return new Vector(calculateMatrixMultiply(tempMatrix, otherVector.getVectorValues()));
+        } else if (other instanceof Matrix otherMatrix) {
+            double[][] tempMatrix = this.getMatrixValue();
+            return new Matrix(calculateMatrixMultiply(tempMatrix, otherMatrix.matrixValue));
+        } else {
+            return super.mul(other);
+        }
     }
 
     private boolean checkInputMatrix(double[][] array) {
@@ -103,5 +175,28 @@ public class Matrix extends Var {
         }
         return true;
     }
+
+    private static double[][] calculateMatrixMultiply(double[][] matrixLeft, double[][] matrixRight) {
+        double[][] matrixResult = new double[matrixLeft.length][matrixRight[0].length];
+        for (int i = 0; i < matrixLeft.length; ++i) {
+            for (int j = 0; j < matrixRight[0].length; ++j) {
+                for (int iterator = 0; iterator < matrixRight.length; ++iterator) {
+                    matrixResult[i][j] += matrixLeft[i][iterator] * matrixRight[iterator][j];
+                }
+            }
+        }
+        return matrixResult;
+    }
+
+    static double[] calculateMatrixMultiply(double[][] matrix, double[] vector) {
+        double[] vectorResult = new double[matrix.length];
+        for (int i = 0; i < matrix.length; ++i) {
+            for (int iterator = 0; iterator < vector.length; ++iterator) {
+                vectorResult[i] += matrix[i][iterator] * vector[iterator];
+            }
+        }
+        return vectorResult;
+    }
+
 
 }

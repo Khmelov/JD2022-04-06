@@ -85,7 +85,7 @@ public class Vector extends Var {
             }
             return new Vector(tempVector);
         } else {
-            return super.add(other);
+            return super.sub(other);
         }
     }
 
