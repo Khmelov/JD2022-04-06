@@ -32,6 +32,46 @@ class Matrix extends Var {
 
     }
 
+
+    @Override
+    public Var add(Var other) {
+        if (other instanceof Scalar otherScalar) {
+            double[][] result = new double[value.length][];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = value[i].clone();
+                for (int j = 0; j < result[i].length; j++) {
+                    result[i][j] = result[i][j] + otherScalar.getValue();
+
+                }
+            }
+            return new Matrix(result);
+        } else if (other instanceof Matrix otherMatrix) {
+            if (value.length == otherMatrix.value.length) {
+                double[][] result = new double[value.length][];
+                for (int i = 0; i < result.length; i++) {
+                    result[i] = value[i].clone();
+                    for (int j = 0; j < result.length; j++) {
+                        result[i][j] = result[i][j] + otherMatrix.value[i][j];
+
+                    }
+                    
+                }
+                return new Matrix(result);
+            } else {
+                return super.add(other);
+            }
+        } else {
+            return super.add(other);
+
+        }
+    }
+
+
+
+
+
+
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("{");
