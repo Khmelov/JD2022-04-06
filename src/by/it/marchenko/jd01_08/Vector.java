@@ -4,20 +4,21 @@ import java.util.Arrays;
 
 public class Vector extends Var {
     final String INCORRECT_INPUT_MESSAGE = "Incorrect vector input";
+
     private final String OPEN_CURVE_BRACKET = "{";
     private final String CLOSE_CURVE_BRACKET = "}";
     final String OPEN_SQUARE_BRACKET = "\\[";
     final String CLOSE_SQUARE_BRACKET = "]";
     final String VECTOR_SEPARATOR = ", *";
 
-    private final double[] value;
+    private final double[] vectorValues;
 
     public Vector(double[] value) {
-        this.value = Arrays.copyOf(value, value.length);
+        this.vectorValues = Arrays.copyOf(value, value.length);
     }
 
     public Vector(Vector vector) {
-        this.value = Arrays.copyOf(vector.value, vector.value.length);
+        this.vectorValues = Arrays.copyOf(vector.vectorValues, vector.vectorValues.length);
     }
 
     public Vector(String stringVector) {
@@ -29,18 +30,94 @@ public class Vector extends Var {
             for (int i = 0; i < stringValuesArray.length; i++) {
                 tempDoubleArray[i] = Double.parseDouble(stringValuesArray[i]);
             }
-            this.value = Arrays.copyOf(tempDoubleArray, tempDoubleArray.length);
+            this.vectorValues = Arrays.copyOf(tempDoubleArray, tempDoubleArray.length);
         } else {
             System.out.println(INCORRECT_INPUT_MESSAGE);
-            this.value = null;
+            this.vectorValues = null;
         }
+    }
+
+    public double[] getVectorValues() {
+        return vectorValues.clone();
     }
 
     @Override
     public String toString() {
-        String outputString = Arrays.toString(value);
-        outputString = outputString.replaceAll(OPEN_SQUARE_BRACKET,OPEN_CURVE_BRACKET);
-        outputString = outputString.replaceAll(CLOSE_SQUARE_BRACKET,CLOSE_CURVE_BRACKET);
+        String outputString = Arrays.toString(vectorValues);
+        outputString = outputString.replaceAll(OPEN_SQUARE_BRACKET, OPEN_CURVE_BRACKET);
+        outputString = outputString.replaceAll(CLOSE_SQUARE_BRACKET, CLOSE_CURVE_BRACKET);
         return outputString;
+    }
+
+    @Override
+    public Var add(Var other) {
+        if (other instanceof Scalar otherScalar) {
+            double[] tempVector = getVectorValues();
+            for (int i = 0; i < tempVector.length; i++) {
+                tempVector[i] += otherScalar.getValue();
+            }
+            return new Vector(tempVector);
+        } else if (other instanceof Vector otherVector) {
+            double[] tempVector = getVectorValues();
+
+            for (int i = 0; i < tempVector.length; i++) {
+                tempVector[i] += otherVector.vectorValues[i];
+            }
+            return new Vector(tempVector);
+        } else {
+            return super.add(other);
+        }
+    }
+
+    @Override
+    public Var sub(Var other) {
+        if (other instanceof Scalar otherScalar) {
+            double[] tempVector = getVectorValues();
+            for (int i = 0; i < tempVector.length; i++) {
+                tempVector[i] -= otherScalar.getValue();
+            }
+            return new Vector(tempVector);
+        } else if (other instanceof Vector otherVector) {
+            double[] tempVector = getVectorValues();
+
+            for (int i = 0; i < tempVector.length; i++) {
+                tempVector[i] -= otherVector.vectorValues[i];
+            }
+            return new Vector(tempVector);
+        } else {
+            return super.add(other);
+        }
+    }
+
+    @Override
+    public Var mul(Var other) {
+        if (other instanceof Scalar otherScalar) {
+            double[] tempVector = getVectorValues();
+            for (int i = 0; i < tempVector.length; i++) {
+                tempVector[i] *= otherScalar.getValue();
+            }
+            return new Vector(tempVector);
+        } else if (other instanceof Vector otherVector) {
+            double result = 0;
+            for (int i = 0; i < this.vectorValues.length; i++) {
+                result += this.vectorValues[i] * otherVector.vectorValues[i];
+            }
+            return new Scalar(result);
+        } else {
+            return super.mul(other);
+        }
+    }
+
+    @Override
+    public Var div(Var other) {
+        if (other instanceof Scalar otherScalar) {
+            double[] tempVector = getVectorValues();
+            for (int i = 0; i < tempVector.length; i++) {
+                tempVector[i] /= otherScalar.getValue();
+            }
+            return new Vector(tempVector);
+        } else {
+            return super.div(other);
+        }
     }
 }
