@@ -8,24 +8,24 @@ class Matrix extends Var {
         this.value = value;
     }
 
-    Matrix (Matrix matrix) {
+    Matrix(Matrix matrix) {
         this.value = matrix.value;
     }
 
-    Matrix (String strMatrix) {
+    Matrix(String strMatrix) {
 
-        String[]strRow = strMatrix.split("},");
+        String[] strRow = strMatrix.split("},");
         value = new double[strRow.length][];
         for (int i = 0; i < strRow.length; i++) {
-            String row =strRow[i];
-            row = row.replace("{","").
-                    replace(" ","").
-                        replace("}","");
-            String [] strings = row.split(",");
+            String row = strRow[i];
+            row = row.replace("{", "").
+                    replace(" ", "").
+                    replace("}", "");
+            String[] strings = row.split(",");
             value[i] = new double[strings.length];
             for (int j = 0; j < value.length; j++) {
                 value[i][j] = Double.parseDouble(strings[j]);
-                
+
             }
 
         }
@@ -46,7 +46,7 @@ class Matrix extends Var {
             }
             return new Matrix(result);
         } else if (other instanceof Matrix otherMatrix) {
-            if (value.length == otherMatrix.value.length) {
+            if (value.length == otherMatrix.value.length && value[0].length == otherMatrix.value[0].length) {
                 double[][] result = new double[value.length][];
                 for (int i = 0; i < result.length; i++) {
                     result[i] = value[i].clone();
@@ -54,7 +54,7 @@ class Matrix extends Var {
                         result[i][j] = result[i][j] + otherMatrix.value[i][j];
 
                     }
-                    
+
                 }
                 return new Matrix(result);
             } else {
@@ -67,9 +67,37 @@ class Matrix extends Var {
     }
 
 
+    @Override
+    public Var sub(Var other) {
+        if (other instanceof Scalar otherScalar) {
+            double[][] result = new double[value.length][];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = value[i].clone();
+                for (int j = 0; j < result.length; j++) {
+                    result[i][j] = result[i][j] - otherScalar.getValue();
 
+                }
+            }
+            return new Matrix(result);
+        } else if (other instanceof Matrix otherMatrix) {
+            if (value.length == otherMatrix.value.length && value[0].length == otherMatrix.value[0].length) {
+                double[][] result = new double[value.length][];
+                for (int i = 0; i < result.length; i++) {
+                    result[i] = value[i].clone();
+                    for (int j = 0; j < result.length; j++) {
+                        result[i][j] = result[i][j] - otherMatrix.value[i][j];
+                    }
 
+                }
+                return new Matrix(result);
 
+            } else {
+                return super.sub(other);
+            }
+        } else {
+            return super.sub(other);
+        }
+    }
 
 
     @Override
@@ -84,11 +112,11 @@ class Matrix extends Var {
                 delimiter = ", ";
 
             }
-            start="}, ";
+            start = "}, ";
         }
-            str.append("}}");
-            return str.toString();
+        str.append("}}");
+        return str.toString();
 
 
-        }
     }
+}
