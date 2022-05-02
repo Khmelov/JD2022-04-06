@@ -12,16 +12,24 @@ class Matrix extends Var {
         this.value = matrix.value;
     }
 
-    Matrix (String strMatrix){
-        this.value = changeMatrixtoString(strMatrix);
+    Matrix (String strMatrix) {
 
-    }
+        String[]strRow = strMatrix.split("},");
+        value = new double[strRow.length][];
+        for (int i = 0; i < strRow.length; i++) {
+            String row =strRow[i];
+            row = row.replace("{","").
+                    replace(" ","").
+                        replace("}","");
+            String [] strings = row.split(",");
+            value[i] = new double[strings.length];
+            for (int j = 0; j < value.length; j++) {
+                value[i][j] = Double.parseDouble(strings[j]);
+                
+            }
 
-    private double[][] changeMatrixtoString(String strMatrix) {
+        }
 
-
-
-        return new double[0][];
     }
 
     @Override
