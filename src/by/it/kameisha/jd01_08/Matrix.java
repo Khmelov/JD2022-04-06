@@ -55,23 +55,117 @@ public class Matrix extends Var {
         return strValue.toString();
     }
 
+    private boolean checkMatrix(Matrix matrix) {
+        boolean result = true;
+        for (int i = 0; i < matrix.value.length; i++) {
+            if (matrix.value[0].length != matrix.value[i].length) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
     @Override
     public Var add(Var other) {
-        return null;
+        if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
+            double[][] newMatrix = new double[value.length][];
+            for (int i = 0; i < value.length; i++) {
+                newMatrix[i] = value[i].clone();
+                for (int j = 0; j < value[i].length; j++) {
+                    newMatrix[i][j] = newMatrix[i][j] + scalar.getValue();
+                }
+            }
+            return new Matrix(newMatrix);
+        } else if (other instanceof Matrix matrix && checkMatrix(new Matrix(value)) &&
+                checkMatrix(matrix) && matrix.value.length == value.length) {
+            double[][] newMatrix = new double[value.length][];
+            for (int i = 0; i < value.length; i++) {
+                newMatrix[i] = value[i].clone();
+                for (int j = 0; j < value[i].length; j++) {
+                    newMatrix[i][j] = newMatrix[i][j] + matrix.value[i][j];
+                }
+            }
+            return new Matrix(newMatrix);
+        } else {
+            return super.add(other);
+        }
     }
 
     @Override
     public Var sub(Var other) {
-        return null;
+        if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
+            double[][] newMatrix = new double[value.length][];
+            for (int i = 0; i < value.length; i++) {
+                newMatrix[i] = value[i].clone();
+                for (int j = 0; j < value[i].length; j++) {
+                    newMatrix[i][j] = newMatrix[i][j] - scalar.getValue();
+                }
+            }
+            return new Matrix(newMatrix);
+        } else if (other instanceof Matrix matrix && checkMatrix(new Matrix(value)) &&
+                checkMatrix(matrix) && matrix.value.length == value.length) {
+            double[][] newMatrix = new double[value.length][];
+            for (int i = 0; i < value.length; i++) {
+                newMatrix[i] = value[i].clone();
+                for (int j = 0; j < value[i].length; j++) {
+                    newMatrix[i][j] = newMatrix[i][j] - matrix.value[i][j];
+                }
+            }
+            return new Matrix(newMatrix);
+        } else {
+            return super.sub(other);
+        }
     }
 
     @Override
     public Var mul(Var other) {
-        return null;
+        if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
+            double[][] newMatrix = new double[value.length][];
+            for (int i = 0; i < value.length; i++) {
+                newMatrix[i] = value[i].clone();
+                for (int j = 0; j < value[i].length; j++) {
+                    newMatrix[i][j] = newMatrix[i][j] * scalar.getValue();
+                }
+            }
+            return new Matrix(newMatrix);
+        } else if (other instanceof Vector vector && checkMatrix(new Matrix(value))) {
+            double[] newVector = new double[vector.getValue().length];
+            for (int i = 0; i < vector.getValue().length; i++) {
+                for (int j = 0; j < value[i].length; j++) {
+                    newVector[i] = newVector[i] + value[i][j] * vector.getValue()[j];
+                }
+            }
+            return new Vector(newVector);
+        } else if ((other instanceof Matrix matrix && checkMatrix(new Matrix(value)) &&
+                checkMatrix(matrix) && matrix.value[0].length == value.length)) {
+            double[][] newMatrix = new double[value.length][matrix.value[0].length];
+            for (int i = 0; i < value.length; i++) {
+                for (int j = 0; j < matrix.value[0].length; j++) {
+                    for (int k = 0; k < matrix.value.length; k++) {
+                        newMatrix[i][j] = newMatrix[i][j] + value[i][k] * matrix.value[k][j];
+                    }
+                }
+            }
+            return new Matrix(newMatrix);
+        } else {
+            return super.mul(other);
+        }
     }
 
     @Override
     public Var div(Var other) {
-        return null;
+        if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
+            double[][] newMatrix = new double[value.length][];
+            for (int i = 0; i < value.length; i++) {
+                newMatrix[i] = value[i].clone();
+                for (int j = 0; j < value[i].length; j++) {
+                    newMatrix[i][j] = newMatrix[i][j] / scalar.getValue();
+                }
+            }
+            return new Matrix(newMatrix);
+        } else {
+            return super.div(other);
+        }
     }
 }
