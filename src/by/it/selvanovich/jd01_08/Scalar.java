@@ -56,8 +56,8 @@ class Scalar extends Var {
         }
     }
 
-    public double setValue() {
-        return value;
+    public double getValue() {
+        return this.value;
     }
 
     @Override
