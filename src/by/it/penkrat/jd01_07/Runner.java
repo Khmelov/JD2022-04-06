@@ -26,8 +26,10 @@ public class Runner {
 
         Var matrix1 = new Matrix(valueNew);
         Var matrix2 = new Matrix(new Matrix(valueNew));
+        Var matrix3 = new Matrix("{{1,2,3},{3,4,5}}");
         System.out.println(matrix1);
         System.out.println(matrix2);
+        System.out.println(matrix3);
     }
 }
 

@@ -1,26 +1,33 @@
 package by.it.penkrat.jd01_07;
 
-class Matrix extends Var{
+class Matrix extends Var {
 
     double[][] value;
 
     Matrix(double[][] value) {
         this.value = value;
     }
-    Matrix(Matrix matrix){
-        this.value= matrix.value;
+
+    Matrix(Matrix matrix) {
+        this.value = matrix.value;
     }
-    Matrix(String strMatrix){
+
+    Matrix(String strMatrix) {
 
         String[] newStr = strMatrix.split("},");
-        for (int i =0; i< newStr.length; i++){
-            newStr[i] = newStr[i].replaceAll("[{}]+", "");
-            System.out.println(newStr[i] + " ");
-        }
-        String[][] doubleString = new String[newStr.length][];
-        }
+        value = new double[newStr.length][];
+        for (int i = 0; i < newStr.length; i++) {
 
-
+            String row = newStr[i].replace("{", "")
+                    .replace(" ", "")
+                    .replace("}", "");
+            String[] rows = row.split(",");
+            value[i] = new double[rows.length];
+            for (int j = 0; j < value[i].length; j++) {
+                value[i][j] = Double.parseDouble(rows[j]);
+            }
+        }
+    }
 
     @Override
     public String toString() {
@@ -30,9 +37,9 @@ class Matrix extends Var{
         for (int i = 0; i < value.length; i++) {
             for (int j = 0; j < value[i].length; j++) {
                 sb.append(delimiter).append(value[i][j]);
-                delimiter=", ";
-                }
-            delimiter ="}, {";
+                delimiter = ", ";
+            }
+            delimiter = "}, {";
         }
         sb.append("}}");
         return sb.toString();
