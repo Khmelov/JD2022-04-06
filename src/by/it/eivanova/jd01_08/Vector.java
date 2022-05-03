@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 
 public class Vector extends Var {
 
-    private final double[] values;
+    final double[] values;
     public Vector(double[] values) {
         this.values = Arrays.copyOf(values, values.length);
     }

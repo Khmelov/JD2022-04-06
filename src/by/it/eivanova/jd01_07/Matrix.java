@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class Matrix extends Var {
 
-    private final double[][] values;
+    public final double[][] values;
 
 
 
@@ -51,11 +51,7 @@ public class Matrix extends Var {
 
     //public String toString() {
    //     StringBuilder out = new StringBuilder();
-
-
-
-      //  return out.toString();
-
+     //  return out.toString();
     //   return Arrays.deepToString(values);
     }
 }
