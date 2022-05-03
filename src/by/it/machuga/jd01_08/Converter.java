@@ -42,7 +42,7 @@ public class Converter {
     }
 
     static double[][] convertStringToDoubleMultiDimensionArray(String strMatrix) {
-        Pattern pattern = Pattern.compile("\\{ ?(\\d+.\\d+,? ?)+}");
+        Pattern pattern = Pattern.compile("\\{ ?(\\d+.?\\d?,? ?)+}");
         Matcher matcher = pattern.matcher(strMatrix);
         double[][] arrayMultiDimensionArray = new double[0][];
         while (matcher.find()) {
