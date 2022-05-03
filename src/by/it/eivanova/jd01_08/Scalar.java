@@ -17,7 +17,6 @@ class Scalar extends Var {
 
 
 
-
     //Сложение
     @Override
     public Var add(Var other) {

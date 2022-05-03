@@ -33,17 +33,6 @@ public class Vector extends Var {
 
 
 
-
-
-
-
-
-  // public Vector (String strVector){
-   //double values = Double.parseDouble(strVector);
-    //value = Double.parseDouble(stringValues);
-   //}
-
-
     public double[] getValues() {
         return this.values.clone();
     }
