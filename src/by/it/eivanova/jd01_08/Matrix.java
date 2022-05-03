@@ -26,7 +26,6 @@ public class Matrix extends Var {
             values[i] = new double[strings.length];
             for (int j = 0; j < values[i].length; j++) {
                 values[i][j] = Double.parseDouble(strings[j]);
-
             }
         }
     }
