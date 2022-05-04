@@ -1,6 +1,5 @@
 package by.it.selvanovich.jd01_08;
 
-import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.StringTokenizer;
 
@@ -16,8 +15,8 @@ class Vector extends Var {
     }
 
     public Vector(String line) {
-        line = line.replace("{", "");
-        line = line.replace("}", "");
+        line = line.replace("{", "")
+                .replace("}", "");
         StringTokenizer tokenizer = new StringTokenizer(line, ", ");
         int size = tokenizer.countTokens();
         values = new double[size];
