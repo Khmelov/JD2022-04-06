@@ -2,7 +2,7 @@ package by.it.arsenihlaz.jd01_08.oop;
 
 public class Battleship extends Warship {
 
-    public static boolean shoot(int x, int y) {
+    public boolean shoot(int x, int y) {
         if (x == Enemy_Ship.coordinates[0] && y == Enemy_Ship.coordinates[1]) {
             System.out.println("target hit");
             return true;

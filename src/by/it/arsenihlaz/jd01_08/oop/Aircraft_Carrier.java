@@ -8,4 +8,16 @@ public class Aircraft_Carrier extends Warship{
     public void buzz() {
         System.out.println("the aircraft carrier is buzzing gooo-gooo");
     }
+
+    @Override
+    boolean shoot(int x, int y) {
+        System.out.println("planes took off");
+        if (x == Enemy_Ship.coordinates[0] && y == Enemy_Ship.coordinates[1]) {
+            System.out.println("bombs dropped successfully");
+            return true;
+        } else {
+            System.out.println("missed");
+            return false;
+        }
+    }
 }

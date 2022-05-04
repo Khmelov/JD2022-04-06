@@ -13,7 +13,7 @@ public class Enemy_Ship extends Warship implements Ship{
     public void buzz() {
 
     }
-    public static int[] getCoordinates(){
+    public int[] getCoordinates(){
         int[] coordinatesEnemy = new int[2];
         for (int i = 0; i < coordinatesEnemy.length; i++) {
             coordinatesEnemy[i] = (int) (Math.random()*5);
