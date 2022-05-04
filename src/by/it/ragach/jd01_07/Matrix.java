@@ -15,13 +15,14 @@ class Matrix extends Var {
     }
 
     Matrix (String strMatrix){
-        this.value = changeStringtoMatrix(strMatrix);
+        this.value = changeMatrixtoString(strMatrix);
 
     }
 
-    private double[][] changeStringtoMatrix(String strMatrix) {
+    private double[][] changeMatrixtoString(String strMatrix) {
 
-        
+
+
         return new double[0][];
     }
 

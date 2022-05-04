@@ -77,7 +77,6 @@ public class Helper {
             for (int j = 0; j < matrixRight[i].length; j++) {
                 for (int k = 0; k < matrixLeft[0].length; k++) {
                     resultMatrix[i][j] = resultMatrix[i][j] + matrixLeft[i][k] * matrixRight[k][j]; //k нужно, чтобы перейти к след элемнту в изначальных матрицах
-
                 }
             }
         }
