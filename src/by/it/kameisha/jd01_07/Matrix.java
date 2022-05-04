@@ -6,7 +6,7 @@ public class Matrix extends Var {
 
     private double[][] value;
 
-    public Matrix(double[ ][ ] value){
+    public Matrix(double[][] value) {
         double[][] array = new double[value.length][];
         for (int i = 0; i < value.length; i++) {
             array[i] = value[i].clone();
@@ -14,7 +14,7 @@ public class Matrix extends Var {
         this.value = array;
     }
 
-    public Matrix(Matrix matrix){
+    public Matrix(Matrix matrix) {
         double[][] newMatrix = new double[matrix.value.length][];
         for (int i = 0; i < matrix.value.length; i++) {
             newMatrix[i] = matrix.value[i].clone();
@@ -22,13 +22,13 @@ public class Matrix extends Var {
         this.value = newMatrix;
     }
 
-    public Matrix(String strMatrix){
+    public Matrix(String strMatrix) {
         String[] strings = strMatrix.split("},");
         double[][] array = new double[strings.length][strings.length];
         for (int i = 0; i < strings.length; i++) {
             String arrayString = strings[i];
-            arrayString = arrayString.replace("{","");
-            arrayString = arrayString.replace("}","");
+            arrayString = arrayString.replace("{", "");
+            arrayString = arrayString.replace("}", "");
             String[] tempString = arrayString.split(",");
             for (int j = 0; j < tempString.length; j++) {
                 array[i][j] = Double.parseDouble(tempString[j]);
@@ -48,7 +48,7 @@ public class Matrix extends Var {
                 splitter = ", ";
             }
             strValue.append("}");
-            if(i == value.length-1){
+            if (i == value.length - 1) {
                 splitter = "";
             }
             strValue.append(splitter);
