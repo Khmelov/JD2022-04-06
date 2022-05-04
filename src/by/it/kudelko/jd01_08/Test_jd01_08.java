@@ -1,4 +1,4 @@
-package by.it.kudelko.jd01_08;
+ypackage by.it.kudelko.jd01_08;
 
 
 import by.it.HomeWork;
