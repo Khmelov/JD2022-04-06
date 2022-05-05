@@ -7,6 +7,7 @@ import static by.it.marchenko.jd01_09.MessageConst.*;
 
 public class Parser {
 
+    @SuppressWarnings("ConstantConditions")
     public Var calc(String inputString) {
         if (inputString != null) {
             String[] operands = inputString.split(OPERATOR_REGEX, MAXIMUM_ALLOWED_OPERANDS);
@@ -24,6 +25,7 @@ public class Parser {
             Var tempResult = varOperands[0];
             for (int i = 0; i < operator.length; i++) {
                 tempResult = switch (operator[i]) {
+                    // TODO NullPointerException during invocation
                     case "+" -> tempResult.add(varOperands[i + 1]);
                     case "-" -> tempResult.sub(varOperands[i + 1]);
                     case "*" -> tempResult.mul(varOperands[i + 1]);
