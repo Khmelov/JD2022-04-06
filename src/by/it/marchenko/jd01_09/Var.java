@@ -1,5 +1,7 @@
 package by.it.marchenko.jd01_09;
 
+import static by.it.marchenko.jd01_09.MessageConst.*;
+
 abstract class Var implements Operation {
     final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
 
@@ -42,5 +44,16 @@ abstract class Var implements Operation {
         System.out.printf(INCORRECT_OPERATION_MESSAGE, this, operator, other);
     }
 
+    public static Var createVar(String operand) {
+        if (operand.matches(SCALAR_PATTERN)){
+            return new Scalar(operand);
+        } else if (operand.matches(VECTOR_PATTERN)) {
+            return new Vector(operand);
+        }else if (operand.matches(MATRIX_PATTERN)) {
+            return new Matrix(operand);
+        }else{
+            return null;
+        }
+    }
 
 }
