@@ -2,6 +2,18 @@ package by.it.avramchuk.jd01_09;
 
 abstract class Var implements Operation {
 
+    public static Var createVar(String stringVar) {
+        Var reulst = null;
+        if (stringVar.matches(Patterns.SCALAR)){
+            reulst =  new Scalar(stringVar);
+        } else if (stringVar.matches(Patterns.VECTOR)){
+            reulst =  new Vector(stringVar);
+        } else if (stringVar.matches(Patterns.MATRIX)){
+            reulst =  new Matrix(stringVar);
+        }
+        return  reulst;
+    }
+
     @Override
     public String toString() {
         return "Var{}";
