@@ -1,5 +1,7 @@
 package by.it.smirnov.jd01_09;
 
+import java.util.Scanner;
+
 abstract class Var implements Operation {
 
     @Override
@@ -30,4 +32,12 @@ abstract class Var implements Operation {
         System.out.println("Операция деления " + this + "/" + other + " невозможна");
         return null;
     }
+
+    static Var createVar(String operand) {
+        if (operand.matches(Patterns.MATRIX)) return new Matrix(operand);
+        if (operand.matches(Patterns.VECTOR)) return new Vector(operand);
+        if (operand.matches(Patterns.SCALAR)) return new Scalar(operand);
+        return null;
+    }
+
 }
