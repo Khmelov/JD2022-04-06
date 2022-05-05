@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
 
 public class Vector extends Var {
 
+
     private final double[] values;
 
     public Vector(double[] values) {
