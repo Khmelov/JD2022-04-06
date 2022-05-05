@@ -16,4 +16,8 @@ public class Printer {
             }
         }
     }
+
+    public static void greeting() {
+        System.out.println(MESSAGE_GREETING);
+    }
 }

@@ -13,7 +13,6 @@ public class Parser {
             String[] operands = inputString.split(OPERATOR_REGEX, MAXIMUM_ALLOWED_OPERANDS);
             Pattern operatorPattern = Pattern.compile(OPERATOR_REGEX);
             Matcher operatorMatcher = operatorPattern.matcher(inputString);
-
             String[] operator = new String[operands.length - 1];
             Var[] varOperands = new Var[operands.length];
             for (int i = 0; i < operands.length; i++) {
@@ -26,10 +25,10 @@ public class Parser {
             for (int i = 0; i < operator.length; i++) {
                 tempResult = switch (operator[i]) {
                     // TODO NullPointerException during invocation
-                    case "+" -> tempResult.add(varOperands[i + 1]);
-                    case "-" -> tempResult.sub(varOperands[i + 1]);
-                    case "*" -> tempResult.mul(varOperands[i + 1]);
-                    case "/" -> tempResult.div(varOperands[i + 1]);
+                    case ADD_OPERATOR -> tempResult.add(varOperands[i + 1]);
+                    case SUB_OPERATOR -> tempResult.sub(varOperands[i + 1]);
+                    case MUL_OPERATOR -> tempResult.mul(varOperands[i + 1]);
+                    case DIV_OPERATOR -> tempResult.div(varOperands[i + 1]);
                     default -> null;
                 };
             }

@@ -5,11 +5,6 @@ import static by.it.marchenko.jd01_09.MessageConst.*;
 abstract class Var implements Operation {
     final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
 
-    final String ADD_OPERATOR = "+";
-    final String SUB_OPERATOR = "-";
-    final String MUL_OPERATOR = "*";
-    final String DIV_OPERATOR = "/";
-
     @Override
     public Var add(Var other) {
         printNotAvailableOperation(ADD_OPERATOR, other);

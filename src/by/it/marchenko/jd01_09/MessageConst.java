@@ -19,7 +19,13 @@ public class MessageConst {
 
     public static final String EMPTY_STRING = "";
 
-    public static final int MAXIMUM_ALLOWED_OPERANDS = 3;
+    public static final int MAXIMUM_ALLOWED_OPERANDS = 10;
+
+    public static final String ADD_OPERATOR = "+";
+    public static final String SUB_OPERATOR = "-";
+    public static final String MUL_OPERATOR = "*";
+    public static final String DIV_OPERATOR = "/";
+
 
 
 }
