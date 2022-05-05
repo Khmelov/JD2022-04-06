@@ -1,8 +1,5 @@
 package by.it.penkrat.jd01_03;
 
-import java.util.Arrays;
-import java.util.Random;
-
 public class Helper {
 
     static double findMax(double[] array) {
@@ -48,18 +45,6 @@ public class Helper {
         }
         System.out.println();
     }
-
-
-//    static double[] multiply(double[][] matrix, double[] vector) {
-//        double[] z = new double[matrix.length];
-//        for (int i = 0; i < matrix.length; i++) {
-//            for (int j = 0; j < vector.length; j++) {
-//
-//                z[i] = z[i] + matrix[i][j] * vector[j];
-//            }
-//        }
-//        return z;
-//    }
 
     static double[] multiply(double[][] matrix, double[] vector) {
 
