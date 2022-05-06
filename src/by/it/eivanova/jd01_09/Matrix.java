@@ -1,4 +1,4 @@
-package by.it.eivanova.jd01_08;
+package by.it.eivanova.jd01_09;
 
 import java.util.Arrays;
 
@@ -11,7 +11,7 @@ public class Matrix extends Var {
         this.values = Arrays.copyOf(values, values.length);
     }
 
-    public Matrix (Matrix matrix){
+    public Matrix(Matrix matrix){
         this.values = matrix.values;
     }
 
@@ -101,6 +101,7 @@ public class Matrix extends Var {
                             }
                         }
                         return new Matrix(result);
+
                     } else if (other instanceof Vector vector) {
                         double[] result = new double[this.values.length];
                         for (int i = 0; i < result.length; i++) {
@@ -108,8 +109,11 @@ public class Matrix extends Var {
                                 result[i] = result[i] + this.values[i][j] * vector.getValue()[j];
                             }
                         }
-                        return new Vector(result);
-                    } else {
+
+                       return new Vector(result);
+                    }
+
+                    else {
                         Matrix otherMatrix = (Matrix) other;
                         double[][] result = new double[this.values.length][otherMatrix.values[0].length];
                         for (int i = 0; i < result.length; i++) {
@@ -124,7 +128,6 @@ public class Matrix extends Var {
                     }
 
                 }
-
 
                 //деление
                 @Override

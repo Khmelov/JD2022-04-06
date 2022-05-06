@@ -1,4 +1,4 @@
-package by.it.eivanova.jd01_08;
+package by.it.eivanova.jd01_09;
 
 import java.util.Arrays;
 import java.util.StringJoiner;
@@ -94,11 +94,7 @@ public class Vector extends Var {
         } else {
             return super.mul(other);
         }
-
-
-
-
-                           }
+    }
 
 
     //деление
