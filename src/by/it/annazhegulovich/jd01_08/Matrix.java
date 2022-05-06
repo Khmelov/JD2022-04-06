@@ -33,6 +33,62 @@ class Matrix extends Var {
     }
 
     @Override
+    public Var mul(Var other) {
+        if (other instanceof Scalar) {
+            Scalar otherScalar = (Scalar) other;
+            double[][] result = value2.clone();
+            for (int i = 0; i < result.length; i++) {
+                for (int j = 0; j < result.length; j++) {
+                    result[i][j] = result[i][j] * otherScalar.getValue();
+                }
+            }
+            return new Matrix(result);
+        } else if (other instanceof Vector) {
+            Vector otherVector = (Vector) other;
+            double[][] result = value2.clone();
+            for (int i = 0; i < result.length; i++) {
+                for (int j = 0; j < result.length; j++) {
+                    result[i][j] = result[i][j] * otherVector.getValues()[j];
+                }
+            }
+            return new Matrix(result);
+        } else if (other instanceof Matrix) {
+            Matrix otherMatrix = (Matrix) other;
+            double[][] result = value2.clone();
+            for (int i = 0; i < result.length; i++) {
+                double resultIJ = 0;
+                for (int j = 0; j < result[0].length; j++) {
+                    for (int k = 0; k < result[0].length; k++) {
+                        resultIJ = result[i][j] * otherMatrix.value2[j][i];
+                        resultIJ += resultIJ;
+                    }
+                    result[i][j] = resultIJ;
+                }
+                return new Matrix(result);
+            }
+        }
+
+        return super.mul(other);
+    }
+
+    @Override
+    public Var div(Var other) {
+        if (other instanceof Scalar) {
+            /*Scalar otherScalar = (Scalar) other;
+            double[][] result = value2.clone();
+            for (int i = 0; i < result.length; i++) {
+                for (int j = 0; j < result.length; j++) {
+                    result[i][j]= result[i][j]/otherScalar.getValue();
+
+                }
+            } return new Matrix(result);
+            } else*/
+            return other.add(this);
+        } else
+        return super.div(other);
+    }
+
+    @Override
     public String toString() {
         String strMatrix = new String();
         for (int i = 0; i < value2.length; i++) {
