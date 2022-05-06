@@ -17,7 +17,7 @@ public class Runner {
         System.out.println(vector1);
         System.out.println(vector2);
         System.out.println(vector3);
-        double[][] matrix = { { 1.0, 2.0 }, { 3.0, 4.0 } };
+        double[][] matrix = {{1.0, 2.0}, {3.0, 4.0}};
         Matrix matrix1 = new Matrix(matrix);
         Matrix matrix2 = new Matrix(matrix1);
         Matrix matrix3 = new Matrix("{ { 1.0, 2.0 }, { 3.0, 4.0 } }");
