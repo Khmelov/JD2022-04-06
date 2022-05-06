@@ -42,7 +42,7 @@ class Scalar extends Var {
             double result = this.value * otherScalar.value;
             return new Scalar(result);
         } else
-            return super.div(other);
+            return other.add(this);
 
     }
 
@@ -53,7 +53,7 @@ class Scalar extends Var {
             double result = this.value / otherScalar.value;
             return new Scalar(result);
         } else
-            return other.add(this);
+            return super.div(other);
 
     }
 
