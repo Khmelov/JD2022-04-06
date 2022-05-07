@@ -12,7 +12,7 @@ public class Bean {
         return Math.max(a, b);
     }
 
-    @Param(a = 20, b = 30)
+    @Param()
     static double min(int a, int b) {
         return Math.min(a, b);
     }
