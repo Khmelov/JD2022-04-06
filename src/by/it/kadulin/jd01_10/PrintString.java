@@ -12,7 +12,6 @@ public class PrintString {
             if (!Modifier.isStatic(modifiers)) {
                 System.out.println(method.getName());
             }
-
         }
     }
 }
