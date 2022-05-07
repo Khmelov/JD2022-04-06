@@ -75,25 +75,30 @@ public class Vector extends Var {
     @Override
     public Var mul(Var other) {
         if (other instanceof Scalar scalar) {
-            double[] result = values.clone();
+            double[] result = new double[this.values.length];
             for (int i = 0; i < result.length; i++) {
-                result[i] = result[i] * scalar.getValue();
+                result[i] = this.values[i] * scalar.getValue();
             }
             return new Vector(result);
 
-        } else if (other instanceof Vector vector) {
-            double[] result = values.clone();
-            for (int i = 0; i < result.length; i++) {
-                result[i] = result[i] * vector.values[i];
-               }
-
-            return new Vector(result);
+        } else if (other instanceof Vector otherVector) {
+            if (this.values.length==otherVector.values.length){
+                double result=0;
+                for (int i = 0; i < this.values.length; i++) {
+                    result+= this.values[i]*otherVector.values[i];
+                }
+                return new Scalar(result);
+            } else {
+                return super.mul(other);
+            }
         } else {
             return super.mul(other);
         }
-    }
 
 
+
+
+                           }
 
 
     //деление
@@ -139,4 +144,6 @@ public class Vector extends Var {
         }
         return joiner.toString();
     }
+
+
 }

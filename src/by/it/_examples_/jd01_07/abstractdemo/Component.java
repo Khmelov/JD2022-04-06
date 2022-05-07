@@ -5,7 +5,7 @@ abstract class Component {
     protected int y;
 
     protected String getCoordinateString() {
-        return String.format("X=%d, Y=%d", x, y);
+       return String.format("X=%d, Y=%d", x, y);
     }
 
     abstract void show();
