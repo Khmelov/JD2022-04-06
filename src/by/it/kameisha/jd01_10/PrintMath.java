@@ -15,9 +15,9 @@ public class PrintMath {
     private static void printPublicFields(Class<Math> mathClass) {
         Field[] mathFields = mathClass.getDeclaredFields();
         for (Field field : mathFields) {
-            if (Modifier.isPublic(field.getModifiers())){
+            if (Modifier.isPublic(field.getModifiers())) {
                 StringJoiner line = new StringJoiner(" ");
-                getModifier(field,line);
+                getModifier(field, line);
                 line.add(field.getType().getSimpleName());
                 line.add(field.getName());
                 System.out.println(line);
@@ -38,7 +38,7 @@ public class PrintMath {
                 for (Class<?> parametrType : parametrTypes) {
                     parametrs.add(parametrType.getSimpleName());
                 }
-                line.add(methodNAme+parametrs);
+                line.add(methodNAme + parametrs);
                 System.out.println(line);
             }
         }
