@@ -22,11 +22,11 @@ public class Matrix extends Var {
             this.value2[i] = Double.parseDouble(arrayStrMatrix[i]);
         }
 
-        int columns = 2;
-        int lines = value2.length / 2;
+        int columns = (int) Math.sqrt(value2.length);
+        int lines = value2.length / columns;
         this.value = new double[columns][lines];
         int i = 0;
-        for (int j = 0; j < 2; j++) {
+        for (int j = 0; j < columns; j++) {
             for (int k = 0; k < lines; k++) {
                 value[j][k] = value2[i];
                 i++;

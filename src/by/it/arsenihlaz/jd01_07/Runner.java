@@ -16,7 +16,7 @@ public class Runner {
 
         Var valueMatrix = new Matrix(new double[][]{{1.0, 2.0}, {3.0, 4.0}});
         System.out.println(valueMatrix);
-        Var stringMatrix = new Matrix("{ { 1.0, 2.0 }, { 4.0, 5.0 } }");
+        Var stringMatrix = new Matrix("{ { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } }");
         System.out.println(stringMatrix);
     }
 }
