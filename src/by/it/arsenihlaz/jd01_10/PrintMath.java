@@ -21,7 +21,7 @@ public class PrintMath {
             }
         }
         for (Field field : fields) {
-            if ((field.getModifiers() & Modifier.PUBLIC) ==Modifier.PUBLIC) {
+            if ((field.getModifiers() & Modifier.PUBLIC) == Modifier.PUBLIC) {
                 StringJoiner fieldsLine = new StringJoiner(" ");
                 Class<?> returnType = field.getType();
                 String nameReturnType = returnType.getSimpleName();

@@ -6,5 +6,6 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface Param {
     int a();
+
     int b();
 }
