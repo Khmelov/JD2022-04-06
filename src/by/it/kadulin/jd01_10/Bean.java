@@ -17,6 +17,11 @@ public class Bean {
         return a<b?a:b;
     }
 
+//    @Param(a = 90, b = 0)
+//    double sin(int a) {
+//        return Math.sin(a);
+//    }
+
     double avg(int a, int b) {
         return (a+b)/2d;
     }
