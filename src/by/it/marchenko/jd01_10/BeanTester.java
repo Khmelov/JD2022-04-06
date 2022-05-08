@@ -2,6 +2,7 @@ package by.it.marchenko.jd01_10;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
+import java.util.Arrays;
 import java.util.StringJoiner;
 
 public class BeanTester {
@@ -18,8 +19,12 @@ public class BeanTester {
                     int b = ((Param) annotation).b();
                     StringJoiner tempLine = new StringJoiner(WORD_SEPARATOR);
                     System.out.println(annotation);
-                    tempLine.add(method.getName()).
-                            add((method.invoke(createdObject, a, b)).toString());
+                    String result = switch (method.getParameterCount()) {
+                        case 0 -> (method.invoke(createdObject)).toString();
+                        case 1 -> (method.invoke(createdObject, a)).toString();
+                        default -> (method.invoke(createdObject, a, b)).toString();
+                    };
+                    tempLine.add(method.getName()).add(result);
                     System.out.println(tempLine);
                 }
             }
