@@ -1,5 +1,6 @@
 package by.it.marchenko.jd01_10.calc;
 
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.regex.Matcher;
@@ -10,8 +11,7 @@ import static by.it.marchenko.jd01_09.MessageConst.*;
 public class Parser {
 
     @SuppressWarnings("ConstantConditions")
-    public Var calc(String inputString) throws
-            NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public Var calc(String inputString) {
         if (inputString != null) {
             String[] operands = inputString.split(OPERATOR_REGEX, MAXIMUM_ALLOWED_OPERANDS);
             Pattern operatorPattern = Pattern.compile(OPERATOR_REGEX);
@@ -25,11 +25,32 @@ public class Parser {
                 }
             }
             Var tempResult = varOperands[0];
+            Object invokeResult = varOperands[0];
             for (int i = 0; i < operator.length; i++) {
+                String methodName = switch (operator[i]) {
+                    case ADD_OPERATOR -> "add";
+                    case SUB_OPERATOR -> "sub";
+                    case MUL_OPERATOR -> "mul";
+                    case DIV_OPERATOR -> "div";
+                    default -> null;
+                };
 
-                //Method methodForInvoke = tempResult.getClass().getMethod("add");
-                //methodForInvoke.invoke(tempResult, varOperands[i + 1]);
+                Class<? extends Var> tempResultClass = tempResult.getClass();
+//                System.out.println("TempResult " + tempResultClass.getName());
+                try {
+                    Method methodForInvoke = tempResult.getClass().getMethod(methodName, varOperands[i + 1].getClass());
+//                    System.out.println(methodForInvoke);
+                    invokeResult = methodForInvoke.invoke(invokeResult, varOperands[i + 1]);
+//                    System.out.println(invokeResult.getClass().getSimpleName());
+//                    System.out.println(methodForInvoke.invoke(tempResult, varOperands[i + 1]));
+//                    System.out.println(tempResult);
+                } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                //System.out.println(methodForInvoke);
 
+
+/*
                 tempResult = switch (operator[i]) {
                     // TODO NullPointerException during invocation
                     case ADD_OPERATOR -> tempResult.add(varOperands[i + 1]);
@@ -38,8 +59,9 @@ public class Parser {
                     case DIV_OPERATOR -> tempResult.div(varOperands[i + 1]);
                     default -> null;
                 };
+                */
             }
-            return tempResult;
+            return (Var)invokeResult;
         }
         return null;
     }

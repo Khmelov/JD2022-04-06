@@ -3,7 +3,7 @@ package by.it.marchenko.jd01_10.calc;
 import java.util.Scanner;
 
 public class ConsoleRunner {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Printer.greeting();
         Scanner console = new Scanner(System.in);
         Input inputString = new Input(console);

@@ -69,6 +69,27 @@ public class Vector extends Var {
         }
     }
 
+    public Var add(Scalar other) {
+        double[] tempVector = getVectorValues();
+        for (int i = 0; i < tempVector.length; i++) {
+            tempVector[i] += other.getValue();
+        }
+        System.out.println("Зашли по конуструктору вектор + скаляр");
+        return new Vector(tempVector);
+
+    }
+
+    public Var add(Vector other) {
+        double[] tempVector = getVectorValues();
+        for (int i = 0; i < tempVector.length; i++) {
+            tempVector[i] += other.vectorValues[i];
+        }
+        System.out.println("Зашли по конуструктору вектор+вектор");
+        return new Vector(tempVector);
+    }
+
+
+
     @Override
     public Var sub(Var other) {
         if (other instanceof Scalar otherScalar) {
