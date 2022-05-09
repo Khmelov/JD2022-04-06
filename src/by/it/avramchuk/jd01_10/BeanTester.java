@@ -15,16 +15,13 @@ public class BeanTester {
 
         for (Method method : allMethods) {
             if (method.isAnnotationPresent(Param.class)){
-                if (Modifier.isStatic(method.getModifiers())){
-                    Param param = method.getAnnotation(Param.class);
-                    System.out.print(method.getName()+ " ");
-                    System.out.println(method.invoke(o, param.a(),param.b()));
-                }else {
+
                     Param param = method.getAnnotation(Param.class);
                     System.out.print(method.getName()+" ");
                     System.out.println(method.invoke(o, param.a(), param.b()));
+
                 }
             }
         }
     }
-}
+
