@@ -1,5 +1,6 @@
 package by.it.kadulin.jd01_08;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Runner {
