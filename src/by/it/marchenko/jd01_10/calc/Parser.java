@@ -24,8 +24,7 @@ public class Parser {
                     operator[i] = operatorMatcher.group();
                 }
             }
-            Var tempResult = varOperands[0];
-            Object invokeResult = varOperands[0];
+            Object tempResult = varOperands[0];
             for (int i = 0; i < operator.length; i++) {
                 String methodName = switch (operator[i]) {
                     case ADD_OPERATOR -> "add";
@@ -34,20 +33,25 @@ public class Parser {
                     case DIV_OPERATOR -> "div";
                     default -> null;
                 };
-
-                Class<? extends Var> tempResultClass = tempResult.getClass();
-//                System.out.println("TempResult " + tempResultClass.getName());
                 try {
-                    Method methodForInvoke = tempResult.getClass().getMethod(methodName, varOperands[i + 1].getClass());
-//                    System.out.println(methodForInvoke);
-                    invokeResult = methodForInvoke.invoke(invokeResult, varOperands[i + 1]);
-//                    System.out.println(invokeResult.getClass().getSimpleName());
-//                    System.out.println(methodForInvoke.invoke(tempResult, varOperands[i + 1]));
-//                    System.out.println(tempResult);
-                } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                    e.printStackTrace();
+                    Method method = tempResult.getClass().
+                            getMethod(methodName, varOperands[i + 1].getClass());
+                    //boolean b = method.canAccess(tempResult);
+                    tempResult = method.invoke(tempResult, varOperands[i + 1]);
+
+                } catch (NoSuchMethodException e) {
+                    try {
+                        Method method = varOperands[i + 1].getClass().
+                                getMethod(methodName, tempResult.getClass());
+                        tempResult = method.invoke(varOperands[i + 1], tempResult);
+                    } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
+ //                       ex.printStackTrace();
+                    }
+                //    e.printStackTrace();
+                } catch (InvocationTargetException | IllegalAccessException e) {
+//                    e.printStackTrace();
                 }
-                //System.out.println(methodForInvoke);
+
 
 
 /*
@@ -61,7 +65,8 @@ public class Parser {
                 };
                 */
             }
-            return (Var)invokeResult;
+            return //tempRes;
+            (Var)tempResult;
         }
         return null;
     }
