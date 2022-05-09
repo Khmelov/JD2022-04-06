@@ -38,7 +38,7 @@ public class PrintMath {
 
             }
         }
-        
+
     }
 
     private static void fieldModifiers(Field field, StringJoiner line) {
