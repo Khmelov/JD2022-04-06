@@ -24,8 +24,20 @@ public class Scalar extends Var {
         return Double.toString(value);
     }
 
+/*    @Override
+    public Var add(Var other) {
+    //    if (other instanceof Scalar otherScalar) {
+    //        return new Scalar(this.value + otherScalar.getValue());
+    //    } else {
+        System.out.println("Зашли сюда по суперконструтору");
+
+        return other.add(this);
+    //    }
+    }
+*/
+
     public Var add(Scalar other) {
-        //System.out.println("Зашли сюда по конструтору");
+        System.out.println("Зашли сюда по конструтору");
         return new Scalar(this.value + other.getValue());
     }
 

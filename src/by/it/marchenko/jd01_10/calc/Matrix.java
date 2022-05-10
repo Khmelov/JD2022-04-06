@@ -94,27 +94,26 @@ public class Matrix extends Var {
         return stringMatrix;
     }
 
-    @Override
-    public Var add(Var other) {
-        if (other instanceof Scalar otherScalar) {
-            double[][] tempMatrix = this.getMatrixValue();
-            for (int i = 0; i < tempMatrix.length; i++) {
-                for (int j = 0; j < tempMatrix[i].length; j++) {
-                    tempMatrix[i][j] += otherScalar.getValue();
-                }
+    public Var add(Scalar other) {
+        System.out.println("Зашли сюда как матрица + скаляр");
+        double[][] tempMatrix = this.getMatrixValue();
+        for (int i = 0; i < tempMatrix.length; i++) {
+            for (int j = 0; j < tempMatrix[i].length; j++) {
+                tempMatrix[i][j] += other.getValue();
             }
-            return new Matrix(tempMatrix);
-        } else if (other instanceof Matrix otherMatrix) {
-            double[][] tempMatrix = this.getMatrixValue();
-            for (int i = 0; i < tempMatrix.length; i++) {
-                for (int j = 0; j < tempMatrix[i].length; j++) {
-                    tempMatrix[i][j] += otherMatrix.matrixValue[i][j];
-                }
-            }
-            return new Matrix(tempMatrix);
-        } else {
-            return super.add(other);
         }
+        return new Matrix(tempMatrix);
+    }
+
+    public Var add(Matrix other) {
+        System.out.println("Зашли сюда как матрица + матрица");
+        double[][] tempMatrix = this.getMatrixValue();
+        for (int i = 0; i < tempMatrix.length; i++) {
+            for (int j = 0; j < tempMatrix[i].length; j++) {
+                tempMatrix[i][j] += other.matrixValue[i][j];
+            }
+        }
+        return new Matrix(tempMatrix);
     }
 
     @Override

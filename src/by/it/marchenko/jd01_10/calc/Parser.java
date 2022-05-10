@@ -36,37 +36,20 @@ public class Parser {
                 try {
                     Method method = tempResult.getClass().
                             getMethod(methodName, varOperands[i + 1].getClass());
-                    //boolean b = method.canAccess(tempResult);
                     tempResult = method.invoke(tempResult, varOperands[i + 1]);
-
                 } catch (NoSuchMethodException e) {
                     try {
                         Method method = varOperands[i + 1].getClass().
                                 getMethod(methodName, tempResult.getClass());
                         tempResult = method.invoke(varOperands[i + 1], tempResult);
                     } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
- //                       ex.printStackTrace();
+                        ex.printStackTrace();
                     }
-                //    e.printStackTrace();
                 } catch (InvocationTargetException | IllegalAccessException e) {
-//                    e.printStackTrace();
+                    e.printStackTrace();
                 }
-
-
-
-/*
-                tempResult = switch (operator[i]) {
-                    // TODO NullPointerException during invocation
-                    case ADD_OPERATOR -> tempResult.add(varOperands[i + 1]);
-                    case SUB_OPERATOR -> tempResult.sub(varOperands[i + 1]);
-                    case MUL_OPERATOR -> tempResult.mul(varOperands[i + 1]);
-                    case DIV_OPERATOR -> tempResult.div(varOperands[i + 1]);
-                    default -> null;
-                };
-                */
             }
-            return //tempRes;
-            (Var)tempResult;
+            return (Var) tempResult;
         }
         return null;
     }
