@@ -1,6 +1,7 @@
 package by.it.ragach.jd01_10;
 
 public class Bean {
+
     static double sum (int a, int b){
         return a+b;
     }
