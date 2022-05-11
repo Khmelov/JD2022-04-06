@@ -30,6 +30,11 @@ public class Scalar extends Var {
     }
 
     @Override
+    public Var operation(String operator, Var operand) {
+        return null;
+    }
+
+    @Override
     public Var add(Var other) {
         System.out.println("Зашли сюда как Scalar+Var");
         Object tempResult = this;

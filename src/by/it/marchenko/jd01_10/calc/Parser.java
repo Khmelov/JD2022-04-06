@@ -1,8 +1,5 @@
 package by.it.marchenko.jd01_10.calc;
 
-
-//import java.lang.reflect.InvocationTargetException;/
-//import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
