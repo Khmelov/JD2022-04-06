@@ -1,4 +1,4 @@
-package by.it.marchenko.jd01_09;
+package by.it.marchenko.jd01_10.calc;
 
 public class MessageConst {
     public static final String MESSAGE_GREETING = "Application started. Type expression or END for exit.";
@@ -25,4 +25,10 @@ public class MessageConst {
     public static final String SUB_OPERATOR = "-";
     public static final String MUL_OPERATOR = "*";
     public static final String DIV_OPERATOR = "/";
+
+    public static final String ADD_STRING_OPERATOR = "add";
+    public static final String SUB_STRING_OPERATOR = "sub";
+    public static final String MUL_STRING_OPERATOR = "mul";
+    public static final String DIV_STRING_OPERATOR = "div";
+
 }
