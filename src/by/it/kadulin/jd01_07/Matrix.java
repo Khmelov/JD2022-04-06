@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Matrix extends Var{
+class Matrix extends Var{
     private final double[][] matrix;
 
     public Matrix(double[][] matrix) {

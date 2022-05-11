@@ -1,5 +1,7 @@
 package by.it.kadulin.jd01_08;
 
+
+
 class Scalar extends Var {
 
     public double getValue() {
@@ -29,6 +31,18 @@ class Scalar extends Var {
             return other.add(this);
         }
     }
+
+//    public Var add(Scalar other) {
+//        return new Scalar(this.value + other.value);
+//    }
+//
+//    public Var add(Vector other) {
+//        return other.add(this);
+//    }
+//
+//    public Var add(Matrix other) {
+//        return other.add(this);
+//    }
 
     @Override
     public Var sub(Var other) {
