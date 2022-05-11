@@ -1,6 +1,11 @@
 package by.it.marchenko.jd01_10.calc;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
+
+//import static by.it.marchenko.jd01_09.MessageConst.SUB_OPERATOR;
+import static by.it.marchenko.jd01_10.calc.MessageConst.*;
 
 public class Vector extends Var {
     final String INCORRECT_INPUT_MESSAGE = "Incorrect vector input";
@@ -51,47 +56,88 @@ public class Vector extends Var {
 
     @Override
     public Var add(Var other) {
-        if (other instanceof Scalar otherScalar) {
-            double[] tempVector = getVectorValues();
-            for (int i = 0; i < tempVector.length; i++) {
-                tempVector[i] += otherScalar.getValue();
-            }
-            return new Vector(tempVector);
-        } else if (other instanceof Vector otherVector) {
-            double[] tempVector = getVectorValues();
-
-            for (int i = 0; i < tempVector.length; i++) {
-                tempVector[i] += otherVector.vectorValues[i];
-            }
-            return new Vector(tempVector);
-        } else {
-            return super.add(other);
+        System.out.println("Зашли сюда как Vector+Var");
+        Object tempResult = this;
+        try {
+            Method method = this.getClass().getMethod(ADD_STRING_OPERATOR, other.getClass());
+            tempResult = method.invoke(this, other);
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
         }
+        return (Var) tempResult;
     }
 
     public Var add(Scalar other) {
+        System.out.println("Зашли сюда как Vector+Scalar");
         double[] tempVector = getVectorValues();
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] += other.getValue();
         }
-        System.out.println("Зашли по конуструктору вектор + скаляр");
         return new Vector(tempVector);
 
     }
 
     public Var add(Vector other) {
+        System.out.println("Зашли сюда как Vector+Vector");
         double[] tempVector = getVectorValues();
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] += other.vectorValues[i];
         }
-        System.out.println("Зашли по конуструктору вектор+вектор");
         return new Vector(tempVector);
     }
 
+    @Override
+    public Var mul(Var other) {
+        System.out.println("Зашли сюда как Vector*Var");
+        Object tempResult = this;
+        try {
+            Method method = this.getClass().getMethod(MUL_STRING_OPERATOR, other.getClass());
+            tempResult = method.invoke(this, other);
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return (Var) tempResult;
+    }
+
+    public Var mul(Scalar other) {
+        double[] tempVector = getVectorValues();
+        System.out.println("Зашли сюда как Vector*Scalar");
+        for (int i = 0; i < tempVector.length; i++) {
+            tempVector[i] *= other.getValue();
+        }
+        return new Vector(tempVector);
+    }
+
+    public Var mul(Vector other) {
+        System.out.println("Зашли сюда как Vector*Vector");
+        double result = 0;
+        for (int i = 0; i < this.vectorValues.length; i++) {
+            result += this.vectorValues[i] * other.vectorValues[i];
+        }
+        return new Scalar(result);
+    }
 
 
     @Override
     public Var sub(Var other) {
+        Object tempResult = this;
+        try {
+            Method method = tempResult.getClass().
+                    getMethod(SUB_OPERATOR, other.getClass());
+            tempResult = method.invoke(tempResult, other);
+        } catch (NoSuchMethodException e) {
+            try {
+                Method method = other.getClass().
+                        getMethod(SUB_OPERATOR, tempResult.getClass());
+                tempResult = method.invoke(other, tempResult);
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
+                ex.printStackTrace();
+            }
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+
         if (other instanceof Scalar otherScalar) {
             double[] tempVector = getVectorValues();
             for (int i = 0; i < tempVector.length; i++) {
@@ -110,24 +156,6 @@ public class Vector extends Var {
         }
     }
 
-    @Override
-    public Var mul(Var other) {
-        if (other instanceof Scalar otherScalar) {
-            double[] tempVector = getVectorValues();
-            for (int i = 0; i < tempVector.length; i++) {
-                tempVector[i] *= otherScalar.getValue();
-            }
-            return new Vector(tempVector);
-        } else if (other instanceof Vector otherVector) {
-            double result = 0;
-            for (int i = 0; i < this.vectorValues.length; i++) {
-                result += this.vectorValues[i] * otherVector.vectorValues[i];
-            }
-            return new Scalar(result);
-        } else {
-            return super.mul(other);
-        }
-    }
 
     @Override
     public Var div(Var other) {

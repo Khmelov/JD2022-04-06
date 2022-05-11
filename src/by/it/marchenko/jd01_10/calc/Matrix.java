@@ -1,6 +1,10 @@
 package by.it.marchenko.jd01_10.calc;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
+
+import static by.it.marchenko.jd01_10.calc.MessageConst.*;
 
 public class Matrix extends Var {
     final String INCORRECT_INPUT_MESSAGE = "Incorrect matrix input";
@@ -94,8 +98,21 @@ public class Matrix extends Var {
         return stringMatrix;
     }
 
+    @Override
+    public Var add(Var other) {
+        System.out.println("Зашли сюда как Matrix+Var");
+        Object tempResult = this;
+        try {
+            Method method = this.getClass().getMethod(ADD_STRING_OPERATOR, other.getClass());
+            tempResult = method.invoke(this, other);
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return (Var) tempResult;
+    }
+
     public Var add(Scalar other) {
-        System.out.println("Зашли сюда как матрица + скаляр");
+        System.out.println("Зашли сюда как Matrix + Scalar");
         double[][] tempMatrix = this.getMatrixValue();
         for (int i = 0; i < tempMatrix.length; i++) {
             for (int j = 0; j < tempMatrix[i].length; j++) {
@@ -106,7 +123,7 @@ public class Matrix extends Var {
     }
 
     public Var add(Matrix other) {
-        System.out.println("Зашли сюда как матрица + матрица");
+        System.out.println("Зашли сюда как Matrix + Matrix");
         double[][] tempMatrix = this.getMatrixValue();
         for (int i = 0; i < tempMatrix.length; i++) {
             for (int j = 0; j < tempMatrix[i].length; j++) {
@@ -114,6 +131,42 @@ public class Matrix extends Var {
             }
         }
         return new Matrix(tempMatrix);
+    }
+
+    @Override
+    public Var mul(Var other) {
+        System.out.println("Зашли сюда как Matrix*Var");
+        Object tempResult = this;
+        try {
+            Method method = this.getClass().getMethod(MUL_STRING_OPERATOR, other.getClass());
+            tempResult = method.invoke(this, other);
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return (Var) tempResult;
+    }
+
+    public Var mul(Scalar other) {
+        System.out.println("Зашли сюда как Matrix*Scalar");
+        double[][] tempMatrix = this.getMatrixValue();
+        for (int i = 0; i < tempMatrix.length; i++) {
+            for (int j = 0; j < tempMatrix[i].length; j++) {
+                tempMatrix[i][j] *= other.getValue();
+            }
+        }
+        return new Matrix(tempMatrix);
+    }
+
+    public Var mul(Vector other) {
+        System.out.println("Зашли сюда как Matrix*Vector");
+        double[][] tempMatrix = this.getMatrixValue();
+        return new Vector(calculateMatrixMultiply(tempMatrix, other.getVectorValues()));
+    }
+
+    public Var mul(Matrix other) {
+        System.out.println("Зашли сюда как Matrix*Matrix");
+        double[][] tempMatrix = this.getMatrixValue();
+        return new Matrix(calculateMatrixMultiply(tempMatrix, other.matrixValue));
     }
 
     @Override
@@ -136,27 +189,6 @@ public class Matrix extends Var {
             return new Matrix(tempMatrix);
         } else {
             return super.sub(other);
-        }
-    }
-
-    @Override
-    public Var mul(Var other) {
-        if (other instanceof Scalar otherScalar) {
-            double[][] tempMatrix = this.getMatrixValue();
-            for (int i = 0; i < tempMatrix.length; i++) {
-                for (int j = 0; j < tempMatrix[i].length; j++) {
-                    tempMatrix[i][j] *= otherScalar.getValue();
-                }
-            }
-            return new Matrix(tempMatrix);
-        } else if (other instanceof Vector otherVector) {
-            double[][] tempMatrix = this.getMatrixValue();
-            return new Vector(calculateMatrixMultiply(tempMatrix, otherVector.getVectorValues()));
-        } else if (other instanceof Matrix otherMatrix) {
-            double[][] tempMatrix = this.getMatrixValue();
-            return new Matrix(calculateMatrixMultiply(tempMatrix, otherMatrix.matrixValue));
-        } else {
-            return super.mul(other);
         }
     }
 

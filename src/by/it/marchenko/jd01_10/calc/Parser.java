@@ -6,7 +6,8 @@ import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static by.it.marchenko.jd01_09.MessageConst.*;
+//import static by.it.marchenko.jd01_10.MessageConst.*;
+import static by.it.marchenko.jd01_10.calc.MessageConst.*;
 
 public class Parser {
 
@@ -27,24 +28,24 @@ public class Parser {
             Object tempResult = varOperands[0];
             for (int i = 0; i < operator.length; i++) {
                 String methodName = switch (operator[i]) {
-                    case ADD_OPERATOR -> "add";
-                    case SUB_OPERATOR -> "sub";
-                    case MUL_OPERATOR -> "mul";
-                    case DIV_OPERATOR -> "div";
+                    case ADD_OPERATOR -> ADD_STRING_OPERATOR;
+                    case MUL_OPERATOR -> MUL_STRING_OPERATOR;
+                    case SUB_OPERATOR -> SUB_STRING_OPERATOR;
+                    case DIV_OPERATOR -> DIV_STRING_OPERATOR;
                     default -> null;
                 };
                 try {
                     Method method = tempResult.getClass().
-                            getMethod(methodName, varOperands[i + 1].getClass());
+                            getMethod(methodName, varOperands[i + 1].getClass().getSuperclass());
                     tempResult = method.invoke(tempResult, varOperands[i + 1]);
                 } catch (NoSuchMethodException e) {
-                    try {
-                        Method method = varOperands[i + 1].getClass().
-                                getMethod(methodName, tempResult.getClass());
-                        tempResult = method.invoke(varOperands[i + 1], tempResult);
-                    } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
-                        ex.printStackTrace();
-                    }
+                    //                   try {
+                    //    Method method = varOperands[i + 1].getClass().
+                    //            getMethod(methodName, tempResult.getClass());
+                    //    tempResult = method.invoke(varOperands[i + 1], tempResult);
+                    //} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
+                    //    ex.printStackTrace();
+                    //}
                 } catch (InvocationTargetException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
