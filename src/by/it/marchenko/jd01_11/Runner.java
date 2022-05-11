@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Runner {
-    public static final int INITIAL_CAPACITY = 10;
     public static final String FIRST_ELEMENT = "one";
     public static final String SECOND_ELEMENT = "two";
     public static final String THIRD_ELEMENT = "three";
@@ -25,6 +24,18 @@ public class Runner {
         System.out.println(stdList.get(stdList.size()-1));
 
         List<String> myList = new ListA<>();
+        myList.add(FIRST_ELEMENT);
+        myList.add(SECOND_ELEMENT);
+        myList.add(THIRD_ELEMENT);
+        myList.add(FORTH_ELEMENT);
+        myList.add(FIFTH_ELEMENT);
+        System.out.println(myList);
+        myList.remove(2);
+        System.out.println(myList);
+        System.out.println(myList.get(0));
+        System.out.println(myList.get(myList.size()-1));
+
+
 
     }
 }
