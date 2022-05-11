@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-public class BeanTester {
+class BeanTester {
     public static void main(String[] args) throws Exception {
         Class<?> structure = Bean.class;
         Constructor<?> constructor = structure.getDeclaredConstructor();

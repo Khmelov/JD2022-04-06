@@ -1,6 +1,6 @@
 package by.it.kadulin.jd01_10;
 
-public class Bean {
+class Bean {
 
     @Param(a= 100, b = 200)
     static double sum(int a, int b) {
