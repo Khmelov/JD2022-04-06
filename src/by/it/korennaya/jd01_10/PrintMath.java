@@ -1,5 +1,6 @@
 package by.it.korennaya.jd01_10;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.StringJoiner;
@@ -23,8 +24,17 @@ public class PrintMath {
                 System.out.println(line);
             }
         }
-        System.out.println("double E");
-        System.out.println("double PI");
+        Field[] fields = structure.getFields();
+        for (Field field : fields) {
+            if (Modifier.isPublic(field.getModifiers())) {
+              StringJoiner fieldline = new StringJoiner(" ");
+                addModifiers(field, fieldline);
+                fieldline.add(field.getType().getSimpleName());
+                String fieldname = field.getName();
+                 fieldline.add(fieldname);
+                System.out.println(fieldline);
+            }
+        }
     }
 
     private static void addModifiers(Method method, StringJoiner out) {
@@ -42,7 +52,26 @@ public class PrintMath {
             out.add("static");
         }
         if (Modifier.isFinal(modifiers)) {
-            out.add(" ");
+            out.add("final");
+        }
+    }
+
+    private static void addModifiers(Field field, StringJoiner out) {
+        int modifiers = field.getModifiers();
+        if (Modifier.isPublic(modifiers)) {
+            out.add("public");
+        }
+        if (Modifier.isPrivate(modifiers)) {
+            out.add("private");
+        }
+        if (Modifier.isProtected(modifiers)) {
+            out.add("protected");
+        }
+        if (Modifier.isStatic(modifiers)) {
+            out.add("static");
+        }
+        if (Modifier.isFinal(modifiers)) {
+            out.add("final");
         }
     }
 }
