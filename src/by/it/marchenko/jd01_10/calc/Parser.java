@@ -1,8 +1,8 @@
 package by.it.marchenko.jd01_10.calc;
 
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+//import java.lang.reflect.InvocationTargetException;/
+//import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,24 +24,18 @@ public class Parser {
                     operator[i] = operatorMatcher.group();
                 }
             }
-            Object tempResult = varOperands[0];
+            Var tempResult = varOperands[0];
             for (int i = 0; i < operator.length; i++) {
-                String methodName = switch (operator[i]) {
-                    case ADD_OPERATOR -> ADD_STRING_OPERATOR;
-                    case MUL_OPERATOR -> MUL_STRING_OPERATOR;
-                    case SUB_OPERATOR -> SUB_STRING_OPERATOR;
-                    case DIV_OPERATOR -> DIV_STRING_OPERATOR;
+                tempResult = switch (operator[i]) {
+                    // TODO NullPointerException during invocation
+                    case ADD_OPERATOR -> tempResult.add(varOperands[i + 1]);
+                    case SUB_OPERATOR -> tempResult.sub(varOperands[i + 1]);
+                    case MUL_OPERATOR -> tempResult.mul(varOperands[i + 1]);
+                    case DIV_OPERATOR -> tempResult.div(varOperands[i + 1]);
                     default -> null;
                 };
-                try {
-                    Method method = tempResult.getClass().
-                            getMethod(methodName, varOperands[i + 1].getClass().getSuperclass());
-                    tempResult = method.invoke(tempResult, varOperands[i + 1]);
-                } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
             }
-            return (Var) tempResult;
+            return tempResult;
         }
         return null;
     }
