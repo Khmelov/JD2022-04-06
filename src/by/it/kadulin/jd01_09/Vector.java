@@ -38,6 +38,26 @@ class Vector extends Var {
         return super.add(other);
     }
 
+//    public Var add(Scalar other) {
+//        double[] result = values.clone();
+//        for (int i = 0; i < result.length; i++) {
+//            result[i] = result[i] + other.getValue();
+//        }
+//        return new Vector(result);
+//    }
+//
+//    public Var add(Vector other) {
+//        double[] result = values.clone();
+//        for (int i = 0; i < result.length; i++) {
+//            result[i] = result[i] + other.values[i];
+//        }
+//        return new Vector(result);
+//    }
+//
+//    public Var add(Matrix other) {
+//        return super.add(other);
+//    }
+
     @Override
     public Var sub(Var other) {
         if (other instanceof Scalar scalar) {
@@ -56,6 +76,26 @@ class Vector extends Var {
         }
         return super.sub(other);
     }
+
+//    public Var sub(Scalar other) {
+//        double[] result = values.clone();
+//        for (int i = 0; i < result.length; i++) {
+//            result[i] = result[i] - other.getValue();
+//        }
+//        return new Vector(result);
+//    }
+//
+//    public Var sub(Vector other) {
+//        double[] result = values.clone();
+//        for (int i = 0; i < result.length; i++) {
+//            result[i] = result[i] - other.values[i];
+//        }
+//        return new Vector(result);
+//    }
+//
+//    public Var sub(Matrix other) {
+//        return super.add(other);
+//    }
 
     @Override
     public Var mul(Var other) {
@@ -76,6 +116,26 @@ class Vector extends Var {
         return super.mul(other);
     }
 
+//    public Var mul(Scalar other) {
+//        double[] result = values.clone();
+//        for (int i = 0; i < result.length; i++) {
+//            result[i] = result[i] * other.getValue();
+//        }
+//        return new Vector(result);
+//    }
+//
+//    public Var mul(Vector other) {
+//        double result = 0;
+//        for (int i = 0; i < other.values.length; i++) {
+//            result = result + (other.values[i] * this.values[i]);
+//        }
+//        return new Scalar(result);
+//    }
+//
+//    public Var mul(Matrix other) {
+//        return super.mul(other);
+//    }
+
     @Override
     public Var div(Var other) {
         if (other instanceof Scalar scalar) {
@@ -88,6 +148,14 @@ class Vector extends Var {
         return super.div(other);
     }
 
+//    public Var div(Scalar other) {
+//        double[] result = values.clone();
+//        for (int i = 0; i < result.length; i++) {
+//            result[i] = result[i] / other.getValue();
+//        }
+//        return new Vector(result);
+//    }
+//
     public double[] getValues() {
         return values.clone();
     }

@@ -13,6 +13,7 @@ public class Vector extends Var {
     }
 
     public Vector(Vector vector) {
+
         this(vector.values);
     }
 
