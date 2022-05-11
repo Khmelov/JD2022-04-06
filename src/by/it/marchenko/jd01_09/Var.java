@@ -6,11 +6,11 @@ abstract class Var implements Operation {
     final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
 
     //@Override
-    public Var operation(String operator, Var operand) {
+/*    public Var operation(String operator, Var operand) {
         printNotAvailableOperation(operator, operand);
         return null;
     }
-
+*/
     @Override
     public Var add(Var other) {
         printNotAvailableOperation(ADD_OPERATOR, other);

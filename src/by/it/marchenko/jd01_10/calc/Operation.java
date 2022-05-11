@@ -9,5 +9,5 @@ interface Operation {
 
     Var div(Var other);
 
-    Var operation(String operator, Var operand);
+ //   Var operation(String operator, Var operand);
 }
