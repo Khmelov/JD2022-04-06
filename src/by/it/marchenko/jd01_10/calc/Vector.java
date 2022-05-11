@@ -131,7 +131,7 @@ public class Vector extends Var {
                     getMethod(MUL_STRING_OPERATOR, MINUS_ONE.getClass());
             tempResult = methodMul.invoke(other, MINUS_ONE);
             Method methodAdd = this.getClass().getMethod(ADD_STRING_OPERATOR, other.getClass());
-            tempResult = methodAdd.invoke(this, tempResult);
+            tempResult = methodAdd.invoke(this, (Var)tempResult);
         } catch (NoSuchMethodException e) {
             return super.sub(other);
         } catch (InvocationTargetException | IllegalAccessException e) {

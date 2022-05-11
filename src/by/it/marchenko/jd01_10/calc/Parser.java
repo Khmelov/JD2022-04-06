@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//import static by.it.marchenko.jd01_10.MessageConst.*;
 import static by.it.marchenko.jd01_10.calc.MessageConst.*;
 
 public class Parser {
