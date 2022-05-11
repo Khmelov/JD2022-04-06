@@ -38,15 +38,7 @@ public class Parser {
                     Method method = tempResult.getClass().
                             getMethod(methodName, varOperands[i + 1].getClass().getSuperclass());
                     tempResult = method.invoke(tempResult, varOperands[i + 1]);
-                } catch (NoSuchMethodException e) {
-                    //                   try {
-                    //    Method method = varOperands[i + 1].getClass().
-                    //            getMethod(methodName, tempResult.getClass());
-                    //    tempResult = method.invoke(varOperands[i + 1], tempResult);
-                    //} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
-                    //    ex.printStackTrace();
-                    //}
-                } catch (InvocationTargetException | IllegalAccessException e) {
+                } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
             }

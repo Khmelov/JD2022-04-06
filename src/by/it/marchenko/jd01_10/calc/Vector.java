@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-//import static by.it.marchenko.jd01_09.MessageConst.SUB_OPERATOR;
 import static by.it.marchenko.jd01_10.calc.MessageConst.*;
 
 public class Vector extends Var {
@@ -61,7 +60,9 @@ public class Vector extends Var {
         try {
             Method method = this.getClass().getMethod(ADD_STRING_OPERATOR, other.getClass());
             tempResult = method.invoke(this, other);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
+            return super.add(other);
+        } catch (InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return (Var) tempResult;
@@ -93,7 +94,9 @@ public class Vector extends Var {
         try {
             Method method = this.getClass().getMethod(MUL_STRING_OPERATOR, other.getClass());
             tempResult = method.invoke(this, other);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
+            return super.mul(other);
+        } catch (InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return (Var) tempResult;
@@ -120,53 +123,47 @@ public class Vector extends Var {
 
     @Override
     public Var sub(Var other) {
+        final Scalar MINUS_ONE = new Scalar(-1d);
+        System.out.println("Зашли сюда как Vector-Var");
         Object tempResult = this;
         try {
-            Method method = tempResult.getClass().
-                    getMethod(SUB_OPERATOR, other.getClass());
-            tempResult = method.invoke(tempResult, other);
+            Method methodMul = other.getClass().
+                    getMethod(MUL_STRING_OPERATOR, MINUS_ONE.getClass());
+            tempResult = methodMul.invoke(other, MINUS_ONE);
+            Method methodAdd = this.getClass().getMethod(ADD_STRING_OPERATOR, other.getClass());
+            tempResult = methodAdd.invoke(this, tempResult);
         } catch (NoSuchMethodException e) {
-            try {
-                Method method = other.getClass().
-                        getMethod(SUB_OPERATOR, tempResult.getClass());
-                tempResult = method.invoke(other, tempResult);
-            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
-                ex.printStackTrace();
-            }
+            return super.sub(other);
         } catch (InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
-
-
-        if (other instanceof Scalar otherScalar) {
-            double[] tempVector = getVectorValues();
-            for (int i = 0; i < tempVector.length; i++) {
-                tempVector[i] -= otherScalar.getValue();
-            }
-            return new Vector(tempVector);
-        } else if (other instanceof Vector otherVector) {
-            double[] tempVector = getVectorValues();
-
-            for (int i = 0; i < tempVector.length; i++) {
-                tempVector[i] -= otherVector.vectorValues[i];
-            }
-            return new Vector(tempVector);
-        } else {
-            return super.sub(other);
-        }
+        return (Var) tempResult;
     }
 
 
     @Override
     public Var div(Var other) {
-        if (other instanceof Scalar otherScalar) {
-            double[] tempVector = getVectorValues();
-            for (int i = 0; i < tempVector.length; i++) {
-                tempVector[i] /= otherScalar.getValue();
-            }
-            return new Vector(tempVector);
-        } else {
+        System.out.println("Зашли сюда как Vector/Var");
+        Object tempResult = this;
+        try {
+            Method method = this.getClass().getMethod(DIV_STRING_OPERATOR, other.getClass());
+            tempResult = method.invoke(this, other);
+        } catch (NoSuchMethodException e) {
             return super.div(other);
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
         }
+        return (Var) tempResult;
+    }
+
+    public Var div(Scalar other) {
+        System.out.println("Зашли сюда как Vector/Scalar");
+        double[] tempVector = getVectorValues();
+        for (int i = 0; i < tempVector.length; i++) {
+            tempVector[i] /= other.getValue();
+        }
+        return new Vector(tempVector);
     }
 }
+
+

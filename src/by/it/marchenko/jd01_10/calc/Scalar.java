@@ -60,34 +60,45 @@ public class Scalar extends Var {
         return (Var) tempResult;
     }
 
-
     public Var mul(Scalar other) {
         System.out.println("Зашли сюда как Scalar*Scalar");
         return new Scalar(this.value * other.getValue());
     }
 
-    public Var sub(Scalar other) {
-        System.out.println("Зашли сюда по конструтору");
-        return new Scalar(this.value - other.getValue());
-    }
-
     @Override
     public Var sub(Var other) {
-        if (other instanceof Scalar otherScalar) {
-            return new Scalar(this.value - otherScalar.getValue());
-        } else {
-            return other.mul(new Scalar(-1)).add(this);
+        final Scalar MINUS_ONE = new Scalar(-1d);
+        System.out.println("Зашли сюда как Scalar-Var");
+        Object tempResult = this;
+        try {
+            Method methodMul = other.getClass().
+                    getMethod(MUL_STRING_OPERATOR, MINUS_ONE.getClass());
+            tempResult = methodMul.invoke(other, MINUS_ONE);
+            Method methodAdd = other.getClass().getMethod(ADD_STRING_OPERATOR, this.getClass());
+            tempResult = methodAdd.invoke(tempResult, this);
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
         }
+        return (Var) tempResult;
     }
-
 
     @Override
     public Var div(Var other) {
-        if (other instanceof Scalar otherScalar) {
-            return new Scalar(this.value / otherScalar.getValue());
-        } else {
-            return super.div(other);
+        System.out.println("Зашли сюда как Scalar/Var");
+        Object tempResult = this;
+        try {
+            Method method = this.getClass().getMethod(DIV_STRING_OPERATOR, other.getClass());
+            tempResult = method.invoke(this, other);
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
         }
+        return (Var) tempResult;
     }
+
+    public Var div(Scalar other) {
+        System.out.println("Зашли сюда как Scalar/Scalar");
+        return new Scalar(this.value / other.getValue());
+    }
+
 
 }

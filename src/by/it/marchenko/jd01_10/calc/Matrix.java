@@ -105,7 +105,9 @@ public class Matrix extends Var {
         try {
             Method method = this.getClass().getMethod(ADD_STRING_OPERATOR, other.getClass());
             tempResult = method.invoke(this, other);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
+            return super.add(other);
+        } catch (InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return (Var) tempResult;
@@ -140,7 +142,9 @@ public class Matrix extends Var {
         try {
             Method method = this.getClass().getMethod(MUL_STRING_OPERATOR, other.getClass());
             tempResult = method.invoke(this, other);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
+            return super.mul(other);
+        } catch (InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return (Var) tempResult;
@@ -171,6 +175,28 @@ public class Matrix extends Var {
 
     @Override
     public Var sub(Var other) {
+        final Scalar MINUS_ONE = new Scalar(-1d);
+        System.out.println("Зашли сюда как Matrix-Var");
+        Object tempResult = this;
+        try {
+            Method methodMul = other.getClass().
+                    getMethod(MUL_STRING_OPERATOR, MINUS_ONE.getClass());
+            tempResult = methodMul.invoke(other, MINUS_ONE);
+            Method methodAdd = this.getClass().getMethod(ADD_STRING_OPERATOR, other.getClass());
+            tempResult = methodAdd.invoke(this, tempResult);
+        } catch (NoSuchMethodException e) {
+            return super.sub(other);
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return (Var) tempResult;
+
+
+
+
+
+
+/*
         if (other instanceof Scalar otherScalar) {
             double[][] tempMatrix = this.getMatrixValue();
             for (int i = 0; i < tempMatrix.length; i++) {
@@ -189,7 +215,35 @@ public class Matrix extends Var {
             return new Matrix(tempMatrix);
         } else {
             return super.sub(other);
+
         }
+*/
+    }
+
+    @Override
+    public Var div(Var other) {
+        System.out.println("Зашли сюда как Matrix/Var");
+        Object tempResult = this;
+        try {
+            Method method = this.getClass().getMethod(DIV_STRING_OPERATOR, other.getClass());
+            tempResult = method.invoke(this, other);
+        } catch (NoSuchMethodException e) {
+            return super.div(other);
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return (Var) tempResult;
+    }
+
+    public Var div(Scalar other) {
+        System.out.println("Зашли сюда как Matrix/Scalar");
+        double[][] tempMatrix = this.getMatrixValue();
+        for (int i = 0; i < tempMatrix.length; i++) {
+            for (int j = 0; j < tempMatrix[i].length; j++) {
+                tempMatrix[i][j] /= other.getValue();
+            }
+        }
+        return new Matrix(tempMatrix);
     }
 
     private boolean checkInputMatrix(double[][] array) {
