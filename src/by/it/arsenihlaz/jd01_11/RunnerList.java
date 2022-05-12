@@ -25,5 +25,16 @@ public class RunnerList {
         System.out.println("Good cat is " + catNameList.get(0));
 //        ArrayList<String> catNameList2 = new ArrayList<>();
 //        catNameList2.remove(0);
+
+        catNameList = new ListB<>();
+        catNameList.add("Vatrushka");
+        catNameList.add("Chernoslivka");
+        catNameList.add("Barsik");
+        catNameList.add("Ibragim");
+        System.out.println(catNameList);
+        catNameList.set(2, "Barsik v2.0");
+        System.out.println(catNameList);
+        catNameList.add(1, "Pushistaia jopka");
+        System.out.println(catNameList);
     }
 }

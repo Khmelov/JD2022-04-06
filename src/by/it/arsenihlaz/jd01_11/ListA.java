@@ -11,7 +11,6 @@ public class ListA<T> implements List<T> {
 
     @Override
     public boolean add(T t) {
-
         int index = 0;
         if (size == elements.length) {
             //elements = Arrays.copyOf(elements, elements.length * 2 + 1);
