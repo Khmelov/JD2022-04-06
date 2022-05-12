@@ -26,8 +26,7 @@ public class ListA<E> implements List<E> {
     @Override
     public boolean add(E e) {
         if (capacity == elements.length) {
-            capacity = (int) (capacity * 1.5) + 1;
-            elements = Arrays.copyOf(elements, capacity);
+            elements = Arrays.copyOf(elements, (int) (capacity * 1.5) + 1);
         }
         elements[capacity++] = e;
         return true;
@@ -55,6 +54,7 @@ public class ListA<E> implements List<E> {
         return capacity;
     }
 
+    //TODO recent interfaces
     @Override
     public boolean isEmpty() {
         return false;
