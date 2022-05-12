@@ -7,6 +7,26 @@ import java.util.ListIterator;
 
 public class ListA<T> implements List<T> {
     @Override
+    public boolean add(T t) {
+        return false;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    @Override
+    public T get(int index) {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "ListA{}";
+    }
+
+    @Override
     public int size() {
         return 0;
     }
@@ -37,16 +57,6 @@ public class ListA<T> implements List<T> {
     }
 
     @Override
-    public boolean add(T t) {
-        return false;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
     public boolean containsAll(Collection<?> c) {
         return false;
     }
@@ -74,11 +84,6 @@ public class ListA<T> implements List<T> {
     @Override
     public void clear() {
 
-    }
-
-    @Override
-    public T get(int index) {
-        return null;
     }
 
     @Override
