@@ -10,14 +10,12 @@ public class Vector extends Var {
         this.values = Arrays.copyOf(values, values.length);
     }
 
-    public double[] getValues() {
+    public double[] getValue() {
         return this.values.clone();
     }
 
     @Override
     public String toString() {
-        return "Vector{" +
-                "values=" + Arrays.toString(values) +
-                '}';
+        return "Vector{" +"values=" + Arrays.toString(values) +'}';
     }
 }

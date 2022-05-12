@@ -20,7 +20,7 @@ public class Runner {
 //        print(m1.sub(m2));
 
         /* Уровень сложности A (калькулятор) */
-//        print(s.add(s2)); //выведет в консоль 6.0
+        print(s.add(s2)); //выведет в консоль 6.0
 //        print(s.add(v));
 //        print(s.add(m));
 //        print(s.add(m));
@@ -54,7 +54,7 @@ public class Runner {
 //        print(m.mul(s));
 //        print(m.mul(s));
 //        print(m.mul(v)); //{14.0, 32.0, 50.0}
-        print(m.div(s));
-        print(m.div(s));
+//        print(m.div(s));
+//        print(m.div(s));
     }
 }
