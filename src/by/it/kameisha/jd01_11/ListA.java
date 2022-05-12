@@ -1,29 +1,42 @@
 package by.it.kameisha.jd01_11;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class ListA<T> implements List<T> {
+    private T[] elements = (T[]) new Object[10];
+
+    private int size = 0;
+
     @Override
     public boolean add(T t) {
-        return false;
+        if (size == elements.length) {
+            elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
+        }
+        elements[size] = t;
+        size++;
+        return true;
     }
 
     @Override
-    public boolean remove(Object o) {
-        return false;
+    public T remove(int index) {
+        T result = elements[index];
+        System.arraycopy(elements, index + 1, elements, index, size - index - 1);
+        elements[--size] = null;
+        return result;
     }
 
     @Override
     public T get(int index) {
-        return null;
+        return elements[index];
     }
 
     @Override
     public String toString() {
-        return "ListA{}";
+        StringJoiner out = new StringJoiner(", ", "[", "]");
+        for (int i = 0; i < size; i++) {
+            out.add(elements[i].toString());
+        }
+        return out.toString();
     }
 
     @Override
@@ -72,6 +85,11 @@ public class ListA<T> implements List<T> {
     }
 
     @Override
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    @Override
     public boolean removeAll(Collection<?> c) {
         return false;
     }
@@ -94,11 +112,6 @@ public class ListA<T> implements List<T> {
     @Override
     public void add(int index, T element) {
 
-    }
-
-    @Override
-    public T remove(int index) {
-        return null;
     }
 
     @Override
