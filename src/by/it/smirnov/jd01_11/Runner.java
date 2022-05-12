@@ -15,6 +15,7 @@ public class Runner {
         list.add("five");
         System.out.println(list);
         list.remove(2);
+        list.add(1, "fourteen");
         System.out.println(list);
         String line = list.toString();
         System.out.println(line);
@@ -22,7 +23,7 @@ public class Runner {
         System.out.println();
         System.out.println();
 
-        list = new ListA<>();
+        list = new ListB<>();
         list.add("six");
         list.add("seven");
         list.add("eight");
@@ -31,9 +32,10 @@ public class Runner {
         list.add("eleven");
         System.out.println(list);
         list.remove(2);
+        list.add(1, "fourteen");
         System.out.println(list);
-        String line1 = list.toString();
-        System.out.println(line);
+
+        System.out.println(list.toString());
         System.out.printf("First = %s, Last = %s", list.get(0), list.get(list.size() - 1));
     }
 }
