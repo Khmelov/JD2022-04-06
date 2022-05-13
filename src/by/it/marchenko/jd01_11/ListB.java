@@ -2,6 +2,7 @@ package by.it.marchenko.jd01_11;
 
 import java.util.*;
 
+@SuppressWarnings({"unchecked", "ConstantConditions"})
 public class ListB<E> implements List<E> {
     public static final int INITIAL_LENGTH = 10;
     public static final double CAPACITY_INCREMENT = 1.5;

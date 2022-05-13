@@ -3,6 +3,7 @@ package by.it.marchenko.jd01_11;
 import java.util.*;
 
 
+@SuppressWarnings({"unchecked", "ConstantConditions"})
 public class ListA<E> implements List<E> {
     private static final int INITIAL_CAPACITY = 10;
     private static final String DELIMITER = ", ";

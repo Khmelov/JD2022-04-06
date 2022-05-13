@@ -3,6 +3,7 @@ package by.it.marchenko.jd01_11;
 import java.util.*;
 
 
+@SuppressWarnings("unchecked")
 public class SetC<E> implements Set<E> {
     private static final int INITIAL_CAPACITY = 10;
     private static final double LOAD_FACTOR = 0.25d;
@@ -85,9 +86,9 @@ public class SetC<E> implements Set<E> {
     public boolean addAll(Collection<? extends E> c) {
         E[] arrayForAdd = (E[]) c.toArray();
         boolean elementAdded = false;
-        for (int i = 0; i < arrayForAdd.length; i++) {
-            if (!this.contains(arrayForAdd[i])) {
-                this.add(arrayForAdd[i]);
+        for (E elementForAdd : arrayForAdd) {
+            if (!this.contains(elementForAdd)) {
+                this.add(elementForAdd);
                 elementAdded = true;
             }
         }
@@ -97,8 +98,8 @@ public class SetC<E> implements Set<E> {
     @Override
     public boolean containsAll(Collection<?> c) {
         E[] arrayForAdd = (E[]) c.toArray();
-        for (int i = 0; i < arrayForAdd.length; i++) {
-            if (!this.contains(arrayForAdd[i])) {
+        for (E elementForAdd : arrayForAdd) {
+            if (!this.contains(elementForAdd)) {
                 return false;
             }
         }
@@ -108,8 +109,8 @@ public class SetC<E> implements Set<E> {
     @Override
     public Iterator<E> iterator() {
 
-        return new Iterator() {
-            int currentPosition = 0;
+        return new Iterator<>() {
+            private int currentPosition = 0;
 
             @Override
             public boolean hasNext() {
@@ -117,7 +118,7 @@ public class SetC<E> implements Set<E> {
             }
 
             @Override
-            public Object next() {
+            public E next() {
                 return elements[currentPosition++];
             }
         };
@@ -133,9 +134,9 @@ public class SetC<E> implements Set<E> {
     public boolean removeAll(Collection<?> c) {
         E[] arrayForRemove = (E[]) c.toArray();
         boolean elementRemoved = false;
-        for (int i = 0; i < arrayForRemove.length; i++) {
-            if (this.contains(arrayForRemove[i])) {
-                this.remove(arrayForRemove[i]);
+        for (E elementForRemove : arrayForRemove) {
+            if (this.contains(elementForRemove)) {
+                this.remove(elementForRemove);
                 elementRemoved = true;
             }
         }
@@ -149,6 +150,7 @@ public class SetC<E> implements Set<E> {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public <T> T[] toArray(T[] a) {
         return null;
