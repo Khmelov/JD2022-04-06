@@ -1,6 +1,5 @@
 package by.it.machuga.jd01_11;
 
-
 import java.util.*;
 
 public class ListB<T> implements List<T> {
@@ -68,7 +67,6 @@ public class ListB<T> implements List<T> {
         return returnValue;
     }
 
-    //    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override
     public int size() {
         return size;
@@ -76,12 +74,78 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
     public boolean contains(Object o) {
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                if (elements[i] == null) {
+                    return true;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (o.equals(elements[i])) {
+                    return true;
+                }
+            }
+        }
         return false;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        int index = indexOf(o);
+        if (index < 0) {
+            return false;
+        }
+        return remove(index) == o;
+    }
+
+    @Override
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        size = 0;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        int index = -1;
+        if (!isEmpty()) {
+            if (o == null) {
+                for (int i = 0; i < size; i++) {
+                    if (elements[i] == null) {
+                        index = i;
+                        break;
+                    }
+                }
+            } else {
+                for (int i = 0; i < size; i++) {
+                    if (o.equals(elements[i])) {
+                        index = i;
+                        break;
+                    }
+                }
+            }
+        }
+        return index;
+    }
+
+    @Override
+    public boolean containsAll(Collection c) {
+        if (isEmpty() || c.isEmpty()) {
+            return false;
+        }
+        for (Object element : c) {
+            if (!contains(element)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -95,23 +159,8 @@ public class ListB<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
     public boolean addAll(int index, Collection c) {
         return false;
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
     }
 
     @Override
@@ -141,11 +190,6 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean removeAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection c) {
         return false;
     }
 

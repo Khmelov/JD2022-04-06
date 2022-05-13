@@ -1,21 +1,17 @@
 package by.it.machuga.jd01_11;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class SetC<T> implements Set<T> {
 
-    private HashMap<T,Object> elements =  new HashMap<>();
-    private final Object VALUE=new Object();
+    private List<T> elements = new ListB<T>();
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("[");
         String delimiter = "";
-        for (T element : elements.keySet()) {
-            stringBuilder.append(delimiter).append(element);
+        for (int i = 0; i < elements.size(); i++) {
+            stringBuilder.append(delimiter).append(elements.get(i));
             delimiter = ", ";
         }
         stringBuilder.append("]");
@@ -24,17 +20,21 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public boolean add(T t) {
-        return elements.put(t,VALUE)==VALUE;
+        if (!contains(t)) {
+            return elements.add(t);
+        }
+        return false;
     }
+
 
     @Override
     public boolean remove(Object o) {
-        return elements.remove(o)==VALUE;
+        return elements.remove(o);
     }
 
     @Override
     public boolean contains(Object o) {
-        return elements.containsKey(o);
+        return elements.contains(o);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return elements.keySet().containsAll(c);
+        return elements.containsAll(c);
     }
 
     @Override
@@ -67,12 +67,11 @@ public class SetC<T> implements Set<T> {
         }
         return true;
     }
+
     @Override
     public void clear() {
         elements.clear();
     }
-
-    //------------------------------------
 
     @Override
     public Iterator<T> iterator() {

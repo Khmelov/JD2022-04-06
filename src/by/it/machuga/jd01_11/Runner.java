@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class Runner {
     public static void main(String[] args) {
+
+// ArrayList
         List<String> list = new ArrayList<>();
         list.add("one");
         list.add("two");
@@ -19,7 +21,7 @@ public class Runner {
         System.out.printf("first=%s last=%s%n", list.get(0), list.get(list.size() - 1));
         System.out.println();
 
-
+//ListA
         list = new ListA<>();
         list.add("one");
         list.add("two");
@@ -32,7 +34,7 @@ public class Runner {
         System.out.printf("first=%s last=%s%n", list.get(0), list.get(list.size() - 1));
         System.out.println();
 
-
+//ListB
         list = new ListB<>();
         list.add("one");
         list.add("two");
@@ -56,9 +58,11 @@ public class Runner {
 
         list.set(3, "ten");
         System.out.println(list);
+
+        list.add(2, "zero");
         System.out.println();
 
-
+//SetC
         Set<String> set = new SetC<>();
         set.add("one");
         set.add("two");
@@ -67,12 +71,31 @@ public class Runner {
         set.add("five");
         System.out.println(set);
 
-        Set<String> arrayList = new HashSet<>();
-        arrayList.add("six");
-        arrayList.add("seven");
-        arrayList.add("eight");
-        arrayList.add("nine");
-        arrayList.addAll(temp);
-        System.out.println(list);
+        set.remove("two");
+        System.out.println(set);
+
+        System.out.println(set.contains("three"));
+        System.out.println(set.contains("two"));
+        System.out.println("set size = " + set.size());
+        System.out.println("is empty? ->" + set.isEmpty());
+
+
+        Set<String> hashSet = new HashSet<>();
+        hashSet.add("six");
+        hashSet.add("seven");
+        hashSet.add("eight");
+        hashSet.add("nine");
+        set.addAll(hashSet);
+        System.out.println(set);
+
+        System.out.println(set.containsAll(hashSet));
+        set.remove("six");
+        System.out.println(set.containsAll(hashSet));
+
+        set.removeAll(hashSet);
+        System.out.println(set);
+
+        set.clear();
+        System.out.println(set);
     }
 }
