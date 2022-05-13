@@ -2,6 +2,7 @@ package by.it.kadulin.jd01_11;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Runner {
     public static void main(String[] args) {
@@ -24,24 +25,27 @@ public class Runner {
 //        list.remove(2);
 //        System.out.println(list);
 //        System.out.printf("first=%s last=%s%n", list.get(0), list.get(list.size() - 1));
-        List<Long> a = new ListB<>();
+        Set<Short> a = new SetC<>();
         for (int i = 0; i < 10; i++) {
-            a.add(i * 2L);
+            a.add((short) (i * 2));
             System.out.println(a.toString());
         }
-        System.out.println(a.toString());
         a.remove(0);
-        System.out.println(a.toString());
         a.remove(8);
-        System.out.println(a.toString());
         a.remove(4);
         System.out.println(a.toString());
-        Long aLong = a.get(6);
-        System.out.println("get from list " + aLong);
-        System.out.println(a.toString());
-        a.set(0, 0L);
-        System.out.println(a.toString());
-        a.set(6, null);
+        List<Short> added = new ArrayList<>();
+        added.add(null);
+        added.add(null);
+        added.add((short) 1000);
+        added.add((short) 1000);
+        added.add((short) 1001);
+        added.add((short) 1002);
+//        Long x = 10121413431412341L;
+//        Long y = 10121413431412341L;
+//        System.out.println(x.equals(y));
+        a.addAll(added);
+        a.containsAll(added);
         System.out.println(a.toString());
     }
 }
