@@ -36,7 +36,7 @@ public class ListB<T> implements List<T> {
 
     @Override
     public T set(int index, T element) {
-        if (size == 0 || index >= size) {
+        if (index >= size) {
             return null;
         } else {
             T result = elements[index];
@@ -66,13 +66,9 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        if (size+c.size()==elements.length){
-            elements = Arrays.copyOf(elements, elements.length*3/2+1);
-        }
-        T[] collection = (T[]) c.toArray();
-        for (int i = 0; i < collection.length; i++) {
-            elements[size+i-1] = collection[i];
-        }
+        Object[] collection = c.toArray();
+        System.arraycopy(collection, 0, elements, size, collection.length);
+        size = size + collection.length;
         return true;
     }
 

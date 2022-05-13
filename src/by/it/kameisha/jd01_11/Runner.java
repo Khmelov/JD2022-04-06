@@ -17,6 +17,8 @@ public class Runner {
         System.out.println(list1.get(2));
         list1.add(4,"six");
         System.out.println(list1);
+        list1.addAll(list1);
+        System.out.println(list1);
         ListB<String> list=new ListB<>();
         list.add("one"); //0
         list.add("two"); //1
@@ -28,6 +30,8 @@ public class Runner {
         System.out.println(list);
         System.out.println(list.get(2));
         list.add(4,"six");
+        System.out.println(list);
+        list.addAll(list);
         System.out.println(list);
 
 
