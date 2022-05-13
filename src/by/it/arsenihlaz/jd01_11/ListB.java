@@ -5,14 +5,14 @@ import java.util.function.UnaryOperator;
 
 public class ListB<T> implements List<T> {
 
-    private T[] elements = (T[]) new Object[10];
+    private T[] elements = (T[]) new Object[0];
     private int size = 0;
 
     @Override
     public boolean add(T t) {
         int index = 0;
         if (size == elements.length) {
-            System.arraycopy(elements, index, elements, index + 1, size - index);
+            elements = Arrays.copyOf(elements, elements.length * 2 + 1);
         }
         elements[size] = t;
         size++;
@@ -39,11 +39,17 @@ public class ListB<T> implements List<T> {
 
     @Override
     public String toString() {
-        StringJoiner out = new StringJoiner(", ", "[", "]");
-
+//        StringJoiner out = new StringJoiner(", ", "[", "]");
+//        for (int i = 0; i < size; i++) {
+//            out.add(elements[i].toString());
+//        }
+        StringBuilder out = new StringBuilder("[");
+        String delimeter = "";
         for (int i = 0; i < size; i++) {
-            out.add(elements[i].toString());
+            out.append(delimeter).append(elements[i]);
+            delimeter = ", ";
         }
+        out.append("]");
         return out.toString();
     }
 
@@ -63,7 +69,14 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        Object[] a = c.toArray();
+        int numNew = a.length;
+        if (numNew == 0) {
+            return false;
+        }
+            System.arraycopy(a, 0, elements, size, numNew);
+        size = size + numNew;
+        return true;
     }
 
     //------------------------------------------------------------------------
