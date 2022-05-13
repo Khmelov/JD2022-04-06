@@ -1,4 +1,4 @@
-package by.it._classwork_.jd01_11;
+package by.it.marchenko.jd01_11;
 
 import java.util.*;
 

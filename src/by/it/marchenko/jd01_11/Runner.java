@@ -1,8 +1,7 @@
 package by.it.marchenko.jd01_11;
 
-import by.it._classwork_.jd01_11.ListB;
-
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Runner {
@@ -123,6 +122,24 @@ public class Runner {
         System.out.printf("StdList: Remove: %-7s List: %-85s Result: %s%n", search2, stdList, b1);
         System.out.printf("myListB: Remove: %-7s List: %-85s Result: %s%n", search2, myListB, b2);
 
+        HashSet<String> stdSet = new HashSet<>();
+        stdSet.add(FIRST_ELEMENT);
+        stdSet.add(SECOND_ELEMENT);
+        stdSet.add(THIRD_ELEMENT);
+        stdSet.add(FORTH_ELEMENT);
+        stdSet.add(FIFTH_ELEMENT);
+        stdSet.add(FIRST_ELEMENT);
+
+        SetC<String> mySetC = new SetC<>();
+        mySetC.add(FIRST_ELEMENT);
+        mySetC.add(SECOND_ELEMENT);
+        mySetC.add(THIRD_ELEMENT);
+        mySetC.add(FORTH_ELEMENT);
+        mySetC.add(FIFTH_ELEMENT);
+        mySetC.add(FIRST_ELEMENT);
+
+        System.out.println(stdSet);
+        System.out.println(mySetC);
 
 
     }
