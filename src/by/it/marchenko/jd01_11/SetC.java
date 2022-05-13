@@ -18,7 +18,12 @@ public class SetC<E> implements Set<E> {
     public String toString() {
         StringJoiner out = new StringJoiner(TO_STRING_DELIMITER, TO_STRING_PREFIX, TO_STRING_SUFFIX);
         for (int i = 0; i < size; i++) {
-            out.add(elements[i].toString());
+            if (elements[i] != null) {
+                out.add(elements[i].toString());
+            } else {
+                out.add("null");
+            }
+
         }
         return out.toString();
     }
@@ -73,7 +78,31 @@ public class SetC<E> implements Set<E> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        E[] arrayForAdd = (E[]) c.toArray();
+        boolean elementAdded = false;
+        for (int i = 0; i < arrayForAdd.length; i++) {
+            if (!this.contains(arrayForAdd[i])) {
+                this.add(arrayForAdd[i]);
+                elementAdded = true;
+            }
+        }
+        return elementAdded;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        E[] arrayForAdd = (E[]) c.toArray();
+        for (int i = 0; i < arrayForAdd.length; i++) {
+            if (!this.contains(arrayForAdd[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -101,32 +130,32 @@ public class SetC<E> implements Set<E> {
     }
 
     @Override
+    public boolean removeAll(Collection<?> c) {
+        E[] arrayForRemove = (E[]) c.toArray();
+        boolean elementRemoved = false;
+        for (int i = 0; i < arrayForRemove.length; i++) {
+            if (this.contains(arrayForRemove[i])) {
+                this.remove(arrayForRemove[i]);
+                elementRemoved = true;
+            }
+        }
+        return elementRemoved;
+    }
+
+    @Override
+    public void clear() {
+        while (!isEmpty()) {
+            elements[size--] = null;
+        }
+    }
+
+    @Override
     public <T> T[] toArray(T[] a) {
         return null;
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends E> c) {
-        return false;
-    }
-
-    @Override
     public boolean retainAll(Collection<?> c) {
         return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public void clear() {
-
     }
 }

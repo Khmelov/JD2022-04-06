@@ -128,7 +128,6 @@ public class Runner {
         stdSet.add(THIRD_ELEMENT);
         stdSet.add(FORTH_ELEMENT);
         stdSet.add(FIFTH_ELEMENT);
-        stdSet.add(FIRST_ELEMENT);
 
         SetC<String> mySetC = new SetC<>();
         mySetC.add(FIRST_ELEMENT);
@@ -136,10 +135,33 @@ public class Runner {
         mySetC.add(THIRD_ELEMENT);
         mySetC.add(FORTH_ELEMENT);
         mySetC.add(FIFTH_ELEMENT);
-        mySetC.add(FIRST_ELEMENT);
 
         System.out.println(stdSet);
         System.out.println(mySetC);
+
+        List<String> listToAdd2 = new ArrayList<>();
+        listToAdd2.add(FIRST_ELEMENT);
+        listToAdd2.add(SECOND_ELEMENT);
+        listToAdd2.add("Honda");
+        System.out.println(listToAdd);
+
+        System.out.println(stdSet.addAll(listToAdd));
+        System.out.println(mySetC.addAll(listToAdd));
+        System.out.println(stdSet);
+        System.out.println(mySetC);
+
+        System.out.println(stdSet.containsAll(listToAdd));
+        System.out.println("-".repeat(50));
+        System.out.println(stdSet);
+        listToAdd2.remove(0);
+        listToAdd2.remove(0);
+        listToAdd.add("HomeWork");
+        System.out.println(listToAdd2);
+
+
+        //System.out.println(stdSet.removeAll(listToAdd2));
+        System.out.println(stdSet);
+
 
 
     }
