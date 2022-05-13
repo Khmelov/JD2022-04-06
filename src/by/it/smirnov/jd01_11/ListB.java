@@ -151,6 +151,19 @@ public class ListB<E> implements List<E> {
         return 0;
     }
 
+
+/*
+    @Override
+    public int indexOf(Object o) {
+        E[] array2 = (E[])new Object[]{array};
+        Arrays.sort(array2, (Comparator.comparing(Object::toString)));
+        return Arrays.binarySearch(array2, o);
+    }
+
+
+ */
+
+
     @Override
     public int lastIndexOf(Object o) {
         return 0;
