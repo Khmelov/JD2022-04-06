@@ -1,35 +1,87 @@
 package by.it.ragach.jd01_11;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class ListB<E> implements List <E>{
+    private E[] elements = (E[]) new Object[10];
+    private  int size = 0;
+
+
+
     @Override
     public boolean add(E e) {
-        return false;
+        if (size==elements.length-1){
+            elements= Arrays.copyOf(elements,elements.length*3/2+1);
+        }
+        elements [size] = e ;
+        size++;
+        return true;
+
     }
 
     @Override
-    public boolean remove(Object o) {
-        return false;
+    public E remove(int index) {
+        E result = elements[index];
+        System.arraycopy(elements,index+1,elements,index,size-index-1);
+        elements[--size]=null;
+        return result;
     }
 
     @Override
     public E get(int index) {
-        return null;
+        return elements[index];
     }
 
 
     @Override
     public E set(int index, E element) {
-        return null;
+        E result = elements[index];
+        elements[index]=element;
+        return result;
+    }
+
+
+    @Override
+    public int size() {
+        return size;
     }
 
     @Override
     public void add(int index, E element) {
+        if (size==elements.length-1){
+            elements= Arrays.copyOf(elements,elements.length*3/2+1);
+            }
 
+        System.arraycopy(elements,index+0,elements,index+1,size-index);
+        elements[index]=element;
+        size++;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        if  (size<=elements.length-1+c.size()){
+            elements = Arrays.copyOf(elements,elements.length*3/2+c.size());
+
+        }
+        int index = size;
+        for (E element : c) {
+            elements[index] = element;
+            index++;
+        }
+        size=size+ c.size();
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("[");
+        String delimiter = "";
+        for (int i = 0; i < size; i++) {
+            stringBuilder.append(delimiter).append(elements[i]);
+            delimiter = ", ";
+        }
+        stringBuilder.append("]");
+        return stringBuilder.toString();
     }
 
     @Override
@@ -37,16 +89,6 @@ public class ListB<E> implements List <E>{
         return false;
     }
 
-
-    @Override
-    public String toString() {
-        return "ListB{}";
-    }
-
-    @Override
-    public int size() {
-        return 0;
-    }
 
     @Override
     public boolean isEmpty() {
@@ -79,7 +121,7 @@ public class ListB<E> implements List <E>{
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean remove(Object o) {
         return false;
     }
 
@@ -96,11 +138,6 @@ public class ListB<E> implements List <E>{
     @Override
     public void clear() {
 
-    }
-
-    @Override
-    public E remove(int index) {
-        return null;
     }
 
     @Override

@@ -15,6 +15,9 @@ public class Runner {
         list.remove(2);
         System.out.println(list);
         System.out.printf("first = %s last=%s%n",list.get(0), list.get(list.size()-1));
+        System.out.println(list.set(3,"seven"));
+        System.out.println(list);
+
 
 
         list = new ListA<>();
@@ -27,6 +30,23 @@ public class Runner {
         list.remove(2);
         System.out.println(list);
         System.out.printf("first = %s last=%s%n",list.get(0), list.get(list.size()-1));
+
+
+
+
+        list = new ListB<>();
+        list.add("one");
+        list.add("two");
+        list.add("three");
+        list.add("four");
+        list.add("five");
+        System.out.println(list);
+        list.remove(2);
+        System.out.println(list);
+        System.out.printf("first = %s last=%s%n",list.get(0), list.get(list.size()-1));
+        System.out.println(list.set(3,"seven"));
+        System.out.println(list);
+
 
     }
 }
