@@ -15,8 +15,21 @@ public class Runner {
         list.remove(2);
         System.out.println(list);
         System.out.printf("first=%s last=%s%n",list.get(0), list.get(list.size()-1));
+        list.set(1, null);
+        System.out.println(list);
+        list.add(1, "one");
+        System.out.println(list);
+        List<String> list2 = new ArrayList<>();
+        list2.add("added One");
+        list2.add("added Two");
+        list.addAll(0, list2);
+        System.out.println(list);
+        list.addAll(list2);
+        System.out.println(list);
+        System.out.println();
 
-        list = new ListA<>();
+
+        list = new ListB<>();
         list.add("one");
         list.add("two");
         list.add("three");
@@ -26,5 +39,13 @@ public class Runner {
         list.remove(2);
         System.out.println(list);
         System.out.printf("first=%s last=%s%n",list.get(0), list.get(list.size()-1));
+        list.set(1, null);
+        System.out.println(list);
+        list.add(1, "one");
+        System.out.println(list);
+        list.addAll(0, list2);
+        System.out.println(list);
+        list.addAll(list2);
+        System.out.println(list);
     }
 }
