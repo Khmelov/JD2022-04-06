@@ -25,7 +25,4 @@ public class MessageConst {
     public static final String SUB_OPERATOR = "-";
     public static final String MUL_OPERATOR = "*";
     public static final String DIV_OPERATOR = "/";
-
-
-
 }
