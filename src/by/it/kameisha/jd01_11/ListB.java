@@ -9,8 +9,8 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean add(T t) {
-        if(size==elements.length){
-            elements = Arrays.copyOf(elements, elements.length*3/2+1);
+        if (size == elements.length) {
+            elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
         }
         elements[size] = t;
         size++;
@@ -19,27 +19,61 @@ public class ListB<T> implements List<T> {
 
     @Override
     public T remove(int index) {
-        return null;
+        T result = elements[index];
+        System.arraycopy(elements, index + 1, elements, index, size - index - 1);
+        elements[--size] = null;
+        return result;
     }
 
     @Override
     public T get(int index) {
-        return null;
+        if (size == 0 || index >= size) {
+            return null;
+        } else {
+            return elements[index];
+        }
     }
 
     @Override
     public T set(int index, T element) {
-        return null;
+        if (size == 0 || index >= size) {
+            return null;
+        } else {
+            T result = elements[index];
+            elements[index] = element;
+            return result;
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner out = new StringJoiner(", ", "[", "]");
+        for (int i = 0; i < size; i++) {
+            out.add(elements[i].toString());
+        }
+        return out.toString();
     }
 
     @Override
     public void add(int index, T element) {
-
+        if (size == elements.length) {
+            elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
+        }
+        System.arraycopy(elements, index, elements, index + 1, size - index);
+        elements[index] = element;
+        size++;
     }
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        if (size+c.size()==elements.length){
+            elements = Arrays.copyOf(elements, elements.length*3/2+1);
+        }
+        T[] collection = (T[]) c.toArray();
+        for (int i = 0; i < collection.length; i++) {
+            elements[size+i-1] = collection[i];
+        }
+        return true;
     }
 
     @Override
