@@ -1,9 +1,9 @@
-package by.it.marchenko.jd01_10.calc;
+package by.it.marchenko.calc;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static by.it.marchenko.jd01_10.calc.MessageConst.*;
+import static by.it.marchenko.calc.MessageConst.*;
 
 public class Scalar extends Var {
     private final double value;
@@ -36,7 +36,7 @@ public class Scalar extends Var {
 
     @Override
     public Var add(Var other) {
-        System.out.println("Зашли сюда как Scalar+Var");
+        //System.out.println("Зашли сюда как Scalar+Var");
         Object tempResult = this;
         try {
             Method method = other.getClass().getMethod(ADD_STRING_OPERATOR, this.getClass());
@@ -48,13 +48,13 @@ public class Scalar extends Var {
     }
 
     public Var add(Scalar other) {
-        System.out.println("Зашли сюда как Scalar+Scalar");
+        //System.out.println("Зашли сюда как Scalar+Scalar");
         return new Scalar(this.value + other.getValue());
     }
 
     @Override
     public Var mul(Var other) {
-        System.out.println("Зашли сюда как Scalar*Var");
+        //System.out.println("Зашли сюда как Scalar*Var");
         Object tempResult = this;
         try {
             Method method = other.getClass().getMethod(MUL_STRING_OPERATOR, this.getClass());
@@ -66,14 +66,14 @@ public class Scalar extends Var {
     }
 
     public Var mul(Scalar other) {
-        System.out.println("Зашли сюда как Scalar*Scalar");
+        //System.out.println("Зашли сюда как Scalar*Scalar");
         return new Scalar(this.value * other.getValue());
     }
 
     @Override
     public Var sub(Var other) {
         final Scalar MINUS_ONE = new Scalar(-1d);
-        System.out.println("Зашли сюда как Scalar-Var");
+        //System.out.println("Зашли сюда как Scalar-Var");
         Object tempResult = this;
         try {
             Method methodMul = other.getClass().
@@ -89,7 +89,7 @@ public class Scalar extends Var {
 
     @Override
     public Var div(Var other) {
-        System.out.println("Зашли сюда как Scalar/Var");
+        //System.out.println("Зашли сюда как Scalar/Var");
         Object tempResult = this;
         try {
             Method method = this.getClass().getMethod(DIV_STRING_OPERATOR, other.getClass());
@@ -101,7 +101,7 @@ public class Scalar extends Var {
     }
 
     public Var div(Scalar other) {
-        System.out.println("Зашли сюда как Scalar/Scalar");
+        //System.out.println("Зашли сюда как Scalar/Scalar");
         return new Scalar(this.value / other.getValue());
     }
 
