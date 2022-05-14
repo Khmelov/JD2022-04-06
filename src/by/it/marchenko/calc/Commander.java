@@ -29,19 +29,20 @@ public class Commander {
 
     private static String printVariable(HashMap<String, Var> variables) {
         StringBuilder out = new StringBuilder("Available variables:");
-        for (String key : variables.keySet()) {
-            out.append("\n").append(key).append(ASSIGN_OPERATOR).append(variables.get(key));
+        for(Map.Entry<String,Var> element: variables.entrySet()) {
+            out.append("\n").append(element.getKey()).
+                    append(ASSIGN_OPERATOR).append(element.getValue());
         }
         out.append("\n");
         return out.toString();
     }
 
     private static String sortVariable(HashMap<String, Var> variables) {
-        List<String> keys = new ArrayList<>(variables.keySet());
-        Collections.sort(keys);
+        TreeMap<String,Var> sortedVariables = new TreeMap<>(variables);
         StringBuilder out = new StringBuilder("Available variables:");
-        for (String key : keys) {
-            out.append("\n").append(key).append(ASSIGN_OPERATOR).append(variables.get(key));
+        for(Map.Entry<String,Var> element: sortedVariables.entrySet()) {
+            out.append("\n").append(element.getKey()).
+                    append(ASSIGN_OPERATOR).append(element.getValue());
         }
         out.append("\n");
         return out.toString();
