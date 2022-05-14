@@ -8,11 +8,17 @@ public class ConsoleRunner {
         Scanner console = new Scanner(System.in);
         Input inputString = new Input(console);
         Parser parseString = new Parser();
+        Commander.loadCommand();
         while (inputString.runEnabled()) {
             inputString.setExpression();
             String tempString = inputString.getExpression();
-            Var result = parseString.calc(tempString);
-            Printer.print(inputString, result);
+            String resultString = Commander.performCommand(tempString);
+            if (resultString == null) {
+                Var result = parseString.calc(tempString);
+                Printer.print(inputString, result);
+            } else {
+                Printer.print(resultString);
+            }
         }
     }
 }

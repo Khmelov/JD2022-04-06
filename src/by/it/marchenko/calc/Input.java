@@ -9,7 +9,6 @@ public class Input {
     private int expressionNumber;
     private String expression;
 
-
     public Input(Scanner console) {
         this.console = console;
         this.expression = EMPTY_STRING;

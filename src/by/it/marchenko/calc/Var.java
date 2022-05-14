@@ -1,44 +1,38 @@
 package by.it.marchenko.calc;
 
-//import java.lang.reflect.*;
+import java.util.HashMap;
 
 import static by.it.marchenko.calc.MessageConst.*;
 
 abstract class Var implements Operation {
     final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
 
+    private final static HashMap<String, Var> varMap = new HashMap<>();
+
+    public static HashMap<String, Var> getVarMap() {
+        return varMap;
+    }
+
+    static void saveVariable(String name, Var variable){
+        varMap.put(name, variable);
+        //return variable;
+    }
+
+    public static Var createVar(String operand) {
+        if (operand.matches(SCALAR_PATTERN)) {
+            return new Scalar(operand);
+        } else if (operand.matches(VECTOR_PATTERN)) {
+            return new Vector(operand);
+        } else if (operand.matches(MATRIX_PATTERN)) {
+            return new Matrix(operand);
+        } else if (varMap.containsKey(operand)) {
+            return varMap.get(operand);
+        }
+        return null;
+    }
+
     @Override
     public Var add(Var other) {
-        //Class<? extends Var> leftClass = this.getClass();
-        //Class<? extends Var> rightClass = other.getClass();
-
-        //Constructor<?>[] constructors = leftClass.getConstructors();
-        //for (Constructor<?> constructor : constructors) {
-        //    System.out.println(constructor);
-            //constructor.
-        //}
-
-        //try {
-        //    Constructor<? extends Var> constructor = rightClass.getConstructor(String.class);
-        //    Object o = constructor.newInstance(other.toString());
-        //    System.out.println("leftO "+o.getClass().getSimpleName());
-
-            //Var var = constructor.newInstance(other.toString());
-            //System.out.println(var.);
-        //} catch (NoSuchMethodException e) {
-        //    e.printStackTrace();
-        //} catch (InvocationTargetException e) {
-        //    e.printStackTrace();
-        //} catch (InstantiationException e) {
-        //    e.printStackTrace();
-        //} catch (IllegalAccessException e) {
-        //    e.printStackTrace();
-        //}
-
-
-
-        //System.out.println(leftClass.getSimpleName()+rightClass.getSimpleName());
-
         printNotAvailableOperation(ADD_OPERATOR, other);
         return null;
     }
@@ -69,18 +63,6 @@ abstract class Var implements Operation {
     private void printNotAvailableOperation(String operator, Var other) {
         final String INCORRECT_OPERATION_MESSAGE = "Operation %s %s %s not available.%n";
         System.out.printf(INCORRECT_OPERATION_MESSAGE, this, operator, other);
-    }
-
-    public static Var createVar(String operand) {
-        if (operand.matches(SCALAR_PATTERN)){
-            return new Scalar(operand);
-        } else if (operand.matches(VECTOR_PATTERN)) {
-            return new Vector(operand);
-        }else if (operand.matches(MATRIX_PATTERN)) {
-            return new Matrix(operand);
-        }else{
-            return null;
-        }
     }
 
 }

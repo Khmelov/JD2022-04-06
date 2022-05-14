@@ -55,7 +55,7 @@ public class Vector extends Var {
 
     @Override
     public Var add(Var other) {
-        System.out.println("Зашли сюда как Vector+Var");
+        //System.out.println("Зашли сюда как Vector+Var");
         Object tempResult = this;
         try {
             Method method = this.getClass().getMethod(ADD_STRING_OPERATOR, other.getClass());
@@ -69,7 +69,7 @@ public class Vector extends Var {
     }
 
     public Var add(Scalar other) {
-        System.out.println("Зашли сюда как Vector+Scalar");
+        //System.out.println("Зашли сюда как Vector+Scalar");
         double[] tempVector = getVectorValues();
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] += other.getValue();
@@ -79,7 +79,7 @@ public class Vector extends Var {
     }
 
     public Var add(Vector other) {
-        System.out.println("Зашли сюда как Vector+Vector");
+        //System.out.println("Зашли сюда как Vector+Vector");
         double[] tempVector = getVectorValues();
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] += other.vectorValues[i];
@@ -89,7 +89,7 @@ public class Vector extends Var {
 
     @Override
     public Var mul(Var other) {
-        System.out.println("Зашли сюда как Vector*Var");
+        //System.out.println("Зашли сюда как Vector*Var");
         Object tempResult = this;
         try {
             Method method = this.getClass().getMethod(MUL_STRING_OPERATOR, other.getClass());
@@ -104,7 +104,7 @@ public class Vector extends Var {
 
     public Var mul(Scalar other) {
         double[] tempVector = getVectorValues();
-        System.out.println("Зашли сюда как Vector*Scalar");
+        //System.out.println("Зашли сюда как Vector*Scalar");
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] *= other.getValue();
         }
@@ -112,7 +112,7 @@ public class Vector extends Var {
     }
 
     public Var mul(Vector other) {
-        System.out.println("Зашли сюда как Vector*Vector");
+        //System.out.println("Зашли сюда как Vector*Vector");
         double result = 0;
         for (int i = 0; i < this.vectorValues.length; i++) {
             result += this.vectorValues[i] * other.vectorValues[i];
@@ -124,7 +124,7 @@ public class Vector extends Var {
     @Override
     public Var sub(Var other) {
         final Scalar MINUS_ONE = new Scalar(-1d);
-        System.out.println("Зашли сюда как Vector-Var");
+        //System.out.println("Зашли сюда как Vector-Var");
         Object tempResult = this;
         try {
             Method methodMul = other.getClass().

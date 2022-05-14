@@ -100,7 +100,7 @@ public class Matrix extends Var {
 
     @Override
     public Var add(Var other) {
-        System.out.println("Зашли сюда как Matrix+Var");
+        //System.out.println("Зашли сюда как Matrix+Var");
         Object tempResult = this;
         try {
             Method method = this.getClass().getMethod(ADD_STRING_OPERATOR, other.getClass());
@@ -114,7 +114,7 @@ public class Matrix extends Var {
     }
 
     public Var add(Scalar other) {
-        System.out.println("Зашли сюда как Matrix + Scalar");
+        //System.out.println("Зашли сюда как Matrix + Scalar");
         double[][] tempMatrix = this.getMatrixValue();
         for (int i = 0; i < tempMatrix.length; i++) {
             for (int j = 0; j < tempMatrix[i].length; j++) {
@@ -125,7 +125,7 @@ public class Matrix extends Var {
     }
 
     public Var add(Matrix other) {
-        System.out.println("Зашли сюда как Matrix + Matrix");
+        //System.out.println("Зашли сюда как Matrix + Matrix");
         double[][] tempMatrix = this.getMatrixValue();
         for (int i = 0; i < tempMatrix.length; i++) {
             for (int j = 0; j < tempMatrix[i].length; j++) {
@@ -137,7 +137,7 @@ public class Matrix extends Var {
 
     @Override
     public Var mul(Var other) {
-        System.out.println("Зашли сюда как Matrix*Var");
+        //System.out.println("Зашли сюда как Matrix*Var");
         Object tempResult = this;
         try {
             Method method = this.getClass().getMethod(MUL_STRING_OPERATOR, other.getClass());
@@ -151,7 +151,7 @@ public class Matrix extends Var {
     }
 
     public Var mul(Scalar other) {
-        System.out.println("Зашли сюда как Matrix*Scalar");
+        //System.out.println("Зашли сюда как Matrix*Scalar");
         double[][] tempMatrix = this.getMatrixValue();
         for (int i = 0; i < tempMatrix.length; i++) {
             for (int j = 0; j < tempMatrix[i].length; j++) {
@@ -162,13 +162,13 @@ public class Matrix extends Var {
     }
 
     public Var mul(Vector other) {
-        System.out.println("Зашли сюда как Matrix*Vector");
+        //System.out.println("Зашли сюда как Matrix*Vector");
         double[][] tempMatrix = this.getMatrixValue();
         return new Vector(calculateMatrixMultiply(tempMatrix, other.getVectorValues()));
     }
 
     public Var mul(Matrix other) {
-        System.out.println("Зашли сюда как Matrix*Matrix");
+        //System.out.println("Зашли сюда как Matrix*Matrix");
         double[][] tempMatrix = this.getMatrixValue();
         return new Matrix(calculateMatrixMultiply(tempMatrix, other.matrixValue));
     }
@@ -176,7 +176,7 @@ public class Matrix extends Var {
     @Override
     public Var sub(Var other) {
         final Scalar MINUS_ONE = new Scalar(-1d);
-        System.out.println("Зашли сюда как Matrix-Var");
+        //System.out.println("Зашли сюда как Matrix-Var");
         Object tempResult = this;
         try {
             Method methodMul = other.getClass().
@@ -190,39 +190,11 @@ public class Matrix extends Var {
             e.printStackTrace();
         }
         return (Var) tempResult;
-
-
-
-
-
-
-/*
-        if (other instanceof Scalar otherScalar) {
-            double[][] tempMatrix = this.getMatrixValue();
-            for (int i = 0; i < tempMatrix.length; i++) {
-                for (int j = 0; j < tempMatrix[i].length; j++) {
-                    tempMatrix[i][j] -= otherScalar.getValue();
-                }
-            }
-            return new Matrix(tempMatrix);
-        } else if (other instanceof Matrix otherMatrix) {
-            double[][] tempMatrix = this.getMatrixValue();
-            for (int i = 0; i < tempMatrix.length; i++) {
-                for (int j = 0; j < tempMatrix[i].length; j++) {
-                    tempMatrix[i][j] -= otherMatrix.matrixValue[i][j];
-                }
-            }
-            return new Matrix(tempMatrix);
-        } else {
-            return super.sub(other);
-
-        }
-*/
     }
 
     @Override
     public Var div(Var other) {
-        System.out.println("Зашли сюда как Matrix/Var");
+//        System.out.println("Зашли сюда как Matrix/Var");
         Object tempResult = this;
         try {
             Method method = this.getClass().getMethod(DIV_STRING_OPERATOR, other.getClass());
@@ -236,7 +208,7 @@ public class Matrix extends Var {
     }
 
     public Var div(Scalar other) {
-        System.out.println("Зашли сюда как Matrix/Scalar");
+  //      System.out.println("Зашли сюда как Matrix/Scalar");
         double[][] tempMatrix = this.getMatrixValue();
         for (int i = 0; i < tempMatrix.length; i++) {
             for (int j = 0; j < tempMatrix[i].length; j++) {
