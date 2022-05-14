@@ -1,4 +1,4 @@
-package by.it.marchenko.jd01_10.calc;
+package by.it.marchenko.calc;
 
 interface Operation {
     Var add(Var other);
