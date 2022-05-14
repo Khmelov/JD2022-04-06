@@ -10,7 +10,6 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean add(T t) {
-        int index = 0;
         if (size == elements.length) {
             elements = Arrays.copyOf(elements, elements.length * 2 + 1);
         }
@@ -39,10 +38,6 @@ public class ListB<T> implements List<T> {
 
     @Override
     public String toString() {
-//        StringJoiner out = new StringJoiner(", ", "[", "]");
-//        for (int i = 0; i < size; i++) {
-//            out.add(elements[i].toString());
-//        }
         StringBuilder out = new StringBuilder("[");
         String delimeter = "";
         for (int i = 0; i < size; i++) {

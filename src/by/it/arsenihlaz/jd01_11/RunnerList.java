@@ -1,8 +1,6 @@
 package by.it.arsenihlaz.jd01_11;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class RunnerList {
     public static void main(String[] args) {
@@ -24,9 +22,7 @@ public class RunnerList {
         catNameList.remove(2);
         System.out.println(catNameList);
         System.out.println("Good cat is " + catNameList.get(0));
-//        ArrayList<String> catNameList2 = new ArrayList<>();
-//        catNameList2.remove(0);
-
+        
         catNameList = new ListB<>();
         for (String s : Arrays.asList("Vatrushka", "Chernoslivka", "Barsik", "Ibragim")) {
             catNameList.add(s);
@@ -38,5 +34,20 @@ public class RunnerList {
         System.out.println(catNameList);
         catNameList.addAll(catNameListStart);
         System.out.println("AddAll " + catNameList);
+
+        Set<String> catNameSet = new SetC<>();
+        catNameSet.add("Vatrushka");
+        System.out.println("SetC add " + catNameSet);
+        System.out.println("SetC contains " + catNameSet.contains("Vatrushka"));
+        System.out.println("SetC contains " + catNameSet.contains("Chernoslivka"));
+        System.out.println("SetC isempty " + catNameSet.isEmpty());
+        System.out.println("AddAll " + catNameList);
+        catNameSet.addAll(catNameListStart);
+        System.out.println("SetC addAll " + catNameSet);
+        System.out.println("SetC contains "+catNameSet.contains("Vatrushka"));
+        System.out.println("SetC containsAll "+catNameSet.containsAll(catNameListStart));
+        System.out.println("SetC removeAll " + catNameSet);
+        catNameSet.removeAll(catNameListStart);
+        System.out.println("SetC removeAll " + catNameSet);
     }
 }
