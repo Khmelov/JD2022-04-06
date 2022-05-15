@@ -4,7 +4,7 @@ import java.util.*;
 
 
 public class TaskB3 {
-    public static final int N = 40960;
+    public static final int N = 4096;
 
     public static void main(String[] args) {
         String[] peoples = getInputData();
@@ -71,15 +71,14 @@ public class TaskB3 {
 
     private static String modifiedProcess(LinkedList<String> inputPeoples) {
         LinkedList<String> peoples = new LinkedList<>(inputPeoples);
-        boolean toRemove = true;
-
+        boolean toRemove = false;
         while (peoples.size() != 1) {
-            toRemove = !toRemove;
             if (toRemove) {
                 peoples.removeFirst();
             } else {
                 peoples.addLast(peoples.removeFirst());
             }
+            toRemove = !toRemove;
         }
         return peoples.get(0);
     }
