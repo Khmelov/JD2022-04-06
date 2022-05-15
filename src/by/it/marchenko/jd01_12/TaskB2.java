@@ -25,7 +25,8 @@ public class TaskB2 {
         return peopleNames;
     }
 
-    static String process(ArrayList<String> peoples) {
+    static String process(ArrayList<String> inputPeoples) {
+        ArrayList<String> peoples = new ArrayList<>(inputPeoples);
         boolean toRemove = true;
         while (peoples.size() != 1) {
             Iterator<String> iterator = peoples.iterator();
@@ -40,7 +41,8 @@ public class TaskB2 {
         return peoples.get(0);
     }
 
-    static String process(LinkedList<String> peoples) {
+    static String process(LinkedList<String> inputPeoples) {
+        LinkedList<String> peoples = new LinkedList<>(inputPeoples);
         boolean toRemove = true;
         while (peoples.size() != 1) {
             Iterator<String> iterator = peoples.iterator();
