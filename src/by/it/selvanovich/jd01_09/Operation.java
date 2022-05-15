@@ -1,4 +1,4 @@
-package by.it.marchenko.jd01_10.calc;
+package by.it.selvanovich.jd01_09;
 
 interface Operation {
     Var add(Var other);
@@ -8,6 +8,4 @@ interface Operation {
     Var mul(Var other);
 
     Var div(Var other);
-
- //   Var operation(String operator, Var operand);
 }
