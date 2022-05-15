@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TaskA1 {
-    private List<Integer> marks = new ArrayList<>();
+    private final List<Integer> marks = new ArrayList<>();
 
     public static void main(String[] args) {
         TaskA1 instance = new TaskA1();
