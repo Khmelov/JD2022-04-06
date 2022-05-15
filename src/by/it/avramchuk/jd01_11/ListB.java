@@ -4,8 +4,16 @@ import java.util.*;
 
 public class ListB<E> implements List<E> {
 
-    private  E[] elements = (E[]) new Object[10];
-    private  int size = 0;
+    public E[] elements = (E[]) new Object[10];
+    public int size = 0;
+
+    public E[] getElements() {
+        return elements;
+    }
+
+    public int getSize() {
+        return size;
+    }
 
     @Override
     public boolean add(E e) {
@@ -111,12 +119,12 @@ public class ListB<E> implements List<E> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size==0;
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return indexOf(o) >= 0;
     }
 
     @Override
@@ -156,17 +164,37 @@ public class ListB<E> implements List<E> {
 
     @Override
     public void clear() {
-
+        final Object[] es = elements;
+        for (int to = size, i = size = 0; i < to; i++)
+            es[i] = null;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        return indexOfRange(o, 0, size);
     }
 
     @Override
     public int lastIndexOf(Object o) {
         return 0;
+    }
+
+    int indexOfRange(Object o, int start, int end) {
+        Object[] es = elements;
+        if (o == null) {
+            for (int i = start; i < end; i++) {
+                if (es[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = start; i < end; i++) {
+                if (o.equals(es[i])) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     @Override
