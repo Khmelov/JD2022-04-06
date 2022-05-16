@@ -15,6 +15,12 @@ interface Operation {
 
 
     Var div(Var other);
+    Var div(Scalar other);
 
- //   Var operation(String operator, Var operand);
+    //Var div(Vector other);
+    //Var div(Matrix other);
+
+
+
+
 }

@@ -1,10 +1,7 @@
 package by.it.marchenko.calc;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import static by.it.marchenko.calc.MessageConst.*;
 
 public class Matrix extends Var {
     final String INCORRECT_INPUT_MESSAGE = "Incorrect matrix input";
@@ -144,36 +141,27 @@ public class Matrix extends Var {
     }
 
     public Var mul(Vector other) {
-        return super.mul((Var)other);
+        return super.mul((Var) other);
     }
 
     public Var mul(Matrix other) {
         double[][] tempMatrix = this.getMatrixValue();
-        return new Matrix(calculateMatrixMultiply(other.matrixValue,tempMatrix));
+        return new Matrix(calculateMatrixMultiply(other.matrixValue, tempMatrix));
     }
 
     @Override
     public Var sub(Var other) {
         final Scalar MINUS_ONE = new Scalar(-1d);
-        //System.out.println("Зашли сюда как Matrix-Var");
-        Object tempResult = this;
-        try {
-            Method methodMul = other.getClass().
-                    getMethod(MUL_STRING_OPERATOR, MINUS_ONE.getClass());
-            tempResult = methodMul.invoke(other, MINUS_ONE);
-            Method methodAdd = this.getClass().getMethod(ADD_STRING_OPERATOR, other.getClass());
-            tempResult = methodAdd.invoke(this, tempResult);
-        } catch (NoSuchMethodException e) {
-            return super.sub(other);
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return (Var) tempResult;
+        return other.mul(MINUS_ONE).add(this);
     }
 
     @Override
     public Var div(Var other) {
-//        System.out.println("Зашли сюда как Matrix/Var");
+        System.out.println("Зашли сюда как Matrix/Var");
+        //return other.div(this);
+        return other.div(this);
+        /*
+
         Object tempResult = this;
         try {
             Method method = this.getClass().getMethod(DIV_STRING_OPERATOR, other.getClass());
@@ -184,10 +172,12 @@ public class Matrix extends Var {
             e.printStackTrace();
         }
         return (Var) tempResult;
+
+         */
     }
 
     public Var div(Scalar other) {
-        //      System.out.println("Зашли сюда как Matrix/Scalar");
+        System.out.println("Зашли сюда как Matrix/Scalar");
         double[][] tempMatrix = this.getMatrixValue();
         for (int i = 0; i < tempMatrix.length; i++) {
             for (int j = 0; j < tempMatrix[i].length; j++) {
