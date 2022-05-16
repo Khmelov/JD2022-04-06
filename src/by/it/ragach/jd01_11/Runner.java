@@ -1,10 +1,12 @@
 package by.it.ragach.jd01_11;
 
 import by.it.machuga.jd01_11.ListB;
+import by.it.machuga.jd01_11.SetC;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Runner {
     public static void main(String[] args) {
@@ -48,12 +50,22 @@ public class Runner {
 
 
 
-        HashSet<String> set = new HashSet<>();
-        set.add("six");
-        set.add("seven");
-        set.add("eight");
-        set.add("nine");
-        set.add("ten");
+        HashSet<String> hashSet = new HashSet<>();
+        hashSet.add("six");
+        hashSet.add("seven");
+        hashSet.add("eight");
+        hashSet.add("nine");
+        hashSet.add("ten");
+        System.out.println(hashSet);
+
+
+
+        Set<String> set = new SetC<>();
+        set.add("one");
+        set.add("two");
+        set.add("three");
+        set.add("four");
+        set.add("five");
         System.out.println(set);
 
 
