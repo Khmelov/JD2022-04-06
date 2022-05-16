@@ -1,5 +1,7 @@
 package by.it.ragach.jd01_11;
 
+import by.it.machuga.jd01_11.ListB;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +24,18 @@ public class Runner {
 
 
         list = new ListA<>();
+        list.add("one");
+        list.add("two");
+        list.add("three");
+        list.add("four");
+        list.add("five");
+        System.out.println(list);
+        list.remove(2);
+        System.out.println(list);
+        System.out.printf("first = %s last=%s%n",list.get(0), list.get(list.size()-1));
+
+
+        list = new ListB<>();
         list.add("one");
         list.add("two");
         list.add("three");
