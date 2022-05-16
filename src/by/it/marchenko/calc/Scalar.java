@@ -32,42 +32,44 @@ public class Scalar extends Var {
     //@Override
     //public Var operation(String operator, Var operand) {
     //    return null;
-   // }
+    // }
 
     @Override
     public Var add(Var other) {
         //System.out.println("Зашли сюда как Scalar+Var");
-        Object tempResult = this;
-        try {
-            Method method = other.getClass().getMethod(ADD_STRING_OPERATOR, this.getClass());
-            tempResult = method.invoke(other, this);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return (Var) tempResult;
+        return other.add(this);
     }
 
     public Var add(Scalar other) {
-        //System.out.println("Зашли сюда как Scalar+Scalar");
         return new Scalar(this.value + other.getValue());
     }
 
+    public Var add(Vector other) {
+        return other.add(this);//new Scalar(this.value + other.getValue());
+    }
+
+    public Var add(Matrix other) {
+        return other.add(this);//new Scalar(this.value + other.getValue());
+    }
+
+
     @Override
     public Var mul(Var other) {
-        //System.out.println("Зашли сюда как Scalar*Var");
-        Object tempResult = this;
-        try {
-            Method method = other.getClass().getMethod(MUL_STRING_OPERATOR, this.getClass());
-            tempResult = method.invoke(other, this);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return (Var) tempResult;
+        return other.mul(this);
     }
 
     public Var mul(Scalar other) {
-        //System.out.println("Зашли сюда как Scalar*Scalar");
         return new Scalar(this.value * other.getValue());
+    }
+
+    @Override
+    public Var mul(Vector other) {
+        return other.mul(this);
+    }
+
+    @Override
+    public Var mul(Matrix other) {
+        return other.mul(this);
     }
 
     @Override

@@ -30,6 +30,9 @@ public class TaskC2 {
     private static Set<?> getUnion(Set<Integer>... sets) {
         Set<Integer> resultSet = new HashSet<>(sets[0]);
         for (Set<Integer> set : sets) {
+            //for (E element : set) {
+
+            //}
             resultSet.addAll(set);
         }
         return resultSet;
