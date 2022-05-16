@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TaskB1 {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<String> text = new ArrayList<>();
@@ -24,7 +25,7 @@ public class TaskB1 {
         Map<String, Integer> mapText = new HashMap<>();
         for (String string : text) {
             if (!mapText.containsKey(string)) {
-                mapText.put(string, 0);
+                mapText.put(string, 1);
             } else {
                 mapText.put(string, mapText.get(string) + 1);
             }
