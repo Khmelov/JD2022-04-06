@@ -13,12 +13,19 @@ public class TaskC2 {
         System.out.println(byteSet);
         System.out.println(longSet);
         System.out.println(floatSet);
-        Set<Number> numberSet1 = getCross(byteSet,longSet);
+        Set<Number> numberSet1 = getCross(longSet,byteSet);
+        Set<Number> unionSet1 = getUnion(longSet, floatSet);
         System.out.println(numberSet1);
+        System.out.println(unionSet1);
     }
     private static Set<Number> getCross(Set<? extends Number> first, Set<? extends Number> second) {
         Set<Number> result = new HashSet<>(first);
         result.retainAll(second);
+        return result;
+    }
+    private static Set<Number> getUnion(Set<? extends Number> first, Set<? extends Number> second) {
+        Set<Number> result = new HashSet<>(first);
+        result.addAll(second);
         return result;
     }
 }
