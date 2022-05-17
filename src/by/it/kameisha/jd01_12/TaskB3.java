@@ -14,10 +14,20 @@ public class TaskB3 {
             peoples1.add(name);
             peoples.add(name);
         }
-        String result1 = process(peoples1);
+        Long t = System.nanoTime();
         String result = process(peoples);
-        System.out.println(result1);
+        Long tA = System.nanoTime() - t;
+
+        t = System.nanoTime();
+        String result1 = process(peoples1);
+        Long tL = System.nanoTime() - t;
+        System.out.println(" Время работы для  ArrayList=" + tA / 1000 + " мкс.");
+        System.out.flush();
+        System.out.println(" Время работы для LinkedList=" + tL / 1000 + " мкс.");
+        System.out.flush();
+
         System.out.println(result);
+        System.out.println(result1);
     }
 
 
@@ -65,9 +75,9 @@ public class TaskB3 {
     }
 
     static String process(LinkedList<String> peoples) {
-        while (peoples.size() != 1) {
-    //        String temporary = peoples.removeFirst();
-            peoples.addLast(peoples.removeFirst());
+        while (peoples.size() > 1) {
+            String temporary = peoples.removeFirst();
+            peoples.addLast(temporary);
             peoples.removeFirst();
         }
         return peoples.get(0);
