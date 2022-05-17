@@ -1,6 +1,8 @@
 package by.it.annazhegulovich.jd01_11;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 
 public class Runner {
@@ -60,11 +62,46 @@ public class Runner {
         System.out.println("B addAll- "+list);
 
 
-        /*List<?> list2 = new ArrayList<>();
-        String newElem= new String("e");
-        list2.add(newElem);
-        list.addAll(List<?>"c");*/
 
+        Set<String> c = new SetC<>() ;
+        c.add("one");
+        c.add("two");
+        c.add("three");
+        c.add("four");
+        c.add("five");
+        System.out.println("C - "+c);
+
+        c.remove("two");
+        System.out.println("C remove- "+c);
+        System.out.println("C contains- "+c.contains("four"));
+        System.out.println("C size- "+c.size());
+        System.out.println("C isEmpty- "+c.isEmpty());
+
+        c.addAll(addList);
+        System.out.println("C addAll- "+c);
+
+        HashSet<String> addSetHash = new HashSet<>() ;
+        addSetHash.add("six");
+        addSetHash.add("seven");
+        addSetHash.add("eight");
+        addSetHash.add("nine");
+        addSetHash.add("ten");
+        addSetHash.add("eleven");
+
+        System.out.println("C containsAll- "+c.containsAll(addSetHash));
+        System.out.println("C removeAll- "+c.removeAll(addSetHash));
+
+
+        /*List<String> addList = new ArrayList<>();
+        addList.add("six");
+        addList.add("seven");
+        addList.add("eight");
+        addList.add("nine");
+        addList.add("ten");
+        addList.add("eleven");
+
+        list.addAll(addList);
+        System.out.println("C addAll- "+list);*/
 
     }
 }
