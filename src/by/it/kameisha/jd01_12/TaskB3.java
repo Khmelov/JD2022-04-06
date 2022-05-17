@@ -9,7 +9,7 @@ public class TaskB3 {
     public static void main(String[] args) {
         ArrayList<String> peoples = new ArrayList<>();
         LinkedList<String> peoples1 = new LinkedList<>();
-        String[] names = generateRandomWords(6000);
+        String[] names = generateRandomWords(4100);
         for (String name : names) {
             peoples.add(name);
             peoples1.add(name);
@@ -40,7 +40,7 @@ public class TaskB3 {
 
     static String process(ArrayList<String> peoples) {
         ArrayList<String> list = deleteSecondMan(peoples);
-        return list.get(0);
+        return String.valueOf(list);
     }
 
     private static ArrayList<String> deleteSecondMan(ArrayList<String> peoples) {
@@ -67,6 +67,6 @@ public class TaskB3 {
                 peoples.addLast(temporary);
                 peoples.removeFirst();
         }
-        return peoples.get(0);
+        return String.valueOf(peoples);
     }
 }

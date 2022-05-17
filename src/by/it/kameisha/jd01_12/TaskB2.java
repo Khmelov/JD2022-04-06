@@ -15,8 +15,9 @@ public class TaskB2 {
         }
         String result = process(peoples);
         String result1 = process(peoples1);
-        System.out.println(result);
-        System.out.println(result1);
+        System.out.println(process(peoples));
+        System.out.println(process(peoples1));
+
     }
 
     static int count = 2;
@@ -24,19 +25,21 @@ public class TaskB2 {
 
     static String process(ArrayList<String> peoples) {
         peoples = deleteSecondMan(peoples);
-        return peoples.get(0);
+        return String.valueOf(peoples);
     }
 
     private static ArrayList<String> deleteSecondMan(ArrayList<String> peoples) {
         Iterator<String> iterator = peoples.iterator();
         ArrayList<String> lastPeoples = new ArrayList<>();
-        while (iterator.hasNext()) {
-            if (count % 2 == 0) {
-                lastPeoples.add(iterator.next());
-            } else {
-                iterator.next();
+        if (peoples.size() != 1) {
+            while (iterator.hasNext()) {
+                if (count % 2 == 0) {
+                    lastPeoples.add(iterator.next());
+                } else {
+                    iterator.next();
+                }
+                count++;
             }
-            count++;
         }
         if (lastPeoples.size() > 1) {
             return (deleteSecondMan(lastPeoples));
@@ -51,6 +54,6 @@ public class TaskB2 {
             peoples.addLast(temporary);
             peoples.removeFirst();
         }
-        return peoples.get(0);
+        return String.valueOf(peoples);
     }
 }
