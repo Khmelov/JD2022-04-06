@@ -9,10 +9,10 @@ public class TaskB3 {
     public static void main(String[] args) {
         ArrayList<String> peoples = new ArrayList<>();
         LinkedList<String> peoples1 = new LinkedList<>();
-        String[] names = generateRandomWords(4100);
+        String[] names = generateRandomWords(4096);
         for (String name : names) {
-            peoples.add(name);
             peoples1.add(name);
+            peoples.add(name);
         }
         String result1 = process(peoples1);
         String result = process(peoples);
@@ -21,13 +21,11 @@ public class TaskB3 {
     }
 
 
-    static int count = 2;
-
     public static String[] generateRandomWords(int numberOfWords) {
         String[] randomStrings = new String[numberOfWords];
         Random random = new Random();
         for (int i = 0; i < numberOfWords; i++) {
-            char[] word = new char[random.nextInt(8) + 3];
+            char[] word = new char[random.nextInt(9) + 3];
             for (int j = 0; j < word.length; j++) {
                 word[j] = (char) ('a' + random.nextInt(26));
             }
@@ -68,9 +66,9 @@ public class TaskB3 {
 
     static String process(LinkedList<String> peoples) {
         while (peoples.size() != 1) {
-            String temporary = peoples.pollFirst();
-            peoples.offerLast(temporary);
-            peoples.pollFirst();
+    //        String temporary = peoples.removeFirst();
+            peoples.addLast(peoples.removeFirst());
+            peoples.removeFirst();
         }
         return peoples.get(0);
     }
