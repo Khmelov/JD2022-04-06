@@ -9,19 +9,19 @@ public class TaskB3 {
         LinkedList<String> peoples2 = new LinkedList<String>();
         Timer t = new Timer();
         while (peoples.size() < 4097) {
-            peoples.add("1");
-            peoples.add("2");
-            peoples.add("3");
-            peoples.add("4");
-            peoples.add("5");
+            peoples.add("Вася");
+            peoples.add("Петя");
+            peoples.add("Таня");
+            peoples.add("Оля");
+            peoples.add("Ибрагим");
         }
         System.out.println("ArrayList add: " + t);
         while (peoples2.size() < 4097) {
-            peoples2.addLast("1");
-            peoples2.addLast("2");
-            peoples2.addLast("3");
-            peoples2.addLast("4");
-            peoples2.addLast("5");
+            peoples2.addLast("Вася");
+            peoples2.addLast("Петя");
+            peoples2.addLast("Таня");
+            peoples2.addLast("Оля");
+            peoples2.addLast("Ибрагим");
         }
         System.out.println("LinkedList add: " + t);
         System.out.println(peoples.size());
@@ -34,7 +34,7 @@ public class TaskB3 {
     static String process(ArrayList<String> peoples) {
         int pos = 0;
         while (peoples.size() > 1) {
-            System.out.println(peoples);
+           // System.out.println(peoples);
             pos = (pos + 1) % peoples.size();
             peoples.remove(pos);
         }
@@ -43,14 +43,20 @@ public class TaskB3 {
     }
 
     static String process(LinkedList<String> peoples) {
-        LinkedList<String> survivor = new LinkedList<String>();
-        int g = 0;
-        for (int i = 0; i < peoples.size(); ++i) {
-            g = (g + 2) % (i + 1);
+//        LinkedList<String> survivor = new LinkedList<String>();
+//        int g = 0;
+//        for (int i = 0; i < peoples.size(); ++i) {
+//            g = (g + 2) % (i + 1);
+//        }
+//        String value = peoples.get(g);
+//        survivor.add(value);
+//        System.out.println(survivor.get(0));
+//        return String.valueOf(survivor.get(0));
+        while (peoples.size() > 1) {
+            peoples.addLast(peoples.pollFirst());
+            peoples.removeFirst();
         }
-        String value = peoples.get(g);
-        survivor.add(value);
-        System.out.println(survivor.get(0));
-        return String.valueOf(survivor.get(0));
+        System.out.println(peoples);
+        return String.valueOf(peoples.get(0));
     }
 }
