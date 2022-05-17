@@ -3,12 +3,13 @@ package by.it.kameisha.jd01_12;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Random;
 
-public class TaskB2 {
+public class TaskB3 {
     public static void main(String[] args) {
-        String[] names = {"12", "2", "3", "4", "3", "5", "7", "10", "3", "5", "7", "9", "11", "13", "15", "16"};
         ArrayList<String> peoples = new ArrayList<>();
         LinkedList<String> peoples1 = new LinkedList<>();
+        String[] names = generateRandomWords(6000);
         for (String name : names) {
             peoples.add(name);
             peoples1.add(name);
@@ -19,12 +20,27 @@ public class TaskB2 {
         System.out.println(result1);
     }
 
+
     static int count = 2;
-    static int countLink = 2;
+    public static String[] generateRandomWords(int numberOfWords)
+    {
+        String[] randomStrings = new String[numberOfWords];
+        Random random = new Random();
+        for(int i = 0; i < numberOfWords; i++)
+        {
+            char[] word = new char[random.nextInt(8)+3];
+            for(int j = 0; j < word.length; j++)
+            {
+                word[j] = (char)('a' + random.nextInt(26));
+            }
+            randomStrings[i] = new String(word);
+        }
+        return randomStrings;
+    }
 
     static String process(ArrayList<String> peoples) {
-        peoples = deleteSecondMan(peoples);
-        return peoples.get(0);
+        ArrayList<String> list = deleteSecondMan(peoples);
+        return list.get(0);
     }
 
     private static ArrayList<String> deleteSecondMan(ArrayList<String> peoples) {
@@ -38,7 +54,7 @@ public class TaskB2 {
             }
             count++;
         }
-        if (lastPeoples.size() > 1) {
+        if (lastPeoples.size() != 1) {
             return (deleteSecondMan(lastPeoples));
         } else {
             return lastPeoples;
@@ -46,10 +62,10 @@ public class TaskB2 {
     }
 
     static String process(LinkedList<String> peoples) {
-        while (peoples.size() > 1) {
-            String temporary = peoples.removeFirst();
-            peoples.addLast(temporary);
-            peoples.removeFirst();
+        while (peoples.size() != 1) {
+                String temporary = peoples.removeFirst();
+                peoples.addLast(temporary);
+                peoples.removeFirst();
         }
         return peoples.get(0);
     }
