@@ -13,9 +13,9 @@ public class TaskC2 {
         System.out.println(byteSet);
         System.out.println(longSet);
         System.out.println(floatSet);
-        Set<Number> numberSet1 = getCross(longSet,byteSet);
-        Set<Number> unionSet1 = getUnion(longSet, floatSet);
-        System.out.println(numberSet1);
+        Set<Number> crossSet1 = getCross(longSet,byteSet);
+        Set<Number> unionSet1 = getUnion(longSet,floatSet);
+        System.out.println(crossSet1);
         System.out.println(unionSet1);
     }
     private static Set<Number> getCross(Set<? extends Number> first, Set<? extends Number> second) {
