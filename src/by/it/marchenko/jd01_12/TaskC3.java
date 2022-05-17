@@ -13,7 +13,7 @@ public class TaskC3 {
         Scanner console = new Scanner(System.in);
         String inputData = getData(console);
         boolean isCorrectCurveFilled = checkCurves(inputData);
-        System.out.println("Правильность расстановки скобок: "+ isCorrectCurveFilled);
+        System.out.println("Правильность расстановки скобок: " + isCorrectCurveFilled);
     }
 
     private static String getData(Scanner source) {
