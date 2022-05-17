@@ -6,31 +6,34 @@ import java.util.LinkedList;
 
 public class TaskB2 {
     public static void main(String[] args) {
-        String[] names = {"12", "2", "3", "4", "3", "5", "7", "10", "3", "5", "7", "9", "11", "13", "15", "16"};
+        String[] names = {"1", "2", "3", "4", "5"};
         ArrayList<String> peoples = new ArrayList<>();
-        LinkedList<String> peoples1 = new LinkedList<>();
+        LinkedList<String> peoplesLink = new LinkedList<>();
         for (String name : names) {
             peoples.add(name);
-            peoples1.add(name);
+            peoplesLink.add(name);
         }
-        String result = process(peoples);
-        String result1 = process(peoples1);
         System.out.println(process(peoples));
-        System.out.println(process(peoples1));
+        System.out.println();
+        String result = process(peoples);
+        String resultLink = process(peoplesLink);
+        System.out.println(result);
+        System.out.println(resultLink);
 
     }
 
-    static int count = 2;
-    static int countLink = 2;
-
     static String process(ArrayList<String> peoples) {
-        peoples = deleteSecondMan(peoples);
-        return String.valueOf(peoples);
+        ArrayList<String> list = new ArrayList<>(peoples);
+        while (list.size() > 1) {
+            list = deleteSecondMan(list);
+        }
+        return list.get(0);
     }
 
     private static ArrayList<String> deleteSecondMan(ArrayList<String> peoples) {
         Iterator<String> iterator = peoples.iterator();
         ArrayList<String> lastPeoples = new ArrayList<>();
+        int count = 2;
         if (peoples.size() != 1) {
             while (iterator.hasNext()) {
                 if (count % 2 == 0) {
@@ -41,11 +44,12 @@ public class TaskB2 {
                 count++;
             }
         }
-        if (lastPeoples.size() > 1) {
-            return (deleteSecondMan(lastPeoples));
-        } else {
-            return lastPeoples;
+        if (count % 2 == 1 && lastPeoples.size() > 1) {
+            String temporary = lastPeoples.remove(lastPeoples.size() - 1);
+            lastPeoples.add(0, temporary);
         }
+
+        return lastPeoples;
     }
 
     static String process(LinkedList<String> peoples) {
@@ -54,6 +58,6 @@ public class TaskB2 {
             peoples.addLast(temporary);
             peoples.removeFirst();
         }
-        return String.valueOf(peoples);
+        return peoples.get(0);
     }
 }

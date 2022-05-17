@@ -14,24 +14,22 @@ public class TaskB3 {
             peoples.add(name);
             peoples1.add(name);
         }
-        String result = process(peoples);
         String result1 = process(peoples1);
-        System.out.println(result);
+        String result = process(peoples);
         System.out.println(result1);
+        System.out.println(result);
     }
 
 
     static int count = 2;
-    public static String[] generateRandomWords(int numberOfWords)
-    {
+
+    public static String[] generateRandomWords(int numberOfWords) {
         String[] randomStrings = new String[numberOfWords];
         Random random = new Random();
-        for(int i = 0; i < numberOfWords; i++)
-        {
-            char[] word = new char[random.nextInt(8)+3];
-            for(int j = 0; j < word.length; j++)
-            {
-                word[j] = (char)('a' + random.nextInt(26));
+        for (int i = 0; i < numberOfWords; i++) {
+            char[] word = new char[random.nextInt(8) + 3];
+            for (int j = 0; j < word.length; j++) {
+                word[j] = (char) ('a' + random.nextInt(26));
             }
             randomStrings[i] = new String(word);
         }
@@ -39,34 +37,41 @@ public class TaskB3 {
     }
 
     static String process(ArrayList<String> peoples) {
-        ArrayList<String> list = deleteSecondMan(peoples);
-        return String.valueOf(list);
+        ArrayList<String> list = new ArrayList<>(peoples);
+        while (list.size() > 1) {
+            list = deleteSecondMan(list);
+        }
+        return list.get(0);
     }
 
     private static ArrayList<String> deleteSecondMan(ArrayList<String> peoples) {
         Iterator<String> iterator = peoples.iterator();
         ArrayList<String> lastPeoples = new ArrayList<>();
-        while (iterator.hasNext()) {
-            if (count % 2 == 0) {
-                lastPeoples.add(iterator.next());
-            } else {
-                iterator.next();
+        int count = 2;
+        if (peoples.size() != 1) {
+            while (iterator.hasNext()) {
+                if (count % 2 == 0) {
+                    lastPeoples.add(iterator.next());
+                } else {
+                    iterator.next();
+                }
+                count++;
             }
-            count++;
         }
-        if (lastPeoples.size() != 1) {
-            return (deleteSecondMan(lastPeoples));
-        } else {
-            return lastPeoples;
+        if (count % 2 == 1 && lastPeoples.size() > 1) {
+            String temporary = lastPeoples.remove(lastPeoples.size() - 1);
+            lastPeoples.add(0, temporary);
         }
+
+        return lastPeoples;
     }
 
     static String process(LinkedList<String> peoples) {
         while (peoples.size() != 1) {
-                String temporary = peoples.removeFirst();
-                peoples.addLast(temporary);
-                peoples.removeFirst();
+            String temporary = peoples.pollFirst();
+            peoples.offerLast(temporary);
+            peoples.pollFirst();
         }
-        return String.valueOf(peoples);
+        return peoples.get(0);
     }
 }
