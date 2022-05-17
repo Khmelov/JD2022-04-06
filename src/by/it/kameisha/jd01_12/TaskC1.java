@@ -23,7 +23,7 @@ public class TaskC1 {
                 break;
             }
         }
-        System.out.println(text.toString());
+        System.out.println(text);
         Map<Integer, String> textFixed = new HashMap<>();
         Iterator<Map.Entry<Integer, String>> iterator = text.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -32,6 +32,6 @@ public class TaskC1 {
                 textFixed.put(element.getKey(), element.getValue());
             }
         }
-        System.out.println(textFixed.toString());
+        System.out.println(textFixed);
     }
 }
