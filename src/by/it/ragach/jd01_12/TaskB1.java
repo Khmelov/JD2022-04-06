@@ -15,8 +15,7 @@ import java.util.regex.Pattern;
             Map<String, Integer> wordToCount = new HashMap<>();
             while (scanner.hasNext()) {
                 String value = scanner.nextLine();
-
-                for (String word : value.split("[^a-zA-Z]+")) {
+                for (String word : value.split("[^a-zA-Z']+")) {
                     if (!word.equals("end")) {
                         if (wordToCount.containsKey(word)) {
                             wordToCount.put(word, wordToCount.get(word) + 1);
