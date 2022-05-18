@@ -19,7 +19,7 @@ public class TaskA {
         }
     }
 
-    private static void processException(RuntimeException e) {
+    public static void processException(RuntimeException e) {
         String exceptionName = e.getClass().getName();
         StackTraceElement[] callingStackTrace = Thread.currentThread().getStackTrace();
         String callingName = callingStackTrace[2].getClassName();
