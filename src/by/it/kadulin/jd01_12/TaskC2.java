@@ -4,12 +4,12 @@ import java.util.*;
 
 public class TaskC2 {
     public static void main(String[] args) {
-        List<Number> first = Arrays.asList(1f, 2, 2.0, 2L, 3, 4);
+        List<Number> first = Arrays.asList(1f, 1f, 2, 2.0, 2L, 3, 4);
         List<Number> second = Arrays.asList(1.0, 1, 2, 5, 5);
         Set<Number> one = new HashSet<>(first);
         Set<Number> two = new HashSet<>(second);
-        System.out.println(first);
-        System.out.println(second);
+        System.out.println(one);
+        System.out.println(two);
         Set<Number> unionRes = getUnion(one, two);
         System.out.println(unionRes);
         Set<Number> crossRes = getCross(one, two);
@@ -40,7 +40,7 @@ public class TaskC2 {
 
 
     private static Set<Number> getCross(Set<Number> left, Set<Number> right) {
-        HashSet<Number> numbers = new HashSet<>(left);
+        Set<Number> numbers = new HashSet<>(left);
         Iterator<Number> iterator1 = left.iterator();
         Iterator<Number> iterator2 = right.iterator();
         while (iterator1.hasNext()) {
