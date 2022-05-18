@@ -30,12 +30,14 @@ public class TaskC1 {
         Set<String> setValues = new HashSet<>(map.values());
         System.out.println(setValues);
         Iterator<String> itr = setValues.iterator();
+        int key=1;
         while (itr.hasNext()){
            String next= itr.next();
+           newMap.put(key++,next);
         }
 
-        System.out.println(entries);
-        System.out.println(setValues);
+        System.out.println(map);
+        System.out.println(newMap);
 
 
     }
