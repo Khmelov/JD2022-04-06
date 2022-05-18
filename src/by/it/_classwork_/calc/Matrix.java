@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Matrix extends Var {
 
 
-    double[][] values;
+    private final double[][] values;
 
     public Matrix(String str) {
         //{{1,2,3},{4,5,6}}
@@ -29,8 +29,4 @@ public class Matrix extends Var {
         return Arrays.deepToString(values);
     }
 
-    public static void main(String[] args) {
-        Matrix matrix = new Matrix("{{1,2,3},{4,5,6}}");
-        System.out.println(matrix);
-    }
 }
