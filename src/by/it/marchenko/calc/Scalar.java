@@ -1,10 +1,5 @@
 package by.it.marchenko.calc;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import static by.it.marchenko.calc.MessageConst.*;
-
 public class Scalar extends Var {
     private final double value;
 
@@ -29,67 +24,54 @@ public class Scalar extends Var {
         return Double.toString(value);
     }
 
-    //@Override
-    //public Var operation(String operator, Var operand) {
-    //    return null;
-   // }
-
     @Override
     public Var add(Var other) {
-        //System.out.println("Зашли сюда как Scalar+Var");
-        Object tempResult = this;
-        try {
-            Method method = other.getClass().getMethod(ADD_STRING_OPERATOR, this.getClass());
-            tempResult = method.invoke(other, this);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return (Var) tempResult;
+        return other.add(this);
     }
 
     public Var add(Scalar other) {
-        //System.out.println("Зашли сюда как Scalar+Scalar");
         return new Scalar(this.value + other.getValue());
+    }
+
+    public Var add(Vector other) {
+        return other.add(this);
+    }
+
+    public Var add(Matrix other) {
+        return other.add(this);//new Scalar(this.value + other.getValue());
     }
 
     @Override
     public Var mul(Var other) {
-        //System.out.println("Зашли сюда как Scalar*Var");
-        Object tempResult = this;
-        try {
-            Method method = other.getClass().getMethod(MUL_STRING_OPERATOR, this.getClass());
-            tempResult = method.invoke(other, this);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return (Var) tempResult;
+        return other.mul(this);
     }
 
     public Var mul(Scalar other) {
-        //System.out.println("Зашли сюда как Scalar*Scalar");
         return new Scalar(this.value * other.getValue());
+    }
+
+    @Override
+    public Var mul(Vector other) {
+        return other.mul(this);
+    }
+
+    @Override
+    public Var mul(Matrix other) {
+        return other.mul(this);
     }
 
     @Override
     public Var sub(Var other) {
         final Scalar MINUS_ONE = new Scalar(-1d);
-        //System.out.println("Зашли сюда как Scalar-Var");
-        Object tempResult = this;
-        try {
-            Method methodMul = other.getClass().
-                    getMethod(MUL_STRING_OPERATOR, MINUS_ONE.getClass());
-            tempResult = methodMul.invoke(other, MINUS_ONE);
-            Method methodAdd = other.getClass().getMethod(ADD_STRING_OPERATOR, this.getClass());
-            tempResult = methodAdd.invoke(tempResult, this);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return (Var) tempResult;
+        return other.mul(MINUS_ONE).add(this);
     }
 
     @Override
     public Var div(Var other) {
-        //System.out.println("Зашли сюда как Scalar/Var");
+        System.out.println("Зашли сюда как Scalar/Var");
+        return other.div(this);
+        /*
+        //
         Object tempResult = this;
         try {
             Method method = this.getClass().getMethod(DIV_STRING_OPERATOR, other.getClass());
@@ -98,12 +80,22 @@ public class Scalar extends Var {
             e.printStackTrace();
         }
         return (Var) tempResult;
+
+         */
     }
 
     public Var div(Scalar other) {
-        //System.out.println("Зашли сюда как Scalar/Scalar");
-        return new Scalar(this.value / other.getValue());
+        System.out.println("Зашли сюда как Scalar/Scalar");
+        return new Scalar(other.getValue() / this.value);
     }
 
+    public Var div(Vector other) {
+        System.out.println("Зашли сюда как Scalar/Vector");
+        return super.div((Var) other);
+    }
 
+    public Var div(Matrix other) {
+        System.out.println("Зашли сюда как Scalar/matrix");
+        return super.div((Var) other);
+    }
 }
