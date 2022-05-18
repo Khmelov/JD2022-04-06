@@ -16,9 +16,9 @@ public class TaskA1 {
             int grade = rnd(1, 11);
             instance.grades.add(grade);
         }
-        System.out.println("full grades: " +instance.grades);
+        System.out.println("full grades: " + instance.grades);
         instance.clearBad(instance.grades);
-        System.out.println("last grades: " +instance.grades);
+        System.out.println("last grades: " + instance.grades);
     }
 
     private static int rnd(int from, int to) {
@@ -27,12 +27,11 @@ public class TaskA1 {
 
     void clearBad(List<Integer> grades) {
         Iterator<Integer> iterator = grades.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Integer grade = iterator.next();
-            if (grade<4){
+            if (grade < 4) {
                 iterator.remove();
             }
         }
-
     }
 }
