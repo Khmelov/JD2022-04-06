@@ -1,33 +1,22 @@
 package by.it.kudelko.jd01_06;
 
-import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class TaskB1 {
-
-    private static String[] words = {};
-
     public static void main(String[] args) {
-        Pattern pattern = Pattern.compile("[а-яА-ЯёЁ]+");
-        Matcher matcher = pattern.matcher(Poem.text);
+        String[] words = Poem.text.split("[\\p{Punct}\\s]");
+        String[] glasn = {"А", "а", "Я", "я", "О", "о", "Ё", "ё", "У", "у", "Ю", "ю", "Ы", "ы", "И", "и", "Э", "э", "Е", "е"};
 
-        while (matcher.find()) {
-            String word = matcher.group();
-            process(word);
-        }
-        printResult();
-
-    }
-
-    private static void process(String word) {
-        words = Arrays.copyOf(words, words.length + 1);
-        words[words.length - 1] = word;
-    }
-
-    private static void printResult() {
-        for (int i = 0; i < words.length; i++) {
-            System.out.println(words[i]);
+        for (int j = 0; j < words.length; j++) {
+            for (int i = 0; i < glasn.length; i++) {
+                if(words[j].startsWith(glasn[i]) || words[j].equals(glasn[i])) {
+                    j++;
+                    break;
+                }
+            }
+            for (int i = 0; i < glasn.length; i++) {
+                if(words[j].endsWith(glasn[i])) {
+                    System.out.println(words[j]);
+                }
+            }
         }
     }
 }
