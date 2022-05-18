@@ -10,7 +10,7 @@ public class TaskA1 {
     private List<Integer> grades = new ArrayList<>();
 
     public static void main(String[] args) {
-        by.it._classwork_.jd01_12.TaskA1 instance = new by.it._classwork_.jd01_12.TaskA1();
+        TaskA1 instance = new TaskA1();
         int count = rnd(40, 50);
         for (int i = 0; i < count; i++) {
             int grade = rnd(1, 11);
