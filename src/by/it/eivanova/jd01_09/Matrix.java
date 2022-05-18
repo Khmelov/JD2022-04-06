@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Matrix extends Var {
 
-    final double[][] values;
+    double[][] values;
 
 
     public Matrix(double[][] values) {
