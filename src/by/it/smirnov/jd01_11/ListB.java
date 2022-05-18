@@ -1,6 +1,7 @@
 package by.it.smirnov.jd01_11;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class ListB<E> implements List<E> {
 
@@ -38,7 +39,7 @@ public class ListB<E> implements List<E> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
@@ -48,17 +49,30 @@ public class ListB<E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        //Iterator<E> iter = Arrays.stream(array).iterator();
+        return new Iterator<E>() {
+            private int index;
+            public boolean hasNext() {
+                return index<size;
+            }
+
+            @Override
+            public E next() {
+                return array[index++];
+            }
+        };
     }
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] copy = Arrays.copyOfRange(array,0, size);
+        return copy;
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        return null;
+        T[] copy = Arrays.copyOfRange((T[]) array,0, size);
+        return copy;
     }
 
     @Override
@@ -83,15 +97,18 @@ public class ListB<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
+        E[] arrayFL = (E[]) c.toArray();
         if (size <= array.length - 1 + c.size()) {
             array = Arrays.copyOf(array, array.length*3/2 + c.size());
         }
         int index = size;
-        for (E e : c) {
-            array[index] = e;
+        for (int i = 0; i < arrayFL.length; i++) {
+            array[index] = arrayFL[i];
             index++;
+            size++;
         }
-        size = size + c.size();
+
+        //size = size + c.size();
         return true;
     }
 
