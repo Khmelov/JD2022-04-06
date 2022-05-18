@@ -9,11 +9,14 @@ public class TaskA2 {
 
         List<Integer> first = Arrays.asList(1,1,2,2,3,4,5,5,6);
         List<Integer> second = Arrays.asList(9,99,8,7,7,5,6,4);
+        List<Long> third = Arrays.asList(1L,1L,2L,2L,3L,4L,5L,5L,6L);
         Set<Integer> one = new HashSet<>(first);
         Set<Integer> two = new TreeSet<>(second);
+        Set<Long> set = new HashSet<>(third);
 
         System.out.println("One" + one);
         System.out.println("Two" + two);
+        System.out.println("set long"+set);
         Set<Integer> union = getUnion(one, two);
         System.out.println("union" + union);
 
