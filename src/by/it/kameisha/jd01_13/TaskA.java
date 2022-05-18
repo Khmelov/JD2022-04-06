@@ -11,20 +11,23 @@ public class TaskA {
                 Integer.parseInt("привет");
             }
         } catch (NullPointerException | NumberFormatException e){
-            Class<? extends RuntimeException> exceptionClass = e.getClass();
             Class<TaskA> taskAClass = TaskA.class;
-            String exceptionName = exceptionClass.getName();
-            StackTraceElement[] stackTrace = e.getStackTrace();
-            for (StackTraceElement element : stackTrace) {
-                if(element.getClassName().equals(taskAClass.getName())){
-                    int lineNumber = element.getLineNumber();
-                    System.out.printf(" name: %s%n",exceptionName);
-                    System.out.printf("class: %s%n",taskAClass);
-                    System.out.printf(" line: %d%n",lineNumber);
-                    break;
-                }
-            }
+            printExceptionInformation(e, taskAClass);
+        }
+    }
 
+     public static void printExceptionInformation(RuntimeException e, Class<TaskA> taskAClass) {
+        Class<? extends RuntimeException> exceptionClass = e.getClass();
+        String exceptionName = exceptionClass.getName();
+        StackTraceElement[] stackTrace = e.getStackTrace();
+        for (StackTraceElement element : stackTrace) {
+            if(element.getClassName().equals(taskAClass.getName())){
+                int lineNumber = element.getLineNumber();
+                System.out.printf(" name: %s%n",exceptionName);
+                System.out.printf("class: %s%n", taskAClass);
+                System.out.printf(" line: %d%n",lineNumber);
+                break;
+            }
         }
     }
 }
