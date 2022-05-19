@@ -12,21 +12,25 @@ public class TaskA {
                 Integer.parseInt("text");
             }
         } catch (NumberFormatException | NullPointerException e){
-            Class<? extends RuntimeException> exClass = e.getClass();
-            String exName = exClass.getName();
-            Class<TaskA> myClass = TaskA.class;
-            StackTraceElement[] stackTrace = e.getStackTrace();
-            for (StackTraceElement element : stackTrace) {
-                String className = element.getClassName();
-                if (className.equals(myClass.getName())){
-                    int lineNumber = element.getLineNumber();
-                    System.out.printf("""
-                             name: %s
-                            class: %s
-                             line: %d
-                            """, exName, className, lineNumber);
-                    break;
-                }
+            showDetails(e);
+        }
+    }
+
+    static void showDetails(RuntimeException e) {
+        Class<? extends RuntimeException> exClass = e.getClass();
+        String exName = exClass.getName();
+        Class<TaskA> myClass = TaskA.class;
+        StackTraceElement[] stackTrace = e.getStackTrace();
+        for (StackTraceElement element : stackTrace) {
+            String className = element.getClassName();
+            if (className.equals(myClass.getName())){
+                int lineNumber = element.getLineNumber();
+                System.out.printf("""
+                         name: %s
+                        class: %s
+                         line: %d
+                        """, exName, className, lineNumber);
+                break;
             }
         }
     }
