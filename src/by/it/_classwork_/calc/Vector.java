@@ -30,7 +30,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var add(Var other) {
+    public Var add(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             double[] result = values.clone();
             for (int i = 0; i < result.length; i++) {
@@ -38,6 +38,9 @@ public class Vector extends Var {
             }
             return new Vector(result);
         } else if (other instanceof Vector vector) {
+            if (this.values.length != vector.values.length) {
+                throw new CalcException("Incorrect size for %s + %s", this, vector);
+            }
             double[] result = values.clone();
             for (int i = 0; i < result.length; i++) {
                 result[i] = result[i] + vector.values[i];
