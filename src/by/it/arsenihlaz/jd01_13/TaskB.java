@@ -26,13 +26,12 @@ public class TaskB {
                 System.out.println(stringsOfNumber);
                 sum += numbers;
                 System.out.println(numbers);
-            } catch (NumberFormatException e) {
-                printException(e);
-            }
-            try {
                 double result = Math.sqrt(sum);
+                if (Double.isNaN(result)){
+                    throw new ArithmeticException();
+                }
                 System.out.println(result);
-            } catch (ArithmeticException e) {
+            } catch (NumberFormatException | ArithmeticException e) {
                 printException(e);
             }
         }
