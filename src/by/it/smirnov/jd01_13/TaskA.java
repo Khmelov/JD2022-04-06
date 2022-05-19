@@ -16,11 +16,13 @@ public class TaskA {
     }
 
     static void print(RuntimeException e) {
+        Class<? extends RuntimeException> exceptionClass = e.getClass();
+        Class<TaskA> currentClass = TaskA.class;
+        String name = exceptionClass.getName();
         StackTraceElement [] stackTraceElement = e.getStackTrace();
         for (StackTraceElement element : stackTraceElement) {
-            if(TaskA.class.getName().equals(element.getClassName())) {
-                String name = e.getClass().getName();
-                String className = element.getClassName();
+            String className = element.getClassName();
+            if(className.equals(currentClass.getName())) {
                 int lineNumb = element.getLineNumber();
                 System.out.printf("""
                     name: %s
