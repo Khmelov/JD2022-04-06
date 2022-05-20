@@ -16,10 +16,8 @@ public class Parser {
     public Var calc(String expression) throws CalcException {
         expression.trim().replaceAll(Patterns.SPACES, "");
         String[] parts = expression.split(Patterns.OPERATIONS, 2);
-        String leftOperand = parts[0];
-        Var left = varCreator.createVar(leftOperand);
         if (parts.length == 1) {
-            return left;
+            return varCreator.createVar(parts[0]);
         }
         String rightOperand = parts[1];
         Var right = varCreator.createVar(rightOperand);
@@ -28,6 +26,11 @@ public class Parser {
         Matcher matcher = pattern.matcher(expression);
         if (matcher.find()) {
             String operation = matcher.group();
+            if (operation.equals("=")) {
+                return repository.save(parts[0], right);
+            }
+            String leftOperand = parts[0];
+            Var left = varCreator.createVar(leftOperand);
             switch (operation) {
                 case "+":
                     return left.add(right);
@@ -40,8 +43,6 @@ public class Parser {
             }
 
         }
-
-
-        return null;
+        throw new CalcException("unknown expression: %s", expression);
     }
 }
