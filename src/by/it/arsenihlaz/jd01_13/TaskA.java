@@ -22,7 +22,7 @@ public class TaskA {
         StackTraceElement[] stackTrace = e.getStackTrace();
         for (StackTraceElement element : stackTrace) {
             String className = element.getClassName();
-            if (className.equals(currentClass.getName())){
+            if (className.equals(currentClass.getName())) {
                 int lineNumber = element.getLineNumber();
                 System.out.printf("""
                          name: %s
