@@ -20,13 +20,12 @@ public class ConsoleRunner {
             if (expression.toLowerCase().equals(COMMAND_END)) {
                 break;
             } else {
-                Var result = null;
                 try {
-                    result = parser.calc(expression);
+                   Var result = parser.calc(expression);
+                    printer.print(result);
                 } catch (CalcException e) {
-                    throw new RuntimeException(e);
+                    printer.print(e);
                 }
-                printer.print(result);
             }
         }
         System.out.println(MESSAGE_STOP_APP);

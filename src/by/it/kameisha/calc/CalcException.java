@@ -9,7 +9,7 @@ public class CalcException extends Exception {
         super(message, cause);
     }
 
-    public CalcException(String messsage, Object... parameters) {
-        this(String.format(messsage, parameters));
+    public CalcException(String message, Object... parameters) {
+        this(String.format(message, parameters));
     }
 }
