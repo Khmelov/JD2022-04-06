@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-    public Var calc(String expression) {
+    public Var calc(String expression) throws CalcException {
         expression = expression.trim().replaceAll(Patterns.SPACES, "");
         String[] parts = expression.split(Patterns.MATH_OPERATIONS, 2);
 
@@ -22,7 +22,7 @@ public class Parser {
         if (matcher.find()) {
             String operation = matcher.group();
 
-            if (operation.equals("=")){
+            if (operation.equals("=")) {
                 return Var.save(parts[0], right);
             }
 
@@ -40,6 +40,6 @@ public class Parser {
                     return left.div(right);
             }
         }
-        return null;
+        throw new CalcException("unknown expression: %s", expression);
     }
 }
