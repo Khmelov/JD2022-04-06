@@ -18,14 +18,14 @@ public class TaskB {
                 }
             }
             double b = 0;
-            double z = 0;
-            for (int j = 0; j < list.size(); j++) {
-                b = b + list.get(j);
+            double z ;
+            for (Double aDouble : list) {
+                b = b + aDouble;
                 z = Math.sqrt(b);
                 if (Double.isNaN(z)) {
                     throw new ArithmeticException();
                 }
-                System.out.println(list.get(j));
+                System.out.println(aDouble);
                 System.out.println(z);
             }
 
