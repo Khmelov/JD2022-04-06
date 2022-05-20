@@ -32,4 +32,3 @@ public class ConsoleRunner {
         System.out.println(MESSAGE_STOP_APP);
     }
 }
-
