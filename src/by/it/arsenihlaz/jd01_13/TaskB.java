@@ -6,8 +6,7 @@ import java.util.Scanner;
 
 public class TaskB {
     public static void main(String[] args) {
-        System.out.println("Введите числа построчно");
-
+        System.out.println("Введите числа через Enter");
         List<String> stringsOfNumbers = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -18,28 +17,29 @@ public class TaskB {
                 stringsOfNumbers.add(inputString);
             }
         }
-
         double sum = 0;
         for (String stringsOfNumber : stringsOfNumbers) {
             try {
                 double numbers = Double.parseDouble(stringsOfNumber);
-                System.out.println(stringsOfNumber);
+
                 sum += numbers;
                 System.out.println(numbers);
                 double result = Math.sqrt(sum);
-                if (Double.isNaN(result)){
+                if (Double.isNaN(result)) {
                     throw new ArithmeticException();
                 }
+                System.out.println(stringsOfNumber);
                 System.out.println(result);
-            } catch (NumberFormatException | ArithmeticException e) {
+            } catch (NumberFormatException | NullPointerException | ArithmeticException e) {
                 printException(e);
             }
         }
 
     }
-    protected static void printException(RuntimeException e) {
+
+    private static void printException(RuntimeException e) {
         Class<? extends RuntimeException> exceptionClass = e.getClass();
-        Class<TaskA> currentClass = TaskA.class;
+        Class<TaskB> currentClass = TaskB.class;
         String exceptionName = exceptionClass.getName();
         StackTraceElement[] stackTrace = e.getStackTrace();
         for (StackTraceElement element : stackTrace) {
