@@ -1,7 +1,7 @@
 package by.it.kameisha.calc;
 
 public class Vector extends Var {
-    private double[] value;
+    private final double[] value;
 
     public Vector(double[] value) {
         this.value = value.clone();
@@ -39,7 +39,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var add(Var other) {
+    public Var add(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
@@ -58,7 +58,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var sub(Var other) {
+    public Var sub(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
@@ -77,7 +77,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var mul(Var other) {
+    public Var mul(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
@@ -97,7 +97,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var div(Var other) {
+    public Var div(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
