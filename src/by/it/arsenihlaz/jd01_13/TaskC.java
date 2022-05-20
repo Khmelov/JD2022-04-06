@@ -27,12 +27,7 @@ public class TaskC {
                 }
             }
             if (counter == 0) {
-                try {
-                    double number = Double.parseDouble(inputString);
-                    numbers.add(number);
-                } catch (NumberFormatException e) {
-                    throw e;
-                }
+                throw new NumberFormatException();
             }
         }
     }
