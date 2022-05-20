@@ -108,7 +108,7 @@ public class Matrix extends Var {
             }
             return new Matrix(newMatrix);
         } else if (other instanceof Matrix matrix ) {
-            if(!checkMatrix(new Matrix(value)) ||
+            if(!checkMatrix((Matrix) other) ||
                     !checkMatrix(matrix) || matrix.value.length != value.length){
                 throw new CalcException("Incorrect argument's size");
             }
