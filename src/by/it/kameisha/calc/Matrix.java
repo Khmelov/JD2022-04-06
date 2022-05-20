@@ -19,15 +19,16 @@ public class Matrix extends Var {
         }
         this.value = newMatrix;
     }
-
+   //{{2,3,3   {2,3,3}}
     public Matrix(String strMatrix) {
         String[] strings = strMatrix.split("},");
-        double[][] array = new double[strings.length][strings.length];
+        double[][] array = new double[strings.length][];
         for (int i = 0; i < strings.length; i++) {
             String arrayString = strings[i];
             arrayString = arrayString.replace("{", "");
             arrayString = arrayString.replace("}", "");
             String[] tempString = arrayString.split(",");
+            array[i] = new double[tempString.length];
             for (int j = 0; j < tempString.length; j++) {
                 array[i][j] = Double.parseDouble(tempString[j]);
             }
@@ -96,7 +97,7 @@ public class Matrix extends Var {
     public Var sub(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             if(!checkMatrix(new Matrix(value))){
-                throw new CalcException("Inccorect argument's size");
+                throw new CalcException("Incorrect argument's size");
             }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
@@ -107,8 +108,8 @@ public class Matrix extends Var {
             }
             return new Matrix(newMatrix);
         } else if (other instanceof Matrix matrix ) {
-            if(checkMatrix(new Matrix(value)) ||
-                    checkMatrix(matrix) && matrix.value.length == value.length){
+            if(!checkMatrix(new Matrix(value)) ||
+                    !checkMatrix(matrix) || matrix.value.length != value.length){
                 throw new CalcException("Incorrect argument's size");
             }
             double[][] newMatrix = new double[value.length][];

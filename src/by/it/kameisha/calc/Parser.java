@@ -19,6 +19,8 @@ public class Parser {
         if (parts.length == 1) {
             return varCreator.createVar(parts[0]);
         }
+        String leftOperand = parts[0];
+        Var left = varCreator.createVar(leftOperand);
         String rightOperand = parts[1];
         Var right = varCreator.createVar(rightOperand);
 
@@ -29,8 +31,6 @@ public class Parser {
             if (operation.equals("=")) {
                 return repository.save(parts[0], right);
             }
-            String leftOperand = parts[0];
-            Var left = varCreator.createVar(leftOperand);
             switch (operation) {
                 case "+":
                     return left.add(right);
