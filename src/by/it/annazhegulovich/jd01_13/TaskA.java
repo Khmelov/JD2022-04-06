@@ -12,6 +12,10 @@ public class TaskA {
 
 
         } catch (NumberFormatException|NullPointerException e){
+            showException(e);
+        }
+    }
+        static void showException (RuntimeException e) {
             Class<? extends RuntimeException> eClass = e.getClass();
             String eClassName = eClass.getName();
             Class<TaskA> taskAClass = TaskA.class;
@@ -34,4 +38,4 @@ public class TaskA {
 
         }
     }
-}
+
