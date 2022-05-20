@@ -9,7 +9,7 @@ public class VarCreator {
         this.repository = repository;
     }
 
-    public Var crateVar(String stringVar) throws CalcException {
+    public Var createVar(String stringVar) throws CalcException {
         Var result;
         if (stringVar.matches(Patterns.SCALAR)) {
             result = new Scalar(stringVar);

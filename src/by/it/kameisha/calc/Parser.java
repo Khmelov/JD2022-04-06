@@ -4,18 +4,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-//TODO fix after add exceptions
-    @SuppressWarnings("ConstantConditions")
-    public Var calc(String expression) {
+
+    private final Repository repository;
+    private final VarCreator varCreator;
+
+    public Parser(Repository repository, VarCreator varCreator) {
+        this.repository = repository;
+        this.varCreator = varCreator;
+    }
+
+    public Var calc(String expression) throws CalcException {
         expression.trim().replaceAll(Patterns.SPACES, "");
         String[] parts = expression.split(Patterns.OPERATIONS, 2);
         String leftOperand = parts[0];
-        Var left = Var.crateVar(leftOperand);
+        Var left = varCreator.createVar(leftOperand);
         if (parts.length == 1) {
             return left;
         }
         String rightOperand = parts[1];
-        Var right = Var.crateVar(rightOperand);
+        Var right = varCreator.createVar(rightOperand);
 
         Pattern pattern = Pattern.compile(Patterns.OPERATIONS);
         Matcher matcher = pattern.matcher(expression);
