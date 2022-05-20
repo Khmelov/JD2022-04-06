@@ -94,7 +94,10 @@ public class Matrix extends Var {
 
     @Override
     public Var sub(Var other) throws CalcException {
-        if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
+        if (other instanceof Scalar scalar) {
+            if(!checkMatrix(new Matrix(value))){
+                throw new CalcException("Inccorect argument's size");
+            }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
                 newMatrix[i] = value[i].clone();
@@ -103,8 +106,11 @@ public class Matrix extends Var {
                 }
             }
             return new Matrix(newMatrix);
-        } else if (other instanceof Matrix matrix && checkMatrix(new Matrix(value)) &&
-                checkMatrix(matrix) && matrix.value.length == value.length) {
+        } else if (other instanceof Matrix matrix ) {
+            if(checkMatrix(new Matrix(value)) ||
+                    checkMatrix(matrix) && matrix.value.length == value.length){
+                throw new CalcException("Incorrect argument's size");
+            }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
                 newMatrix[i] = value[i].clone();

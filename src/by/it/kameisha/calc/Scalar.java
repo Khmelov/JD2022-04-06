@@ -57,6 +57,9 @@ public class Scalar extends Var {
     @Override
     public Var div(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
+            if(scalar.value==0){
+                throw new CalcException("division by zero %s / %s",value,scalar);
+            }
             double result = this.value / scalar.value;
             return new Scalar(result);
         } else {
