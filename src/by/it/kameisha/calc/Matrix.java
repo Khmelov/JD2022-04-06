@@ -1,4 +1,4 @@
-package by.it.kameisha.jd01_08;
+package by.it.kameisha.calc;
 
 public class Matrix extends Var {
 
@@ -19,10 +19,10 @@ public class Matrix extends Var {
         }
         this.value = newMatrix;
     }
-
+   //{{2,3,3   {2,3,3}}
     public Matrix(String strMatrix) {
         String[] strings = strMatrix.split("},");
-        double[][] array = new double[strings.length][strings.length];
+        double[][] array = new double[strings.length][];
         for (int i = 0; i < strings.length; i++) {
             String arrayString = strings[i];
             arrayString = arrayString.replace("{", "");
@@ -68,7 +68,7 @@ public class Matrix extends Var {
     }
 
     @Override
-    public Var add(Var other) {
+    public Var add(Var other) throws CalcException {
         if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
@@ -94,8 +94,11 @@ public class Matrix extends Var {
     }
 
     @Override
-    public Var sub(Var other) {
-        if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
+    public Var sub(Var other) throws CalcException {
+        if (other instanceof Scalar scalar) {
+            if(!checkMatrix(new Matrix(value))){
+                throw new CalcException("Incorrect argument's size");
+            }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
                 newMatrix[i] = value[i].clone();
@@ -104,8 +107,11 @@ public class Matrix extends Var {
                 }
             }
             return new Matrix(newMatrix);
-        } else if (other instanceof Matrix matrix && checkMatrix(new Matrix(value)) &&
-                checkMatrix(matrix) && matrix.value.length == value.length) {
+        } else if (other instanceof Matrix matrix ) {
+            if(!checkMatrix((Matrix) other) ||
+                    !checkMatrix(matrix) || matrix.value.length != value.length){
+                throw new CalcException("Incorrect argument's size");
+            }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
                 newMatrix[i] = value[i].clone();
@@ -120,7 +126,7 @@ public class Matrix extends Var {
     }
 
     @Override
-    public Var mul(Var other) {
+    public Var mul(Var other) throws CalcException {
         if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
@@ -155,7 +161,7 @@ public class Matrix extends Var {
     }
 
     @Override
-    public Var div(Var other) {
+    public Var div(Var other) throws CalcException {
         if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
