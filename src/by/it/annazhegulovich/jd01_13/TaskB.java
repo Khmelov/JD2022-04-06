@@ -19,17 +19,17 @@ public class TaskB {
                     try {
                     value = Double.parseDouble(line);
                     sum = sum + value;
-                    //System.out.println(value);
+
+
+                    System.out.println("value " + value +" sqrt "+Math.sqrt(sum));
+
                     } catch (NumberFormatException|ArithmeticException e){
-                        TaskA.showException(e);
-                    }
+                        TaskA.showException(e);                    }
                 }
-                //sqrt = Math.sqrt(sum);
                 if (sum<0){
                     throw new ArithmeticException("вычисление не возможно");
                 }
         }
-        System.out.println("value " + value +" sqrt "+Math.sqrt(sum));
     }
 }
 
