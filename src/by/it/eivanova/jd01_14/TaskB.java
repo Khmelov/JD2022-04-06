@@ -15,7 +15,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class TaskB {
 
     private static final String RESULT_TASK_B_TXT = "resultTaskB.txt";
-    private static final String DATA_TASK_B_TXT = "resultTaskB";
     public String text = Poem.text;
     public static String[] words = {};
     public static int[] counts = {};
@@ -28,14 +27,11 @@ public class TaskB {
         Pattern pattern = Pattern.compile("[а-яА-ЯёЁ]+");
         Matcher matcher = pattern.matcher(Poem.text);
 
-        String pathBinaryFile = Util.getPath(TaskA.class, DATA_TASK_B_TXT);
-        writeIntegers(pathBinaryFile);
-        ArrayList<Integer> integers = readIntegers(pathBinaryFile);
-        printToConsole(integers);
-        String pathTxtFile = Util.getPath(TaskA.class, RESULT_TASK_B_TXT);
+        String pathTxtFile = Util.getPath(TaskB.class, RESULT_TASK_B_TXT);
+        writeIntegers(pathTxtFile);
+        ArrayList<Integer> integers = readIntegers(pathTxtFile);
         printToTxtFile(integers, pathTxtFile);
-        String hi = "hi";
-
+        printToConsole(integers);
 
 
         while (matcher.find()) {
