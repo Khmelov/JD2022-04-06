@@ -58,9 +58,9 @@ public class TaskA {
             double sum = 0;
             for (Integer integer : integers) {
                 sum = sum + integer;
-                System.out.print(integer+" ");
+                printWriter.print(integer+" ");
             }
-            System.out.println("\navg="+sum/ integers.size());
+            printWriter.println("\navg="+sum/ integers.size());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
