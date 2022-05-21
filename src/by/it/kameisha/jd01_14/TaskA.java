@@ -14,6 +14,8 @@ public class TaskA {
         writeIntegers(pathBinaryFile);
         ArrayList<Integer> integers = readIntegers(pathBinaryFile);
         printConsole(integers);
+        String pathTxtFile = Util.getPath(TaskA.class,RESULT_TASK_A_TXT);
+        printTxtFile(integers, pathTxtFile);
 
     }
 
@@ -48,6 +50,19 @@ public class TaskA {
             sum = sum + integer;
             System.out.print(integer+" ");
         }
-        System.out.println("\navg = "+sum/ integers.size());
+        System.out.println("\navg="+sum/ integers.size());
+    }
+
+    private static void printTxtFile(ArrayList<Integer> integers, String pathTxtFile) {
+        try(PrintWriter printWriter = new PrintWriter(pathTxtFile)){
+            double sum = 0;
+            for (Integer integer : integers) {
+                sum = sum + integer;
+                System.out.print(integer+" ");
+            }
+            System.out.println("\navg="+sum/ integers.size());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
