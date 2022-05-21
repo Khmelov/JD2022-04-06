@@ -13,7 +13,7 @@ public class TaskA {
         String pathBinaryFile = Util.getPath(TaskA.class, DATA_TASK_A_BIN);
         writeIntegers(pathBinaryFile);
         ArrayList<Integer> integers = readIntegers(pathBinaryFile);
-
+        printConsole(integers);
 
     }
 
@@ -40,5 +40,14 @@ public class TaskA {
             throw new RuntimeException(e);
         }
         return integers;
+    }
+
+    private static void printConsole(ArrayList<Integer> integers) {
+        double sum = 0;
+        for (Integer integer : integers) {
+            sum = sum + integer;
+            System.out.print(integer+" ");
+        }
+        System.out.println("\navg = "+sum/ integers.size());
     }
 }
