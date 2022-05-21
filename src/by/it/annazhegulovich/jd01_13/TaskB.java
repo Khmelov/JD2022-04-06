@@ -23,11 +23,11 @@ public class TaskB {
 
                     System.out.println("value " + value +" sqrt "+Math.sqrt(sum));
 
+                        if (sum<0){
+                            throw new ArithmeticException("вычисление не возможно");
+                        }
                     } catch (NumberFormatException|ArithmeticException e){
-                        TaskA.showException(e);                    }
-                }
-                if (sum<0){
-                    throw new ArithmeticException("вычисление не возможно");
+                        TaskA.showException(e, TaskB.class);                  }
                 }
         }
     }
