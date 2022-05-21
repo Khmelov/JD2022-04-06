@@ -10,7 +10,9 @@ public class ConsoleRunner {
 
     public static void main(String[] args) {
         Printer printer = new Printer();
-        Parser parser = new Parser();
+        Repository repository = new VarMapRepository();
+        VarCreator varCreator = new VarCreator(repository);
+        Parser parser = new Parser(repository, varCreator);
         Scanner scanner = new Scanner(System.in);
         System.out.println(MESSAGE_START_APP);
         while (scanner.hasNext()){
@@ -18,8 +20,12 @@ public class ConsoleRunner {
             if (expression.equals(COMMAND_END)){
                 break;
             } else {
-                Var result=parser.calc(expression);
-                printer.print(result);
+                try {
+                    Var result = parser.calc(expression);
+                    printer.print(result);
+                } catch (CalcException e) {
+                    printer.print(e);
+                }
             }
         }
         System.out.println(MESSAGE_STOP_APP);

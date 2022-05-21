@@ -28,6 +28,7 @@ public class Matrix extends Var {
             arrayString = arrayString.replace("{", "");
             arrayString = arrayString.replace("}", "");
             String[] tempString = arrayString.split(",");
+            array[i] = new double[tempString.length];
             for (int j = 0; j < tempString.length; j++) {
                 array[i][j] = Double.parseDouble(tempString[j]);
             }
