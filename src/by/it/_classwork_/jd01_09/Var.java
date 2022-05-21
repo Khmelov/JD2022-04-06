@@ -14,6 +14,7 @@ abstract class Var implements Operation {
         return result;
     }
 
+
     @Override
     public Var add(Var other) {
         System.out.printf("Incorrect operation %s + %s%n", this, other);
