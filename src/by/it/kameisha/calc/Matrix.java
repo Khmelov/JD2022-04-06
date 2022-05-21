@@ -1,7 +1,6 @@
 package by.it.kameisha.calc;
 
 public class Matrix extends Var {
-
     private double[][] value;
 
     public Matrix(double[][] value) {
@@ -56,14 +55,15 @@ public class Matrix extends Var {
         return strValue.toString();
     }
 
-    private boolean checkMatrix(Matrix matrix) {
+     private boolean checkMatrix(Matrix first) {
         boolean result = true;
-        for (int i = 0; i < matrix.value.length; i++) {
-            if (matrix.value[0].length != matrix.value[i].length) {
+        for (int i = 0; i < first.value.length; i++) {
+            if (first.value[0].length != first.value[i].length) {
                 result = false;
                 break;
             }
         }
+
         return result;
     }
 
@@ -97,7 +97,7 @@ public class Matrix extends Var {
     public Var sub(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             if(!checkMatrix(new Matrix(value))){
-                throw new CalcException("Incorrect argument's size");
+                throw new CalcException("Incorrect matrix size");
             }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
@@ -108,9 +108,10 @@ public class Matrix extends Var {
             }
             return new Matrix(newMatrix);
         } else if (other instanceof Matrix matrix ) {
-            if(!checkMatrix(new Matrix(value)) ||
-                    !checkMatrix(matrix) || matrix.value.length != value.length){
-                throw new CalcException("Incorrect argument's size");
+            if(!checkMatrix(new Matrix(value))
+                    || !checkMatrix(matrix) || matrix.value.length != value.length
+                    || matrix.value[0].length != value[0].length){
+                throw new CalcException("Incorrect matrix size");
             }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
