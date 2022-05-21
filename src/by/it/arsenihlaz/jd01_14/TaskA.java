@@ -40,7 +40,7 @@ public class TaskA {
             double sum2 = 0;
             for (int i = 0; i < integers.size(); i++) {
                 sum2 += integers.get(i);
-               out.print(integers.get(i) + " ");
+                out.print(integers.get(i) + " ");
             }
             out.println("\navg=" + sum2 / integers.size());
         } catch (FileNotFoundException e) {
