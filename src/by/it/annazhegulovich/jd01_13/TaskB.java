@@ -1,11 +1,11 @@
 package by.it.annazhegulovich.jd01_13;
 
+import java.util.Locale;
 import java.util.Scanner;
-
 
 public class TaskB {
     public static void main(String[] args)  {
-
+        Locale.setDefault(Locale.ENGLISH);
 
             double sum = 0;
         double sqrt=0;
@@ -13,7 +13,7 @@ public class TaskB {
         Scanner sc = new Scanner(System.in);
         while (true) {
                 String line = sc.nextLine();
-                if (line.equals("END")) {
+                if (line.equalsIgnoreCase("END")) {
                     break;
                 } else {
                     try {
