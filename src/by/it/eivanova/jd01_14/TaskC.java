@@ -17,29 +17,20 @@ public class TaskC {
 
     public static void main(String[] args) {
 
-       // String pathBinaryFile = Util.getPath(TaskA.class, DATA_TASK_A_BIN);
-      //  writeIntegers(pathBinaryFile);
-       // ArrayList<Integer> integers = readIntegers(pathBinaryFile);
-      //  printToConsole(integers);
-       // String pathTxtFile = Util.getPath(TaskA.class, RESULT_TASK_C_TXT);
-      //  printToTxtFile(integers, pathTxtFile);
-      //  String hi = "hi";
+        File pathDir = null;
+        String[] pathsFilesAndDir;
 
-        File currentDir = new File("E:\\it-academy\\jd2022-04-06\\out\\production\\jd2022-04-06\\by\\it\\eivanova");
-        displayAllFilesDirectories(currentDir);
-    }
+        try {
+            pathDir = new File("E:\\it-academy\\jd2022-04-06\\out\\production\\jd2022-04-06\\by\\it\\eivanova");
+            // Массив файлов и папок
+            pathsFilesAndDir = pathDir.list();
 
-
-
-    // Отображение все файлов и папок основной дирректории
-            public static void displayAllFilesDirectories(File dir) {
-                File[] files = dir.listFiles();
-                for (File file : files) {
-                    if (file.isDirectory()) {
-                      //  System.out.println("dir: " + file.getCanonicalPath());
-                        System.out.println("dir:" + file);
-                        // Вывести файлы подкаталогов, ежели нужно: displayAllFilesDirectories(file);
-                    }
-                }
+            for (String path : pathsFilesAndDir) {
+                // Вывод списка файлов и каталогов
+                System.out.println("dir:" + path);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+}
