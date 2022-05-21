@@ -1,6 +1,7 @@
 package by.it.kameisha.jd01_14;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TaskA {
@@ -11,7 +12,9 @@ public class TaskA {
     public static void main(String[] args) {
         String pathBinaryFile = Util.getPath(TaskA.class, DATA_TASK_A_BIN);
         writeIntegers(pathBinaryFile);
-        
+        ArrayList<Integer> integers = readIntegers(pathBinaryFile);
+
+
     }
 
     private static void writeIntegers(String pathBinaryFile) {
@@ -24,5 +27,18 @@ public class TaskA {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static ArrayList<Integer> readIntegers(String pathBinaryFile) {
+        ArrayList<Integer> integers = new ArrayList<>();
+        try (DataInputStream dataInputStream =
+                     new DataInputStream(new BufferedInputStream(new FileInputStream(pathBinaryFile)))) {
+            while (dataInputStream.available() > 0) {
+                integers.add(dataInputStream.readInt());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return integers;
     }
 }
