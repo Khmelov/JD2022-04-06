@@ -31,17 +31,21 @@ public class TaskC {
 
     private static void printTxtFile(String resultPath, File directory) {
         try (PrintWriter printWriter = new PrintWriter(resultPath)) {
-            File[] files = directory.listFiles();
-            for (File file : files != null ? files : new File[0]) {
-                if (!file.isDirectory()) {
-                    printWriter.println("file:" + file.getName());
-                } else {
-                    printWriter.println(" dir:" + file.getName());
-                    printDirectory(file);
-                }
-            }
+            writeTxtFile(directory, printWriter);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static void writeTxtFile(File directory, PrintWriter printWriter) {
+        File[] files = directory.listFiles();
+        for (File file : files != null ? files : new File[0]) {
+            if (!file.isDirectory()) {
+                printWriter.println("file:" + file.getName());
+            } else {
+                printWriter.println(" dir:" + file.getName());
+                writeTxtFile(file, printWriter);
+            }
         }
     }
 }
