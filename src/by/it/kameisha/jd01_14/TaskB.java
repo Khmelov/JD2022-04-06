@@ -17,7 +17,7 @@ public class TaskB {
         Pattern patternPunctuationMarks = Pattern.compile(PUNCTUATION_MARKS);
         int countWords = checkPatternCount(patternWords, pathPoemText);
         int countPunctuationMarks = checkPatternCount(patternPunctuationMarks, pathPoemText);
-        String result = "words="+countWords + ", punctuation marks=" + countPunctuationMarks;
+        String result = "words=" + countWords + ", punctuation marks=" + countPunctuationMarks;
         System.out.println(result);
         printTxtFile(pathResultTaskBText, result);
     }
@@ -39,7 +39,7 @@ public class TaskB {
     }
 
     private static void printTxtFile(String pathFile, String result) {
-        try(PrintWriter printWriter = new PrintWriter(pathFile)){
+        try (PrintWriter printWriter = new PrintWriter(pathFile)) {
             printWriter.print(result);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
