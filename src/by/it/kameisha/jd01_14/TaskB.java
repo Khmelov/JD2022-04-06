@@ -1,8 +1,6 @@
 package by.it.kameisha.jd01_14;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,12 +17,14 @@ public class TaskB {
         Pattern patternPunctuationMarks = Pattern.compile(PUNCTUATION_MARKS);
         int countWords = checkPatternCount(patternWords, pathPoemText);
         int countPunctuationMarks = checkPatternCount(patternPunctuationMarks, pathPoemText);
-        System.out.println("words="+countWords + ", punctuation marks=" + countPunctuationMarks);
+        String result = "words="+countWords + ", punctuation marks=" + countPunctuationMarks;
+        System.out.println(result);
+        printTxtFile(pathResultTaskBText, result);
     }
 
-    private static int checkPatternCount(Pattern pattern, String filePath) {
+    private static int checkPatternCount(Pattern pattern, String pathFile) {
         int count = 0;
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(pathFile))) {
             String line;
             while (null != (line = bufferedReader.readLine())) {
                 Matcher matcher = pattern.matcher(line);
@@ -36,5 +36,13 @@ public class TaskB {
             throw new RuntimeException(e);
         }
         return count;
+    }
+
+    private static void printTxtFile(String pathFile, String result) {
+        try(PrintWriter printWriter = new PrintWriter(pathFile)){
+            printWriter.print(result);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
