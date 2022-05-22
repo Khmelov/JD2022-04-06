@@ -13,8 +13,7 @@ public class TaskB {
 
         String pathFile = Util.getPath(TaskB.class, "Poem.txt");
         File poem = new File(pathFile);
-        try {
-            Scanner scanner = new Scanner(new FileInputStream(poem));
+        try (Scanner scanner = new Scanner(new FileInputStream(poem));){
             scanner.useDelimiter("[^а-яА-ЯёЁ]+");
             while (scanner.hasNext()) {
                 scanner.next();
