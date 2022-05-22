@@ -15,29 +15,26 @@ public class TaskB {
     public static void main(String[] args) {
         String pathPoemText = Util.getPath(TaskB.class, POEM_TEXT);
         String pathResultTaskBText = Util.getPath(TaskB.class, RESULT_TASK_B_TXT);
-        printWordsAndPunctuationMarksCounts(pathPoemText);
-    }
-
-    private static void printWordsAndPunctuationMarksCounts(String path) {
         Pattern patternWords = Pattern.compile(RUSSIAN_WORDS);
         Pattern patternPunctuationMarks = Pattern.compile(PUNCTUATION_MARKS);
-        int countWords = 0;
-        int countPunctuationMarks = 0;
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
+        int countWords = checkPatternCount(patternWords, pathPoemText);
+        int countPunctuationMarks = checkPatternCount(patternPunctuationMarks, pathPoemText);
+        System.out.println("words="+countWords + ", punctuation marks=" + countPunctuationMarks);
+    }
+
+    private static int checkPatternCount(Pattern pattern, String filePath) {
+        int count = 0;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while (null != (line = bufferedReader.readLine())) {
-                Matcher matcherWords = patternWords.matcher(line);
-                Matcher matcherPunctuationMarks = patternPunctuationMarks.matcher(line);
-                while (matcherWords.find()) {
-                    countWords++;
-                }
-                while (matcherPunctuationMarks.find()) {
-                    countPunctuationMarks++;
+                Matcher matcher = pattern.matcher(line);
+                while (matcher.find()) {
+                    count++;
                 }
             }
-            System.out.println("words=" + countWords + ", punctuation marks=" + countPunctuationMarks);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return count;
     }
 }
