@@ -31,4 +31,8 @@ public class Util {
                 .replace(PACKAGE_DIR_SEPARATOR, File.separator);
         return File.separator.concat(SOURCE_DIR).concat(File.separator).concat(relPath);
     }
+
+    public static File getRootFolderPath() {
+        return new File(getFilePath(EMPTY_STRING)).getParentFile();
+    }
 }
