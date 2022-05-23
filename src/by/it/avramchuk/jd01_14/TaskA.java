@@ -59,7 +59,7 @@ public class TaskA {
         System.out.println("\navg="+sum/ integers.size());
     }
 
-    private static void printTxtFile(ArrayList<Integer> integers, String txtFile) {
+    public static void printTxtFile(ArrayList<Integer> integers, String txtFile) {
         try(PrintWriter out = new PrintWriter(txtFile)){
             double sum2=0;
             for (Integer integer : integers) {
