@@ -18,7 +18,7 @@ public class Matrix extends Var {
         }
         this.value = newMatrix;
     }
-   //{{2,3,3   {2,3,3}}
+
     public Matrix(String strMatrix) {
         String[] strings = strMatrix.split("},");
         double[][] array = new double[strings.length][];
@@ -55,7 +55,7 @@ public class Matrix extends Var {
         return strValue.toString();
     }
 
-     private boolean checkMatrix(Matrix first) {
+    private boolean checkMatrix(Matrix first) {
         boolean result = true;
         for (int i = 0; i < first.value.length; i++) {
             if (first.value[0].length != first.value[i].length) {
@@ -63,13 +63,25 @@ public class Matrix extends Var {
                 break;
             }
         }
+        return result;
+    }
 
+    private boolean checkTwoMatrix(Matrix first, Matrix second) {
+        boolean result = true;
+        if (!checkMatrix(first) || !checkMatrix(second)
+                || first.value.length != second.value.length
+                || first.value[0].length != second.value[0].length) {
+            result = false;
+        }
         return result;
     }
 
     @Override
     public Var add(Var other) throws CalcException {
-        if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
+        if (other instanceof Scalar scalar) {
+            if (!checkMatrix(new Matrix(value))) {
+                throw new CalcException("Incorrect matrix size");
+            }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
                 newMatrix[i] = value[i].clone();
@@ -78,8 +90,10 @@ public class Matrix extends Var {
                 }
             }
             return new Matrix(newMatrix);
-        } else if (other instanceof Matrix matrix && checkMatrix(new Matrix(value)) &&
-                checkMatrix(matrix) && matrix.value.length == value.length) {
+        } else if (other instanceof Matrix matrix) {
+            if (!checkTwoMatrix((new Matrix(value)), matrix)) {
+                throw new CalcException("Incorrect matrix size");
+            }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
                 newMatrix[i] = value[i].clone();
@@ -96,7 +110,7 @@ public class Matrix extends Var {
     @Override
     public Var sub(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
-            if(!checkMatrix(new Matrix(value))){
+            if (!checkMatrix(new Matrix(value))) {
                 throw new CalcException("Incorrect matrix size");
             }
             double[][] newMatrix = new double[value.length][];
@@ -107,10 +121,8 @@ public class Matrix extends Var {
                 }
             }
             return new Matrix(newMatrix);
-        } else if (other instanceof Matrix matrix ) {
-            if(!checkMatrix(new Matrix(value))
-                    || !checkMatrix(matrix) || matrix.value.length != value.length
-                    || matrix.value[0].length != value[0].length){
+        } else if (other instanceof Matrix matrix) {
+            if (!checkTwoMatrix((new Matrix(value)), matrix)) {
                 throw new CalcException("Incorrect matrix size");
             }
             double[][] newMatrix = new double[value.length][];
@@ -128,7 +140,10 @@ public class Matrix extends Var {
 
     @Override
     public Var mul(Var other) throws CalcException {
-        if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
+        if (other instanceof Scalar scalar) {
+            if (!checkMatrix(new Matrix(value))) {
+                throw new CalcException("Incorrect matrix size");
+            }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
                 newMatrix[i] = value[i].clone();
@@ -137,7 +152,10 @@ public class Matrix extends Var {
                 }
             }
             return new Matrix(newMatrix);
-        } else if (other instanceof Vector vector && checkMatrix(new Matrix(value))) {
+        } else if (other instanceof Vector vector) {
+            if (!checkMatrix(new Matrix(value)) || vector.getValue().length != value.length) {
+                throw new CalcException("Incorrect vector or matrix size");
+            }
             double[] newVector = new double[vector.getValue().length];
             for (int i = 0; i < vector.getValue().length; i++) {
                 for (int j = 0; j < value[i].length; j++) {
@@ -145,8 +163,10 @@ public class Matrix extends Var {
                 }
             }
             return new Vector(newVector);
-        } else if ((other instanceof Matrix matrix && checkMatrix(new Matrix(value)) &&
-                checkMatrix(matrix) && matrix.value[0].length == value.length)) {
+        } else if (other instanceof Matrix matrix) {
+            if (!checkTwoMatrix((new Matrix(value)), matrix)) {
+                throw new CalcException("Incorrect matrix size");
+            }
             double[][] newMatrix = new double[value.length][matrix.value[0].length];
             for (int i = 0; i < value.length; i++) {
                 for (int j = 0; j < matrix.value[0].length; j++) {
@@ -163,7 +183,10 @@ public class Matrix extends Var {
 
     @Override
     public Var div(Var other) throws CalcException {
-        if (other instanceof Scalar scalar && checkMatrix(new Matrix(value))) {
+        if (other instanceof Scalar scalar) {
+            if (!checkMatrix(new Matrix(value))) {
+                throw new CalcException("Incorrect matrix size");
+            }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
                 newMatrix[i] = value[i].clone();
