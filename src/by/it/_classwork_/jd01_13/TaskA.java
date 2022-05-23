@@ -13,7 +13,7 @@ public class TaskA {
                 method();
             }
         } catch (NumberFormatException | NullPointerException e) {
-            showDetails(e);
+            showDetails(e, TaskA.class);
 
         }
     }
@@ -26,9 +26,8 @@ public class TaskA {
         }
     }
 
-    static void showDetails(RuntimeException e) {
+    static void showDetails(RuntimeException e, Class<?> currentClass) {
         Class<? extends RuntimeException> exceptionClass = e.getClass();
-        Class<TaskA> currentClass = TaskA.class;
         String exceptionName = exceptionClass.getName();
         StackTraceElement[] stackTrace = e.getStackTrace();
         for (StackTraceElement element : stackTrace) {
