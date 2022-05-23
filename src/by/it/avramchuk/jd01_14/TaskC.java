@@ -13,17 +13,17 @@ public class TaskC {
         String property = System.getProperty(TaskA.USER_DIR);
         String path = property+File.separator+"src"+File.separator+
                 "by"+File.separator+"it"+File.separator+"avramchuk";
-        File avramchuk = new File(path);
+        File fileName = new File(path);
 
 
-        printContentConsole(avramchuk);
+        printContentConsole(fileName);
         String pathResultTaskC = Util.getPath(TaskC.class, RESULT_TASK_C_TXT);
-        ptintContentToFileTxt(avramchuk, pathResultTaskC);
+        printContentToFileTxt(fileName, pathResultTaskC);
 
 
     }
 
-    private static void ptintContentToFileTxt(File f, String pathResultTaskC) {
+    private static void printContentToFileTxt(File f, String pathResultTaskC) {
         try (PrintWriter out = new PrintWriter(pathResultTaskC)){
 
             if (f.isDirectory()) {
