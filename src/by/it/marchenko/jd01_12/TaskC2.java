@@ -10,9 +10,9 @@ public class TaskC2 {//implements Comparator<Number> {
         Set<Float> setC = new HashSet<>(Arrays.asList(1f, 2f, 6f, 4f, 5f, 9f, 10f, 12f));
 
         Set<?> crossSet = getCross(setA, setC, setB);
-        System.out.printf("Cross set of %30s %30s %30s%nis %102s%n", setA, setB, setC, crossSet);
+        System.out.printf("Cross set of %30s %30s %50s%nis %122s%n", setA, setB, setC, crossSet);
         Set<?> unionSet = getUnion(setA, setB, setC);
-        System.out.printf("Union set of %30s %30s %30s%nis %102s%n", setA, setB, setC, unionSet);
+        System.out.printf("Union set of %30s %30s %50s%nis %122s%n", setA, setB, setC, unionSet);
     }
 
 
