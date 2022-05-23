@@ -46,7 +46,7 @@ public class TaskA {
         }
     }
 
-    private static String getDir(Class<?> cl) {
+    public static String getDir(Class<?> cl) {
         String clDir = cl.getName().replace(cl.getSimpleName(), "").replace(".", File.separator);
         String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + clDir;
         return path;
