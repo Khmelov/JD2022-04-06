@@ -1,11 +1,26 @@
 package by.it.kameisha.jd01_11;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class SetC<T> implements List<T> {
+    private T[] elements = (T[]) new Object[10];
+    private int size = 0;
+
+    @Override
+    public boolean add(T t) {
+        return false;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return false;
+    }
+
     @Override
     public int size() {
         return 0;
@@ -17,10 +32,32 @@ public class SetC<T> implements List<T> {
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean addAll(Collection<? extends T> c) {
         return false;
     }
 
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner out = new StringJoiner(", ", "[", "]");
+        for (int i = 0; i < size; i++) {
+            if (null != elements[i]) {
+                out.add(elements[i].toString());
+            } else {
+                out.add("null");
+            }
+        }
+        return out.toString();
+    }
     @Override
     public Iterator<T> iterator() {
         return null;
@@ -37,32 +74,7 @@ public class SetC<T> implements List<T> {
     }
 
     @Override
-    public boolean add(T t) {
-        return false;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends T> c) {
-        return false;
-    }
-
-    @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
         return false;
     }
 

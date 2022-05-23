@@ -3,7 +3,6 @@ package by.it.kameisha.jd01_11;
 import java.util.*;
 
 public class ListB<T> implements List<T> {
-
     private T[] elements = (T[]) new Object[10];
     private int size = 0;
 
@@ -70,7 +69,7 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        if (size+c.size() >= elements.length) {
+        if (size + c.size() >= elements.length) {
             elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
         }
         Object[] collection = c.toArray();
