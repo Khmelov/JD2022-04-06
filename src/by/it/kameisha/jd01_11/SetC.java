@@ -22,7 +22,7 @@ public class SetC<T> implements Set<T> {
     @Override
     public boolean add(T t) {
         for (int i = 0; i < size; i++) {
-            if(null!=elements[i] && elements[i].equals(t)) return false;
+            if(elements[i].equals(t)) return false;
         }
         if (size == elements.length) {
             elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
@@ -33,8 +33,28 @@ public class SetC<T> implements Set<T> {
     }
 
     @Override
+    public boolean remove(Object o) {
+        for (int i = 0; i < size; i++) {
+            if(elements[i].equals(o)){
+                System.arraycopy(elements,i+1, elements, i, size-i-1);
+                size--;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        for (int i = 0; i < size; i++) {
+            if(elements[i].equals(o)) return true;
+        }
+        return false;
+    }
+
+    @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
@@ -43,7 +63,17 @@ public class SetC<T> implements Set<T> {
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean addAll(Collection<? extends T> c) {
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
         return false;
     }
 
@@ -63,27 +93,7 @@ public class SetC<T> implements Set<T> {
     }
 
     @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends T> c) {
-        return false;
-    }
-
-    @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
         return false;
     }
 
