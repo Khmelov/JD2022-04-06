@@ -8,4 +8,7 @@ public interface Constant {
     String WORDS = "words=";
     String MARKS = " marks=";
     String RESULT_TASK_B_TXT = "resultTaskB.txt";
+    String RESULT_TASKC_TXT = "resultTaskC.txt";
+    String FILE = "file:";
+    String DIR = "dir:";
 }

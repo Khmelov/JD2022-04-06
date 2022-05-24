@@ -16,7 +16,7 @@ public class TaskB implements Constant {
     private static void counterTextConsole() {
         String pathFile = Util.getPath(TaskB.class, POEM_TXT);
         File poem = new File(pathFile);
-        try (Scanner scanner = new Scanner(new FileInputStream(poem))){
+        try (Scanner scanner = new Scanner(new FileInputStream(poem))) {
             scanner.useDelimiter(DELIMITER);
             while (scanner.hasNext()) {
                 scanner.next();
