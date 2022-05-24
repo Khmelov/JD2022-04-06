@@ -8,6 +8,8 @@ public class TaskA {
 
     public static final String DATA_TASK_A_BIN = "dataTaskA.bin";
     public static final String RESULT_TASK_A_TXT = "resultTaskA.txt";
+    public static final String SPACE = " ";
+    public static final String AVG = "\navg=";
 
     public static void main(String[] args) {
         String pathBinaryFile = Util.getPath(TaskA.class, DATA_TASK_A_BIN);
@@ -53,9 +55,9 @@ public class TaskA {
         double sum = 0;
         for (Integer integer : integers) {
             sum += integer;
-            System.out.print(integer + " ");
+            System.out.print(integer + SPACE);
         }
-        System.out.println("\navg=" + sum / integers.size());
+        System.out.println(AVG + sum / integers.size());
     }
 
     private static void printToTxtFile(ArrayList<Integer> integers, String txtFile) {
@@ -64,9 +66,9 @@ public class TaskA {
             double sum = 0;
             for (Integer integer : integers) {
                 sum += integer;
-                dataOutputStream.writeBytes(integer + " ");
+                dataOutputStream.writeBytes(integer + SPACE);
             }
-            dataOutputStream.writeBytes("\navg=" + sum / integers.size());
+            dataOutputStream.writeBytes(AVG + sum / integers.size());
         } catch (IOException e) {
             e.printStackTrace();
         }
