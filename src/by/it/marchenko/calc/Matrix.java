@@ -178,13 +178,24 @@ public class Matrix extends Var {
 
     public Var div(Scalar other) {
         System.out.println("Зашли сюда как Matrix/Scalar");
-        double[][] tempMatrix = this.getMatrixValue();
-        for (int i = 0; i < tempMatrix.length; i++) {
-            for (int j = 0; j < tempMatrix[i].length; j++) {
-                tempMatrix[i][j] /= other.getValue();
-            }
-        }
-        return new Matrix(tempMatrix);
+        return super.div((Var) other);
+        //double[][] tempMatrix = this.getMatrixValue();
+        //for (int i = 0; i < tempMatrix.length; i++) {
+        //    for (int j = 0; j < tempMatrix[i].length; j++) {
+        //        tempMatrix[i][j] /= other.getValue();
+        //    }
+        //}
+        //return new Matrix(tempMatrix);
+    }
+
+    @Override
+    public Var div(Vector other) {
+        return super.div((Var) other);
+    }
+
+    @Override
+    public Var div(Matrix other) {
+        return this.div((Var) other);
     }
 
     private boolean checkInputMatrix(double[][] array) {

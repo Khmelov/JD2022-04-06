@@ -138,6 +138,16 @@ public class Vector extends Var {
         }
         return new Vector(tempVector);
     }
+
+    @Override
+    public Var div(Vector other) {
+        return super.div((Var) other);
+    }
+
+    @Override
+    public Var div(Matrix other) {
+        return super.div((Var) other);
+    }
 }
 
 

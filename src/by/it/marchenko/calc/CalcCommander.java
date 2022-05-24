@@ -4,22 +4,25 @@ import java.util.*;
 
 import static by.it.marchenko.calc.MessageConst.*;
 
-public class Commander {
-    private static final Set<String> commands = new HashSet<>();
+public class CalcCommander implements CalcAppCommand {
+    private static HashMap<String,Var> variables;
 
-    public static void loadCommand() {
-        commands.add(COMMAND_APP_EXIT);
-        commands.add(COMMAND_PRINT_VARIABLE);
-        commands.add(COMMAND_SORT_VARIABLE);
+    private static final Set<String> commands = new HashSet<>(Arrays.asList(
+            COMMAND_APP_EXIT, COMMAND_PRINT_VARIABLE, COMMAND_SORT_VARIABLE
+    ));
+
+    public CalcCommander(Repository repository) {
+        variables = repository.getAllVariables();
     }
 
-    public static String performCommand(String command) {
+    @Override
+    public String performCommand(String command) {
         command = command.toLowerCase();
 
         if (commands.contains(command)) {
             return switch (command) {
-                case COMMAND_PRINT_VARIABLE -> printVariable(Var.getVarMap());
-                case COMMAND_SORT_VARIABLE -> sortVariable(Var.getVarMap());
+                case COMMAND_PRINT_VARIABLE -> printVariable();
+                case COMMAND_SORT_VARIABLE -> sortVariable();
                 case COMMAND_APP_EXIT -> MESSAGE_FAREWELL;
                 default -> null;
             };
@@ -27,7 +30,7 @@ public class Commander {
         return null;
     }
 
-    private static String printVariable(HashMap<String, Var> variables) {
+    private static String printVariable() {
         StringBuilder out = new StringBuilder("Available variables:");
         for(Map.Entry<String,Var> element: variables.entrySet()) {
             out.append("\n").append(element.getKey()).
@@ -37,7 +40,7 @@ public class Commander {
         return out.toString();
     }
 
-    private static String sortVariable(HashMap<String, Var> variables) {
+    private static String sortVariable() {
         TreeMap<String,Var> sortedVariables = new TreeMap<>(variables);
         StringBuilder out = new StringBuilder("Available variables:");
         for(Map.Entry<String,Var> element: sortedVariables.entrySet()) {

@@ -1,6 +1,7 @@
 package by.it.marchenko.calc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,20 +10,34 @@ import static by.it.marchenko.calc.MessageConst.*;
 
 public class Parser {
 
+    private final Repository repository;
+    private final VarCreator varCreator;
+
+    public Parser(Repository repository, VarCreator varCreator) {
+        this.repository = repository;
+        this.varCreator = varCreator;
+    }
+
     List<String> operatorList;
     List<Var> operandList;
     //private static String[] operands;
 
     @SuppressWarnings("ConstantConditions")
-    public Var calc(String inputString) {
+    public Var calc(String inputString) throws CalcException {
+
+        //VarRepositoryMap mapRepo = new VarRepositoryMap();
+
         if (inputString != null) {
-            String[] operands = inputString.split(OPERATOR_REGEX, MAXIMUM_ALLOWED_OPERANDS);
+            String[] operands = inputString.split(OPERATOR_REGEX);  //, MAXIMUM_ALLOWED_OPERANDS);
+            //System.out.println(Arrays.toString(operands));
             operandList = new ArrayList<>(operands.length);
             operatorList = new ArrayList<>(operands.length - 1);
             Pattern operatorPattern = Pattern.compile(OPERATOR_REGEX);
             Matcher operatorMatcher = operatorPattern.matcher(inputString);
+            // 1 + A + 2 = 3
+
             for (String operand : operands) {
-                operandList.add(Var.createVar(operand));
+                operandList.add(varCreator.createVar(operand));
                 if (operatorMatcher.find()) {
                     operatorList.add(operatorMatcher.group());
                 }
@@ -30,7 +45,13 @@ public class Parser {
             if (isUnique(operatorList, ASSIGN_OPERATOR) && isUnique(operandList, null)) {
                 //TODO transferToLeft(operandList,operatorList);
                 //TODO performLeftSideEvaluation(operandList,operatorList);
-                Var.saveVariable(operands[operandList.indexOf(null)],operandList.get(1));
+                //Var.saveVariable(operands[operandList.indexOf(null)],operandList.get(1));
+               if (!repository.saveVariable(operands[operandList.indexOf(null)], operandList.get(1))) {
+                    throw new RuntimeException("Variable not save");
+                }
+                //Var.saveVariable(operands[operandList.indexOf(null)], operandList.get(1));
+                repository.saveVariable(operands[operandList.indexOf(null)], operandList.get(1));
+
                 operandList.remove(0);
                 operatorList.remove(0);
             }
@@ -51,6 +72,7 @@ public class Parser {
         }
         return null;
     }
+
     private boolean isUnique(List<?> list, String element) {
         int firstAppearance = list.indexOf(element);
         return firstAppearance >= 0 && firstAppearance == list.lastIndexOf(element);

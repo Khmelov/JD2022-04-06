@@ -22,7 +22,7 @@ public class MessageConst {
 
     public static final String EMPTY_STRING = "";
 
-    public static final int MAXIMUM_ALLOWED_OPERANDS = 10;
+    public static final int MAXIMUM_ALLOWED_OPERANDS = 2;
 
     public static final String ADD_OPERATOR = "+";
     public static final String SUB_OPERATOR = "-";

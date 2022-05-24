@@ -1,24 +1,28 @@
 package by.it.marchenko.calc;
 
 interface Operation {
+    // these methods are the same
     Var add(Var other);
+    Var mul(Var other);
+    Var div(Var other);
+    // Var typeFounder (Var other, String operator){
+    //    return other.operation(this, operator);
+    // }
+    // switch operator-> add, mul, div
+
+    Var sub(Var other);
+
     Var add(Scalar other);
     Var add(Vector other);
     Var add(Matrix other);
 
-    Var sub(Var other);
-
-    Var mul(Var other);
     Var mul(Scalar other);
     Var mul(Vector other);
     Var mul(Matrix other);
 
-
-    Var div(Var other);
     Var div(Scalar other);
-
-    //Var div(Vector other);
-    //Var div(Matrix other);
+    Var div(Vector other);
+    Var div(Matrix other);
 
 
 

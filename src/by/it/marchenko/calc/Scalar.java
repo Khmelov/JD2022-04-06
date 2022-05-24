@@ -90,12 +90,25 @@ public class Scalar extends Var {
     }
 
     public Var div(Vector other) {
-        System.out.println("Зашли сюда как Scalar/Vector");
-        return super.div((Var) other);
+        //System.out.println("Зашли сюда как Scalar/Vector");
+        //return super.div((Var) other);
+        double[] tempVector = other.getVectorValues();
+        for (int i = 0; i < tempVector.length; i++) {
+            tempVector[i] /= this.getValue();
+        }
+        return new Vector(tempVector);
+
     }
 
     public Var div(Matrix other) {
-        System.out.println("Зашли сюда как Scalar/matrix");
-        return super.div((Var) other);
+        //System.out.println("Зашли сюда как Scalar/matrix");
+        //return super.div((Var) other);
+        double[][] tempMatrix = other.getMatrixValue();
+        for (int i = 0; i < tempMatrix.length; i++) {
+            for (int j = 0; j < tempMatrix[i].length; j++) {
+                tempMatrix[i][j] /= this.getValue();
+            }
+        }
+        return new Matrix(tempMatrix);
     }
 }
