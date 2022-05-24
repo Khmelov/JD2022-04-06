@@ -7,8 +7,21 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TaskA {
+
+    public static final String PATH_BINFILE_NAME = "dataTaskA.bin";
+    public static final String PATH_TXTFILE_NAME = "resultTaskA.txt";
+
     public static void main(String[] args) {
-        String pathFile = Util.getPath(TaskA.class, "dataTaskA.bin");
+        String pathBinFile = Util.getPath(TaskA.class, PATH_BINFILE_NAME);
+        writeIntegers(pathBinFile);
+        ArrayList<Integer> integers = readIntegers(pathBinFile);
+        printConsole(integers);
+        String txtFile = Util.getPath(TaskA.class, PATH_TXTFILE_NAME);
+        printTxtFile(integers, txtFile);
+    }
+
+
+    private static void writeIntegers(String pathFile) {
         try (DataOutputStream dataOut = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(pathFile)))
         ) {
             for (int i = 0; i < 20; i++) {
@@ -18,8 +31,11 @@ public class TaskA {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static ArrayList<Integer> readIntegers(String pathFile) {
         ArrayList<Integer> integers = new ArrayList<>();
-        try (DataInputStream dataIn = new DataInputStream(new BufferedInputStream(new FileInputStream(pathFile)));
+        try (DataInputStream dataIn = new DataInputStream(new BufferedInputStream(new FileInputStream(pathFile)))
         ) {
             while (dataIn.available() > 0) {
                 integers.add(dataIn.readInt());
@@ -27,20 +43,24 @@ public class TaskA {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return integers;
+    }
+
+    private static void printConsole(ArrayList<Integer> integers) {
         double sum = 0;
-        for (int i = 0; i < integers.size(); i++) {
-            sum += integers.get(i);
-            System.out.print(integers.get(i) + " ");
+        for (Integer integer : integers) {
+            sum += integer;
+            System.out.print(integer + " ");
         }
         System.out.println("\navg=" + sum / integers.size());
+    }
 
-        String txtFile = Util.getPath(TaskA.class, "resultTaskA.txt");
-
+    private static void printTxtFile(ArrayList<Integer> integers, String txtFile) {
         try (PrintWriter out = new PrintWriter(txtFile)) {
             double sum2 = 0;
-            for (int i = 0; i < integers.size(); i++) {
-                sum2 += integers.get(i);
-                out.print(integers.get(i) + " ");
+            for (Integer integer : integers) {
+                sum2 += integer;
+                out.print(integer + " ");
             }
             out.println("\navg=" + sum2 / integers.size());
         } catch (FileNotFoundException e) {

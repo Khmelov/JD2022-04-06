@@ -1,20 +1,23 @@
 package by.it.arsenihlaz.jd01_14;
 
-import by.it._classwork_.jd01_14.Util;
-
 import java.io.*;
 import java.util.Scanner;
 
-public class TaskB {
+public class TaskB implements Constant {
+
     private static int counter1 = 0;
     private static int counter2 = 0;
 
     public static void main(String[] args) {
+        counterTextConsole();
+        counterTextFile();
+    }
 
-        String pathFile = Util.getPath(TaskB.class, "Poem.txt");
+    private static void counterTextConsole() {
+        String pathFile = Util.getPath(TaskB.class, POEM_TXT);
         File poem = new File(pathFile);
-        try (Scanner scanner = new Scanner(new FileInputStream(poem));){
-            scanner.useDelimiter("[^а-яА-ЯёЁ]+");
+        try (Scanner scanner = new Scanner(new FileInputStream(poem))){
+            scanner.useDelimiter(DELIMITER);
             while (scanner.hasNext()) {
                 scanner.next();
                 counter1++;
@@ -22,17 +25,19 @@ public class TaskB {
             Scanner scanner2 = new Scanner(new FileInputStream(poem));
             while (scanner2.hasNext()) {
                 String lineBefore = scanner2.nextLine();
-                String lineAfter = lineBefore.replaceAll("[,!?;:-\\\\.{3}]", "");
+                String lineAfter = lineBefore.replaceAll(REGEX_PUNCTUATION, REPLACEMENT);
                 counter2 += lineBefore.length() - lineAfter.length();
             }
-            System.out.println("words=" + counter1 + " marks=" + counter2);
+            System.out.println(WORDS + counter1 + MARKS + counter2);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
 
-        String txtFile = Util.getPath(TaskA.class, "resultTaskB.txt");
+    private static void counterTextFile() {
+        String txtFile = Util.getPath(TaskB.class, RESULT_TASK_B_TXT);
         try (PrintWriter out = new PrintWriter(txtFile)) {
-            out.println("words=" + counter1 + " marks=" + counter2);
+            out.println(WORDS + counter1 + MARKS + counter2);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
