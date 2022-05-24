@@ -8,23 +8,29 @@ import java.util.Scanner;
 public class TaskB {
     public static void main(String[] args) {
 
-        String pathToBinaryFile = Util.getPath(TaskA.class,"Poem.txt");
 
-        try (DataInputStream dataInputStream = new DataInputStream(
-                    new BufferedInputStream(
-                            new FileInputStream("Poem.txt"))
-                    )
-            ){
+        String pathForTextFile = Util.getPath(TaskA.class,"Poem.txt");
+        String getText = getText(pathForTextFile);
+        System.out.println(getText);
+
+  
+
+
+    }
+
+    private static String getText(String pathForTextFile) {
+        StringBuilder sb = new StringBuilder();
+        try (FileReader fileReader = new FileReader(pathForTextFile)){
+            while (fileReader.ready()){
+                char t = (char)fileReader.read();
+                sb.append(t);
+            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        double count = 0;
-
-
-
-
-        }
-
+        return sb.toString();
     }
+}
+
 
