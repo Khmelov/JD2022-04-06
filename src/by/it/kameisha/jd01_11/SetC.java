@@ -22,7 +22,7 @@ public class SetC<T> implements Set<T> {
     @Override
     public boolean add(T t) {
         for (int i = 0; i < size; i++) {
-            if(elements[i].equals(t)) return false;
+            if (elements[i].equals(t)) return false;
         }
         if (size == elements.length) {
             elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
@@ -35,8 +35,8 @@ public class SetC<T> implements Set<T> {
     @Override
     public boolean remove(Object o) {
         for (int i = 0; i < size; i++) {
-            if(elements[i].equals(o)){
-                System.arraycopy(elements,i+1, elements, i, size-i-1);
+            if (elements[i].equals(o)) {
+                System.arraycopy(elements, i + 1, elements, i, size - i - 1);
                 size--;
                 return true;
             }
@@ -47,7 +47,7 @@ public class SetC<T> implements Set<T> {
     @Override
     public boolean contains(Object o) {
         for (int i = 0; i < size; i++) {
-            if(elements[i].equals(o)) return true;
+            if (elements[i].equals(o)) return true;
         }
         return false;
     }
@@ -59,12 +59,31 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public boolean isEmpty() {
+        if (size == 0) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        T[] objects = (T[]) c.toArray();
+        boolean check = false;
+        System.out.println(objects);
+        for (int i = 0; i < objects.length; i++) {
+            for (int j = 0; j < size; j++) {
+                if (null!=elements[j] && elements[j].equals(objects[i])) {
+                    break;
+                }
+            }
+            check =true;
+            if (size == elements.length) {
+                elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
+            }
+            elements[size] = objects[i];
+            size++;
+        }
+        return check;
     }
 
     @Override
