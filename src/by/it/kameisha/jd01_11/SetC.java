@@ -2,22 +2,35 @@ package by.it.kameisha.jd01_11;
 
 import java.util.*;
 
-public class SetC<T> implements List<T> {
+public class SetC<T> implements Set<T> {
     private T[] elements = (T[]) new Object[10];
     private int size = 0;
 
     @Override
+    public String toString() {
+        StringJoiner out = new StringJoiner(", ", "[", "]");
+        for (int i = 0; i < size; i++) {
+            if (null != elements[i]) {
+                out.add(elements[i].toString());
+            } else {
+                out.add("null");
+            }
+        }
+        return out.toString();
+    }
+
+    @Override
     public boolean add(T t) {
-        return false;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean contains(Object o) {
+        for (T element : elements) {
+            if (element.equals(t)) {
+                return false;
+            }
+        }
+        if (size == elements.length) {
+            elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
+        }
+        elements[size] = t;
+        size++;
         return false;
     }
 
@@ -32,32 +45,10 @@ public class SetC<T> implements List<T> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
+    public boolean contains(Object o) {
         return false;
     }
 
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        StringJoiner out = new StringJoiner(", ", "[", "]");
-        for (int i = 0; i < size; i++) {
-            if (null != elements[i]) {
-                out.add(elements[i].toString());
-            } else {
-                out.add("null");
-            }
-        }
-        return out.toString();
-    }
     @Override
     public Iterator<T> iterator() {
         return null;
@@ -74,7 +65,17 @@ public class SetC<T> implements List<T> {
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends T> c) {
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
         return false;
     }
 
@@ -84,52 +85,12 @@ public class SetC<T> implements List<T> {
     }
 
     @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
     public void clear() {
 
-    }
-
-    @Override
-    public T get(int index) {
-        return null;
-    }
-
-    @Override
-    public T set(int index, T element) {
-        return null;
-    }
-
-    @Override
-    public void add(int index, T element) {
-
-    }
-
-    @Override
-    public T remove(int index) {
-        return null;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public ListIterator<T> listIterator() {
-        return null;
-    }
-
-    @Override
-    public ListIterator<T> listIterator(int index) {
-        return null;
-    }
-
-    @Override
-    public List<T> subList(int fromIndex, int toIndex) {
-        return null;
     }
 }
