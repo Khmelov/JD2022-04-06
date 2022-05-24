@@ -21,17 +21,15 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public boolean add(T t) {
-        for (T element : elements) {
-            if (element.equals(t)) {
-                return false;
-            }
+        for (int i = 0; i < size; i++) {
+            if(null!=elements[i] && elements[i].equals(t)) return false;
         }
         if (size == elements.length) {
             elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
         }
         elements[size] = t;
         size++;
-        return false;
+        return true;
     }
 
     @Override
