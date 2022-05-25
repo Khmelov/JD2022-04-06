@@ -17,6 +17,22 @@ public class MessageConst {
     public static final String MISSING_OPERATOR_COMMENT =
             "\n  Reason: It was detected incorrect or missing operator between operands: %s";
 
+    public static final String ASSIGNMENT_EXCEPTION = "Incorrect assignment: ";
+    public static final String ASSIGNMENT_OPERATOR_EXCEPTION =
+            "More than one assignment operator \"%s\" in the expression%n  Expression: %s";
+    public static final String ASSIGNMENT_OPERATOR_COMMENT =
+            "\n  Reason: it is necessary to have only one assignment operator in the expression.";
+
+    public static final String ASSIGNMENT_OPERAND_EXCEPTION =
+            "More than one unknown variable in the expression%n  Expression: %s";
+    public static final String ASSIGNMENT_OPERAND_COMMENT =
+            "\n  Reason: it is necessary to have only one new variable in the expression.";
+
+    public static final String ASSIGNMENT_VARIABLE_EXCEPTION =
+            "No unknown variable in the expression%n  Expression: %s";
+    public static final String ASSIGNMENT_VARIABLE_COMMENT =
+            "\n  Reason: it is necessary to have variable in the expression.";
+
 
 
     public static final String MESSAGE_PRINT_RESULT = "Result";

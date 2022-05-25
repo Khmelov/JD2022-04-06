@@ -4,7 +4,7 @@ import static by.it.marchenko.calc.MessageConst.*;
 
 public class Operands implements OperandProcessing {
 
-    //Find operands in expression
+    //Find operands in expression, remove spaces from operands if it is possible
     @Override
     public String[] createOperands(String expression) throws CalcException {
         String[] availableOperands;
@@ -15,9 +15,7 @@ public class Operands implements OperandProcessing {
                     throw new CalcException(
                             INPUT_EXCEPTION + EMPTY_OPERAND_EXCEPTION + EMPTY_OPERAND_COMMENT);
                 }
-                //availableOperands[i] = availableOperands[i].trim();
                 availableOperands[i] = removeOperandInnerSpaces(availableOperands[i].trim());
-
             }
         } else {
             throw new CalcException(
@@ -27,6 +25,7 @@ public class Operands implements OperandProcessing {
     }
 
     public String removeOperandInnerSpaces(String operand) throws CalcException {
+        //TODO implement check correct operand for new type of Var...
         boolean isCorrectOperand =
                 operand.matches(SCALAR_PATTERN) ||
                         operand.matches(VECTOR_PATTERN) ||
@@ -36,7 +35,7 @@ public class Operands implements OperandProcessing {
             return operand.replaceAll(SPACES_REGEX, EMPTY_STRING);
         } else {
             throw new CalcException(
-                    INPUT_EXCEPTION+MISSING_OPERATOR_EXCEPTION+MISSING_OPERATOR_COMMENT, operand);
+                    INPUT_EXCEPTION + MISSING_OPERATOR_EXCEPTION + MISSING_OPERATOR_COMMENT, operand);
         }
     }
 }

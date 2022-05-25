@@ -8,6 +8,7 @@ public class ConsoleRunner {
         Repository repo = new VarRepositoryMap();   //  repository for variable saving
         VarCreator creator = new VarCreator(repo);  //  variable creator method
         Operands operands = new Operands();
+        Assignment assignment = new Assignment(repo);
 
 
 
@@ -17,7 +18,7 @@ public class ConsoleRunner {
 
         Input inputString = new Input(console);
 
-        Parser parseString = new Parser(repo, creator, operands);
+        Parser parseString = new Parser(repo, creator, operands, assignment);
 
         while (inputString.runEnabled()) {
             inputString.setExpression();

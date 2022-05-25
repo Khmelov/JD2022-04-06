@@ -12,13 +12,14 @@ public class Parser {
     private final Repository repository;
     private final VarCreator varCreator;
     private final Operands operands;
+    private final Assignment assignment;
 
 
-    public Parser(Repository repository, VarCreator varCreator, Operands operands) {
+    public Parser(Repository repository, VarCreator varCreator, Operands operands, Assignment assignment) {
         this.repository = repository;
         this.varCreator = varCreator;
         this.operands = operands;
-
+        this.assignment = assignment;
     }
 
     List<String> operatorList;
@@ -32,14 +33,15 @@ public class Parser {
         if (inputString != null) {
 
             String[] myOperands = operands.createOperands(inputString);
-            //checkUnknownVariable(myOperands);
-            //TODO
-            // check variable assignment - if more than one not assigned variable - exception
+            boolean assign = assignment.isAssignmentAllowed(inputString, myOperands);
+            if (assign) {
+                //perform assign
+                System.out.println("performing assignment");
+            }
 
             //varCreator.createOperands(inputString);
             //String[] operands = inputString.split(OPERATOR_REGEX);  //, MAXIMUM_ALLOWED_OPERANDS);
 //                    inputString.split(OPERATOR_REGEX);  //, MAXIMUM_ALLOWED_OPERANDS);
-
 
 
             //System.out.println(Arrays.toString(myOperands));
@@ -49,13 +51,6 @@ public class Parser {
             Pattern operatorPattern = Pattern.compile(OPERATOR_REGEX);
             Matcher operatorMatcher = operatorPattern.matcher(inputString);
             // A + B C = 3 + 5 - 2
-            //TODO implement saveVariable()
-            // find amount of "=" in expression. If only one - saveVariable enabled
-            // create Variable pattern
-            // find amount of variables in the expression
-            // change assigned variables to corresponding values
-            // calculate amount of not assigned variables. If only one - saveVariable Enabled.
-            //
 
 
             for (String operand : myOperands) {
@@ -96,9 +91,6 @@ public class Parser {
         return null;
     }
 
-    private void checkUnknownVariable(String[] myOperands) {
-
-    }
 
     private boolean isUnique(List<?> list, String element) {
         int firstAppearance = list.indexOf(element);
