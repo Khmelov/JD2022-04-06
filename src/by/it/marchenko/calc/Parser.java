@@ -1,6 +1,7 @@
 package by.it.marchenko.calc;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static by.it.marchenko.calc.MessageConst.*;
 
@@ -52,7 +53,7 @@ public class Parser {
 
 
             }
-            return tempResult;
+            return Objects.isNull(tempResult) ? tempResult2: tempResult;
         }
         return null;
     }
