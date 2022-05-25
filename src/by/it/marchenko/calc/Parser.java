@@ -1,7 +1,6 @@
 package by.it.marchenko.calc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,15 +11,18 @@ public class Parser {
 
     private final Repository repository;
     private final VarCreator varCreator;
+    private final Operands operands;
 
-    public Parser(Repository repository, VarCreator varCreator) {
+
+    public Parser(Repository repository, VarCreator varCreator, Operands operands) {
         this.repository = repository;
         this.varCreator = varCreator;
+        this.operands = operands;
+
     }
 
     List<String> operatorList;
     List<Var> operandList;
-    //private static String[] operands;
 
     @SuppressWarnings("ConstantConditions")
     public Var calc(String inputString) throws CalcException {
@@ -28,15 +30,36 @@ public class Parser {
         //VarRepositoryMap mapRepo = new VarRepositoryMap();
 
         if (inputString != null) {
-            String[] operands = inputString.split(OPERATOR_REGEX);  //, MAXIMUM_ALLOWED_OPERANDS);
-            //System.out.println(Arrays.toString(operands));
-            operandList = new ArrayList<>(operands.length);
-            operatorList = new ArrayList<>(operands.length - 1);
+
+            String[] myOperands = operands.createOperands(inputString);
+            //checkUnknownVariable(myOperands);
+            //TODO
+            // check variable assignment - if more than one not assigned variable - exception
+
+            //varCreator.createOperands(inputString);
+            //String[] operands = inputString.split(OPERATOR_REGEX);  //, MAXIMUM_ALLOWED_OPERANDS);
+//                    inputString.split(OPERATOR_REGEX);  //, MAXIMUM_ALLOWED_OPERANDS);
+
+
+
+            //System.out.println(Arrays.toString(myOperands));
+            operandList = new ArrayList<>(myOperands.length);
+            operatorList = new ArrayList<>(myOperands.length - 1);
+
             Pattern operatorPattern = Pattern.compile(OPERATOR_REGEX);
             Matcher operatorMatcher = operatorPattern.matcher(inputString);
-            // 1 + A + 2 = 3
+            // A + B C = 3 + 5 - 2
+            //TODO implement saveVariable()
+            // find amount of "=" in expression. If only one - saveVariable enabled
+            // create Variable pattern
+            // find amount of variables in the expression
+            // change assigned variables to corresponding values
+            // calculate amount of not assigned variables. If only one - saveVariable Enabled.
+            //
 
-            for (String operand : operands) {
+
+            for (String operand : myOperands) {
+                //operand = operand.trim();
                 operandList.add(varCreator.createVar(operand));
                 if (operatorMatcher.find()) {
                     operatorList.add(operatorMatcher.group());
@@ -46,11 +69,11 @@ public class Parser {
                 //TODO transferToLeft(operandList,operatorList);
                 //TODO performLeftSideEvaluation(operandList,operatorList);
                 //Var.saveVariable(operands[operandList.indexOf(null)],operandList.get(1));
-               if (!repository.saveVariable(operands[operandList.indexOf(null)], operandList.get(1))) {
-                    throw new RuntimeException("Variable not save");
-                }
+                //if (!repository.saveVariable(operands[operandList.indexOf(null)], operandList.get(1))) {
+                //     throw new RuntimeException("Variable not save");
+                // }
                 //Var.saveVariable(operands[operandList.indexOf(null)], operandList.get(1));
-                repository.saveVariable(operands[operandList.indexOf(null)], operandList.get(1));
+                repository.saveVariable(myOperands[operandList.indexOf(null)], operandList.get(1));
 
                 operandList.remove(0);
                 operatorList.remove(0);
@@ -71,6 +94,10 @@ public class Parser {
             return tempResult;
         }
         return null;
+    }
+
+    private void checkUnknownVariable(String[] myOperands) {
+
     }
 
     private boolean isUnique(List<?> list, String element) {

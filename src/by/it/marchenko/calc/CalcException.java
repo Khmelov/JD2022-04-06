@@ -6,6 +6,10 @@ public class CalcException extends Exception {
         super(message);
     }
 
+    public CalcException(String message, Object ... parameters) {
+        this(String.format(message, parameters));
+    }
+
     public CalcException(String message, Throwable cause) {
         super(message, cause);
     }

@@ -5,6 +5,19 @@ public class MessageConst {
     public static final String MESSAGE_EMPTY_EXPRESSION = "Incorrect input. Empty expression entered";
     public static final String MESSAGE_FAREWELL = "Application finished.";
 
+    public static final String INPUT_EXCEPTION = "Incorrect input: ";
+    public static final String EMPTY_OPERAND_EXCEPTION = "Empty operand entered";
+    public static final String EMPTY_OPERAND_COMMENT =
+            "\n  Reason: it is necessary to have operand between operators.";
+    public static final String EMPTY_EXPRESSION_EXCEPTION = "Empty expression entered";
+    public static final String EMPTY_EXPRESSION_COMMENT =
+            "\n  Reason: expression not contain any significant symbol.";
+
+    public static final String MISSING_OPERATOR_EXCEPTION = "Incorrect or missing operator";
+    public static final String MISSING_OPERATOR_COMMENT =
+            "\n  Reason: It was detected incorrect or missing operator between operands: %s";
+
+
 
     public static final String MESSAGE_PRINT_RESULT = "Result";
     public static final String MESSAGE_DATA_INVITATION = ">"
@@ -16,9 +29,14 @@ public class MessageConst {
 
     public static final String SPACES_REGEX = "\s*";
     public static final String OPERATOR_REGEX = "[-=+*/]";
+
     public static final String SCALAR_PATTERN = "-?[0-9]+\\.?[0-9]*";
-    public static final String VECTOR_PATTERN = "\\{" + SCALAR_PATTERN + "(," + SCALAR_PATTERN + ")*}";
-    public static final String MATRIX_PATTERN = "\\{" + VECTOR_PATTERN + "(," + VECTOR_PATTERN + ")*}";
+    public static final String VARIABLE_PATTERN = "([A-Z_a-z])(\\w*)";
+    public static final String VECTOR_PATTERN =
+            "\\{\s*" + SCALAR_PATTERN + "\s*(,\s*" + SCALAR_PATTERN + "\s*)*}";
+    public static final String MATRIX_PATTERN =
+            "\\{\s*" + VECTOR_PATTERN + "\s*(,\s*" + VECTOR_PATTERN + "\s*)*}";
+
 
     public static final String EMPTY_STRING = "";
 

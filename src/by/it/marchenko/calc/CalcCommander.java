@@ -5,7 +5,7 @@ import java.util.*;
 import static by.it.marchenko.calc.MessageConst.*;
 
 public class CalcCommander implements CalcAppCommand {
-    private static HashMap<String,Var> variables;
+    private static HashMap<String, Var> variables;
 
     private static final Set<String> commands = new HashSet<>(Arrays.asList(
             COMMAND_APP_EXIT, COMMAND_PRINT_VARIABLE, COMMAND_SORT_VARIABLE
@@ -16,10 +16,17 @@ public class CalcCommander implements CalcAppCommand {
     }
 
     @Override
-    public String performCommand(String command) {
-        command = command.toLowerCase();
+    public String performCommand(String command) throws CalcException{
+        //command = command.toLowerCase();  // remove as trim() removing from std presentation
+        if (command != null) {
+            command = command.trim().toLowerCase();
+        } else {
+            throw new CalcException("Empty expression entered");
+        }
 
         if (commands.contains(command)) {
+            //variables =
+                    //repository.getAllVariables();
             return switch (command) {
                 case COMMAND_PRINT_VARIABLE -> printVariable();
                 case COMMAND_SORT_VARIABLE -> sortVariable();
@@ -32,7 +39,7 @@ public class CalcCommander implements CalcAppCommand {
 
     private static String printVariable() {
         StringBuilder out = new StringBuilder("Available variables:");
-        for(Map.Entry<String,Var> element: variables.entrySet()) {
+        for (Map.Entry<String, Var> element : variables.entrySet()) {
             out.append("\n").append(element.getKey()).
                     append(ASSIGN_OPERATOR).append(element.getValue());
         }
@@ -41,9 +48,9 @@ public class CalcCommander implements CalcAppCommand {
     }
 
     private static String sortVariable() {
-        TreeMap<String,Var> sortedVariables = new TreeMap<>(variables);
+        TreeMap<String, Var> sortedVariables = new TreeMap<>(variables);
         StringBuilder out = new StringBuilder("Available variables:");
-        for(Map.Entry<String,Var> element: sortedVariables.entrySet()) {
+        for (Map.Entry<String, Var> element : sortedVariables.entrySet()) {
             out.append("\n").append(element.getKey()).
                     append(ASSIGN_OPERATOR).append(element.getValue());
         }
