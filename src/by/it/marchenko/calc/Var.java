@@ -4,6 +4,7 @@ import static by.it.marchenko.calc.MessageConst.*;
 
 abstract class Var implements Operation {
     final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
+
     @Override
     public Var add(Var other) {
         printNotAvailableOperation(ADD_OPERATOR, other);
@@ -27,6 +28,52 @@ abstract class Var implements Operation {
         printNotAvailableOperation(DIV_OPERATOR, other);
         return null;
     }
+
+    @Override
+    public Var foundVarType(Var operand, String operator) {
+        return operand.foundVarType(this, operator);
+    }
+
+    @Override
+    public Var foundVarType(Scalar operand, String operator) {
+        return switch (operator) {
+            case ADD_OPERATOR -> this.add(operand);
+            case SUB_OPERATOR -> operand.sub(this);
+            case MUL_OPERATOR -> operand.mul(this);
+            case DIV_OPERATOR -> operand.div(this);
+            //case ASSIGN_OPERATOR -> AssignMethod();
+            default -> null;
+        };
+    }
+
+    @Override
+    public Var foundVarType(Vector operand, String operator) {
+        return switch (operator) {
+            case ADD_OPERATOR -> this.add(operand);
+            case SUB_OPERATOR -> operand.sub(this);
+            case MUL_OPERATOR -> operand.mul(this);
+            case DIV_OPERATOR -> operand.div(this);
+            //case ASSIGN_OPERATOR -> AssignMethod();
+            default -> null;
+        };
+    }
+
+    @Override
+    public Var foundVarType(Matrix operand, String operator) {
+        return switch (operator) {
+            case ADD_OPERATOR -> this.add(operand);
+            case SUB_OPERATOR -> operand.sub(this);
+            case MUL_OPERATOR -> operand.mul(this);
+            case DIV_OPERATOR -> operand.div(this);
+            //case ASSIGN_OPERATOR -> AssignMethod();
+            default -> null;
+        };
+    }
+
+
+
+
+
 
     @Override
     public String toString() {

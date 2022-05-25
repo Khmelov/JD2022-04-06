@@ -50,11 +50,19 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var add(Var other) {
-        return other.add(this);
+    public Var foundVarType(Var operand, String operator) {
+        return operand.foundVarType(this,operator);
     }
 
+
+    //@Override
+    //public Var add(Var other) {
+    //    System.out.println("Vector VAR+VAR");
+    //    return other.add(this);
+    //}
+
     public Var add(Scalar other) {
+        System.out.println("Vector Vector+Scalar");
         double[] tempVector = getVectorValues();
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] += other.getValue();

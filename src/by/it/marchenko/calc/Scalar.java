@@ -20,16 +20,23 @@ public class Scalar extends Var {
     }
 
     @Override
+    public Var foundVarType(Var operand, String operator) {
+        return operand.foundVarType(this,operator);
+    }
+
+    @Override
     public String toString() {
         return Double.toString(value);
     }
 
     @Override
     public Var add(Var other) {
+        System.out.println("Scalar VAR+VAR");
         return other.add(this);
     }
 
     public Var add(Scalar other) {
+        System.out.println("Scalar Var+Scalar");
         return new Scalar(this.value + other.getValue());
     }
 

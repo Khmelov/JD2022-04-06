@@ -32,11 +32,14 @@ public class Parser {
             ArrayList<Var> operandList = operands.createVar(stringsOperands);
 
             Var tempResult = operandList.get(0);
+            Var tempResult2 = operandList.get(0);
             for (int i = 0; i < operators.size(); i++) {
+                tempResult2 = tempResult2.foundVarType(operandList.get(i + 1),operators.get(i));
+                System.out.println("NewResult: "+ tempResult2);
                 try {
                     tempResult = switch (operators.get(i)) {
                         // TODO NullPointerException during invocation
-                        case ADD_OPERATOR -> tempResult.add(operandList.get(i + 1));
+                        //case ADD_OPERATOR -> tempResult.add(operandList.get(i + 1));
                         case SUB_OPERATOR -> tempResult.sub(operandList.get(i + 1));
                         case MUL_OPERATOR -> tempResult.mul(operandList.get(i + 1));
                         case DIV_OPERATOR -> tempResult.div(operandList.get(i + 1));
