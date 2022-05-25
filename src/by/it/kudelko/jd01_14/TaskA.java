@@ -7,12 +7,22 @@ import java.util.concurrent.ThreadLocalRandom;
 public class TaskA {
 
     public static final String USER_DIR = "user.dir";
+    public static final String DATA_TASK_A_BIN = "dataTaskA.bin";
+    public static final String RESULT_TASK_A_TXT = "resultTaskA.txt";
 
     public TaskA() {
     }
 
     public static void main(String[] args) {
-        String path = Util.getPath(TaskA.class, "dataTaskA.bin");
+        String pathBinaryFile = Util.getPath(TaskA.class, DATA_TASK_A_BIN);
+        writeIntegers(pathBinaryFile);
+        ArrayList<Integer> integers = readIntegers(pathBinaryFile);
+        printToConsole(integers);
+        String pathTxtFile = Util.getPath(TaskA.class, RESULT_TASK_A_TXT);
+        printToTxtFile(integers, pathTxtFile);
+    }
+
+    private static void writeIntegers(String path) {
         try (
                 DataOutputStream dataOutputStream = new DataOutputStream(
                         new BufferedOutputStream(
@@ -27,7 +37,9 @@ public class TaskA {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    private static ArrayList<Integer> readIntegers(String path) {
         ArrayList<Integer> integers = new ArrayList<>();
         try (
                 DataInputStream dataInputStream = new DataInputStream(
@@ -43,6 +55,10 @@ public class TaskA {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return integers;
+    }
+
+    private static void printToConsole(ArrayList<Integer> integers) {
         double sum = 0;
         double count = 0;
         for (Integer integer : integers) {
@@ -52,8 +68,9 @@ public class TaskA {
         }
         System.out.println();
         System.out.println("avg=" + sum / count);
+    }
 
-        String txtFile = Util.getPath(TaskA.class, "resultTaskA.txt");
+    private static void printToTxtFile(ArrayList<Integer> integers, String txtFile) {
         try (PrintWriter out = new PrintWriter(txtFile)) {
             double sum2 = 0;
             double count2 = 0;
