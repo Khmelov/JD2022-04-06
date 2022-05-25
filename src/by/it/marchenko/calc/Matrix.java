@@ -100,13 +100,6 @@ public class Matrix extends Var {
         return operand.foundVarType(this, operator);
     }
 
-
-    @Override
-    public Var add(Var other) {
-        System.out.println("Matrix VAR+VAR");
-        return other.add(this);
-    }
-
     public Var add(Scalar other) {
         System.out.println("Matrix Matrix+Scalar");
         double[][] tempMatrix = this.getMatrixValue();
@@ -118,12 +111,13 @@ public class Matrix extends Var {
         return new Matrix(tempMatrix);
     }
 
-    @Override
     public Var add(Vector other) {
+        System.out.println("Matrix Matrix+Vector");
         return super.add((Var) other);
     }
 
     public Var add(Matrix other) {
+        System.out.println("Matrix Matrix+Matrix");
         double[][] tempMatrix = this.getMatrixValue();
         for (int i = 0; i < tempMatrix.length; i++) {
             for (int j = 0; j < tempMatrix[i].length; j++) {
@@ -132,6 +126,8 @@ public class Matrix extends Var {
         }
         return new Matrix(tempMatrix);
     }
+
+
 
     @Override
     public Var mul(Var other) {

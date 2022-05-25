@@ -7,22 +7,21 @@ interface Operation {
     Var foundVarType(Vector operand, String operator);
     Var foundVarType(Matrix operand, String operator);
 
+    Var add(Scalar other);
+    Var add(Vector other);
+    Var add(Matrix other);
 
-    Var add(Var other);
+    //Var add(Var other);
+
     Var mul(Var other);
     Var div(Var other);
     // Var typeFounder (Var other, String operator){
     //    return other.operation(this, operator);
     // }
+
     // switch operator-> add, mul, div
 
     Var sub(Var other);
-
-    Var add(Scalar other);
-
-    Var add(Vector other);
-
-    Var add(Matrix other);
 
     Var mul(Scalar other);
 

@@ -20,19 +20,14 @@ public class Scalar extends Var {
     }
 
     @Override
-    public Var foundVarType(Var operand, String operator) {
-        return operand.foundVarType(this,operator);
-    }
-
-    @Override
     public String toString() {
         return Double.toString(value);
     }
 
     @Override
-    public Var add(Var other) {
-        System.out.println("Scalar VAR+VAR");
-        return other.add(this);
+    public Var foundVarType(Var operand, String operator) {
+        System.out.println("FOUND Scalar+VAR");
+        return operand.foundVarType(this,operator);
     }
 
     public Var add(Scalar other) {
@@ -41,12 +36,19 @@ public class Scalar extends Var {
     }
 
     public Var add(Vector other) {
+        System.out.println("Scalar Scalar+Vector");
         return other.add(this);
     }
 
     public Var add(Matrix other) {
-        return other.add(this);//new Scalar(this.value + other.getValue());
+        System.out.println("Scalar Scalar+Matrix");
+        return other.add(this);
     }
+
+
+
+
+
 
     @Override
     public Var mul(Var other) {
