@@ -1,8 +1,16 @@
 package by.it.marchenko.calc;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 public class MessageConst {
+    public static final HashSet<String> YES_ANSWER = new HashSet<>(Arrays.asList("yes", "y", "н", "нуы"));
+    public static final HashSet<String> NO_ANSWER = new HashSet<>(Arrays.asList("no", "n", "т", "тщ"));
+
     public static final String MESSAGE_GREETING = "Application started. Type expression or END for exit.";
     public static final String MESSAGE_EMPTY_EXPRESSION = "Incorrect input. Empty expression entered";
+    public static final String MESSAGE_OVERWRITE_VALUE =
+            "The variable %s is already assigned. Do you want to overwrite value? (Y/N) ";
     public static final String MESSAGE_FAREWELL = "Application finished.";
 
     public static final String INPUT_EXCEPTION = "Incorrect input: ";
@@ -34,7 +42,6 @@ public class MessageConst {
             "\n  Reason: it is necessary to have variable in the expression.";
 
 
-
     public static final String MESSAGE_PRINT_RESULT = "Result";
     public static final String MESSAGE_DATA_INVITATION = ">"
             .repeat(MESSAGE_PRINT_RESULT.length());
@@ -47,7 +54,7 @@ public class MessageConst {
     public static final String OPERATOR_REGEX = "[-=+*/]";
 
     public static final String SCALAR_PATTERN = "-?[0-9]+\\.?[0-9]*";
-    public static final String VARIABLE_PATTERN = "([A-Z_a-z])(\\w*)";
+    public static final String VARIABLE_PATTERN = "([A-Z_a-zА-Яа-яЁё])([А-Яа-яЁё\\w]*)";
     public static final String VECTOR_PATTERN =
             "\\{\s*" + SCALAR_PATTERN + "\s*(,\s*" + SCALAR_PATTERN + "\s*)*}";
     public static final String MATRIX_PATTERN =

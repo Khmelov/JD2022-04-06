@@ -28,50 +28,41 @@ public class Parser {
     @SuppressWarnings("ConstantConditions")
     public Var calc(String inputString) throws CalcException {
 
-        //VarRepositoryMap mapRepo = new VarRepositoryMap();
-
         if (inputString != null) {
+            // remove spaces
+            ArrayList<String> stringsOperands = operands.createOperands(inputString);
+            ArrayList<String> operators = operands.createOperators(inputString);
 
-            String[] myOperands = operands.createOperands(inputString);
-            boolean assign = assignment.isAssignmentAllowed(inputString, myOperands);
-            if (assign) {
-                //perform assign
-                System.out.println("performing assignment");
+
+            //boolean assign = assignment.isAssignmentAllowed(inputString, stringsOperands);
+            if (assignment.isAssignmentAllowed(inputString, stringsOperands)) {
+                //TODO transferToLeft(myOperands,inputString);
+                // Result: A=1+2*3
+                return performAssignment(stringsOperands, operators);
+                /*
+                String stdExpression = toStdPresentation(stringsOperands, operators);
+                String[] temp = stdExpression.split(ASSIGN_OPERATOR);
+                String name = temp[0];
+                Var value = calc(temp[1]);
+                repository.saveVariable(name,value);
+                return repository.getVariable(name);
+                //return assignment.performAssignment(stringsOperands, operators);
+
+
+                 */
             }
 
-            //varCreator.createOperands(inputString);
-            //String[] operands = inputString.split(OPERATOR_REGEX);  //, MAXIMUM_ALLOWED_OPERANDS);
-//                    inputString.split(OPERATOR_REGEX);  //, MAXIMUM_ALLOWED_OPERANDS);
-
-
-            //System.out.println(Arrays.toString(myOperands));
-            operandList = new ArrayList<>(myOperands.length);
-            operatorList = new ArrayList<>(myOperands.length - 1);
+            operandList = new ArrayList<>(stringsOperands.size());
+            operatorList = new ArrayList<>(stringsOperands.size() - 1);
 
             Pattern operatorPattern = Pattern.compile(OPERATOR_REGEX);
-            Matcher operatorMatcher = operatorPattern.matcher(inputString);
-            // A + B C = 3 + 5 - 2
-
-
-            for (String operand : myOperands) {
+            Matcher operatorMatcher1 = operatorPattern.matcher(inputString);
+            for (String operand : stringsOperands) {
                 //operand = operand.trim();
                 operandList.add(varCreator.createVar(operand));
-                if (operatorMatcher.find()) {
-                    operatorList.add(operatorMatcher.group());
+                if (operatorMatcher1.find()) {
+                    operatorList.add(operatorMatcher1.group());
                 }
-            }
-            if (isUnique(operatorList, ASSIGN_OPERATOR) && isUnique(operandList, null)) {
-                //TODO transferToLeft(operandList,operatorList);
-                //TODO performLeftSideEvaluation(operandList,operatorList);
-                //Var.saveVariable(operands[operandList.indexOf(null)],operandList.get(1));
-                //if (!repository.saveVariable(operands[operandList.indexOf(null)], operandList.get(1))) {
-                //     throw new RuntimeException("Variable not save");
-                // }
-                //Var.saveVariable(operands[operandList.indexOf(null)], operandList.get(1));
-                repository.saveVariable(myOperands[operandList.indexOf(null)], operandList.get(1));
-
-                operandList.remove(0);
-                operatorList.remove(0);
             }
             Var tempResult = operandList.get(0);
 
@@ -91,10 +82,23 @@ public class Parser {
         return null;
     }
 
+    private String toStdPresentation(ArrayList<String> operands, ArrayList<String> operators) {
+        StringBuilder tempExpression = new StringBuilder(operands.get(0));
+        for (int i = 0; i < operators.size(); i++) {
+            tempExpression
+                    .append(operators.get(i))
+                    .append(operands.get(i + 1));
+        }
+        return tempExpression.toString();
+    }
 
-    private boolean isUnique(List<?> list, String element) {
-        int firstAppearance = list.indexOf(element);
-        return firstAppearance >= 0 && firstAppearance == list.lastIndexOf(element);
+    private Var performAssignment(ArrayList<String> operands, ArrayList<String> operators) throws CalcException {
+        String stdExpression = toStdPresentation(operands, operators);
+        String[] temp = stdExpression.split(ASSIGN_OPERATOR);
+        String name = temp[0];
+        Var value = calc(temp[1]);
+        repository.saveVariable(name,value);
+        return repository.getVariable(name);
     }
 }
     /*

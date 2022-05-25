@@ -5,19 +5,15 @@ import java.util.Scanner;
 public class ConsoleRunner {
     public static void main(String[] args) throws CalcException {
 
-        Repository repo = new VarRepositoryMap();   //  repository for variable saving
-        VarCreator creator = new VarCreator(repo);  //  variable creator method
-        Operands operands = new Operands();
-        Assignment assignment = new Assignment(repo);
-
-
+        Scanner console = new Scanner(System.in);           //  input data source
+        Repository repo = new VarRepositoryMap(console);    //  repository for variable saving
+        VarCreator creator = new VarCreator(repo);          //  variable creator method
+        Operands operands = new Operands();                 //  create and check operands and operators
+        Assignment assignment = new Assignment(repo);       //  check and perform assignment
 
         Printer.greeting();
 
-        Scanner console = new Scanner(System.in);
-
         Input inputString = new Input(console);
-
         Parser parseString = new Parser(repo, creator, operands, assignment);
 
         while (inputString.runEnabled()) {
