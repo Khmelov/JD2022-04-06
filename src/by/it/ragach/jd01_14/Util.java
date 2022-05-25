@@ -3,8 +3,9 @@ package by.it.ragach.jd01_14;
 import java.io.File;
 
 public class Util {
+    public static final String USER_DIR = "user.dir";
     public static String getPath(Class<?> aClass, String filename) {
-        String root = System.getProperty(TaskA.USER_DIR);
+        String root = System.getProperty(USER_DIR);
         String relationPath =aClass.getName()
                 .replace(aClass.getSimpleName(), "")
                 .replace(".", File.separator);
