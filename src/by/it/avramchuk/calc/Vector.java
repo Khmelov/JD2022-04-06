@@ -35,7 +35,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var add(Var other) {
+    public Var add(Var other) throws CalcException{
         if ( other instanceof Scalar scalar){
             double [] result = new double[this.values.length];
             for (int i = 0; i < result.length; i++) {
@@ -49,12 +49,12 @@ public class Vector extends Var {
                     result[i] = this.values[i] + otherVector.values[i];
                 }
                 return new Vector(result);
-            } else {return super.add(other);}
+            } else {throw new CalcException("Incorrect size for %s + %s", this, otherVector);}
         } else {return super.add(other);}
     }
 
     @Override
-    public Var sub(Var other) {
+    public Var sub(Var other) throws CalcException{
         if ( other instanceof Scalar scalar){
             double [] result = new double[this.values.length];
             for (int i = 0; i < result.length; i++) {
@@ -73,7 +73,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var mul(Var other) {
+    public Var mul(Var other) throws CalcException{
         if (other instanceof Scalar scalar){
             double [] result = new double[this.values.length];
             for (int i = 0; i < result.length; i++) {
@@ -92,7 +92,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var div(Var other) {
+    public Var div(Var other) throws CalcException{
         if (other instanceof Scalar scalar){
             if (scalar.getValue()==0){
                 return super.div(other);
