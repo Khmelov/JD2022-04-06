@@ -1,12 +1,19 @@
 package by.it.marchenko.calc;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static by.it.marchenko.calc.MessageConst.*;
 
 public class Operands implements OperandProcessing {
+
+    public Operands(Repository repository) {
+        this.repository = repository;
+    }
+
+    private final Repository repository;
 
     //Find operands in expression, remove spaces from operands if it is possible
     @Override
@@ -55,5 +62,34 @@ public class Operands implements OperandProcessing {
             operators.add(operatorMatcher.group());
         }
         return operators;
+    }
+
+    @Override
+    public ArrayList<Var> createVar(ArrayList<String> operands) throws CalcException {
+
+        ArrayList<Var> operandList = new ArrayList<>(operands.size());
+        for (String operand : operands) {
+            operandList.add(createVar(operand));
+        }
+        return operandList;
+    }
+
+    @Override
+    public Var createVar(String operand) throws CalcException {
+        Var createdVar = null;
+        if (operand.matches(SCALAR_PATTERN)) {
+            createdVar = new Scalar(operand);
+        } else if (operand.matches(VECTOR_PATTERN)) {
+            createdVar = new Vector(operand);
+        } else if (operand.matches(MATRIX_PATTERN)) {
+            createdVar = new Matrix(operand);
+        } else if (repository.getAllVariables().containsKey(operand)) {
+            createdVar = repository.getVariable(operand);
+        }
+        if (Objects.isNull(createdVar)) {
+            throw new CalcException(
+                    INPUT_EXCEPTION + WRONG_OPERAND_EXCEPTION + WRONG_OPERAND_COMMENT, operand);
+        }
+        return createdVar;
     }
 }

@@ -7,4 +7,7 @@ public interface OperandProcessing {
 
     ArrayList<String> createOperators(String expression);
 
+    Var createVar(String operand) throws CalcException;
+
+    ArrayList<Var> createVar(ArrayList<String> operands) throws CalcException;
 }

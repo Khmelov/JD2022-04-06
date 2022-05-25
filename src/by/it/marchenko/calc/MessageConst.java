@@ -17,13 +17,18 @@ public class MessageConst {
     public static final String EMPTY_OPERAND_EXCEPTION = "Empty operand entered";
     public static final String EMPTY_OPERAND_COMMENT =
             "\n  Reason: it is necessary to have operand between operators.";
+
+    public static final String WRONG_OPERAND_EXCEPTION = "Wrong operand entered";
+    public static final String WRONG_OPERAND_COMMENT =
+            "\n  Reason: The operand %s is incorrect.";
+
     public static final String EMPTY_EXPRESSION_EXCEPTION = "Empty expression entered";
     public static final String EMPTY_EXPRESSION_COMMENT =
             "\n  Reason: expression not contain any significant symbol.";
 
-    public static final String MISSING_OPERATOR_EXCEPTION = "Incorrect or missing operator";
+    public static final String MISSING_OPERATOR_EXCEPTION = "Expression is incorrect";
     public static final String MISSING_OPERATOR_COMMENT =
-            "\n  Reason: It was detected incorrect or missing operator between operands: %s";
+            "\n  Reason: Incorrect/missing operator or incorrect operand: %s";
 
     public static final String ASSIGNMENT_EXCEPTION = "Incorrect assignment: ";
     public static final String ASSIGNMENT_OPERATOR_EXCEPTION =
@@ -35,6 +40,16 @@ public class MessageConst {
             "More than one unknown variable in the expression%n  Expression: %s";
     public static final String ASSIGNMENT_OPERAND_COMMENT =
             "\n  Reason: it is necessary to have only one new variable in the expression.";
+
+    public static final String ASSIGNMENT_NO_VAR_EXCEPTION =
+            "Nothing to assign%n  Expression: %s";
+    public static final String ASSIGNMENT_NO_VAR_COMMENT =
+            "\n  Reason: it is necessary to have any Var for assign.";
+
+
+
+
+
 
     public static final String ASSIGNMENT_VARIABLE_EXCEPTION =
             "No unknown variable in the expression%n  Expression: %s";

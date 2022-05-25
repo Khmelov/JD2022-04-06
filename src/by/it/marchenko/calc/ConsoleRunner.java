@@ -7,14 +7,14 @@ public class ConsoleRunner {
 
         Scanner console = new Scanner(System.in);           //  input data source
         Repository repo = new VarRepositoryMap(console);    //  repository for variable saving
-        VarCreator creator = new VarCreator(repo);          //  variable creator method
-        Operands operands = new Operands();                 //  create and check operands and operators
+        //VarCreator creator = new VarCreator(repo);          //  variable creator method
+        Operands operands = new Operands(repo);             //  create/check String/Var operands and operators
         Assignment assignment = new Assignment(repo);       //  check and perform assignment
 
         Printer.greeting();
 
         Input inputString = new Input(console);
-        Parser parseString = new Parser(repo, creator, operands, assignment);
+        Parser parseString = new Parser(repo/*, creator*/, operands, assignment);
 
         while (inputString.runEnabled()) {
             inputString.setExpression();

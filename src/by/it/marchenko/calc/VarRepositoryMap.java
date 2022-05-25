@@ -24,7 +24,7 @@ public class VarRepositoryMap implements Repository {
             String answer;
             do {
                 System.out.printf(MESSAGE_OVERWRITE_VALUE, name);
-                answer = console.nextLine().toLowerCase();
+                answer = console.nextLine().toLowerCase().trim();
             } while (!YES_ANSWER.contains(answer) && !NO_ANSWER.contains(answer));
             if (NO_ANSWER.contains(answer)) {
                 result = false;
