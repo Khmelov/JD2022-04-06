@@ -1,6 +1,9 @@
-package by.it._classwork_.calc;
+package by.it._classwork_.calc.interfaces;
 
-interface Operation {
+import by.it._classwork_.calc.exception.CalcException;
+import by.it._classwork_.calc.entity.Var;
+
+public interface Operation {
     Var add(Var other) throws CalcException;;
 
     Var sub(Var other) throws CalcException;;

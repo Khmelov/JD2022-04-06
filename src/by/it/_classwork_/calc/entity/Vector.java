@@ -1,4 +1,6 @@
-package by.it._classwork_.calc;
+package by.it._classwork_.calc.entity;
+
+import by.it._classwork_.calc.exception.CalcException;
 
 import java.util.Arrays;
 import java.util.StringJoiner;

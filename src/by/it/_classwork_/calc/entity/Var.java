@@ -1,10 +1,9 @@
-package by.it._classwork_.calc;
+package by.it._classwork_.calc.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import by.it._classwork_.calc.exception.CalcException;
+import by.it._classwork_.calc.interfaces.Operation;
 
-abstract class Var implements Operation {
+public abstract class Var implements Operation {
 
 
 
