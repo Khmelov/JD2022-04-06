@@ -1,4 +1,9 @@
-package by.it._classwork_.calc;
+package by.it._classwork_.calc.service;
+
+import by.it._classwork_.calc.contants.Patterns;
+import by.it._classwork_.calc.entity.Var;
+import by.it._classwork_.calc.exception.CalcException;
+import by.it._classwork_.calc.interfaces.Repository;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

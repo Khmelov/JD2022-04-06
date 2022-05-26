@@ -1,4 +1,4 @@
-package by.it._classwork_.calc;
+package by.it._classwork_.calc.entity;
 
 import java.util.Arrays;
 
