@@ -51,7 +51,6 @@ public class TaskA {
                 }
                 writerTxt.println();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
