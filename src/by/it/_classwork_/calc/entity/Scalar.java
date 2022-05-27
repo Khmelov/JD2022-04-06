@@ -1,6 +1,8 @@
-package by.it._classwork_.calc;
+package by.it._classwork_.calc.entity;
 
-class Scalar extends Var {
+import by.it._classwork_.calc.exception.CalcException;
+
+public class Scalar extends Var {
 
     private final double value;
 
