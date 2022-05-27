@@ -1,9 +1,12 @@
-package by.it._classwork_.calc;
+package by.it._classwork_.calc.repository;
+
+import by.it._classwork_.calc.entity.Var;
+import by.it._classwork_.calc.interfaces.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class VarMapRepository implements Repository{
+public class VarMapRepository implements Repository {
 
 
     private final Map<String, Var> vars = new HashMap<>();

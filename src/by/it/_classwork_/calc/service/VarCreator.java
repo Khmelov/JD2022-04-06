@@ -1,4 +1,12 @@
-package by.it._classwork_.calc;
+package by.it._classwork_.calc.service;
+
+import by.it._classwork_.calc.contants.Patterns;
+import by.it._classwork_.calc.entity.Matrix;
+import by.it._classwork_.calc.entity.Scalar;
+import by.it._classwork_.calc.entity.Var;
+import by.it._classwork_.calc.entity.Vector;
+import by.it._classwork_.calc.exception.CalcException;
+import by.it._classwork_.calc.interfaces.Repository;
 
 import java.util.Objects;
 
