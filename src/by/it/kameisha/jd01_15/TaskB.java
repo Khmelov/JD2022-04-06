@@ -10,10 +10,22 @@ public class TaskB {
         String pathTxtFile = Util.getPath(TaskA.class, TaskB.class.getSimpleName() + ".txt");
         printClass(pathClass, pathTxtFile);
         //comment 1
+        System.out.println((byte) '*');
         /*
         hnrnrnrnrnrnr
          */
-        System.out.println((byte) '*');
+        StringBuilder result = readTxtFile(pathTxtFile);
+        System.out.println(result);
+    }
+
+    private static StringBuilder readTxtFile(String pathTxtFile) {
+        StringBuilder result = new StringBuilder();
+        try(BufferedReader reader = new BufferedReader(new FileReader(pathTxtFile))){
+            
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
     private static void printClass(String pathClass, String pathTxtFile) {
@@ -30,7 +42,10 @@ public class TaskB {
                     if (second == 47) {
                         reader.readLine();
                     } else if (second == 42) {
-
+                        String line = "";
+                        while(!line.contains("*/")){
+                            line = reader.readLine();
+                        }
                     }
                 }
             }
