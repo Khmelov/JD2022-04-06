@@ -8,7 +8,8 @@ public class TaskB {
     public static final String FILE_NOT_FOUND_MESSAGE = "File not found";
     public static final char SLASH = '/';
     public static final char STAR = '*';
-        public static final String JAVA = "java";
+    public static final char END_LINE = '\n';
+    public static final String JAVA = "java";
     public static final String TXT = "txt";
 
     /**
@@ -50,9 +51,10 @@ public class TaskB {
 
     private static void appendLine(StringBuilder code, BufferedReader in) throws IOException {
         boolean multiLineCommentStart = false;
-        //boolean firstLine = true;
+        boolean singeLineCommentStart = false;
         while (true) {
             String line = in.readLine();
+            //in.
             if (!Objects.isNull(line)) {
                 char charToSearch = multiLineCommentStart ? STAR : SLASH;
                 int searchPosition = line.indexOf(charToSearch);
