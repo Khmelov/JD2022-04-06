@@ -6,10 +6,21 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class TaskA {
     public static final String USER_DIR = "user.dir";
+    public static final String DATA_TASK_A_BIN = "dataTaskA.bin";
+    public static final String RESULT_TASK_A_TXT = "resultTaskA.txt";
 
     public static void main(String[] args) {
-        String path = Util.getPath(TaskA.class, "dataTaskA.bin");
+        String path = Util.getPath(TaskA.class, DATA_TASK_A_BIN);
         //System.out.println(path);
+        writeIntegers(path);
+        ArrayList<Integer> integers = new ArrayList<>();
+        readIntegers(path, integers);
+        printConsole(integers);
+        String txtFile = Util.getPath(TaskA.class, RESULT_TASK_A_TXT);
+        printTxt(integers, txtFile);
+    }
+
+    private static void writeIntegers(String path) {
         try (DataOutputStream dataOutputStream =
                      new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path)))
         ) {
@@ -21,10 +32,9 @@ public class TaskA {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
-
-        ArrayList<Integer> integers = new ArrayList<>();
-
+    private static void readIntegers(String path, ArrayList<Integer> integers) {
         try (DataInputStream dataInputStream =
                      new DataInputStream(new BufferedInputStream(new FileInputStream(path)))
         ) {
@@ -35,26 +45,30 @@ public class TaskA {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-double sum=0;
+    }
+
+    private static void printConsole(ArrayList<Integer> integers) {
+        double sum=0;
         for (Integer integer : integers) {
             System.out.print(integer+" ");
             sum+=integer;
         }
         System.out.println("\n avg="+sum/ integers.size());
-        String txtFile = Util.getPath(TaskA.class, "resultTaskA.txt");
-try (PrintWriter out = new PrintWriter(txtFile))
-{
-    double sum2=0;
-    for (Integer integer : integers) {
-        out.print(integer+" ");
-        sum2+=integer;
     }
-    out.println("\n avg="+sum2/ integers.size());
 
-} catch (FileNotFoundException e) {
-    throw new RuntimeException(e);
-}
+    private static void printTxt(ArrayList<Integer> integers, String txtFile) {
+        try (PrintWriter out = new PrintWriter(txtFile))
+        {
+            double sum2=0;
+            for (Integer integer : integers) {
+                out.print(integer+" ");
+                sum2+=integer;
+            }
+            out.println("\n avg="+sum2/ integers.size());
 
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
