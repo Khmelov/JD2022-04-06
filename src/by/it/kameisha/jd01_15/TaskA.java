@@ -13,17 +13,17 @@ public class TaskA {
     public static final int MAX_VALUE = 15;
 
     public static void main(String[] args) {
-        String pathTxtFile = Util.getPath(TaskA.class,"matrix.txt");
+        String pathTxtFile = Util.getPath(TaskA.class, "matrix.txt");
         int[][] matrix = createMatrix();
-        printMatrixInFile(pathTxtFile,matrix);
+        printMatrixInFile(pathTxtFile, matrix);
         String result = readFile(pathTxtFile);
         System.out.println(result);
     }
 
     private static String readFile(String pathTxtFile) {
         StringBuilder result = new StringBuilder();
-        try(BufferedReader reader = new BufferedReader(new FileReader(pathTxtFile))){
-            while(reader.ready()){
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathTxtFile))) {
+            while (reader.ready()) {
                 String line = reader.readLine();
                 result.append(line).append("\n");
             }
@@ -34,10 +34,10 @@ public class TaskA {
     }
 
     private static void printMatrixInFile(String pathTxtFile, int[][] matrix) {
-        try(PrintWriter printer = new PrintWriter(pathTxtFile)){
+        try (PrintWriter printer = new PrintWriter(pathTxtFile)) {
             for (int[] row : matrix) {
                 for (int element : row) {
-                    printer.printf("%3d ",element);
+                    printer.printf("%3d ", element);
                 }
                 printer.println();
             }
@@ -47,10 +47,10 @@ public class TaskA {
     }
 
     private static int[][] createMatrix() {
-        int[][]matrix = new int[TaskA.ROWS][TaskA.COLNS];
+        int[][] matrix = new int[TaskA.ROWS][TaskA.COLNS];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
-                matrix[i][j] = ThreadLocalRandom.current().nextInt(TaskA.MIN_VALUE, TaskA.MAX_VALUE +1);
+                matrix[i][j] = ThreadLocalRandom.current().nextInt(TaskA.MIN_VALUE, TaskA.MAX_VALUE + 1);
             }
         }
         return matrix;
