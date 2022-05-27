@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class TaskA1 {
 
-    private List<Integer> grades = new ArrayList<>();
+    public List<Integer> grades = new ArrayList<>();
 
     public static void main(String[] args) {
         TaskA1 instance = new TaskA1();
@@ -26,7 +26,7 @@ public class TaskA1 {
         return ThreadLocalRandom.current().nextInt(from, to);
     }
 
-    void clearBad(List<Integer> grades) {
+    public void clearBad(List<Integer> grades) {
         Iterator<Integer> iterator = grades.iterator();
         //noinspection Java8CollectionRemoveIf
         while (iterator.hasNext()){
