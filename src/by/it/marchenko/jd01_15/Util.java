@@ -32,7 +32,7 @@ public class Util {
         return File.separator.concat(SOURCE_DIR).concat(File.separator).concat(relPath);
     }
 
-    public static File getRootFolderPath() {
-        return new File(getFilePath(EMPTY_STRING)).getParentFile();
+    public File getCurrentFolderPath() {
+        return new File(getFilePath(EMPTY_STRING));
     }
 }
