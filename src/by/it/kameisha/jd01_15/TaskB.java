@@ -7,12 +7,11 @@ import java.io.*;
 public class TaskB {
     public static void main(String[] args) {
         String pathClass = Util.getPath(TaskA.class, TaskB.class.getSimpleName() + ".java");
+        //comment 1
         String pathTxtFile = Util.getPath(TaskA.class, TaskB.class.getSimpleName() + ".txt");
         printClass(pathClass, pathTxtFile);
-        //comment 1
-        System.out.println((byte) '*');
         /*
-        hnrnrnrnrnrnr
+        block 1
          */
         StringBuilder result = readTxtFile(pathTxtFile);
         System.out.println(result);
@@ -21,7 +20,10 @@ public class TaskB {
     private static StringBuilder readTxtFile(String pathTxtFile) {
         StringBuilder result = new StringBuilder();
         try(BufferedReader reader = new BufferedReader(new FileReader(pathTxtFile))){
-            
+            while(reader.ready()){
+                String line = reader.readLine();
+                result.append(line).append("\n");
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -30,6 +32,9 @@ public class TaskB {
 
     private static void printClass(String pathClass, String pathTxtFile) {
         StringBuilder stringBuilder = new StringBuilder();
+        /*
+        block 2
+        */
         try (BufferedReader reader = new BufferedReader(new FileReader(pathClass));
              PrintWriter writer = new PrintWriter(pathTxtFile)) {
             //comment 2
@@ -52,6 +57,5 @@ public class TaskB {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
