@@ -21,8 +21,8 @@ public class TaskB {
         StringBuilder result = new StringBuilder();
         try(BufferedReader reader = new BufferedReader(new FileReader(pathTxtFile))){
             while(reader.ready()){
-                String line = reader.readLine();
-                result.append(line).append("\n");
+                char symbol = (char)reader.read();
+                result.append(symbol);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
