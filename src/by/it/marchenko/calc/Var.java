@@ -1,37 +1,56 @@
 package by.it.marchenko.calc;
 
-import java.util.HashMap;
-
 import static by.it.marchenko.calc.MessageConst.*;
 
 abstract class Var implements Operation {
+
     final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
 
-    private final static HashMap<String, Var> varMap = new HashMap<>();
-
-    public static HashMap<String, Var> getVarMap() {
-        return varMap;
-    }
-
-    static void saveVariable(String name, Var variable){
-        varMap.put(name, variable);
-        //return variable;
-    }
-
-    public static Var createVar(String operand) {
-        if (operand.matches(SCALAR_PATTERN)) {
-            return new Scalar(operand);
-        } else if (operand.matches(VECTOR_PATTERN)) {
-            return new Vector(operand);
-        } else if (operand.matches(MATRIX_PATTERN)) {
-            return new Matrix(operand);
-        } else if (varMap.containsKey(operand)) {
-            return varMap.get(operand);
-        }
-        return null;
+    @Override
+    public Var foundVarType(Var operand, String operator) {
+        System.out.println("FOUND VAR+VAR");
+        return operand.foundVarType(this, operator);
     }
 
     @Override
+    public Var foundVarType(Scalar operand, String operator) {
+        System.out.println("FOUND VAR+Scalar");
+        return switch (operator) {
+            case ADD_OPERATOR -> this.add(operand);
+            case SUB_OPERATOR -> operand.sub(this);
+            case MUL_OPERATOR -> operand.mul(this);
+            case DIV_OPERATOR -> operand.div(this);
+            //case ASSIGN_OPERATOR -> AssignMethod();
+            default -> null;
+        };
+    }
+
+    @Override
+    public Var foundVarType(Vector operand, String operator) {
+        System.out.println("FOUND VAR+Vector");
+        return switch (operator) {
+            case ADD_OPERATOR -> this.add(operand);
+            case SUB_OPERATOR -> operand.sub(this);
+            case MUL_OPERATOR -> operand.mul(this);
+            case DIV_OPERATOR -> operand.div(this);
+            //case ASSIGN_OPERATOR -> AssignMethod();
+            default -> null;
+        };
+    }
+
+    @Override
+    public Var foundVarType(Matrix operand, String operator) {
+        System.out.println("FOUND VAR+Matrix");
+        return switch (operator) {
+            case ADD_OPERATOR -> this.add(operand);
+            case SUB_OPERATOR -> operand.sub(this);
+            case MUL_OPERATOR -> operand.mul(this);
+            case DIV_OPERATOR -> operand.div(this);
+            //case ASSIGN_OPERATOR -> AssignMethod();
+            default -> null;
+        };
+    }
+
     public Var add(Var other) {
         printNotAvailableOperation(ADD_OPERATOR, other);
         return null;
@@ -55,6 +74,7 @@ abstract class Var implements Operation {
         return null;
     }
 
+
     @Override
     public String toString() {
         return VAR_TO_STRING_MESSAGE;
@@ -62,7 +82,7 @@ abstract class Var implements Operation {
 
     private void printNotAvailableOperation(String operator, Var other) {
         final String INCORRECT_OPERATION_MESSAGE = "Operation %s %s %s not available.%n";
-        System.out.printf(INCORRECT_OPERATION_MESSAGE, this, operator, other);
+        System.out.printf(INCORRECT_OPERATION_MESSAGE, other, operator, this);
     }
 
 }
