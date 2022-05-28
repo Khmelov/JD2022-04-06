@@ -1,12 +1,12 @@
-package by.it.marchenko.jd02_01;
+package by.it.marchenko.jd02_01.models;
 
 import by.it.marchenko.jd02_01.utility.RandomGenerator;
 
-import static by.it.marchenko.jd02_01.GoodConstants.*;
+import static by.it.marchenko.jd02_01.constants.GoodConstants.*;
 
 public class Good {
     private static int startId = 1;
-    private int currentId;
+    private final int currentId;
     private final String name;
     private final double price;
     private final String currency;
@@ -30,6 +30,7 @@ public class Good {
         }
     }
 
+    @SuppressWarnings("unused")
     public Good(String name, double price) {
         this(name, price, DEFAULT_CURRENCY);
     }
@@ -45,10 +46,7 @@ public class Good {
         return name;
     }
 
-    public long getId() {
-        return currentId;
-    }
-
+    @SuppressWarnings("unused")
     public double getPrice() {
         return price;
     }

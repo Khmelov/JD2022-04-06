@@ -3,7 +3,7 @@ package by.it.marchenko.jd02_01;
 import java.io.PrintStream;
 
 public class Printer extends PrintStream {
-    private PrintStream out;
+    //private PrintStream out;
 
     public Printer(PrintStream out) {
         //    this.out=out;

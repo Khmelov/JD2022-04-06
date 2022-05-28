@@ -1,4 +1,4 @@
-package by.it.marchenko.jd02_01;
+package by.it.marchenko.jd02_01.constants;
 
 public class CustomerConstant {
     public static final String CUSTOMER = "Customer ";

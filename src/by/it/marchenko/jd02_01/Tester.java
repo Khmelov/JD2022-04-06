@@ -1,5 +1,8 @@
 package by.it.marchenko.jd02_01;
 
+import by.it.marchenko.jd02_01.models.Store;
+import by.it.marchenko.jd02_01.workers.StoreWorker;
+
 public class Tester {
     public static void main(String[] args) {
 

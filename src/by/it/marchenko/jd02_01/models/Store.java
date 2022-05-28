@@ -1,6 +1,6 @@
-package by.it.marchenko.jd02_01;
+package by.it.marchenko.jd02_01.models;
 
-import static by.it.marchenko.jd02_01.StoreConstant.*;
+import static by.it.marchenko.jd02_01.constants.StoreConstant.*;
 
 public class Store {
 
