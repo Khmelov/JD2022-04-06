@@ -1,7 +1,5 @@
 package by.it.machuga.jd01_15;
 
-import by.it.machuga.jd01_14.Util;
-
 import java.io.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -14,6 +12,7 @@ public class TaskA {
     public static final String FILE_NAME = "matrix.txt";
     public static final String MESSAGE_IO_ERROR = "io error";
     public static final String PRINT_FORMAT = "%3d ";
+    public static final char NEW_LINE = '\n';
 
     public static void main(String[] args) {
         int[][] matrix = createMatrix(ROWS, COLS, MIN_VALUE, MAX_VALUE);
@@ -25,11 +24,11 @@ public class TaskA {
     }
 
     private static String readFile(String fileName) {
-        StringBuilder out=new StringBuilder();
+        StringBuilder out = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             while (reader.ready()) {
-                 String line = reader.readLine();
-                 out.append(line).append('\n');
+                String line = reader.readLine();
+                out.append(line).append(NEW_LINE);
             }
         } catch (IOException e) {
             throw new RuntimeException(MESSAGE_IO_ERROR, e);
