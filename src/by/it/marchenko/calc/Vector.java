@@ -50,11 +50,12 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var add(Var other) {
-        return other.add(this);
+    public Var foundVarType(Var operand, String operator) {
+       return operand.foundVarType(this,operator);
     }
 
     public Var add(Scalar other) {
+        System.out.println("Vector Vector+Scalar");
         double[] tempVector = getVectorValues();
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] += other.getValue();
@@ -64,6 +65,7 @@ public class Vector extends Var {
     }
 
     public Var add(Vector other) {
+        System.out.println("Vector Vector+Vector");
         double[] tempVector = getVectorValues();
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] += other.vectorValues[i];
@@ -71,10 +73,12 @@ public class Vector extends Var {
         return new Vector(tempVector);
     }
 
-    @Override
     public Var add(Matrix other) {
+        System.out.println("Vector Vector+Matrix");
         return super.add((Var)other);
     }
+
+
 
     @Override
     public Var mul(Var other) {
@@ -137,6 +141,16 @@ public class Vector extends Var {
             tempVector[i] /= other.getValue();
         }
         return new Vector(tempVector);
+    }
+
+    @Override
+    public Var div(Vector other) {
+        return super.div((Var) other);
+    }
+
+    @Override
+    public Var div(Matrix other) {
+        return super.div((Var) other);
     }
 }
 

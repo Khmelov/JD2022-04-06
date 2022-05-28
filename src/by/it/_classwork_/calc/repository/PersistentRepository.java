@@ -10,6 +10,7 @@ import by.it._classwork_.calc.util.PathFinder;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class PersistentRepository implements Repository {
 
@@ -28,12 +29,16 @@ public class PersistentRepository implements Repository {
         if (path.exists()) {
             VarCreator creator = new VarCreator(this);
             try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-                while (reader.ready()) {
+                while (true) {
                     String line = reader.readLine();
-                    String[] parts = line.split("=", 2);
-                    String name = parts[0];
-                    Var var = creator.createVar(parts[1]);
-                    vars.put(name, var);
+                    if (!Objects.isNull(line)) {
+                        String[] parts = line.split("=", 2);
+                        String name = parts[0];
+                        Var var = creator.createVar(parts[1]);
+                        vars.put(name, var);
+                    } else {
+                        break;
+                    }
                 }
             } catch (IOException | CalcException e) {
                 throw new RuntimeException("not found file", e);
