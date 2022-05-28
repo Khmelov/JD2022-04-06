@@ -3,7 +3,7 @@ package by.it.kameisha.calc;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VarMapRepositiry implements Repository{
+public class VarMapRepository implements Repository{
 
 public Map<String,Var> vars =  new HashMap<>();
 

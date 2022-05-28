@@ -1,59 +1,83 @@
 package by.it.marchenko.calc;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Objects;
 
 import static by.it.marchenko.calc.MessageConst.*;
 
 public class Parser {
 
-    List<String> operatorList;
-    List<Var> operandList;
-    //private static String[] operands;
+    private final Repository repository;
+    //private final VarCreator varCreator;
+    private final Operands operands;
+    private final Assignment assignment;
 
-    @SuppressWarnings("ConstantConditions")
-    public Var calc(String inputString) {
+
+    public Parser(Repository repository, /*VarCreator varCreator,*/ Operands operands, Assignment assignment) {
+        this.repository = repository;
+        //this.varCreator = varCreator;
+        this.operands = operands;
+        this.assignment = assignment;
+    }
+
+    //List<Var> operandList;
+
+    public Var calc(String inputString) throws CalcException {
+
         if (inputString != null) {
-            String[] operands = inputString.split(OPERATOR_REGEX, MAXIMUM_ALLOWED_OPERANDS);
-            operandList = new ArrayList<>(operands.length);
-            operatorList = new ArrayList<>(operands.length - 1);
-            Pattern operatorPattern = Pattern.compile(OPERATOR_REGEX);
-            Matcher operatorMatcher = operatorPattern.matcher(inputString);
-            for (String operand : operands) {
-                operandList.add(Var.createVar(operand));
-                if (operatorMatcher.find()) {
-                    operatorList.add(operatorMatcher.group());
-                }
+            ArrayList<String> stringsOperands = operands.createOperands(inputString);
+            ArrayList<String> operators = operands.createOperators(inputString);
+            if (assignment.isAssignmentAllowed(inputString, stringsOperands)) {
+                return performAssignment(stringsOperands, operators);
             }
-            if (isUnique(operatorList, ASSIGN_OPERATOR) && isUnique(operandList, null)) {
-                //TODO transferToLeft(operandList,operatorList);
-                //TODO performLeftSideEvaluation(operandList,operatorList);
-                Var.saveVariable(operands[operandList.indexOf(null)],operandList.get(1));
-                operandList.remove(0);
-                operatorList.remove(0);
-            }
-            Var tempResult = operandList.get(0);
+            ArrayList<Var> operandList = operands.createVar(stringsOperands);
 
-            for (int i = 0; i < operatorList.size(); i++) {
-                tempResult = switch (operatorList.get(i)) {
-                    // TODO NullPointerException during invocation
-                    case ADD_OPERATOR -> tempResult.add(operandList.get(i + 1));
-                    case SUB_OPERATOR -> tempResult.sub(operandList.get(i + 1));
-                    case MUL_OPERATOR -> tempResult.mul(operandList.get(i + 1));
-                    case DIV_OPERATOR -> tempResult.div(operandList.get(i + 1));
-                    //case ASSIGN_OPERATOR -> AssignMethod();
-                    default -> null;
-                };
+            Var tempResult = operandList.get(0);
+            Var tempResult2 = operandList.get(0);
+            for (int i = 0; i < operators.size(); i++) {
+                tempResult2 = tempResult2.foundVarType(operandList.get(i + 1),operators.get(i));
+                System.out.println("NewResult: "+ tempResult2);
+                try {
+                    tempResult = switch (operators.get(i)) {
+                        // TODO NullPointerException during invocation
+                        //case ADD_OPERATOR -> tempResult.add(operandList.get(i + 1));
+                        case SUB_OPERATOR -> tempResult.sub(operandList.get(i + 1));
+                        case MUL_OPERATOR -> tempResult.mul(operandList.get(i + 1));
+                        case DIV_OPERATOR -> tempResult.div(operandList.get(i + 1));
+                        //case ASSIGN_OPERATOR -> AssignMethod();
+                        default -> null;
+                    };
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+
+
             }
-            return tempResult;
+            return Objects.isNull(tempResult) ? tempResult2: tempResult;
         }
         return null;
     }
-    private boolean isUnique(List<?> list, String element) {
-        int firstAppearance = list.indexOf(element);
-        return firstAppearance >= 0 && firstAppearance == list.lastIndexOf(element);
+
+    private String toStdPresentation(ArrayList<String> operands, ArrayList<String> operators) {
+        StringBuilder tempExpression = new StringBuilder(operands.get(0));
+        for (int i = 0; i < operators.size(); i++) {
+            tempExpression
+                    .append(operators.get(i))
+                    .append(operands.get(i + 1));
+        }
+        return tempExpression.toString();
+    }
+
+    private Var performAssignment(ArrayList<String> operands, ArrayList<String> operators) throws CalcException {
+        //TODO transferToLeft(myOperands,operators);
+        // Input:   A-1=2*3
+        // Result:  A=2*3+1
+        String stdExpression = toStdPresentation(operands, operators);
+        String[] temp = stdExpression.split(ASSIGN_OPERATOR);
+        String name = temp[0];
+        Var value = calc(temp[1]);
+        repository.saveVariable(name,value);
+        return repository.getVariable(name);
     }
 }
     /*
