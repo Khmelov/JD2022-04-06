@@ -22,7 +22,7 @@ public class TaskC {
     public static void main(String[] args) {
         dir = TaskA.getDir(TaskC.class);
         while (!command.equals("end")) {
-            System.out.print(dir);
+            System.out.print(dir+">");
             command = enterCommand();
             if (command.startsWith("cd ")) reSetDir(command);
             else if (command.equals("dir")) printDirInfo(dir);
@@ -34,10 +34,10 @@ public class TaskC {
     private static void reSetDir(String command) {
         String[] dePath = command.split(" ");
         Path path = Paths.get(dePath[1]);
-        if (path.isAbsolute() && Files.exists(path)) dir = path.toString() + File.separator;
+        if (path.isAbsolute() && Files.exists(path)) dir = path.toString();
         else if (!path.isAbsolute()) {
             path = Paths.get(dir, dePath[1]);
-            if (Files.exists(path)) dir = path.toString() + File.separator;
+            if (Files.exists(path)) dir = path.toString();
             else System.out.println(NO_DIR);
         }
     }
