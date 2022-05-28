@@ -4,7 +4,6 @@ import java.util.*;
 
 public class ListA<T> implements List<T> {
     private T[] elements = (T[]) new Object[10];
-
     private int size = 0;
 
     @Override

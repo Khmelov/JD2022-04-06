@@ -1,0 +1,82 @@
+package by.it.smirnov.jd01_15;
+
+import java.io.*;
+
+import static by.it.smirnov.jd01_15.TaskA.getDir;
+
+public class TaskB {
+
+    private static final String FILE_RES = "TaskB.txt";
+    private static final String FILE_COM = "TaskBCommentaries.txt";
+    private static final String FILE_INPUT = "TaskB.java";
+
+    private static StringBuilder sb = new StringBuilder();
+    private static StringBuilder commentaries = new StringBuilder();
+
+    public static void main(String[] args) {
+        String filePathInput = getDir(TaskB.class) + FILE_INPUT;
+        String filePathOutput = getDir(TaskB.class) + FILE_RES;
+        String filePathOutputCom = getDir(TaskB.class) + FILE_COM;
+        readJavaFile(filePathInput);
+        System.out.println(sb);
+        writeToFile(sb, filePathOutput);
+        System.out.println(commentaries);
+        writeToFile(commentaries, filePathOutputCom);
+    }
+
+    private static void readJavaFile(String filePath) {
+        int intChar = -1;
+        int intCharNext = -1;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)))) {
+            while ((intChar = reader.read()) != -1) {
+                if ((char) intChar == '/') {
+                    intCharNext = reader.read();
+                    if ((char) intCharNext == '/') {
+                        commentaries.append(Character.toChars(intChar)).append(Character.toChars(intCharNext));
+                        while ((intChar = reader.read()) != -1) {
+                            commentaries.append(Character.toChars(intChar));
+                            if ((char) intChar == '\n') break;
+                        }
+                    } else if ((char) intCharNext == '*') {
+                        commentaries.append(Character.toChars(intChar)).append(Character.toChars(intCharNext));
+                        while ((intChar = reader.read()) != -1) {
+                            commentaries.append(Character.toChars(intChar));
+                            if ((char) intChar == '*') {
+                                intCharNext = reader.read();
+                                commentaries.append(Character.toChars(intCharNext));
+                                if ((char) intCharNext == '/') {
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        sb.append(Character.toChars(intChar)).append(Character.toChars(intCharNext));
+                    }
+                } else sb.append(Character.toChars(intChar));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void writeToFile(StringBuilder sb, String filePath) {
+        try (PrintWriter writerTxt = new PrintWriter(filePath)) {
+            writerTxt.println(sb);
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+//1
+//2
+/*
+3
+ */
+/*
+4
+ */
+/**
+ * 5
+ */
