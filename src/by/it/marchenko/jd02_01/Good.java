@@ -1,17 +1,19 @@
 package by.it.marchenko.jd02_01;
 
+import by.it.marchenko.jd02_01.utility.RandomGenerator;
+
 import static by.it.marchenko.jd02_01.GoodConstants.*;
 
 public class Good {
-
-    private final int id;
+    private static int startId = 1;
+    private int currentId;
     private final String name;
     private final double price;
     private final String currency;
     private final String goodPrintFormat;
 
-    public Good(int id, String name, double price, String currency) {
-        this.id = id;
+    public Good(String name, double price, String currency) {
+        currentId = startId++;
         this.name = name;
         this.price = price;
         this.currency = currency;
@@ -28,8 +30,15 @@ public class Good {
         }
     }
 
-    public Good(int id, String name, double price) {
-        this(id, name, price, DEFAULT_CURRENCY);
+    public Good(String name, double price) {
+        this(name, price, DEFAULT_CURRENCY);
+    }
+
+    public Good() {
+        this(
+                "Good" + startId,
+                RandomGenerator.getRandom(1, 10000) / 100.0,
+                DEFAULT_CURRENCY);
     }
 
     public String getName() {
@@ -37,7 +46,7 @@ public class Good {
     }
 
     public long getId() {
-        return id;
+        return currentId;
     }
 
     public double getPrice() {
@@ -49,6 +58,6 @@ public class Good {
         String printName = MAX_NAME_PRINT_LENGTH < name.length() ?
                 name.substring(0, MAX_NAME_PRINT_LENGTH).concat(SUFFIX) : name;
         return String.format(goodPrintFormat,
-                id, printName, price, currency);
+                currentId, printName, price, currency);
     }
 }
