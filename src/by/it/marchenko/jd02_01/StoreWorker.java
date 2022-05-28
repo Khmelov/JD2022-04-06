@@ -32,11 +32,11 @@ public class StoreWorker extends Thread {
     }
 
     private void workStore() {
-        for (int workTime = 0; workTime < WORK_TIME / 10; workTime++) {
+        for (int workTime = 0; workTime < WORK_TIME; workTime++) {
             int customerCountPerSecond = generateCustomerCountPerSecond(SIMPLY_CUSTOMER_LIMITATION);
             for (int customerCount = 0; customerCount < customerCountPerSecond; customerCount++) {
-                Delayer.performDelay(500);
-                System.out.printf("Time: %-3d  Customer: %d.%n", workTime, customerCount + 1);
+//                Delayer.performDelay(500);
+                System.out.printf("Time: %-3d  Customer: %d.%n", workTime, ++customerCount);
             }
         }
     }
