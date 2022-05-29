@@ -16,42 +16,53 @@ public class TaskB {
         File thisFile = new File(pathFile);
         StringBuilder stringBuilder = new StringBuilder();
         try (BufferedReader fileReader = new BufferedReader(new FileReader(thisFile))) {
-            int nextSymbol = fileReader.read();
-            while (nextSymbol != -1) {
-                printText(fileReader, stringBuilder);
-
-                if ((char) nextSymbol == '/') {
-                    if ((char) nextSymbol == '/') {
-                        do {
-                            printText(fileReader, stringBuilder);
-                        }
-                        while ((char) nextSymbol != '\n');
-                    }
-                    if ((char) nextSymbol == '*') {
-                        do {
-                            readText(fileReader);
-                        }
-                        while ((char) nextSymbol != '*');
-                        if ((char) nextSymbol == '/') {
-                            printText(fileReader, stringBuilder);
-                        }
-                    }
-                } else printText(fileReader, stringBuilder);
-            }
+            printText(fileReader, stringBuilder);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         System.out.println(stringBuilder);
     }
 
-    private static char readText(BufferedReader fileReader) throws IOException {
-        char nextSymbol = (char) fileReader.read();
-        return nextSymbol;
+    private static void readText(BufferedReader fileReader, StringBuilder stringBuilder) throws IOException {
+        while (fileReader.ready()) {
+            int symbol = fileReader.read();
+            if ((char) symbol == '\n') {
+                printText(fileReader, stringBuilder);
+            }
+        }
     }
 
+    private static void readText2(BufferedReader fileReader, StringBuilder stringBuilder) throws IOException {
+        while (fileReader.ready()) {
+            int symbol = fileReader.read();
+            if ((char) symbol == '*') {
+                checkText2(fileReader, stringBuilder);
+            }
+        }
+    }
+
+    private static void checkText2(BufferedReader fileReader, StringBuilder stringBuilder) throws IOException {
+        if (fileReader.read() == '/') {
+            printText(fileReader, stringBuilder);
+        } else readText2(fileReader, stringBuilder);
+    }
+
+    private static void checkText(BufferedReader fileReader, StringBuilder stringBuilder) throws IOException {
+        if (fileReader.read() == '/') {
+            readText(fileReader, stringBuilder);
+        } else printText(fileReader, stringBuilder);
+        if (fileReader.read() == '*') {
+            readText2(fileReader, stringBuilder);
+        } else printText(fileReader, stringBuilder);
+    }
 
     private static void printText(BufferedReader fileReader, StringBuilder stringBuilder) throws IOException {
-        int symbol = fileReader.read();
-        stringBuilder.append((char) symbol);
+        while (fileReader.ready()) {
+            int symbol = fileReader.read();
+            stringBuilder.append((char) symbol);
+            if ((char) symbol == '/') {
+                checkText(fileReader, stringBuilder);
+            }
+        }
     }
 }
