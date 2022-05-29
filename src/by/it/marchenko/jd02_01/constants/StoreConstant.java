@@ -14,4 +14,9 @@ public class StoreConstant {
     public static final boolean SIMPLY_CUSTOMER_LIMITATION = true;
     public static final boolean COMPLEX_CUSTOMER_LIMITATION = false;
 
+    public static final int STARTED_CUSTOMER_AMOUNT = 10;
+    public static final int MIN_MIDDLE_MINUTE_CUSTOMER_AMOUNT = 30;
+    public static final int MAX_MIDDLE_MINUTE_CUSTOMER_AMOUNT = 40;
+
+
 }

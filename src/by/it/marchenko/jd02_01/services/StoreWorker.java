@@ -9,6 +9,7 @@ import by.it.marchenko.jd02_01.models.Student;
 import by.it.marchenko.jd02_01.repository.GoodRepo;
 import by.it.marchenko.jd02_01.repository.PriceListRepo;
 import by.it.marchenko.jd02_01.repository.StockRepo;
+import by.it.marchenko.jd02_01.utility.CustomerChecker;
 import by.it.marchenko.jd02_01.utility.Delayer;
 import by.it.marchenko.jd02_01.utility.RandomGenerator;
 
@@ -24,13 +25,15 @@ public class StoreWorker extends Thread {
     public static final String STOCK_INIT_FINISHED = "\nStock init finished.";
     public static final String INIT_PROGRESS_INDICATOR_SYMBOL = ".";
     public static final int INIT_PROGRESS_DELAY_TIME = 20;
+
     private final Printer out;
     private final Store store;
     private final StockRepo stockRepo;
     private final GoodRepo goodRepo;
     private final PriceListRepo priceRepo;
-    //private final GoodWorker
 
+    private int totalCustomerCount = 0;
+    private int currentCustomerCount = 0;
 
     public StoreWorker(StockRepo stockRepo, Store store, GoodRepo goodRepo, PriceListRepo priceRepo, Printer out) {
         this.stockRepo = stockRepo;
@@ -44,6 +47,8 @@ public class StoreWorker extends Thread {
     public void run() {
         storeInit();
         openStore();
+        new CustomerChecker(this).start();
+
         workStore();
         closeSore();
     }
@@ -75,9 +80,10 @@ public class StoreWorker extends Thread {
                 //TODO implement customerType
                 Customer customer = generateCustomer();
                 CustomerWorker customerWorker = new CustomerWorker(customer, store,
-                        goodRepo, stockRepo, priceRepo, out);
+                        goodRepo, stockRepo, priceRepo, out, this);
                 customerWorker.start();
                 customerWorkerSet.add(customerWorker);
+
                 new Delayer().performDelay(REAL_ONE_SECOND);
             }
         }
@@ -110,5 +116,22 @@ public class StoreWorker extends Thread {
             return new Pensioner();
         }
         return new Customer();
+    }
+
+    public int getTotalCustomerCount() {
+        return totalCustomerCount;
+    }
+
+    public int getCurrentCustomerCount() {
+        return currentCustomerCount;
+    }
+
+    public void decreaseCurrentCustomerCount() {
+        currentCustomerCount--;
+    }
+
+    public void increaseCurrentCustomerCount() {
+        currentCustomerCount++;
+        totalCustomerCount++;
     }
 }

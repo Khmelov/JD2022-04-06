@@ -17,8 +17,6 @@ import by.it.marchenko.jd02_01.utility.RandomGenerator;
 import java.util.Objects;
 
 import static by.it.marchenko.jd02_01.constants.CustomerConstant.*;
-import static by.it.marchenko.jd02_01.constants.ShoppingCartConstant.MAX_CART_CAPACITY;
-import static by.it.marchenko.jd02_01.constants.ShoppingCartConstant.MIN_CART_CAPACITY;
 
 public class CustomerWorker extends Thread
         implements CustomerAction, ShoppingCardAction {
@@ -37,6 +35,8 @@ public class CustomerWorker extends Thread
     private final GoodRepo goodRepo;
     private final PriceListRepo priceRepo;
 
+    private final StoreWorker storeWorker;
+
 
     private int currentCartSize;
     private int totalCartSize;
@@ -45,13 +45,15 @@ public class CustomerWorker extends Thread
     private Delayer delayer;
 
     public CustomerWorker(Customer customer, Store store,
-                          GoodRepo goodRepo, StockRepo stockRepo, PriceListRepo priceRepo, Printer out) {
+                          GoodRepo goodRepo, StockRepo stockRepo, PriceListRepo priceRepo, Printer out,
+                          StoreWorker storeWorker) {
         this.goodRepo = goodRepo;
         this.stockRepo = stockRepo;
         this.priceRepo = priceRepo;
         this.store = store;
         this.out = out;
         this.customer = customer;
+        this.storeWorker = storeWorker;
     }
 
     public void setPrinter(Printer out) {
@@ -63,6 +65,7 @@ public class CustomerWorker extends Thread
         double speedUpCoefficient = customer.getSpeedDownCoefficient();
         delayer = new Delayer(speedUpCoefficient);
         enteredStore();
+        //store
         takeCart();
         while (totalCartSize > currentCartSize) {
             Good currentGood = chooseGood();
@@ -75,6 +78,7 @@ public class CustomerWorker extends Thread
     @Override
     public void enteredStore() {
         out.println(customer + ENTERED_TO + store);
+        storeWorker.increaseCurrentCustomerCount();
     }
 
     @Override
@@ -129,6 +133,7 @@ public class CustomerWorker extends Thread
     @Override
     public void goOut() {
         out.println(customer + LEAVED + store);
+        storeWorker.decreaseCurrentCustomerCount();
     }
 
 }
