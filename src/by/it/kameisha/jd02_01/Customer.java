@@ -2,8 +2,8 @@ package by.it.kameisha.jd02_01;
 
 public class Customer {
     private static long currentId = System.currentTimeMillis();
-    public final String name;
-    public final long id;
+    private final String name;
+    private final long id;
 
     public Customer(long number) {
         id = ++currentId;

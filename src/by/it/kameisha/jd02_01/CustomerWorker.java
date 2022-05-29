@@ -33,7 +33,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void takeCart() {
-
+        System.out.println(customer + " take a cart");
     }
 
     @Override
