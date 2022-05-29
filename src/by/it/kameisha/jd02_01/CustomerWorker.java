@@ -23,7 +23,13 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public Good chooseGood() {
-        return null;
+        System.out.println(customer + " started to choose goods");
+        int timout = RandomGenerator.get(500, 2000);
+        Timer.sleep(timout);
+        Good good = new Good();
+        System.out.println(customer + " choose " + good);
+        System.out.println(customer + " finished to choose goods");
+        return good;
     }
 
     @Override
