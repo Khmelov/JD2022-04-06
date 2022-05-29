@@ -25,21 +25,30 @@ public class Scalar extends Var {
     }
 
     @Override
-    public Var add(Var other) {
-        return other.add(this);
+    public Var foundVarType(Var operand, String operator) {
+        System.out.println("FOUND Scalar+VAR");
+        return operand.foundVarType(this,operator);
     }
 
     public Var add(Scalar other) {
+        System.out.println("Scalar Var+Scalar");
         return new Scalar(this.value + other.getValue());
     }
 
     public Var add(Vector other) {
+        System.out.println("Scalar Scalar+Vector");
         return other.add(this);
     }
 
     public Var add(Matrix other) {
-        return other.add(this);//new Scalar(this.value + other.getValue());
+        System.out.println("Scalar Scalar+Matrix");
+        return other.add(this);
     }
+
+
+
+
+
 
     @Override
     public Var mul(Var other) {
@@ -90,12 +99,25 @@ public class Scalar extends Var {
     }
 
     public Var div(Vector other) {
-        System.out.println("Зашли сюда как Scalar/Vector");
-        return super.div((Var) other);
+        //System.out.println("Зашли сюда как Scalar/Vector");
+        //return super.div((Var) other);
+        double[] tempVector = other.getVectorValues();
+        for (int i = 0; i < tempVector.length; i++) {
+            tempVector[i] /= this.getValue();
+        }
+        return new Vector(tempVector);
+
     }
 
     public Var div(Matrix other) {
-        System.out.println("Зашли сюда как Scalar/matrix");
-        return super.div((Var) other);
+        //System.out.println("Зашли сюда как Scalar/matrix");
+        //return super.div((Var) other);
+        double[][] tempMatrix = other.getMatrixValue();
+        for (int i = 0; i < tempMatrix.length; i++) {
+            for (int j = 0; j < tempMatrix[i].length; j++) {
+                tempMatrix[i][j] /= this.getValue();
+            }
+        }
+        return new Matrix(tempMatrix);
     }
 }

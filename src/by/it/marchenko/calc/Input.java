@@ -1,6 +1,9 @@
 package by.it.marchenko.calc;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static by.it.marchenko.calc.MessageConst.*;
 
@@ -44,10 +47,24 @@ public class Input {
     }
 
     private static String toStdPresentation(String expression) {
+        // check empty or \s expression string
         if (expression.matches(SPACES_REGEX)) {
             System.out.println(MESSAGE_EMPTY_EXPRESSION);
             return null;
         }
-        return expression.trim().replaceAll(SPACES_REGEX, EMPTY_STRING);
+        //TODO check if expression have spaces between variables or Vars
+        // we can replace spaces only between operand and operator or in the begin and and expression
+        // find all variables in expression
+//        Pattern variablePattern = Pattern.compile(VARIABLE_PATTERN);
+//        Matcher variableMatcher = variablePattern.matcher(expression);
+ //       HashSet<String> expressionVariable = new HashSet<>();
+ //       while (variableMatcher.find()) {
+ //           expressionVariable.add(variableMatcher.group());
+ //       }
+ //       System.out.println("Var: " + expressionVariable);
+
+
+        //return expression.trim().replaceAll(SPACES_REGEX, EMPTY_STRING);
+        return expression.trim();
     }
 }
