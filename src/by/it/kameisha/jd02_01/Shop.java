@@ -1,4 +1,4 @@
 package by.it.kameisha.jd02_01;
 
-public class Store {
+public class Shop {
 }

@@ -1,9 +1,24 @@
 package by.it.kameisha.jd02_01;
 
-public class CustomerWorker implements CustomerAction, ShoppingCardAction {
+public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
+    private final Customer customer;
+    private final Shop shop;
+
+    public CustomerWorker(Customer customer, Shop shop) {
+        this.customer = customer;
+        this.shop = shop;
+    }
+
+    @Override
+    public void run() {
+        enteredStore();
+        chooseGood();
+        goOut();
+    }
+
     @Override
     public void enteredStore() {
-
+        System.out.println();
     }
 
     @Override
