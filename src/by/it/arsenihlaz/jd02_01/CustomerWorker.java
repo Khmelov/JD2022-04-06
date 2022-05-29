@@ -1,6 +1,6 @@
 package by.it.arsenihlaz.jd02_01;
 
-public class CustomerWorker extends Thread implements CustomerAction {
+public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
 
     private final Customer customer;
     private final Shop shop;
@@ -12,9 +12,11 @@ public class CustomerWorker extends Thread implements CustomerAction {
 
     @Override
     public void run() {
-       enteredStore();
-       chooseGood();
-       goOut();
+        enteredStore();
+        chooseGood();
+        takeCart();
+       // putToCart(Good good);
+        goOut();
     }
 
     @Override
@@ -36,5 +38,18 @@ public class CustomerWorker extends Thread implements CustomerAction {
     @Override
     public void goOut() {
         System.out.println(customer + " leaves " + shop);
+    }
+
+    @Override
+    public void takeCart() {
+        System.out.println(customer + " take the cart");
+    }
+
+    @Override
+    public int putToCart(Good good) {
+
+        int counterGoods = 0;
+        counterGoods++;
+        return counterGoods;
     }
 }

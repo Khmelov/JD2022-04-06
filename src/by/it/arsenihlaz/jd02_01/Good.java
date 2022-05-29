@@ -12,6 +12,10 @@ public class Good {
         name = "unknown good";
     }
 
+//    public Good(long id, String name, double price) {
+//        this(id,name,price);
+//    }
+
     @Override
     public String toString() {
         return name;
