@@ -1,7 +1,8 @@
-package by.it.marchenko.jd02_01.workers;
+package by.it.marchenko.jd02_01.services;
 
 import by.it.marchenko.jd02_01.*;
 import by.it.marchenko.jd02_01.interfaces.CustomerAction;
+import by.it.marchenko.jd02_01.interfaces.ShoppingCardAction;
 import by.it.marchenko.jd02_01.models.Customer;
 import by.it.marchenko.jd02_01.models.Good;
 import by.it.marchenko.jd02_01.models.Store;
@@ -11,12 +12,13 @@ import by.it.marchenko.jd02_01.utility.RandomGenerator;
 import static by.it.marchenko.jd02_01.constants.CustomerConstant.*;
 
 public class CustomerWorker extends Thread
-        implements CustomerAction {
+        implements CustomerAction, ShoppingCardAction {
 
     public static final String ENTERED_TO = "entered to ";
     public static final String CHOSE = "chose ";
     public static final String FINISHED_TO_CHOOSE_GOODS = "finished to choose goods";
     public static final String LEAVED = "leaved ";
+    public static final String TAKE_CART = "take cart";
 
     private Printer out;
     private final Customer customer;
@@ -36,6 +38,7 @@ public class CustomerWorker extends Thread
     @Override
     public void run() {
         enteredStore();
+        takeCart();
         chooseGood();
         out.println(customer + FINISHED_TO_CHOOSE_GOODS);
         goOut();
@@ -60,5 +63,17 @@ public class CustomerWorker extends Thread
     @Override
     public void goOut() {
         out.println(customer + LEAVED + store);
+    }
+
+    @Override
+    public void takeCart() {
+        int takeCartTime = RandomGenerator.getRandom(MIN_TAKE_CART_TIME, MAX_TAKE_CART_TIME);
+        Delayer.performDelay(takeCartTime);
+        out.println(customer + TAKE_CART);
+    }
+
+    @Override
+    public int putToCart(Good good) {
+        return 0;
     }
 }

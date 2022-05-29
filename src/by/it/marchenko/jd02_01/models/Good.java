@@ -6,14 +6,17 @@ import static by.it.marchenko.jd02_01.constants.GoodConstants.*;
 
 public class Good {
     private static int startId = 1;
-    private final int currentId;
+
+    //private final int currentId;
+    private final int goodID;
     private final String name;
     private final double price;
     private final String currency;
     private final String goodPrintFormat;
 
-    public Good(String name, double price, String currency) {
-        currentId = startId++;
+    public Good(int goodID, String name, double price, String currency) {
+        this.goodID = goodID;
+        //currentId = startId++;
         this.name = name;
         this.price = price;
         this.currency = currency;
@@ -31,12 +34,13 @@ public class Good {
     }
 
     @SuppressWarnings("unused")
-    public Good(String name, double price) {
-        this(name, price, DEFAULT_CURRENCY);
+    public Good(int goodID, String name, double price) {
+        this(goodID, name, price, DEFAULT_CURRENCY);
     }
 
     public Good() {
         this(
+                startId++,
                 "Good" + startId,
                 RandomGenerator.getRandom(1, 10000) / 100.0,
                 DEFAULT_CURRENCY);
@@ -53,9 +57,14 @@ public class Good {
 
     @Override
     public String toString() {
+        return name;
+    }
+
+    @SuppressWarnings("unused")
+    public String toFormatString() {
         String printName = MAX_NAME_PRINT_LENGTH < name.length() ?
                 name.substring(0, MAX_NAME_PRINT_LENGTH).concat(SUFFIX) : name;
         return String.format(goodPrintFormat,
-                currentId, printName, price, currency);
+                goodID, printName, price, currency);
     }
 }

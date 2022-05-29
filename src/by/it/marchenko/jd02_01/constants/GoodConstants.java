@@ -1,6 +1,11 @@
 package by.it.marchenko.jd02_01.constants;
 
 public class GoodConstants {
+    // price*100
+    public static final int MIN_GOOD_PRICE = 1;
+    public static final int MAX_GOOD_PRICE = 1_000_000;
+
+    // good formatted output
     public static final String DEFAULT_CURRENCY = "$";
     public static final String ID_HOLDER = "0";
     public static final int ID_LENGTH = 11;

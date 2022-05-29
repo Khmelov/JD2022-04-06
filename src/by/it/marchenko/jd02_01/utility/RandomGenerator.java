@@ -9,7 +9,7 @@ public class RandomGenerator {
         return ThreadLocalRandom.current().nextInt(minValue, ++maxValue);
     }
 
-    public static int getRandom(int value) {
-        return getRandom(DEFAULT_RANDOM_MIN, value);
+    public static int getRandom(int maxValue) {
+        return getRandom(DEFAULT_RANDOM_MIN, maxValue);
     }
 }

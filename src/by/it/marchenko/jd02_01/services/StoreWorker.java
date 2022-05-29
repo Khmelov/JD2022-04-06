@@ -1,4 +1,4 @@
-package by.it.marchenko.jd02_01.workers;
+package by.it.marchenko.jd02_01.services;
 
 import by.it.marchenko.jd02_01.models.Customer;
 import by.it.marchenko.jd02_01.Printer;
@@ -26,6 +26,7 @@ public class StoreWorker extends Thread {
 
     @Override
     public void run() {
+        // TODO call StockWorker for creating stock
         openStore();
         workStore();
         closeSore();

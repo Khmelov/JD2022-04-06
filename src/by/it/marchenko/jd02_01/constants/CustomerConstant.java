@@ -10,4 +10,11 @@ public class CustomerConstant {
     public static final int MIN_CHOOSE_TIME = 500;
     public static final int MAX_CHOOSE_TIME = 2000;
 
+    public static final int MIN_TAKE_CART_TIME = 100;
+    public static final int MAX_TAKE_CART_TIME = 300;
+
+    public static final int MIN_PUT_CART_TIME = 100;
+    public static final int MAX_PUT_CART_TIME = 300;
+
+
 }

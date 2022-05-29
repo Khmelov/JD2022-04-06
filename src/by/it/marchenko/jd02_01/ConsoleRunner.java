@@ -1,7 +1,7 @@
 package by.it.marchenko.jd02_01;
 
 import by.it.marchenko.jd02_01.models.Store;
-import by.it.marchenko.jd02_01.workers.StoreWorker;
+import by.it.marchenko.jd02_01.services.StoreWorker;
 
 public class ConsoleRunner {
     public static void main(String[] args) {
