@@ -2,12 +2,12 @@ package by.it.avramchuk.jd01_12;
 
 import java.util.*;
 
-public class TaskC2 implements Comparator<Number>{
+public class TaskC2 {
 
     public static void main(String[] args) {
 
-        List<Integer> first = Arrays.asList(1,1,2,2,3,4,5,5,6);
-        List<Double> second = Arrays.asList(9.0,99.0,8.0,7.0,7.0,5.0,6.0,4.0);
+        List<Integer> first = Arrays.asList(1, 1, 2, 2, 3, 4, 5, 5, 6);
+        List<Double> second = Arrays.asList(9.0, 99.0, 8.0, 7.0, 7.0, 5.0, 6.0, 4.0);
 
 
         Set<Integer> one = new HashSet<>(first);
@@ -18,40 +18,67 @@ public class TaskC2 implements Comparator<Number>{
         System.out.println("Two" + two);
 
 
-        Set<? extends Number> union = getUnion(one, two);
-        System.out.println("union: "+union);
-
-
-
     }
 
-    private  static Set<? extends Number> getUnion(Set<? extends Number>... args){
-        int count = args.length;
-        Set<Number> result = new HashSet<>(args[0]);
-        TaskC2 task = new TaskC2();
-        for (Number number : args[0]) {
-            Iterator<? extends Number> iterator = args[1].iterator();
-            for (int i = 1; i<= args[1].size(); i++){
-                Number num = iterator.next();
-                if (task.compare(number, num )!=0){
-                    result.add(num);
-                }
-            }
-
-        }
-        return result;
-    }
-    private  static Set<? extends Number> getCross(Set<? extends Number>... args){
-        Set<Number> result = new HashSet<>(args[0]);
-        result.retainAll(args[1]);
+    @SafeVarargs
+    private static Set<Number> getUnion(Set<Number>... args) {
+       Set <Number> result = new HashSet<>(args[0]);
+       if (args.length>1){
+           for(int i=1; i<args.length;i++){
+               Set<Number> nextSet = new HashSet<>(args[i]);
+               for (Number el : nextSet) {
+                   int counter=0;
+                   for (Number leftSetValue : result) {
+                       if (!(el.longValue() == leftSetValue.longValue() &&
+                               el.doubleValue() == leftSetValue.doubleValue())) {
+                           counter++;
+                       }
+                   }
+                   if (counter==result.size()){
+                       result.add(el);
+                   }
+               }
+           }
+       }
         return result;
     }
 
-
-    @Override
-    public int compare(Number o1, Number o2) {
-        if (o1.longValue()==o2.longValue()&& o1.doubleValue()== o2.doubleValue()){
-            return 0;
-        } else return -1;
+    private static Set<Number> getCross(Set<Number>... args) {
+       Set<Number> result = new HashSet<>();
+       Set<Number> leftSet = new HashSet<>(args[0]);
+       if(args.length>1){
+           Set<Number> secondSet = new HashSet<>(args[1]);
+           for (Number el : secondSet) {
+               Iterator<Number> itr = leftSet.iterator();
+               while (itr.hasNext()){
+                   Number secondValue = itr.next();
+                   if (el.longValue()== secondValue.longValue() &&
+                           el.doubleValue()== secondValue.doubleValue()){
+                       result.add(el);
+                       break;
+                   }
+               }
+           }
+           if (args.length>2) {
+               for (int i = 1; i < args.length; i++) {
+                   Set<Number> nextSet = new HashSet<>(args[i]);
+                   for (Number el : nextSet) {
+                       Iterator<Number> itr = result.iterator();
+                       while (itr.hasNext()) {
+                           Number leftSetValue = itr.next();
+                           if (el.longValue() == leftSetValue.longValue() &&
+                                   el.doubleValue() == leftSetValue.doubleValue()) {
+                               result.add(el);
+                               break;
+                           }
+                       }
+                   }
+               }
+           }
+       } else {return leftSet;}
+        return result;
     }
 }
+
+
+
