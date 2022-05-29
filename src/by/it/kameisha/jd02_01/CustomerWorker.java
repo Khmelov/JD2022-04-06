@@ -18,7 +18,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void enteredStore() {
-        System.out.println();
+        System.out.println(customer + " enter to the shop " + shop);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void goOut() {
-
+        System.out.println(customer + " leaves the shop " + shop);
     }
 
     @Override
