@@ -5,26 +5,26 @@ import java.util.List;
 
 public class ShoppingCart {
 
-    private final List<Good> shoppingCart;
+    private final List<Good> shoppingCartList;
 
     public ShoppingCart(int capacity) {
-        shoppingCart = new ArrayList<>(capacity);
+        shoppingCartList = new ArrayList<>(capacity);
     }
 
     public int getSize() {
-        return shoppingCart.size();
+        return shoppingCartList.size();
     }
 
-    public List<Good> getShoppingCart() {
-        return shoppingCart;
+    public List<Good> getShoppingCartList() {
+        return new ArrayList<>(shoppingCartList);
     }
 
     public void addGoodToCart(Good good) {
-        shoppingCart.add(good);
+        shoppingCartList.add(good);
     }
 
     @Override
     public String toString() {
-        return shoppingCart.toString();
+        return shoppingCartList.toString();
     }
 }

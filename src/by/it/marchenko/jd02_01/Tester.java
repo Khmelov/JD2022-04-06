@@ -18,7 +18,10 @@ public class Tester {
 
         Printer printer = new Printer(System.out);
         Store store = new Store("BestStore", 1);
-        StoreWorker storeWorker = new StoreWorker(printer, store);
+        StockRepo stockRepo = new StockRepo();
+        GoodRepo goodRepo = new GoodRepo();
+        PriceListRepo priceListRepo = new PriceListRepo();
+        StoreWorker storeWorker = new StoreWorker(stockRepo, store, goodRepo, priceListRepo, printer);
         //storeWorker.start();
 
 
@@ -26,16 +29,19 @@ public class Tester {
         ShoppingCart cart = new ShoppingCart(3);
         Good good1 = new Good(1, "Pizza", 1.20d, "BYN");
         Good good2 = new Good(2, "Golden bread with diamond milk and silver core", 10000.457d);
-        Good good3 = new Good();
+        Good good3 = new Good(3);
         cart.addGoodToCart(good1);
         cart.addGoodToCart(good2);
         cart.addGoodToCart(good3);
 
-        StockRepo stockRepo = new StockRepo();
+        //StockRepo stockRepo = new StockRepo();
+
+
         Stock stock = new Stock("StoreStore#1", 100, stockRepo);
         System.out.println(stock);
-        GoodRepo goodRepo = new GoodRepo();
-        PriceListRepo priceListRepo = new PriceListRepo();
+        //
+        //goodRepo = new GoodRepo();
+        //
         StockWorker stockWorker =
                 new StockWorker(stockRepo, goodRepo, priceListRepo);
         stockWorker.start();

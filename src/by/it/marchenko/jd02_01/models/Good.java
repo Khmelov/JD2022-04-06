@@ -5,7 +5,7 @@ import by.it.marchenko.jd02_01.utility.RandomGenerator;
 import static by.it.marchenko.jd02_01.constants.GoodConstants.*;
 
 public class Good {
-    private static int startId = 1;
+    //private static int startId = 1;
 
     //private final int currentId;
     private final int goodID;
@@ -38,10 +38,10 @@ public class Good {
         this(goodID, name, price, DEFAULT_CURRENCY);
     }
 
-    public Good() {
+    public Good(int goodID) {
         this(
-                startId++,
-                "Good" + startId,
+                goodID,
+                "Good" + goodID,
                 RandomGenerator.getRandom(1, 10000) / 100.0,
                 DEFAULT_CURRENCY);
     }

@@ -5,10 +5,9 @@ import by.it.marchenko.jd02_01.repository.PriceListRepo;
 import by.it.marchenko.jd02_01.repository.StockRepo;
 import by.it.marchenko.jd02_01.utility.RandomGenerator;
 
+import static by.it.marchenko.jd02_01.constants.StockConstant.*;
+
 public class StockWorker extends Thread {
-    public static final int MAX_QUANTITY_VALUE = 20;
-    public static final int MAX_GOODS_POSITION = 15;
-    public static final int MIN_GOODS_POSITION = 8;
 
     //private final StoreStock stock;
     private final StockRepo stockRepo;
@@ -26,14 +25,16 @@ public class StockWorker extends Thread {
     public void run() {
         int goodsPositionCount = RandomGenerator.getRandom(MIN_GOODS_POSITION, MAX_GOODS_POSITION);
         initStock(goodsPositionCount);
+        // print not needed
         printStock();
+
         GoodWorker goodWorker = new GoodWorker(goodRepo, stockRepo, priceRepo);
         goodWorker.start();
 
     }
 
     private void initStock(int goodsPositionCount) {
-        for (int goodIndex = 1; goodIndex <= goodsPositionCount; goodIndex++) {
+        for (int goodIndex = 0; goodIndex < goodsPositionCount; goodIndex++) {
             int goodQuantity = RandomGenerator.getRandom(MAX_QUANTITY_VALUE);
             stockRepo.addGoodIDToStock(goodIndex, goodQuantity);
         }

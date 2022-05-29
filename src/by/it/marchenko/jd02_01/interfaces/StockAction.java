@@ -10,4 +10,6 @@ public interface StockAction {
 
     int getGoodIDAmount();
 
+    boolean getFromStock(int id);
+
 }

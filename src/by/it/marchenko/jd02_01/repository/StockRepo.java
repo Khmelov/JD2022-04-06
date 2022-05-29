@@ -43,5 +43,15 @@ public class StockRepo implements StockAction {
         return stockRepo.size();
     }
 
+    @Override
+    public boolean getFromStock(int id) {
+        int recentAtStock = stockRepo.get(id);
+        if (recentAtStock > 0) {
+            stockRepo.replace(id, recentAtStock - 1);
+            return true;
+        }
+        return false;
+    }
+
 
 }

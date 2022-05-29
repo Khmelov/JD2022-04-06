@@ -29,6 +29,7 @@ public class GoodWorker extends Thread {
     @Override
     public void run() {
         initGood();
+
         for (Good good : goodsSet) {
             System.out.println(good.toFormatString());
         }
@@ -49,4 +50,16 @@ public class GoodWorker extends Thread {
             goodsSet.add(good);
         }
     }
+
+
+    @SuppressWarnings("unused")
+    public Set<Good> getGoodsSet() {
+        return new HashSet<>(goodsSet);
+    }
+
+    @SuppressWarnings("unused")
+    public Good findGoodFromID(int id) {
+        return null;//return goodsSet.
+    }
+
 }
