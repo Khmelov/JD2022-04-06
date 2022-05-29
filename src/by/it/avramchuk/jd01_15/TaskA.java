@@ -20,7 +20,7 @@ public class TaskA {
         System.out.println(text);
     }
 
-    private static String readFile(String path) {
+    public static String readFile(String path) {
         StringBuilder out = new StringBuilder();
         try(BufferedReader reader = new BufferedReader(new FileReader(path))){
             while(reader.ready()){
