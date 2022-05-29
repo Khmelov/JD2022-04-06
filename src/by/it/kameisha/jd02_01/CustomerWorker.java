@@ -12,7 +12,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void run() {
         enteredStore();
-        chooseGood();
+        takeCart();
+        putToCart(chooseGood());
         goOut();
     }
 
@@ -44,6 +45,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public int putToCart(Good good) {
-        return 0;
+        int countGoods =0;
+        System.out.println(customer + " put "+good+" to cart");
+        return countGoods;
     }
 }
