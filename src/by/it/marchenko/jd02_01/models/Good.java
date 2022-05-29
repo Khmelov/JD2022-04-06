@@ -5,9 +5,6 @@ import by.it.marchenko.jd02_01.utility.RandomGenerator;
 import static by.it.marchenko.jd02_01.constants.GoodConstants.*;
 
 public class Good {
-    //private static int startId = 1;
-
-    //private final int currentId;
     private final int goodID;
     private final String name;
     private final double price;
@@ -16,7 +13,6 @@ public class Good {
 
     public Good(int goodID, String name, double price, String currency) {
         this.goodID = goodID;
-        //currentId = startId++;
         this.name = name;
         this.price = price;
         this.currency = currency;
@@ -57,7 +53,8 @@ public class Good {
 
     @Override
     public String toString() {
-        return name;
+
+        return String.format("%s with price %.2f %s", name, price, currency);
     }
 
     @SuppressWarnings("unused")

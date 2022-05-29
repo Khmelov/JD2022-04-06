@@ -48,6 +48,7 @@ public class StockRepo implements StockAction {
         int recentAtStock = stockRepo.get(id);
         if (recentAtStock > 0) {
             stockRepo.replace(id, recentAtStock - 1);
+            // TODO implement remove good from stock if recentAtStock=0
             return true;
         }
         return false;

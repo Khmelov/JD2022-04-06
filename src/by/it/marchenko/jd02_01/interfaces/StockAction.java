@@ -12,4 +12,6 @@ public interface StockAction {
 
     boolean getFromStock(int id);
 
+    //boolean
+
 }

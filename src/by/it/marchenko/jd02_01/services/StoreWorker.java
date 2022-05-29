@@ -2,8 +2,10 @@ package by.it.marchenko.jd02_01.services;
 
 import by.it.marchenko.jd02_01.models.Customer;
 import by.it.marchenko.jd02_01.Printer;
+import by.it.marchenko.jd02_01.models.Pensioner;
 import by.it.marchenko.jd02_01.models.Store;
 import by.it.marchenko.jd02_01.exception.StoreException;
+import by.it.marchenko.jd02_01.models.Student;
 import by.it.marchenko.jd02_01.repository.GoodRepo;
 import by.it.marchenko.jd02_01.repository.PriceListRepo;
 import by.it.marchenko.jd02_01.repository.StockRepo;
@@ -14,10 +16,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static by.it.marchenko.jd02_01.constants.StoreConstant.*;
-import static by.it.marchenko.jd02_01.constants.StoreExceptionConstant.INTERRUPTED_EXCEPTION_MESSAGE;
+import static by.it.marchenko.jd02_01.constants.StoreExceptionConstant.*;
 
 public class StoreWorker extends Thread {
 
+    public static final String STOCK_INIT_IN_PROGRESS = "Stock init in progress";
+    public static final String STOCK_INIT_FINISHED = "\nStock init finished.";
+    public static final String INIT_PROGRESS_INDICATOR_SYMBOL = ".";
+    public static final int INIT_PROGRESS_DELAY_TIME = 20;
     private final Printer out;
     private final Store store;
     private final StockRepo stockRepo;
@@ -36,20 +42,21 @@ public class StoreWorker extends Thread {
 
     @Override
     public void run() {
-        // TODO call StockWorker for creating stock
-        StockWorker stockWorker = new StockWorker(stockRepo, goodRepo, priceRepo);
-        stockWorker.start();
-        out.println("Stock init in progress.");
-        while (stockWorker.isAlive()) {
-            out.print(".");
-            Delayer.performDelay(1000);
-        }
-        out.println("\nStock init finished.");
-
-
+        storeInit();
         openStore();
         workStore();
         closeSore();
+    }
+
+    private void storeInit() {
+        StockWorker stockWorker = new StockWorker(stockRepo, goodRepo, priceRepo);
+        stockWorker.start();
+        out.print(STOCK_INIT_IN_PROGRESS);
+        while (stockWorker.isAlive()) {
+            out.print(INIT_PROGRESS_INDICATOR_SYMBOL);
+            new Delayer().performDelay(INIT_PROGRESS_DELAY_TIME);
+        }
+        out.println(STOCK_INIT_FINISHED);
     }
 
     private void openStore() {
@@ -65,11 +72,13 @@ public class StoreWorker extends Thread {
         for (int workTime = 0; workTime < WORK_TIME; workTime++) {
             int customerCountPerSecond = generateCustomerCountPerSecond(SIMPLY_CUSTOMER_LIMITATION);
             for (int customerCount = 0; customerCount < customerCountPerSecond; customerCount++) {
-                Customer customer = new Customer();
-                CustomerWorker customerWorker = new CustomerWorker(customer, stockRepo, /*goodWorker,*/ store, out);
+                //TODO implement customerType
+                Customer customer = generateCustomer();
+                CustomerWorker customerWorker = new CustomerWorker(customer, store,
+                        goodRepo, stockRepo, priceRepo, out);
                 customerWorker.start();
                 customerWorkerSet.add(customerWorker);
-                Delayer.performDelay(REAL_ONE_SECOND);
+                new Delayer().performDelay(REAL_ONE_SECOND);
             }
         }
         for (CustomerWorker customerWorker : customerWorkerSet) {
@@ -89,5 +98,17 @@ public class StoreWorker extends Thread {
             //TODO implement complexCustomerLimitation
             return 10;
         }
+    }
+
+    private Customer generateCustomer() {
+        //TODO implement constant
+        int customerTypeRandom = RandomGenerator.getRandom(4 - 1);
+        if (customerTypeRandom < 2) {
+            return new Student();
+        }
+        if (customerTypeRandom < 3) {
+            return new Pensioner();
+        }
+        return new Customer();
     }
 }
