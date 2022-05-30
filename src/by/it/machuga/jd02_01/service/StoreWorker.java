@@ -21,10 +21,10 @@ public class StoreWorker extends Thread{
         System.out.println(store+" opened");
         List<CustomerWorker>customerWorkers=new ArrayList<>();
         for (int time = 0; time < 120; time++) {
-            int numberCustomerParSecond = RandomGenerator.getRandomNumber(2);
+            int numberCustomerParSecond = RandomGenerator.getRandomInt(2);
             for (int i = 0; i < numberCustomerParSecond; i++) {
                 Customer customer = new Customer(RandomGenerator.getRandomText(4));
-                CustomerWorker customerWorker=new CustomerWorker(customer);
+                CustomerWorker customerWorker=new CustomerWorker(customer, store);
                 customerWorker.start();
                 customerWorkers.add(customerWorker);
             }

@@ -1,19 +1,23 @@
 package by.it.machuga.jd02_01.entity;
 
+import by.it.machuga.jd02_01.repository.PriceListRepo;
+
 public class Store {
 
-    private String name;
+    private final String name;
+    private final PriceListRepo priceListRepo;
 
-    public Store(String name) {
+    public Store(String name, PriceListRepo priceListRepo) {
         this.name = name;
+        this.priceListRepo = priceListRepo;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public PriceListRepo getPriceListRepo() {
+        return priceListRepo;
     }
 
     @Override

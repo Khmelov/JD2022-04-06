@@ -9,11 +9,11 @@ public class RandomGenerator {
     private RandomGenerator() {
     }
 
-    public static int getRandomNumber(int start, int end) {
+    public static int getRandomInt(int start, int end) {
         return ThreadLocalRandom.current().nextInt(start, end + 1);
     }
-    public  static int getRandomNumber(int max){
-        return getRandomNumber(0,max);
+    public  static int getRandomInt(int max){
+        return getRandomInt(0,max);
     }
 
     public static String getRandomText(int size) {
@@ -22,5 +22,8 @@ public class RandomGenerator {
             sb.append(ALPHABET.charAt(ThreadLocalRandom.current().nextInt(ALPHABET.length())));
         }
         return sb.toString();
+    }
+    public static double getRandomDouble(double start, double end) {
+        return ThreadLocalRandom.current().nextDouble(start, end + 1);
     }
 }
