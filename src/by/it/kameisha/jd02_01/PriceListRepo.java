@@ -4,11 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PriceListRepo {
-    private Map<String, Integer> priceList = new HashMap<>();
+    private final Map<String, Integer> priceList = new HashMap<>();
 
-    public PriceListRepo(Map<String, Integer> priceList) {
-        this.priceList = priceList;
-    }
 
     public Integer getPrice(String key){
         return priceList.get(key);
