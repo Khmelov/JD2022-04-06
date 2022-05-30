@@ -7,8 +7,6 @@ import java.util.List;
 
 public class ShopWorker extends Thread {
     private final Shop shop;
-    public static final String PRICE_LIST_TXT = "PriceList.txt";
-    String path = Util.getPath(PriceReader.class, PRICE_LIST_TXT);
 
     public ShopWorker(Shop shop) {
         this.shop = shop;
@@ -18,13 +16,13 @@ public class ShopWorker extends Thread {
     public void run() {
         System.out.println(shop + " opened");
         int number = 0;
-        PriceReader priceReader = new PriceReader();
-        priceReader.readPriceList(path);
+
         List<CustomerWorker> customerWorkerList = new ArrayList<>();
         for (int time = 0; time < 120; time++) {
             int countCustomersPerSecond = RandomGenerator.get(2);
             for (int i = 0; i < countCustomersPerSecond; i++) {
                 Customer customer = new Customer(++number);
+
                 CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                 customerWorker.start();
                 customerWorkerList.add(customerWorker);
