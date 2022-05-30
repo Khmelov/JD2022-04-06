@@ -45,11 +45,11 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public int putToCart(Good good) {
-        int countGoods = RandomGenerator.get(2,5);
+        int countGoods = RandomGenerator.get(2, 5);
         for (int i = 1; i <= countGoods; i++) {
-            int timeout = RandomGenerator.get(100,300);
+            int timeout = RandomGenerator.get(100, 300);
             Timer.sleep(timeout);
-            System.out.println(customer + " put "+good+" to cart. In cart "+i);
+            System.out.println(customer + " put " + good + " to cart. In cart " + i);
         }
         return countGoods;
     }

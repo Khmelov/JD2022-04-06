@@ -13,15 +13,15 @@ public class PriceReader {
     }
 
     public void readPriceList(String path) {
-        try(BufferedReader reader = new BufferedReader(new FileReader(path))){
-            while (reader.ready()){
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            while (reader.ready()) {
                 String line = reader.readLine();
-                String[] goodsPrice = line.split("=",2);
+                String[] goodsPrice = line.split("=", 2);
                 Good good = new Good(goodsPrice[0].trim());
                 priceList.put(good, Integer.valueOf(goodsPrice[1].trim()));
             }
         } catch (IOException e) {
-            throw new RuntimeException("Cannot read file",e);
+            throw new RuntimeException("Cannot read file", e);
         }
     }
 }
