@@ -1,10 +1,14 @@
 package by.it.kameisha.jd02_01;
 
+import by.it.kameisha.jd01_14.Util;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShopWorker extends Thread {
     private final Shop shop;
+    public static final String PRICE_LIST_TXT = "PriceList.txt";
+    String path = Util.getPath(PriceReader.class, PRICE_LIST_TXT);
 
     public ShopWorker(Shop shop) {
         this.shop = shop;
@@ -14,6 +18,8 @@ public class ShopWorker extends Thread {
     public void run() {
         System.out.println(shop + " opened");
         int number = 0;
+        PriceReader priceReader = new PriceReader();
+        priceReader.readPriceList(path);
         List<CustomerWorker> customerWorkerList = new ArrayList<>();
         for (int time = 0; time < 120; time++) {
             int countCustomersPerSecond = RandomGenerator.get(2);

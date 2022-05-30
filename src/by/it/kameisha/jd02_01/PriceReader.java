@@ -9,11 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PriceReader {
-    public static final String PRICE_LIST_TXT = "PriceList.txt";
     private final Map<String, Integer> priceList = new HashMap<>();
-    String path = Util.getPath(PriceReader.class, PRICE_LIST_TXT);
 
-    private void readPriceList(String path) {
+    public PriceReader() {
+    }
+
+    public void readPriceList(String path) {
         try(BufferedReader reader = new BufferedReader(new FileReader(path))){
             while (reader.lines()!=null){
                 String line = reader.readLine();
