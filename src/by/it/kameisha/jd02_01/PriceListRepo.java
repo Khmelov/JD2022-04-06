@@ -8,6 +8,10 @@ public class PriceListRepo {
     public PriceListRepo(HashMap<String, Integer> priceList) {
         this.priceList = priceList;
     }
+    public Integer getValue(String key){
+        int value = priceList.get(key);
+        return value;
+    }
 
     public HashMap<String, Integer> getPriceList() {
         return priceList;

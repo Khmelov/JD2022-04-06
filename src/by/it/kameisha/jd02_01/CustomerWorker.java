@@ -25,8 +25,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public Good chooseGood() {
         System.out.println(customer + " started to choose goods");
-        int timout = RandomGenerator.get(500, 2000);
-        Timer.sleep(timout);
+        int timeout = RandomGenerator.get(500, 2000);
+        Timer.sleep(timeout);
         Good good = new Good();
         System.out.println(customer + " choose " + good);
         System.out.println(customer + " finished to choose goods");
@@ -45,8 +45,12 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public int putToCart(Good good) {
-        int countGoods =0;
-        System.out.println(customer + " put "+good+" to cart");
+        int countGoods = RandomGenerator.get(2,5);
+        for (int i = 1; i <= countGoods; i++) {
+            int timeout = RandomGenerator.get(100,300);
+            Timer.sleep(timeout);
+            System.out.println(customer + " put "+good+" to cart. In cart "+i);
+        }
         return countGoods;
     }
 }
