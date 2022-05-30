@@ -19,6 +19,7 @@ public class ShopWorker extends Thread {
 
         List<CustomerWorker> customerWorkerList = new ArrayList<>();
         for (int time = 0; time < 120; time++) {
+            PriceListRepository priceListRepository = new PriceListRepository();
             int countCustomersPerSecond = RandomGenerator.get(2);
             for (int i = 0; i < countCustomersPerSecond; i++) {
                 Customer customer = new Customer(++number);
