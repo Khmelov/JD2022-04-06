@@ -16,9 +16,9 @@ public class PriceReader {
 
     public void readPriceList(String path) {
         try(BufferedReader reader = new BufferedReader(new FileReader(path))){
-            while (reader.lines()!=null){
+            while (reader.ready()){
                 String line = reader.readLine();
-                String[] goodsPrice = line.split("=");
+                String[] goodsPrice = line.split("=",2);
                 priceList.put(goodsPrice[0].trim(), Integer.valueOf(goodsPrice[1].trim()));
             }
         } catch (IOException e) {
