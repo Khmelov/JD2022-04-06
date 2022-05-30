@@ -26,6 +26,12 @@ public class StoreWorker extends Thread {
     public static final String INIT_PROGRESS_INDICATOR_SYMBOL = ".";
     public static final int INIT_PROGRESS_DELAY_TIME = 20;
 
+    public static final double MAX_COUNTER_TEMP =
+            (double) ((MAX_MIDDLE_MINUTE_CUSTOMER_AMOUNT - STARTED_CUSTOMER_AMOUNT)) / HALF_A_MINUTE;
+    public static final double MIN_COUNTER_TEMP =
+            (double) ((MIN_MIDDLE_MINUTE_CUSTOMER_AMOUNT - STARTED_CUSTOMER_AMOUNT)) / HALF_A_MINUTE;
+
+
     private final Printer out;
     private final Store store;
     private final StockRepo stockRepo;
@@ -75,7 +81,8 @@ public class StoreWorker extends Thread {
     private void workStore() {
         Set<CustomerWorker> customerWorkerSet = new HashSet<>();
         for (int workTime = 0; workTime < WORK_TIME; workTime++) {
-            int customerCountPerSecond = generateCustomerCountPerSecond(SIMPLY_CUSTOMER_LIMITATION);
+            //int customerCountPerSecond = generateCustomerCountPerSecond(SIMPLY_CUSTOMER_LIMITATION);
+            int customerCountPerSecond = generateCustomerCountPerSecond(workTime);
             for (int customerCount = 0; customerCount < customerCountPerSecond; customerCount++) {
                 //TODO implement customerType
                 Customer customer = generateCustomer();
@@ -83,9 +90,8 @@ public class StoreWorker extends Thread {
                         goodRepo, stockRepo, priceRepo, out, this);
                 customerWorker.start();
                 customerWorkerSet.add(customerWorker);
-
-                new Delayer().performDelay(REAL_ONE_SECOND);
             }
+            new Delayer().performDelay(REAL_ONE_SECOND);
         }
         for (CustomerWorker customerWorker : customerWorkerSet) {
             try {
@@ -97,7 +103,24 @@ public class StoreWorker extends Thread {
         }
     }
 
-    private int generateCustomerCountPerSecond(@SuppressWarnings("SameParameterValue") boolean mode) {
+    private int generateCustomerCountPerSecond(int time) {
+        int timePeriod = time % ONE_MINUTE;
+        int calcTime = (timePeriod < ONE_MINUTE / 2) ? timePeriod : ONE_MINUTE - timePeriod;
+        double expectedMinCustomerCount = (MIN_COUNTER_TEMP * calcTime + STARTED_CUSTOMER_AMOUNT);
+        double expectedMaxCustomerCount = (MAX_COUNTER_TEMP * calcTime + STARTED_CUSTOMER_AMOUNT);
+        if (currentCustomerCount > expectedMaxCustomerCount) {
+            return 0;
+        } else if (currentCustomerCount < expectedMinCustomerCount) {
+            return (int) (expectedMaxCustomerCount - currentCustomerCount);
+        } else {
+            double expectedAvgCustomerCount =
+                    (expectedMinCustomerCount + expectedMaxCustomerCount) / 2;
+            return (int) (Math.round(expectedAvgCustomerCount - currentCustomerCount));
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private int generateCustomerCountPerSecond(boolean mode) {
         if (mode == SIMPLY_CUSTOMER_LIMITATION) {
             return RandomGenerator.getRandom(MAX_CUSTOMERS_COUNT_PER_SECOND);
         } else {
