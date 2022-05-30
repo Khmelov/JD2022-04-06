@@ -1,5 +1,8 @@
 package by.it.arsenihlaz.jd02_01;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
 
     private final Customer customer;
@@ -13,9 +16,9 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void run() {
         enteredStore();
-        chooseGood();
         takeCart();
-       // putToCart(Good good);
+        chooseGood();
+        // putToCart(Good good);
         goOut();
     }
 
@@ -29,7 +32,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         System.out.println(customer + " started choosing products");
         int timeout = RandomGenerator.get(500, 2000);
         Timer.sleep(timeout);
-        Good good = new Good();
+        Good good = new Good("bread", 2.2);
         System.out.println(customer + " chose a good " + good);
         System.out.println(customer + " finished choosing goods");
         return good;
@@ -47,9 +50,9 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public int putToCart(Good good) {
+        Map<String, Double> cart = new HashMap<>();
+        cart.put(good.getName(), good.getPrice());
 
-        int counterGoods = 0;
-        counterGoods++;
-        return counterGoods;
+        return cart.size();
     }
 }
