@@ -1,6 +1,6 @@
 package by.it.smirnov.jd02_01;
 
-public class CustomerWorker extends Thread implements CustomerAction {
+public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
 
     private final Customer customer;
     private final Store store;
@@ -40,5 +40,15 @@ public class CustomerWorker extends Thread implements CustomerAction {
     @Override
     public void goOut() {
         System.out.println(customer + " has left the " + store);
+    }
+
+    @Override
+    public void takeCart() {
+
+    }
+
+    @Override
+    public int putToCart(Good good) {
+        return 0;
     }
 }
