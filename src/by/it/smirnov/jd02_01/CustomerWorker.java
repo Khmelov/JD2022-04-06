@@ -1,6 +1,9 @@
 package by.it.smirnov.jd02_01;
 
-import java.util.ArrayList;
+import by.it.smirnov.jd02_01.customer_types.Customer;
+import by.it.smirnov.jd02_01.repo.PriceListRepo;
+import by.it.smirnov.jd02_01.utils.Randomizer;
+import by.it.smirnov.jd02_01.utils.Sleeper;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -9,6 +12,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     private final Customer customer;
     private final Store store;
     private ShoppingCart shoppingCart;
+    public static int customersEntered = 0;
+    public static int customersLeft = 0;
 
     private int goodsTaken;
 
@@ -27,7 +32,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     public void run() {
         enteredStore();
         takeCart();
-        int chosenGoodsNumber = Randomizer.get(2, 5);
+        int chosenGoodsNumber = customer.quantityNeed();
         for (int count = 0; count < chosenGoodsNumber; count++) {
             Good good = chooseGood();
             goodsTaken = putToCart(good);
@@ -38,12 +43,13 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void enteredStore() {
         System.out.println(customer + " entered the " + store);
+        ++customersEntered;
     }
 
     @Override
     public void takeCart() {
         this.shoppingCart = new ShoppingCart(customer, store);
-        int timeout = Randomizer.get(100, 300);
+        int timeout = customer.getSpeed(Randomizer.get(100, 300));
         Sleeper.sleep(timeout);
         System.out.println(customer + " takes shopping cart");
     }
@@ -51,7 +57,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public Good chooseGood() {
         if (goodsTaken == 0) System.out.println(customer + " starts to choose goods");
-        else System.out.println(customer + " is seeking for another gear, and for sure will find it in our store");
+        else System.out.println(customer + " starts seeking for another gear, and for sure will find it in our store");
         int timeout = Randomizer.get(500, 2000);
         Sleeper.sleep(timeout);
         Good good = new Good(PriceListRepo.getRandomGoodName());
@@ -77,8 +83,18 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         for (Good good : goodsList) {
             goods = goods.add(good.getName());
         }
-        System.out.println(customer + "seeks for his money and/or banking cards in his huge pocket, " +
-                "buys goods and happy lefts the " + store + " with " + goodsTaken + " goods:\n          "
-                + goods.toString());
+        if (goodsTaken == 0) {
+            System.out.println(customer + " bought nothing and went away very sad...");
+        }
+        else {
+            System.out.println(customer + " seeks for his money and/or banking cards in his huge pocket, " +
+                    "buys goods and leaves happy the " + store + " with " + goodsTaken + " goods:\n          "
+                    + goods.toString());
+        }
+        ++customersLeft;
+    }
+
+    public static int getInStoreCustomers() {
+        return customersEntered - customersLeft;
     }
 }

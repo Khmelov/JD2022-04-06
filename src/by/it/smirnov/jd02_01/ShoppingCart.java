@@ -1,5 +1,7 @@
 package by.it.smirnov.jd02_01;
 
+import by.it.smirnov.jd02_01.customer_types.Customer;
+
 import java.util.ArrayList;
 import java.util.List;
 
