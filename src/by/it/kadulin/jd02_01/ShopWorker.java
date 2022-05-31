@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ShopWorker extends Thread{
     private final Shop shop;
+    private static PriceListRepo priceListRepo = new PriceListRepo();
 
     public ShopWorker(Shop shop) {
         this.shop = shop;
@@ -13,7 +14,7 @@ public class ShopWorker extends Thread{
 
     @Override
     public void run() {
-        System.out.println(shop + "opened");
+        System.out.println(shop + " opened");
         int number = 0;
         List<CustomerWorker> customerWorkerList = new ArrayList<>();
 
@@ -34,6 +35,6 @@ public class ShopWorker extends Thread{
                 e.printStackTrace();
             }
         }
-        System.out.println(shop + "closed");
+        System.out.println(shop + " closed");
     }
 }

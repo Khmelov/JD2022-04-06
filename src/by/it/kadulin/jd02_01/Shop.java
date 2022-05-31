@@ -10,6 +10,6 @@ public class Shop {
 
     @Override
     public String toString() {
-        return "Shop" + name ;
+        return "Shop " + name ;
     }
 }
