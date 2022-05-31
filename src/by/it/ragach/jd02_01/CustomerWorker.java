@@ -1,6 +1,6 @@
 package by.it.ragach.jd02_01;
 
-public class CustomerWorker extends Thread implements CustomerAction {
+public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
 
     private final Customer customer;
     private final Shop shop;
@@ -39,5 +39,15 @@ public class CustomerWorker extends Thread implements CustomerAction {
     public void goOut() {
         System.out.println(customer + " leaves to the" + shop);
 
+    }
+
+    @Override
+    public void takeCart() {
+
+    }
+
+    @Override
+    public int putToCart(Good good) {
+        return 0;
     }
 }

@@ -9,8 +9,7 @@ public class ShopWorker extends Thread{
     public ShopWorker (Shop shop){
         this.shop = shop;
     }
-
-
+    
     @Override
     public void run() {
         System.out.println(shop+" opened");
