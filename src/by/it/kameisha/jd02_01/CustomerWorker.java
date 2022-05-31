@@ -47,6 +47,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void takeCart() {
         System.out.println(customer + " take a cart");
+        int timeout = RandomGenerator.get(100, 300);
+        Timer.sleep(timeout);
     }
 
     @Override
