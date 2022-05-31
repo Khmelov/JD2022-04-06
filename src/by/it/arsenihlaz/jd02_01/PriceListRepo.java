@@ -1,24 +1,29 @@
 package by.it.arsenihlaz.jd02_01;
 
-import java.util.HashMap;
+import java.util.*;
 
-import java.util.Map;
+public class PriceListRepo {
+    private static final Map<String, Double> goods = new HashMap<>();
 
-public class PriceListRepo extends Good{
-    Map<String, Double> goods = new HashMap<>();{
+    static {
         goods.put("bread", 2.2);
-        goods.put("milk", 1.5);
-        goods.put("pizza", 8.5);
-        goods.put("ice-cream", 1.2);
-        goods.put("tomatoes", 9.0);
+        goods.put("milk", 1.45);
+        goods.put("pizza", 8.9);
+        goods.put("ice-cream", 2.15);
+        goods.put("tomatoes", 9.5);
+        goods.put("potatoes", 0.75);
+        goods.put("green peas", 2.65);
     }
 
-    public PriceListRepo(String name, double price, Map<String, Double> goods) {
-        super(name, price);
-        this.goods = goods;
+    public static String getRandomGoods() {
+        List<String> goodsList = new ArrayList<String>(goods.keySet());
+        int randomIndex = RandomGenerator.get(0, goodsList.size()-1);
+        String randomGoods = goodsList.get(randomIndex);
+        return randomGoods;
     }
 
-    public Map<String, Double> getGoods() {
-        return goods;
+    public static double getPrice(String nameGoods) {
+        return goods.get(nameGoods);
     }
+
 }

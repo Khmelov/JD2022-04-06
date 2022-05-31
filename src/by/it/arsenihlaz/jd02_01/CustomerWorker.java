@@ -1,12 +1,12 @@
 package by.it.arsenihlaz.jd02_01;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
 
     private final Customer customer;
     private final Shop shop;
+    private ShoppingCart shoppingCart;
+    private final int timeoutChoosing = RandomGenerator.get(500, 2000);
+    private final int timeoutOperation = RandomGenerator.get(100, 300);
 
     public CustomerWorker(Customer customer, Shop shop) {
         this.customer = customer;
@@ -15,10 +15,17 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void run() {
+
         enteredStore();
         takeCart();
-        chooseGood();
-        // putToCart(Good good);
+        int howManyGoods = RandomGenerator.get(2, 5);
+        System.out.println(customer + " started choosing products");
+        for (int i = 0; i < howManyGoods; i++) {
+            Good good = chooseGood();
+            putToCart(good);
+        }
+        System.out.println(customer + " finished choosing goods");
+        System.out.println(customer + " in the shopping cart " + shoppingCart.size() + " goods");
         goOut();
     }
 
@@ -29,12 +36,11 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public Good chooseGood() {
-        System.out.println(customer + " started choosing products");
-        int timeout = RandomGenerator.get(500, 2000);
-        Timer.sleep(timeout);
-        Good good = new Good("bread", 2.2);
-        System.out.println(customer + " chose a good " + good);
-        System.out.println(customer + " finished choosing goods");
+        Timer.sleep(timeoutChoosing);
+        String nameGoods = PriceListRepo.getRandomGoods();
+        double price = PriceListRepo.getPrice(nameGoods);
+        Good good = new Good(nameGoods, price);
+        System.out.println(customer + " chose a good: " + good);
         return good;
     }
 
@@ -45,14 +51,15 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void takeCart() {
+        shoppingCart = new ShoppingCart();
         System.out.println(customer + " take the cart");
+        Timer.sleep(timeoutOperation);
     }
 
     @Override
     public int putToCart(Good good) {
-        Map<String, Double> cart = new HashMap<>();
-        cart.put(good.getName(), good.getPrice());
-
-        return cart.size();
+        shoppingCart.addGoods(good.getName(), good.getPrice());
+        Timer.sleep(timeoutOperation);
+        return shoppingCart.size();
     }
 }
