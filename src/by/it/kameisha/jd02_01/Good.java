@@ -7,9 +7,8 @@ public class Good {
         this.name = name;
     }
 
-    public Good() {
-        System.out.println(name = "unknown good");
-        ;
+    public Good(Good good) {
+        this.name = good.name;
     }
 
     @Override
