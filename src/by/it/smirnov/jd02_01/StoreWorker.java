@@ -27,16 +27,20 @@ public class StoreWorker extends Thread {
                 CustomerWorker customerWorker = new CustomerWorker(customer, store);
                 customerWorker.start();
                 listCW.add(customerWorker);
-                for (CustomerWorker worker : listCW) {
+                /*for (CustomerWorker worker : listCW) {
                     try {
                         worker.join();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }
+                }*/
             }
             Sleeper.sleep(1000);
         }
+        for (CustomerWorker worker : listCW) {
+            while (worker.isAlive()) Sleeper.sleep(100);
+        }
+        //Sleeper.sleep(1000);
         System.out.println(store + " closed");
     }
 }

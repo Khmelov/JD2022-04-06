@@ -7,4 +7,8 @@ public class Good {
     public Good(String name) {
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
 }
