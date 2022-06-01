@@ -25,6 +25,7 @@ public class ShopWorker extends Thread {
                 CustomerWorker customerWorker = new CustomerWorker(customer, shop, repository);
                 customerWorker.start();
                 customerWorkerList.add(customerWorker);
+                System.out.println(ShopWorker.activeCount()+" активных потоков");
                 Timer.sleep(1000);
             }
         }
