@@ -17,4 +17,8 @@ public class Student extends Customer {
     public int getMaxCountGoods() {
         return 2;
     }
+
+    public String toString() {
+        return name;
+    }
 }

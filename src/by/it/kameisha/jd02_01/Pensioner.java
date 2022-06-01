@@ -12,4 +12,8 @@ public class Pensioner extends Customer {
     public double getTimeoutFactor() {
         return 1.5;
     }
+
+    public String toString() {
+        return name;
+    }
 }
