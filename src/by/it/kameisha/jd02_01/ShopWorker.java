@@ -16,7 +16,6 @@ public class ShopWorker extends Thread {
     public void run() {
         System.out.println(shop + " opened");
         int number = 0;
-
         List<CustomerWorker> customerWorkerList = new ArrayList<>();
         for (int time = 0; time < 120; time++) {
             int countCustomersPerSecond = RandomGenerator.get(2);
