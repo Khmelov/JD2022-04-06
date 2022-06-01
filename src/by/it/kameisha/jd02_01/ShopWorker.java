@@ -41,14 +41,11 @@ public class ShopWorker extends Thread {
     private Customer createRandomCustomer(int number) {
         int random = RandomGenerator.get(1, 12);
         if (random < 4) {
-            Customer customer = new Customer(++number);
-            return customer;
+            return new Customer(++number);
         } else if (random < 7) {
-            Customer customer = new Pensioner(++number);
-            return customer;
+            return new Pensioner(++number);
         } else {
-            Customer customer = new Student(++number);
-            return customer;
+            return new Student(++number);
         }
     }
 }
