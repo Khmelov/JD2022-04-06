@@ -22,7 +22,6 @@ public class ShopWorker extends Thread {
             int countCustomersPerSecond = RandomGenerator.get(2);
             for (int i = 0; i < countCustomersPerSecond; i++) {
                 Customer customer = new Customer(++number);
-
                 CustomerWorker customerWorker = new CustomerWorker(customer, shop, repository);
                 customerWorker.start();
                 customerWorkerList.add(customerWorker);
