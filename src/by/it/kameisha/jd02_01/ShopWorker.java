@@ -21,7 +21,7 @@ public class ShopWorker extends Thread {
         for (int time = 0; time < 120; time++) {
             int countCustomersPerSecond = RandomGenerator.get(2);
             for (int i = 0; i < countCustomersPerSecond; i++) {
-                Customer customer = createRandomCustomer(number);
+                Customer customer = createRandomCustomer(++number);
                 CustomerWorker customerWorker = new CustomerWorker(customer, shop, repository);
                 customerWorker.start();
                 customerWorkerList.add(customerWorker);
@@ -39,13 +39,15 @@ public class ShopWorker extends Thread {
     }
 
     private Customer createRandomCustomer(int number) {
+        Customer customer;
         int random = RandomGenerator.get(1, 12);
         if (random < 4) {
-            return new Customer(++number);
+            customer = new Customer(number);
         } else if (random < 7) {
-            return new Pensioner(++number);
+            customer = new Pensioner(number);
         } else {
-            return new Student(++number);
+            customer = new Student(number);
         }
+        return customer;
     }
 }
