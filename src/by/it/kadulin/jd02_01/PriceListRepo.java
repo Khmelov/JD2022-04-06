@@ -37,5 +37,13 @@ public class PriceListRepo {
         namesGoods.add("Crucial Ballistix 3600MHz CL16");
         goodsPriceList.put("MSI MPG X570S EDGE MAX WIFI", 250.);
         namesGoods.add("MSI MPG X570S EDGE MAX WIFI");
+        goodsPriceList.put("Phanteks AMP 650W 80 Plus Gold", 100.);
+        namesGoods.add("Phanteks AMP 650W 80 Plus Gold");
+        goodsPriceList.put("Sapphire Radeon RX 6650 XT NITRO GAMING OC 8GB GDDR6", 550.);
+        namesGoods.add("Sapphire Radeon RX 6650 XT NITRO GAMING OC 8GB GDDR6");
+        goodsPriceList.put("Sapphire Radeon RX 6750 XT PULSE GAMING OC 12GB GDDR6", 850.);
+        namesGoods.add("Sapphire Radeon RX 6750 XT PULSE GAMING OC 12GB GDDR6");
+        goodsPriceList.put("MSI Optix G251F", 250.);
+        namesGoods.add("MSI Optix G251F");
     }
 }

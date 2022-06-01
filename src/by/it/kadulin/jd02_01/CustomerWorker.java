@@ -9,7 +9,13 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     private final Shop shop;
     private Map<String, Double> listSelectedGoods = new HashMap<>();
     private ShoppingCart shoppingCart;
-    private int countWTB = RandomGenerator.get(2, 5);
+
+    public boolean isInShop() {
+        return isInShop;
+    }
+
+    private boolean isInShop = false;
+
     private int countGoodsInCart = 0;
     private final List<String> namesOfPriceList = PriceListRepo.getNamesOfPriceList();
 
@@ -22,8 +28,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void run() {
         enteredStore();
-        while (countGoodsInCart != countWTB) {
-            Good good = chooseGood();
+        while (countGoodsInCart != customer.getCountWTB()) {
+            chooseGood();
         }
         goOut();
 
@@ -32,9 +38,10 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void enteredStore() {
         System.out.println(customer + " enter to the " + shop);
+        isInShop = true;
         takeCart();
-        int timeout = (int) (customer.getMltSpeedOperation() * RandomGenerator.get(100, 300));
-        Timer.sleep(timeout);
+//        int timeout = (int) (customer.getMltSpeedOperation() * RandomGenerator.get(100, 300));
+//        Timer.sleep(timeout);
     }
 
     @Override
@@ -54,6 +61,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void goOut() {
         System.out.println(customer + " leaves the " + shop);
+        isInShop = false;
         int timeout = (int) (customer.getMltSpeedOperation() * RandomGenerator.get(100, 300));
         Timer.sleep(timeout);
     }
@@ -68,8 +76,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public int putToCart(Good good) {
         shoppingCart.addToCart(good.getName(), good.getPrice());
-        int timeout = RandomGenerator.get(100, 300);
-        Timer.sleep(timeout);
+//        int timeout = RandomGenerator.get(100, 300);
+//        Timer.sleep(timeout);
         return shoppingCart.getAmountGoods();
     }
 }
