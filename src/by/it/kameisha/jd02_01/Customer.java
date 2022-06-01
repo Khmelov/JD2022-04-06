@@ -22,4 +22,16 @@ public class Customer {
     public String toString() {
         return name;
     }
+
+    public int getMinCountGoods() {
+        return 2;
+    }
+
+    public int getMaxCountGoods() {
+        return 5;
+    }
+      public double getTimeoutFactor() {
+        return 1;
+    }
+
 }
