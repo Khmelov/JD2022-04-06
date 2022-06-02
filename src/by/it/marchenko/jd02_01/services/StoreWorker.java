@@ -88,8 +88,8 @@ public class StoreWorker extends Thread {
                 Customer customer = generateCustomer();
                 CustomerWorker customerWorker = new CustomerWorker(customer, store,
                         goodRepo, stockRepo, priceRepo, out, this);
-                customerWorker.start();
                 customerWorkerSet.add(customerWorker);
+                customerWorker.start();
             }
             new Delayer().performDelay(REAL_ONE_SECOND);
         }
