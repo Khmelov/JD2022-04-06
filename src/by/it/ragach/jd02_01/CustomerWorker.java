@@ -4,6 +4,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     private final Customer customer;
     private final Shop shop;
+    private ShoppingCart shoppingCart;
+
 
     public CustomerWorker(Customer customer, Shop shop) {
         this.customer = customer;
@@ -37,12 +39,17 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void goOut() {
-        System.out.println(customer + " leaves to the" + shop);
+        System.out.println(customer + " leaves the" + shop);
 
     }
 
     @Override
     public void takeCart() {
+        this.shoppingCart = new ShoppingCart(customer, shop);
+        int timeout = RandomGenerator.get(100, 300);
+        Timer.sleep(timeout);
+        System.out.println(customer + "takes shopping cart");
+
 
     }
 
