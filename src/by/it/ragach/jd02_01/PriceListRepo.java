@@ -24,5 +24,11 @@ public class PriceListRepo {
     }
 
 
-
+    public static String getGoodName(){
+        List<String>goodsList = new ArrayList<>(goods.keySet());
+        int randomGoodNumber = RandomGenerator.get(0,goodsList.size()-1);
+        String randomGoods = goodsList.get(randomGoodNumber);
+        return randomGoods;
+    }
+    
 }
