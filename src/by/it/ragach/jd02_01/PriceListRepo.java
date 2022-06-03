@@ -19,7 +19,6 @@ public class PriceListRepo {
         goods.put("cherries",8.75);
         goods.put("lemon", 2.45);
 
-        new ArrayList<>();
 
     }
 
@@ -27,8 +26,12 @@ public class PriceListRepo {
     public static String getGoodName(){
         List<String>goodsList = new ArrayList<>(goods.keySet());
         int randomGoodNumber = RandomGenerator.get(0,goodsList.size()-1);
-        String randomGoods = goodsList.get(randomGoodNumber);
-        return randomGoods;
+        return goodsList.get(randomGoodNumber);
     }
-    
+
+    public static double getPrice(String nameGoods){
+        return goods.get(nameGoods);
+
+    }
+
 }

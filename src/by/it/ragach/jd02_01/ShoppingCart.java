@@ -1,19 +1,19 @@
 package by.it.ragach.jd02_01;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ShoppingCart {
+    Map<String,Double> cart=  new HashMap<>();
 
+ public int addGoods (String name, double price){
+     cart.put(name,price);
+     return cart.size();
+ }
 
-   private final Customer customer;
-   private final Shop shop;
-   private List<Good>shoppingCart;
-
-
-    public ShoppingCart(Customer customer, Shop shop) {
-        this.customer = customer;
-        this.shop = shop;
-        shoppingCart=new ArrayList<>();
+   public int size(){
+     return cart.size();
     }
 }

@@ -1,21 +1,26 @@
 package by.it.ragach.jd02_01;
 
-public class Good {
+public class Good extends PriceListRepo {
 
     final private String name;
+    final private double price;
 
-    public Good(String name) {
+    public Good(String name, double price) {
+
         this.name = name;
+        this.price = PriceListRepo.getPrice(name);
     }
 
-    public Good(){
-        name = "unknown good";
+    public String getName(){
+        return name;
+    }
+
+    public double getPrice(){
+       return price;
     }
 
     @Override
     public String toString() {
-        return "Good{" +
-                "name='" + name + '\'' +
-                '}';
+        return name +"("+"price " + price+")";
     }
 }
