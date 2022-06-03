@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ChoiseHelper {
-    private ChoiseHelper() {
+public class ChooseHelper {
+    private ChooseHelper() {
     }
-    public static Good getRandomGood(PriceListRepo priceListRepo){
+
+    public static Good getRandomGood(PriceListRepo priceListRepo) {
         Map<Good, Double> priceList = priceListRepo.getPriceList();
-        List<Good>goods= new ArrayList<>(priceList.keySet());
-        Good good=goods.get(RandomGenerator.getRandomInt(goods.size()-1));
+        List<Good> goods = new ArrayList<>(priceList.keySet());
+        Good good = goods.get(RandomGenerator.getRandomInt(goods.size() - 1));
         return good;
     }
 }

@@ -1,11 +1,13 @@
 package by.it.machuga.jd02_01.entity;
 
+import by.it.machuga.jd02_01.util.Constants;
+
 public class Good {
 
     private final String name;
 
     public Good(String name) {
-        this.name = "Good " + name;
+        this.name = Constants.GOOD + name;
     }
 
     public String getName() {

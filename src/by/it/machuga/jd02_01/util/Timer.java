@@ -4,9 +4,10 @@ public class Timer {
 
     private Timer() {
     }
-    public static void sleep(int timeout){
+
+    public static void sleep(int timeout) {
         try {
-            Thread.sleep(timeout/10);
+            Thread.sleep(timeout);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
