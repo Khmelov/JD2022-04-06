@@ -39,7 +39,7 @@ public class StockRepo implements StockAction {
     }
 
     @Override
-    public int getGoodIDAmount() {
+    public int getStockSize() {
         return stockRepo.size();
     }
 

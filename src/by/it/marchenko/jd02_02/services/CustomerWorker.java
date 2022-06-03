@@ -78,7 +78,7 @@ public class CustomerWorker extends Thread
     @Override
     public void enteredStore() {
         out.println(customer + ENTERED_TO + store);
-        storeWorker.increaseCurrentCustomerCount();
+        storeWorker.increaseCurrentCustomerCount(1);
     }
 
     @Override
@@ -98,8 +98,8 @@ public class CustomerWorker extends Thread
         delayer.performDelay(choosingTime);
         while (true) {
             // TODO it is possible that stock is empty and not possible to choose good
-            int goodIDAmount = stockRepo.getGoodIDAmount();
-            int goodID = RandomGenerator.getRandom(goodIDAmount - 1);
+            int stockSize = stockRepo.getStockSize();
+            int goodID = RandomGenerator.getRandom(stockSize - 1);
             if (stockRepo.getFromStock(goodID) == GOOD_PRESENT) {
                 GoodWorker goodWorker = new GoodWorker(goodRepo, stockRepo, priceRepo);
                 Good good = goodWorker.findGoodFromID(goodID);
@@ -133,7 +133,8 @@ public class CustomerWorker extends Thread
     @Override
     public void goOut() {
         out.println(customer + LEAVED + store);
-        storeWorker.decreaseCurrentCustomerCount();
+        //storeWorker.decreaseCurrentCustomerCount();
+        storeWorker.increaseCurrentCustomerCount(-1);
     }
 
 }

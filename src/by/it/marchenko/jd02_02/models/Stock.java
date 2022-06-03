@@ -21,7 +21,7 @@ public class Stock {
     public String toString() {
 
         return String.format("Goods amount in the stock %s: %d. Different positions: %d.%n",
-                name, repo.getOccupiedPlace(), repo.getGoodIDAmount());
+                name, repo.getOccupiedPlace(), repo.getStockSize());
 
     }
 }

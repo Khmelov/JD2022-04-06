@@ -8,7 +8,7 @@ public interface StockAction {
 
     int getOccupiedPlace();
 
-    int getGoodIDAmount();
+    int getStockSize();
 
     boolean getFromStock(int id);
 

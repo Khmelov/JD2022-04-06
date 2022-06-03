@@ -87,7 +87,6 @@ public class StoreWorker extends Thread {
             //int customerCountPerSecond = generateCustomerCountPerSecond(SIMPLY_CUSTOMER_LIMITATION);
             int customerCountPerSecond = generateCustomerCountPerSecond(workTime);
             for (int customerCount = 0; customerCount < customerCountPerSecond; customerCount++) {
-                //TODO implement customerType
                 Customer customer = generateCustomer();
                 CustomerWorker customerWorker = new CustomerWorker(customer, store,
                         goodRepo, stockRepo, priceRepo, out, this);
@@ -117,7 +116,7 @@ public class StoreWorker extends Thread {
             return (int) (expectedMaxCustomerCount - currentCustomerCount);
         } else {
             double expectedAvgCustomerCount =
-                    (expectedMinCustomerCount + expectedMaxCustomerCount) / 2;
+                    (expectedMinCustomerCount + expectedMaxCustomerCount) / 2d;
             return (int) (Math.round(expectedAvgCustomerCount - currentCustomerCount));
         }
     }
@@ -152,12 +151,17 @@ public class StoreWorker extends Thread {
         return currentCustomerCount;
     }
 
-    public synchronized void decreaseCurrentCustomerCount() {
+    public /*synchronized*/ void decreaseCurrentCustomerCount() {
         currentCustomerCount--;
     }
 
-    public synchronized void increaseCurrentCustomerCount() {
+    public /*synchronized*/ void increaseCurrentCustomerCount() {
         currentCustomerCount++;
         totalCustomerCount++;
+    }
+
+    public synchronized void increaseCurrentCustomerCount(int increment) {
+        currentCustomerCount += increment;
+        if (increment > 0) totalCustomerCount++;
     }
 }
