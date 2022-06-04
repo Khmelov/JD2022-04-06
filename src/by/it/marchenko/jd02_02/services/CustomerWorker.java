@@ -62,8 +62,8 @@ public class CustomerWorker extends Thread
 
     @Override
     public void run() {
-        double speedUpCoefficient = customer.getSpeedDownCoefficient();
-        delayer = new Delayer(speedUpCoefficient);
+        double speedDownCoefficient = customer.getSpeedDownCoefficient();
+        delayer = new Delayer(speedDownCoefficient);
         enteredStore();
         //store
         takeCart();
@@ -78,7 +78,10 @@ public class CustomerWorker extends Thread
     @Override
     public void enteredStore() {
         out.println(customer + ENTERED_TO + store);
-        storeWorker.increaseCurrentCustomerCount(1);
+        storeWorker.changeCustomerCurrentCount(1);
+        //storeWorker.increaseTotalCustomerCount();
+
+
     }
 
     @Override
@@ -134,7 +137,7 @@ public class CustomerWorker extends Thread
     public void goOut() {
         out.println(customer + LEAVED + store);
         //storeWorker.decreaseCurrentCustomerCount();
-        storeWorker.increaseCurrentCustomerCount(-1);
+        storeWorker.changeCustomerCurrentCount(-1);
     }
 
 }

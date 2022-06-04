@@ -15,6 +15,7 @@ public class ShoppingCart {
         return shoppingCartList.size();
     }
 
+    @SuppressWarnings("unused")
     public List<Good> getShoppingCartList() {
         return new ArrayList<>(shoppingCartList);
     }

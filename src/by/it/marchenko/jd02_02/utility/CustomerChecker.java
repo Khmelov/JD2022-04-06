@@ -1,6 +1,7 @@
 package by.it.marchenko.jd02_02.utility;
 
 import by.it.marchenko.jd02_02.exception.StoreException;
+import by.it.marchenko.jd02_02.services.ManagerWorker;
 import by.it.marchenko.jd02_02.services.StoreWorker;
 
 import java.io.FileNotFoundException;
@@ -16,9 +17,12 @@ public class CustomerChecker extends Thread {
     public static final String ANSI_YELLOW = "\u001B[33m";
 
     private final StoreWorker storeWorker;
+    private final ManagerWorker managerWorker;
 
-    public CustomerChecker(StoreWorker storeWorker) {
+
+    public CustomerChecker(StoreWorker storeWorker, ManagerWorker managerWorker) {
         this.storeWorker = storeWorker;
+        this.managerWorker = managerWorker;
     }
 
     public void run() {
@@ -27,7 +31,7 @@ public class CustomerChecker extends Thread {
         LinkedList<Integer> currentList = new LinkedList<>();
         while (storeWorker.isAlive()) {
             delayer.performDelay(REAL_ONE_SECOND);
-            int totalCustomerCount = storeWorker.getTotalCustomerCount();
+            int totalCustomerCount = managerWorker.getTotalCustomerCount();
             int currentCustomerCount = storeWorker.getCurrentCustomerCount();
             //noinspection unused
             String checkResult = String.format(

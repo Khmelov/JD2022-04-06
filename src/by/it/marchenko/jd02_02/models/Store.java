@@ -4,12 +4,20 @@ import static by.it.marchenko.jd02_02.constants.StoreConstant.STORE;
 
 public class Store {
 
-    public final int id;
-    public final String name;
+    private static int startID = 1;
 
-    public Store(String name, int id) {
+    private final int id;
+    private final String name;
+    private final Manager manager;
+
+    public Store(String name, Manager manager) {
         this.name = name;
-        this.id = id;
+        this.manager = manager;
+        this.id = startID++;
+    }
+
+    public Manager getManager() {
+        return manager;
     }
 
     @Override
