@@ -17,6 +17,10 @@ public class PriceListRepo {
         return priceList;
     }
 
+    public double getPrice(Good good) {
+        return priceList.get(good);
+    }
+
     @Override
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(Constants.NEW_LINE);

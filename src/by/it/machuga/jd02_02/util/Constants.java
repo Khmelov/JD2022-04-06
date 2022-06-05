@@ -20,7 +20,6 @@ public class Constants {
     public static final String STORE_CLOSED_MSG = "%s closed%n";
     public static final int MIN_SELECTION_SPEED = 100;
     public static final int MAX_SELECTION_SPEED = 300;
-    public static final int MAX_STORE_OPENED_MINUTES = 2;
     public static final int FIRST_SECOND = 1;
     public static final int LAST_SECOND = 60;
     public static final int MIDDLE_SECOND = 30;
@@ -40,6 +39,12 @@ public class Constants {
     public static final String GOES_TO_QUEUE_MSG = "%s goes to the queue%n";
     public static final String LEFT_QUEUE_MSG = "%s left the queue%n";
     public static final int PLAN_QUANTITY_CUSTOMER = 100;
+    public static final String STARTED_SERVICE_MSG = "%s started %s service%n";
+    public static final String FINISHED_SERVICE_MSG = "%s finished %s service%n";
+    public static final String BILL = " Bill #";
+    public static final String SPACE = " ";
+    public static final String BILL_LINE = "%s -> %.2f";
+    public static final String BILL_TOTAL = "Total: %.2f";
     static final String ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     static final String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
 }

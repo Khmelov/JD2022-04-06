@@ -20,6 +20,10 @@ public class ShoppingKart {
         return goods.size();
     }
 
+    public List<Good> getGoods() {
+        return goods;
+    }
+
     @Override
     public String toString() {
         return Constants.GOODS + goods;
