@@ -2,16 +2,16 @@ package by.it.machuga.jd02_01.service;
 
 import by.it.machuga.jd02_01.entity.Customer;
 import by.it.machuga.jd02_01.entity.Good;
-import by.it.machuga.jd02_01.entity.ShoppingKart;
+import by.it.machuga.jd02_01.entity.ShoppingCart;
 import by.it.machuga.jd02_01.entity.Store;
 import by.it.machuga.jd02_01.interfaces.CustomerAction;
-import by.it.machuga.jd02_01.interfaces.ShoppingCardAction;
+import by.it.machuga.jd02_01.interfaces.ShoppingCartAction;
 import by.it.machuga.jd02_01.util.ChooseHelper;
 import by.it.machuga.jd02_01.util.Constants;
 import by.it.machuga.jd02_01.util.RandomGenerator;
 import by.it.machuga.jd02_01.util.Timer;
 
-public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
+public class CustomerWorker extends Thread implements CustomerAction, ShoppingCartAction {
     private final Customer customer;
     private final Store store;
 
@@ -44,8 +44,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void takeCart() {
-        ShoppingKart shoppingKart = new ShoppingKart();
-        customer.setShoppingKart(shoppingKart);
+        ShoppingCart shoppingCart = new ShoppingCart();
+        customer.setShoppingCart(shoppingCart);
     }
 
     @Override
@@ -60,9 +60,9 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public int putToCart(Good good) {
-        ShoppingKart shoppingKart = customer.getShoppingKart();
-        shoppingKart.addGoodToCart(good);
-        return shoppingKart.getGoodsCount();
+        ShoppingCart shoppingCart = customer.getShoppingCart();
+        shoppingCart.addGoodToCart(good);
+        return shoppingCart.getGoodsCount();
     }
 
     @Override

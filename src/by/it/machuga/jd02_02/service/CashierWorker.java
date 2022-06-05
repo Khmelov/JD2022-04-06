@@ -32,7 +32,7 @@ public class CashierWorker extends Thread {
                 System.out.printf(STARTED_SERVICE_MSG, cashier, customer);
                 int timeOut = RandomGenerator.getRandomInt(MIN_SERVICE_TIMEOUT, MAX_SERVICE_TIMEOUT);
                 Timer.sleep(timeOut);
-                String bill = processShoppingCart(customer.getShoppingKart());
+                String bill = processShoppingCart(customer.getShoppingCart());
                 printBill(bill);
                 System.out.printf(FINISHED_SERVICE_MSG, cashier, customer);
                 synchronized (customer.getMonitor()) {
@@ -55,11 +55,11 @@ public class CashierWorker extends Thread {
         System.out.println(bill);
     }
 
-    private String processShoppingCart(ShoppingKart shoppingKart) {
+    private String processShoppingCart(ShoppingCart shoppingCart) {
         synchronized (store) {
             billNumber++;
         }
-        List<Good> goods = shoppingKart.getGoods();
+        List<Good> goods = shoppingCart.getGoods();
         double billTotal = 0;
         StringJoiner stringJoiner = new StringJoiner(NEW_LINE);
         stringJoiner.add(SPACE.repeat(15) + cashier + BILL + billNumber);

@@ -5,7 +5,7 @@ import by.it.machuga.jd02_01.util.Constants;
 public class Customer {
 
     private final String name;
-    private ShoppingKart shoppingKart;
+    private ShoppingCart shoppingCart;
     private final int maxGood = 5;
     private final int minGood = 2;
     private final double selectionSpeed = 1.0;
@@ -14,12 +14,12 @@ public class Customer {
         this.name = name;
     }
 
-    public ShoppingKart getShoppingKart() {
-        return shoppingKart;
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
     }
 
-    public void setShoppingKart(ShoppingKart shoppingKart) {
-        this.shoppingKart = shoppingKart;
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
     public String getName() {

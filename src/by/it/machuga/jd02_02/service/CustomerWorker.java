@@ -2,13 +2,13 @@ package by.it.machuga.jd02_02.service;
 
 import by.it.machuga.jd02_02.entity.*;
 import by.it.machuga.jd02_02.interfaces.CustomerAction;
-import by.it.machuga.jd02_02.interfaces.ShoppingCardAction;
+import by.it.machuga.jd02_02.interfaces.ShoppingCartAction;
 import by.it.machuga.jd02_02.util.ChooseHelper;
 import by.it.machuga.jd02_02.util.Constants;
 import by.it.machuga.jd02_02.util.RandomGenerator;
 import by.it.machuga.jd02_02.util.Timer;
 
-public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
+public class CustomerWorker extends Thread implements CustomerAction, ShoppingCartAction {
     private final Customer customer;
     private final Store store;
 
@@ -41,8 +41,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void takeCart() {
-        ShoppingKart shoppingKart = new ShoppingKart();
-        customer.setShoppingKart(shoppingKart);
+        ShoppingCart shoppingCart = new ShoppingCart();
+        customer.setShoppingCart(shoppingCart);
     }
 
     @Override
@@ -75,9 +75,9 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public int putToCart(Good good) {
-        ShoppingKart shoppingKart = customer.getShoppingKart();
-        shoppingKart.addGoodToCart(good);
-        return shoppingKart.getGoodsCount();
+        ShoppingCart shoppingCart = customer.getShoppingCart();
+        shoppingCart.addGoodToCart(good);
+        return shoppingCart.getGoodsCount();
     }
 
     @Override

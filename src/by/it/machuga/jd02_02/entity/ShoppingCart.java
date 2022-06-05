@@ -5,10 +5,10 @@ import by.it.machuga.jd02_02.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingKart {
+public class ShoppingCart {
     private final List<Good> goods;
 
-    public ShoppingKart() {
+    public ShoppingCart() {
         this.goods = new ArrayList<>();
     }
 
