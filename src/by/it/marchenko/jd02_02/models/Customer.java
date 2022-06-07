@@ -12,6 +12,8 @@ public class Customer {
     private final int id;
 
     private boolean waitingEnabled = false;
+    private ShoppingCart shoppingCart;
+
     @SuppressWarnings("unused")
     private final long cash;
 
@@ -40,9 +42,12 @@ public class Customer {
         return CUSTOMER_SPEED_DOWN_COEFFICIENT;
     }
 
-    @SuppressWarnings("unused")
-    public long getCash() {
-        return cash;
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
     @Override

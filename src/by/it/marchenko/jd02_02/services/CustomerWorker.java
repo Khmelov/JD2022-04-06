@@ -44,9 +44,6 @@ public class CustomerWorker extends Thread
     private int totalCartSize;
     private ShoppingCart shoppingCart;
 
-    //private int currentCashierCount = 0;
-
-
     private Delayer delayer;
 
     public CustomerWorker(Customer customer, Store store,
@@ -61,21 +58,19 @@ public class CustomerWorker extends Thread
         this.storeWorker = storeWorker;
     }
 
-    //public void setPrinter(Printer out) {
-    //    this.out = out;
-    //}
+    private void init() {
+        double speedDownCoefficient = customer.getSpeedDownCoefficient();
+        delayer = new Delayer(speedDownCoefficient);
+    }
 
     @Override
     public void run() {
-        double speedDownCoefficient = customer.getSpeedDownCoefficient();
-        delayer = new Delayer(speedDownCoefficient);
+        init();
 
         enteredStore();
         takeCart();
         fillCart();
         goToCashier();
-
-
         goOut();
     }
 
@@ -84,8 +79,6 @@ public class CustomerWorker extends Thread
         out.println(customer + ENTERED_TO + store);
         storeWorker.changeCustomerCurrentCount(1);
         //storeWorker.increaseTotalCustomerCount();
-
-
     }
 
     @Override
@@ -147,6 +140,7 @@ public class CustomerWorker extends Thread
         if (shoppingCart.getSize() > 0) {
             StoreQueue storeQueue = store.getStoreQueue();
             out.println(customer + GO_TO_THE_QUEUE);
+            customer.setShoppingCart(shoppingCart);
             synchronized (customer.getMonitor()) {
                 storeQueue.add(customer);
                 manageCashier(storeQueue);
@@ -175,7 +169,8 @@ public class CustomerWorker extends Thread
 
     private void manageCashier(StoreQueue storeQueue) {
         int currentCashierCount = storeWorker.getCurrentCashierCount();
-        while (true) {
+        //while (true) {
+        while (currentCashierCount < 2) {
             int expectedCashierCount = storeQueue.getExpectedCashierCount(SIMPLY_CASHIER_MODE);
             if (expectedCashierCount == currentCashierCount) {
                 break;

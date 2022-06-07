@@ -11,7 +11,8 @@ public class CashierWorker extends Thread {
     public static final int MIN_CASHIER_OPERATION_TIME = 2000;
     public static final int MAX_CASHIER_OPERATION_TIME = 5000;
     public static final String START_OPERATION = " start operation with ";
-    public static final String FINISH_OPERATION = " finish operation with ";
+    public static final String FINISH_SERVICE = "finished service by ";
+
     private final Cashier cashier;
     private final Store store;
     private final Delayer delayer;
@@ -35,14 +36,9 @@ public class CashierWorker extends Thread {
         while (managerWorker.storeOpened()) {
             Customer customer = storeQueue.remove();
             if (Objects.nonNull(customer)) {
-                out.println("\t\t\t" + cashier + START_OPERATION + customer);
-                int cashierOperationTime =
-                        RandomGenerator.getRandom(MIN_CASHIER_OPERATION_TIME, MAX_CASHIER_OPERATION_TIME);
-                delayer.performDelay(cashierOperationTime);
-                out.println("\t\t\t" + cashier + FINISH_OPERATION + customer);
+                performOperation(customer);
                 synchronized (customer.getMonitor()) {
                     customer.setWaitingEnabled(false);
-                    //out.println("\t\t\t\t" + customer + "processing with " + cashier);
                     customer.notify();
                 }
             } else {
@@ -52,6 +48,22 @@ public class CashierWorker extends Thread {
                 //Thread.onSpinWait();
             }
         }
+    }
+
+    private void performOperation(Customer customer) {
+        out.println("\t\t\t" + cashier + START_OPERATION + customer);
+        int cashierOperationTime =
+                RandomGenerator.getRandom(MIN_CASHIER_OPERATION_TIME, MAX_CASHIER_OPERATION_TIME);
+        delayer.performDelay(cashierOperationTime);
+        ShoppingCart shoppingCart = customer.getShoppingCart();
+        double checkAmount = shoppingCart.calculateCheckAmount();
+        double totalReceipts = cashier.getReceipts() + checkAmount;
+        cashier.setReceipts(totalReceipts);
+        //out.println("\t\t\t" + cashier + FINISH_SERVICE + customer + " total bill: " + checkAmount);
+        out.println(customer + FINISH_SERVICE + cashier + ". Total bill: " + checkAmount +
+                ". Total cash: " + totalReceipts);
+        out.println(shoppingCart.getBill());
+
     }
 
     private void initCashierWorker() {
