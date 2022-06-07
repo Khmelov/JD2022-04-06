@@ -1,18 +1,20 @@
 package by.it.marchenko.jd02_02.models;
 
+import by.it.marchenko.jd02_02.constants.CashierConstant;
+
 public class Cashier {
-    public static final String CASHIER_DEFAULT_NAME = "Cashier#";
+    private static int startID = CashierConstant.DEFAULT_START_ID;
 
     public final int id;
     public final String name;
 
-    public Cashier(int id) {
-        this.id = id;
-        this.name = CASHIER_DEFAULT_NAME + id;
+    public Cashier() {
+        this.id = startID++;
+        this.name = CashierConstant.CASHIER_DEFAULT_NAME + id;
     }
 
     @Override
     public String toString() {
-        return "cashier " + name;
+        return "Cashier " + name;
     }
 }
