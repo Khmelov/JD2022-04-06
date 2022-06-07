@@ -4,14 +4,14 @@ import by.it.marchenko.jd02_02.utility.RandomGenerator;
 
 import static by.it.marchenko.jd02_02.constants.CustomerConstant.*;
 
+
 public class Customer {
+    private static int startId = CUSTOMER_START_ID;
 
     private final String name;
     private final int id;
-    //private final String type = CUSTOMER;
 
-    private static int startId = 1;
-
+    private boolean waitingEnabled = false;
     @SuppressWarnings("unused")
     private final long cash;
 
@@ -20,7 +20,6 @@ public class Customer {
         this.id = startId++;
         this.name = name;
         this.cash = cash;
-
     }
 
     public Customer() {
@@ -41,10 +40,6 @@ public class Customer {
         return CUSTOMER_SPEED_DOWN_COEFFICIENT;
     }
 
-    //   public int getSpeedDownCoefficient() {
-    //       return CUSTOMER_SPEED_DOWN_COEFFICIENT;
-    //   }
-
     @SuppressWarnings("unused")
     public long getCash() {
         return cash;
@@ -61,5 +56,17 @@ public class Customer {
 
     public int getMaxCartCapacity() {
         return CUSTOMER_MAX_CART_CAPACITY;
+    }
+
+    public Object getMonitor() {
+        return this;
+    }
+
+    public boolean isWaitingEnabled() {
+        return waitingEnabled;
+    }
+
+    public void setWaitingEnabled(boolean waitingEnabled) {
+        this.waitingEnabled = waitingEnabled;
     }
 }
