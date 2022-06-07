@@ -4,20 +4,19 @@ import by.it.marchenko.jd02_02.interfaces.ManagerAction;
 import by.it.marchenko.jd02_02.models.Manager;
 
 public class ManagerWorker implements ManagerAction {
-    private final StoreWorker storeWorker;
+    private final Manager manager;
     private final int plan;
+
     private volatile int totalCustomerCount;
 
-
-    public ManagerWorker(StoreWorker storeWorker, Manager manager) {
-        this.storeWorker = storeWorker;
+    public ManagerWorker(Manager manager) {
+        this.manager = manager;
         this.plan = manager.getPlan();
-
     }
 
     @Override
     public void increaseTotalCustomerCount() {
-        synchronized (storeWorker) {
+        synchronized (manager) {
             totalCustomerCount++;
         }
     }
@@ -29,13 +28,15 @@ public class ManagerWorker implements ManagerAction {
 
     @Override
     public boolean storeOpened() {
-        //int totalCustomerCount = storeWorker.getTotalCustomerCount();
         return totalCustomerCount != plan;
     }
 
     @Override
     public boolean storeClosed() {
-        //int totalCustomerCount = storeWorker.getTotalCustomerCount();
         return totalCustomerCount == plan;
+    }
+
+    public Manager getManager() {
+        return manager;
     }
 }
