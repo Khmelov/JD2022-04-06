@@ -13,7 +13,6 @@ public class Delayer {
 
     public Delayer(double speedDownCoefficient) {
         this.speedDownCoefficient = speedDownCoefficient;
-
     }
 
     public Delayer() {

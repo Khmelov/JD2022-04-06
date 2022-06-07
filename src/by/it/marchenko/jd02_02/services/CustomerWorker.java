@@ -4,10 +4,7 @@ import by.it.marchenko.jd02_02.Printer;
 import by.it.marchenko.jd02_02.exception.StoreException;
 import by.it.marchenko.jd02_02.interfaces.CustomerAction;
 import by.it.marchenko.jd02_02.interfaces.ShoppingCardAction;
-import by.it.marchenko.jd02_02.models.Customer;
-import by.it.marchenko.jd02_02.models.Good;
-import by.it.marchenko.jd02_02.models.ShoppingCart;
-import by.it.marchenko.jd02_02.models.Store;
+import by.it.marchenko.jd02_02.models.*;
 import by.it.marchenko.jd02_02.repository.GoodRepo;
 import by.it.marchenko.jd02_02.repository.PriceListRepo;
 import by.it.marchenko.jd02_02.repository.StockRepo;
@@ -17,6 +14,7 @@ import by.it.marchenko.jd02_02.utility.RandomGenerator;
 import java.util.Objects;
 
 import static by.it.marchenko.jd02_02.constants.CustomerConstant.*;
+import static by.it.marchenko.jd02_02.exception.StoreException.*;
 
 public class CustomerWorker extends Thread
         implements CustomerAction, ShoppingCardAction {
@@ -27,8 +25,12 @@ public class CustomerWorker extends Thread
     public static final String LEAVED = "leaved ";
     public static final String TAKE_CART = "take cart";
     public static final boolean GOOD_PRESENT = true;
+    public static final String GO_TO_THE_QUEUE = "go to the queue.";
+    public static final boolean ENABLE_WAITING = true;
+    public static final boolean SIMPLY_CASHIER_MODE = true;
+    public static final String LIVED_THE_QUEUE = "lived the queue";
 
-    private Printer out;
+    private final Printer out;
     private final Customer customer;
     private final Store store;
     private final StockRepo stockRepo;
@@ -41,6 +43,9 @@ public class CustomerWorker extends Thread
     private int currentCartSize;
     private int totalCartSize;
     private ShoppingCart shoppingCart;
+
+    //private int currentCashierCount = 0;
+
 
     private Delayer delayer;
 
@@ -56,22 +61,21 @@ public class CustomerWorker extends Thread
         this.storeWorker = storeWorker;
     }
 
-    public void setPrinter(Printer out) {
-        this.out = out;
-    }
+    //public void setPrinter(Printer out) {
+    //    this.out = out;
+    //}
 
     @Override
     public void run() {
         double speedDownCoefficient = customer.getSpeedDownCoefficient();
         delayer = new Delayer(speedDownCoefficient);
+
         enteredStore();
-        //store
         takeCart();
-        while (totalCartSize > currentCartSize) {
-            Good currentGood = chooseGood();
-            currentCartSize = putToCart(currentGood);
-        }
-        out.println(customer + FINISHED_TO_CHOOSE_GOODS);
+        fillCart();
+        goToCashier();
+
+
         goOut();
     }
 
@@ -93,6 +97,14 @@ public class CustomerWorker extends Thread
         int takeCartTime = RandomGenerator.getRandom(MIN_TAKE_CART_TIME, MAX_TAKE_CART_TIME);
         delayer.performDelay(takeCartTime);
         out.println(customer + TAKE_CART);
+    }
+
+    private void fillCart() {
+        while (totalCartSize > currentCartSize) {
+            Good currentGood = chooseGood();
+            currentCartSize = putToCart(currentGood);
+        }
+        out.println(customer + FINISHED_TO_CHOOSE_GOODS);
     }
 
     @Override
@@ -119,8 +131,6 @@ public class CustomerWorker extends Thread
     public int putToCart(Good good) {
         int operationTime = RandomGenerator.getRandom(MIN_PUT_CART_TIME, MAX_PUT_CART_TIME);
         delayer.performDelay(operationTime);
-        // TODO implement calling to ShoppingCart
-
         if (!Objects.isNull(shoppingCart)) {
             shoppingCart.addGoodToCart(good);
         } else {
@@ -133,11 +143,57 @@ public class CustomerWorker extends Thread
 
     }
 
+    private void goToCashier() {
+        if (shoppingCart.getSize() > 0) {
+            StoreQueue storeQueue = store.getStoreQueue();
+            out.println(customer + GO_TO_THE_QUEUE);
+            synchronized (customer.getMonitor()) {
+                storeQueue.add(customer);
+                manageCashier(storeQueue);
+                waitCashierOperation();
+            }
+            out.println(customer + LIVED_THE_QUEUE);
+        }
+    }
+
+    private void waitCashierOperation() {
+        customer.setWaitingEnabled(ENABLE_WAITING);
+        while (customer.isWaitingEnabled()) {
+            try {
+                customer.wait();
+            } catch (InterruptedException e) {
+                throw new StoreException(WAITING_IN_QUEUE_WAS_INTERRUPTED, e);
+            }
+        }
+    }
+
     @Override
     public void goOut() {
         out.println(customer + LEAVED + store);
-        //storeWorker.decreaseCurrentCustomerCount();
         storeWorker.changeCustomerCurrentCount(-1);
+    }
+
+    private void manageCashier(StoreQueue storeQueue) {
+        int currentCashierCount = storeWorker.getCurrentCashierCount();
+        while (true) {
+            int expectedCashierCount = storeQueue.getExpectedCashierCount(SIMPLY_CASHIER_MODE);
+            if (expectedCashierCount == currentCashierCount) {
+                break;
+            }
+            if (expectedCashierCount > currentCashierCount) {
+                Cashier cashier = new Cashier();
+                storeWorker.setCurrentCashierCount(++currentCashierCount);
+                CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
+                cashierWorker.start();
+            }
+            // TODO remove cashierWorker after performing operation
+
+        }
+        // while (expectedCashierCount < currentCashierCount) {
+        //     currentCashierCount--;
+        // }
+        //if (expectedCashierCount>currentCashierCount){}
+        //storeQueue.
     }
 
 }

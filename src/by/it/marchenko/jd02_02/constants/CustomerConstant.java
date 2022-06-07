@@ -27,5 +27,5 @@ public class CustomerConstant {
     public static final int MIN_PUT_CART_TIME = 100;
     public static final int MAX_PUT_CART_TIME = 300;
 
-
+    public static final int CUSTOMER_START_ID = 1;
 }

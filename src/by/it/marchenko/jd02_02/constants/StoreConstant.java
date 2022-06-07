@@ -21,5 +21,8 @@ public class StoreConstant {
     public static final int MIN_MIDDLE_MINUTE_CUSTOMER_AMOUNT = 30;
     public static final int MAX_MIDDLE_MINUTE_CUSTOMER_AMOUNT = 40;
 
-
+    public static final int STORE_START_ID = 1;
+    public static final int CUSTOMER_PER_CASHIER = 5;
+    public static final int MAX_CASHIER_COUNT = 5;
+    public static final int DEFAULT_CASHIER_COUNT = 2;
 }
