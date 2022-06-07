@@ -1,14 +1,12 @@
 package by.it.marchenko.jd02_02.services;
 
-import by.it.marchenko.jd02_02.Printer;
-import by.it.marchenko.jd02_02.exception.StoreException;
 import by.it.marchenko.jd02_02.models.*;
-import by.it.marchenko.jd02_02.repository.GoodRepo;
-import by.it.marchenko.jd02_02.repository.PriceListRepo;
-import by.it.marchenko.jd02_02.repository.StockRepo;
+import by.it.marchenko.jd02_02.repository.*;
+import by.it.marchenko.jd02_02.exception.StoreException;
 import by.it.marchenko.jd02_02.utility.CustomerChecker;
 import by.it.marchenko.jd02_02.utility.Delayer;
 import by.it.marchenko.jd02_02.utility.RandomGenerator;
+import by.it.marchenko.jd02_02.Printer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,11 +35,13 @@ public class StoreWorker extends Thread {
 
     private Manager manager;
     private ManagerWorker managerWorker;
+    private Delayer delayer;
 
-    //    private volatile int totalCustomerCount = 0;
     private volatile int currentCustomerCount = 0;
+    private volatile int currentCashierCount = 0;
 
-    public StoreWorker(StockRepo stockRepo, Store store, GoodRepo goodRepo, PriceListRepo priceRepo, Printer out) {
+    public StoreWorker(StockRepo stockRepo, Store store, GoodRepo goodRepo, PriceListRepo priceRepo,
+                       Printer out) {
         this.stockRepo = stockRepo;
         this.priceRepo = priceRepo;
         this.out = out;
@@ -57,14 +57,16 @@ public class StoreWorker extends Thread {
 
         workStore();
         closeStore();
+
         out.printf("Total customer count: %s%n", managerWorker.getTotalCustomerCount());
         out.printf("Current customer count: %s%n", currentCustomerCount);
-
     }
 
     private void storeInit() {
         manager = store.getManager();
-        managerWorker = new ManagerWorker(this, manager);
+        managerWorker = new ManagerWorker(manager);
+        delayer = new Delayer();
+
         StockWorker stockWorker = new StockWorker(stockRepo, goodRepo, priceRepo);
         out.print(STOCK_INIT_IN_PROGRESS);
         stockWorker.start();
@@ -79,19 +81,15 @@ public class StoreWorker extends Thread {
         out.printf("%s%s%s%n", store, OPENED_MESSAGE, manager);
     }
 
-    private void closeStore() {
-        out.printf("%s%s%s%n", store, CLOSED_MESSAGE, manager);
-    }
-
     private void workStore() {
         Set<CustomerWorker> customerWorkerSet = new HashSet<>();
+
         for (int workTime = 0; managerWorker.storeOpened(); workTime++) {
             //int customerCountPerSecond = generateCustomerCountPerSecond(SIMPLY_CUSTOMER_LIMITATION);
             int customerCountPerSecond = generateCustomerCountPerSecond(workTime);
-            for (int customerCount = 0; customerCount < customerCountPerSecond; customerCount++) {
-                if (managerWorker.storeClosed()) {
-                    break;
-                }
+            for (int customerCount = 0;
+                 managerWorker.storeOpened() && customerCount < customerCountPerSecond;
+                 customerCount++) {
                 Customer customer = generateCustomer();
                 CustomerWorker customerWorker = new CustomerWorker(customer, store,
                         goodRepo, stockRepo, priceRepo, out, this);
@@ -99,8 +97,9 @@ public class StoreWorker extends Thread {
                 managerWorker.increaseTotalCustomerCount();
                 customerWorker.start();
             }
-            new Delayer().performDelay(REAL_ONE_SECOND);
+            delayer.performDelay(REAL_ONE_SECOND);
         }
+
         for (CustomerWorker customerWorker : customerWorkerSet) {
             try {
                 customerWorker.join();
@@ -109,6 +108,10 @@ public class StoreWorker extends Thread {
             }
 
         }
+    }
+
+    private void closeStore() {
+        out.printf("%s%s%s%n", store, CLOSED_MESSAGE, manager);
     }
 
     private int generateCustomerCountPerSecond(int time) {
@@ -132,7 +135,7 @@ public class StoreWorker extends Thread {
         if (mode == SIMPLY_CUSTOMER_LIMITATION) {
             return RandomGenerator.getRandom(MAX_CUSTOMERS_COUNT_PER_SECOND);
         } else {
-            //TODO implement complexCustomerLimitation
+            //TODO remove method if simply customer limitation will never used
             return 10;
         }
     }
@@ -156,23 +159,23 @@ public class StoreWorker extends Thread {
     public void changeCustomerCurrentCount(int increment) {
         synchronized (store) {
             currentCustomerCount += increment;
-            // if (increment > 0) totalCustomerCount++;
-        }
-
-    }
-/*
-    public void increaseTotalCustomerCount() {
-        synchronized (store) {
-            totalCustomerCount++;
         }
     }
 
-    public int getTotalCustomerCount() {
-        synchronized (store) {
-            return totalCustomerCount;
+    public int getCurrentCashierCount() {
+        synchronized (store.getMonitor()) {
+            return currentCashierCount;
         }
     }
 
+    public void setCurrentCashierCount(int currentCashierCount) {
+        synchronized (store.getMonitor()) {
+            this.currentCashierCount = currentCashierCount;
+        }
+    }
 
- */
+    @SuppressWarnings("unused")
+    public ManagerWorker getManagerWorker() {
+        return managerWorker;
+    }
 }
