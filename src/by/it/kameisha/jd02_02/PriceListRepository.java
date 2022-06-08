@@ -1,7 +1,5 @@
 package by.it.kameisha.jd02_02;
 
-import by.it.kameisha.jd02_02.Util;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
