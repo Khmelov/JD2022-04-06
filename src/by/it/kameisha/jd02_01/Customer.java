@@ -30,8 +30,7 @@ public class Customer {
     public int getMaxCountGoods() {
         return 5;
     }
-
-    public double getTimeoutFactor() {
+      public double getTimeoutFactor() {
         return 1;
     }
 

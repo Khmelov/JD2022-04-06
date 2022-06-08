@@ -30,7 +30,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public Good chooseGood() {
         System.out.println(customer + " started to choose goods");
-        int timeout = (int) (customer.getTimeoutFactor() * RandomGenerator.get(500, 2000));
+        int timeout = (int) (customer.getTimeoutFactor()*RandomGenerator.get(500, 2000));
         Timer.sleep(timeout);
         int indexRandomGood = RandomGenerator.get(repository.getGoodsList().size() - 1);
         Good good = new Good(repository.getGoodsList().get(indexRandomGood));
@@ -47,14 +47,14 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void takeCart() {
         System.out.println(customer + " take a cart");
-        int timeout = (int) (customer.getTimeoutFactor() * RandomGenerator.get(100, 300));
+        int timeout = (int) (customer.getTimeoutFactor()*RandomGenerator.get(100, 300));
         Timer.sleep(timeout);
     }
 
     @Override
     public int putToCart(Good good) {
         customer.getShoppingCart().add(good);
-        int timeout = (int) (customer.getTimeoutFactor() * RandomGenerator.get(100, 300));
+        int timeout = (int) (customer.getTimeoutFactor()*RandomGenerator.get(100, 300));
         Timer.sleep(timeout);
         System.out.println(customer + " put " + good + " to cart. In cart " + customer.getShoppingCart().size());
         return customer.getShoppingCart().size();
