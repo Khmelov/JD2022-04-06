@@ -17,14 +17,20 @@ public class ShopWorker extends Thread {
         System.out.println(shop + " opened");
         int number = 0;
         List<CustomerWorker> customerWorkerList = new ArrayList<>();
-        for (int time = 0; time < 120; time++) {
-            int countCustomersPerSecond = RandomGenerator.get(2);
-            for (int i = 0; i < countCustomersPerSecond; i++) {
-                Customer customer = createRandomCustomer(++number);
-                CustomerWorker customerWorker = new CustomerWorker(customer, shop, repository);
-                customerWorker.start();
-                customerWorkerList.add(customerWorker);
-                System.out.println(ShopWorker.activeCount()+" активных потоков");
+        for (int timeMinute = 0; timeMinute < 2; timeMinute++) {
+            for (int timeSecond = 0; timeSecond < 60; timeSecond++) {
+                int countCustomersPerSecond = 0;
+                if (timeSecond < 30 && ShopWorker.activeCount() < timeSecond + 10) {
+                    countCustomersPerSecond = timeSecond + 10 - ShopWorker.activeCount();
+                } else if (timeSecond >= 30 && ShopWorker.activeCount() < 40 + (30 - timeSecond)) {
+                    countCustomersPerSecond = 40 + (30 - timeSecond) - ShopWorker.activeCount();
+                }
+                for (int i = 0; i < countCustomersPerSecond; i++) {
+                    Customer customer = createRandomCustomer(++number);
+                    CustomerWorker customerWorker = new CustomerWorker(customer, shop, repository);
+                    customerWorker.start();
+                    customerWorkerList.add(customerWorker);
+                }
                 Timer.sleep(1000);
             }
         }
