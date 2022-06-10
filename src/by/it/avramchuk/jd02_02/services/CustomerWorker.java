@@ -1,12 +1,9 @@
 package by.it.avramchuk.jd02_02.services;
 
+import by.it.avramchuk.jd02_02.entity.*;
 import by.it.avramchuk.jd02_02.repository.PriceListRepository;
 import by.it.avramchuk.jd02_02.util.RandomGenerator;
 import by.it.avramchuk.jd02_02.util.Timer;
-import by.it.avramchuk.jd02_02.entity.Customer;
-import by.it.avramchuk.jd02_02.entity.Good;
-import by.it.avramchuk.jd02_02.entity.Shop;
-import by.it.avramchuk.jd02_02.entity.ShoppingCart;
 import by.it.avramchuk.jd02_02.interfaces.CustomerAction;
 import by.it.avramchuk.jd02_02.interfaces.ShoppingCardAction;
 
@@ -35,6 +32,7 @@ implements CustomerAction, ShoppingCardAction {
             putToCart(nextGood);
         }
         System.out.println(customer+" finished. He choosed "+myCart.goodsInCart.size()+" goods");
+        goToQueue();
         goOut();
     }
 
@@ -74,5 +72,23 @@ implements CustomerAction, ShoppingCardAction {
         Timer.sleep(timeout);
         System.out.println(customer+" put "+good+ " to his cart");
         return myCart.addGoodToCart(good);
+    }
+
+    @Override
+    public void goToQueue() {
+        ShopQueue queue = shop.getQueue();
+        synchronized (customer){
+            System.out.println(customer+" go to the queue");
+            queue.add(customer);
+            customer.isWaiting=true;
+            while (customer.isWaiting){
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            System.out.println(customer+" leaves the queue");
+        }
     }
 }

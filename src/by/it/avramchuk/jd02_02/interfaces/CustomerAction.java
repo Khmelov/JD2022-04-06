@@ -6,4 +6,5 @@ public interface CustomerAction {
     void enteredStore();
     Good chooseGood();
     void goOut();
+    void goToQueue();
 }

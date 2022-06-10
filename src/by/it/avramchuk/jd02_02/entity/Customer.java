@@ -6,6 +6,7 @@ public class Customer {
 
     public final String name;
     private final int speedFactor;
+    public boolean isWaiting;
     public Customer(long number) {
         this.name = "Customer №"+number;
         this.speedFactor = 1;
