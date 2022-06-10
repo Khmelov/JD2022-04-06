@@ -1,11 +1,13 @@
-package by.it.avramchuk.jd02_02;
+package by.it.avramchuk.jd02_02.entity;
+
+import by.it.avramchuk.jd02_02.entity.Good;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
 
-    List<Good> goodsInCart;
+    public List<Good> goodsInCart;
 
     public ShoppingCart(){
         this.goodsInCart = new ArrayList<>();

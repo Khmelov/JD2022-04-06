@@ -1,4 +1,6 @@
-package by.it.avramchuk.jd02_02;
+package by.it.avramchuk.jd02_02.entity;
+
+import by.it.avramchuk.jd02_02.util.RandomGenerator;
 
 public class Customer {
 

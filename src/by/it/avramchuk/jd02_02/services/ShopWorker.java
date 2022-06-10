@@ -1,4 +1,11 @@
-package by.it.avramchuk.jd02_02;
+package by.it.avramchuk.jd02_02.services;
+
+import by.it.avramchuk.jd02_02.util.RandomGenerator;
+import by.it.avramchuk.jd02_02.util.Timer;
+import by.it.avramchuk.jd02_02.entity.Customer;
+import by.it.avramchuk.jd02_02.entity.Pensioner;
+import by.it.avramchuk.jd02_02.entity.Shop;
+import by.it.avramchuk.jd02_02.entity.Student;
 
 import java.util.ArrayList;
 import java.util.List;

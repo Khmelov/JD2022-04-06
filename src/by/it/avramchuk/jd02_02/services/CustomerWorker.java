@@ -1,4 +1,14 @@
-package by.it.avramchuk.jd02_02;
+package by.it.avramchuk.jd02_02.services;
+
+import by.it.avramchuk.jd02_02.repository.PriceListRepository;
+import by.it.avramchuk.jd02_02.util.RandomGenerator;
+import by.it.avramchuk.jd02_02.util.Timer;
+import by.it.avramchuk.jd02_02.entity.Customer;
+import by.it.avramchuk.jd02_02.entity.Good;
+import by.it.avramchuk.jd02_02.entity.Shop;
+import by.it.avramchuk.jd02_02.entity.ShoppingCart;
+import by.it.avramchuk.jd02_02.interfaces.CustomerAction;
+import by.it.avramchuk.jd02_02.interfaces.ShoppingCardAction;
 
 import java.util.Set;
 

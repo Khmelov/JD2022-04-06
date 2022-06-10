@@ -1,4 +1,4 @@
-package by.it.avramchuk.jd02_02;
+package by.it.avramchuk.jd02_02.repository;
 
 import java.util.HashMap;
 import java.util.Map;
