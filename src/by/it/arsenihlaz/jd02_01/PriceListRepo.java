@@ -6,13 +6,17 @@ public class PriceListRepo {
     private static final Map<String, Double> goods = new HashMap<>();
 
     static {
-        goods.put("bread", 2.2);
+        goods.put("bread", 2.20);
         goods.put("milk", 1.45);
-        goods.put("pizza", 8.9);
+        goods.put("pizza", 8.90);
         goods.put("ice-cream", 2.15);
-        goods.put("tomatoes", 9.5);
+        goods.put("tomatoes", 9.50);
         goods.put("potatoes", 0.75);
         goods.put("green peas", 2.65);
+        goods.put("buckwheat grain", 3.80);
+        goods.put("rice", 2.99);
+        goods.put("eggs", 3.25);
+
     }
 
     public static String getRandomGoods() {
