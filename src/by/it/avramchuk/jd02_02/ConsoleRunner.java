@@ -1,5 +1,6 @@
 package by.it.avramchuk.jd02_02;
 
+import by.it.avramchuk.jd02_02.entity.Manager;
 import by.it.avramchuk.jd02_02.entity.Shop;
 import by.it.avramchuk.jd02_02.entity.ShopQueue;
 import by.it.avramchuk.jd02_02.services.ShopWorker;

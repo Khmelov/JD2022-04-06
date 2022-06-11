@@ -1,18 +1,16 @@
 package by.it.avramchuk.jd02_02.services;
 
+import by.it.avramchuk.jd02_02.entity.*;
 import by.it.avramchuk.jd02_02.util.RandomGenerator;
 import by.it.avramchuk.jd02_02.util.Timer;
-import by.it.avramchuk.jd02_02.entity.Customer;
-import by.it.avramchuk.jd02_02.entity.Pensioner;
-import by.it.avramchuk.jd02_02.entity.Shop;
-import by.it.avramchuk.jd02_02.entity.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShopWorker extends Thread{
     private final Shop shop;
-    private int number=0;
+    private int visitors =0;
+    List<CustomerWorker> customerWorkerList = new ArrayList<>();
     public ShopWorker(Shop shop) {
         this.shop = shop;
     }
@@ -24,17 +22,11 @@ public class ShopWorker extends Thread{
 
     @Override
     public void run() {
-
+        Manager manager = new Manager(shop);
         System.out.println(shop+" opened");
-        List<CustomerWorker> customerWorkerList = new ArrayList<>();
         for (int min = 0; min < 2; min++) {
             for (int sec = 0; sec < 60; sec++) {
-                int currentCount = 0;
-                for (CustomerWorker c : customerWorkerList) {
-                    if (c.isAlive()) {
-                        currentCount++;
-                    }
-                }
+                int currentCount = getCurrentCount();
                 int countCustomerPerSecond = needToAdd(currentCount, sec);
                 for (int i = 0; i < countCustomerPerSecond; i++) {
                     Customer customer = defineCustomer();
@@ -42,6 +34,8 @@ public class ShopWorker extends Thread{
                     customerWorker.start();
                     customerWorkerList.add(customerWorker);
                 }
+                int cashierNeeded = cashierNeeded();
+                manager.regulateCountCashier(cashierNeeded);
                 System.out.println("\n at " + sec + " second " + currentCount + " customers in the store\n" );
                 Timer.sleep(1000);
             }
@@ -53,19 +47,34 @@ public class ShopWorker extends Thread{
                 e.printStackTrace();
             }
         }
+        while(getCurrentCount()>0){
+            int cashierNeeded = cashierNeeded();
+            manager.regulateCountCashier(cashierNeeded);
+        }
+        manager.closeAllCashier();
         System.out.println(shop+" closed");
-        System.out.println("\n total visitors: "+ number);
+        System.out.println("\n total visitors: "+ visitors);
+    }
+
+    private int getCurrentCount() {
+        int currentCount = 0;
+        for (CustomerWorker c : customerWorkerList) {
+            if (c.isAlive()) {
+                currentCount++;
+            }
+        }
+        return currentCount;
     }
 
     public Customer defineCustomer(){
         Customer customer;
         int whoIsCustomer = RandomGenerator.get(100);
         if (whoIsCustomer <= 25) {
-            customer = new Pensioner(++number);
+            customer = new Pensioner(++visitors);
         } else if (whoIsCustomer >= 50) {
-            customer = new Student(++number);
+            customer = new Student(++visitors);
         } else {
-            customer = new Customer(++number);
+            customer = new Customer(++visitors);
         }
         return customer;
     }
@@ -78,5 +87,11 @@ public class ShopWorker extends Thread{
             countCustomerPerSecond = (40+(30-sec))-currentCount;
         }
         return countCustomerPerSecond;
+    }
+    public int cashierNeeded (){
+        ShopQueue queue = shop.getQueue();
+        int neededCount = queue.getSize()/5;
+        if (neededCount%5!=0){neededCount++;}
+        return Math.min(neededCount, 5);
     }
 }

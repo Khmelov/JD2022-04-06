@@ -77,13 +77,13 @@ implements CustomerAction, ShoppingCardAction {
     @Override
     public void goToQueue() {
         ShopQueue queue = shop.getQueue();
-        synchronized (customer){
+        synchronized (customer.getMonitor()){
             System.out.println(customer+" go to the queue");
             queue.add(customer);
             customer.isWaiting=true;
             while (customer.isWaiting){
                 try {
-                    wait();
+                    customer.wait();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

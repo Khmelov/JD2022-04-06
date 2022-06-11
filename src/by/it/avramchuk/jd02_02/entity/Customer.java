@@ -20,6 +20,10 @@ public class Customer {
         return RandomGenerator.get(2,5);
     }
 
+    public Customer getMonitor(){
+        return this;
+    }
+
     @Override
     public String toString() {
         return name;
