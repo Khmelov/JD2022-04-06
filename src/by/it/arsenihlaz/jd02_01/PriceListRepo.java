@@ -20,7 +20,7 @@ public class PriceListRepo {
     }
 
     public static String getRandomGoods() {
-        List<String> goodsList = new ArrayList<String>(goods.keySet());
+        List<String> goodsList = new ArrayList<>(goods.keySet());
         int randomIndex = RandomGenerator.get(0, goodsList.size()-1);
         String randomGoods = goodsList.get(randomIndex);
         return randomGoods;

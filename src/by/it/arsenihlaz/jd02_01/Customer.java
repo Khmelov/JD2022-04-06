@@ -13,4 +13,12 @@ public class Customer {
     public String toString() {
         return name;
     }
+
+    public int numberOfGoods(){
+        return RandomGenerator.get(2, 5);
+    }
+
+    public double speedFactor(){
+        return 1.0;
+    }
 }

@@ -12,4 +12,14 @@ public class Pensioner extends Customer {
     public String toString() {
         return name;
     }
+
+    @Override
+    public int numberOfGoods() {
+        return super.numberOfGoods();
+    }
+
+    @Override
+    public double speedFactor() {
+        return 1.5;
+    }
 }

@@ -1,13 +1,15 @@
 package by.it.arsenihlaz.jd02_01;
 
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
-    // Student №[1-9]++ in the shopping cart [0-9]++ goods
     private final Customer customer;
     private final Shop shop;
     private ShoppingCart shoppingCart;
-    private final int timeoutOperationPensioner = RandomGenerator.get(150, 450);
     private final int timeoutOperation = RandomGenerator.get(100, 300);
-
+    private final int timeoutChoosing = RandomGenerator.get(500, 2000);
+    private final static Integer incomingMonitor = 0;
+    private final static Integer exitMonitor = 0;
+    public static int incomingCounter = 0;
+    public static int exitCounter = 0;
 
     public CustomerWorker(Customer customer, Shop shop) {
         this.customer = customer;
@@ -20,7 +22,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         enteredStore();
         takeCart();
         System.out.println(customer + " started choosing goods");
-        int howManyGoods = howManyGoods();
+        int howManyGoods = customer.numberOfGoods();
         if (howManyGoods == 0) {
             System.out.println(customer + " looked at the prices and decided not to take anything");
         }
@@ -33,20 +35,12 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         goOut();
     }
 
-    private int howManyGoods() {
-        String nameCustomer = String.valueOf(customer);
-        int numberOfGoods;
-        if (nameCustomer.contains("Student")) {
-            numberOfGoods = RandomGenerator.get(0, 2);
-        } else {
-            numberOfGoods = RandomGenerator.get(2, 5);
-        }
-        return numberOfGoods;
-    }
-
     @Override
     public void enteredStore() {
         System.out.println(customer + " enter to the " + shop);
+        synchronized (incomingMonitor){
+            incomingCounter++;
+        }
     }
 
     @Override
@@ -55,36 +49,34 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         double price = PriceListRepo.getPrice(nameGoods);
         Good good = new Good(nameGoods, price);
         System.out.println(customer + " chose a good: " + good);
-        timeout();
+        Timer.sleep((int) (timeoutChoosing * customer.speedFactor()));
         return good;
-    }
-
-    private void timeout() {
-        String nameCustomer = String.valueOf(customer);
-        if (nameCustomer.contains("Pensioner")) {
-            Timer.sleep(timeoutOperationPensioner);
-        } else {
-            Timer.sleep(timeoutOperation);
-        }
     }
 
     @Override
     public void goOut() {
         System.out.println(customer + " leaves " + shop);
+        synchronized (exitMonitor){
+            exitCounter++;
+        }
     }
 
     @Override
     public void takeCart() {
         shoppingCart = new ShoppingCart();
         System.out.println(customer + " take the cart");
-        timeout();
+        Timer.sleep((int) (timeoutOperation * customer.speedFactor()));
     }
 
     @Override
     public int putToCart(Good good) {
         shoppingCart.addGoods(good.getName(), good.getPrice());
         System.out.println(customer + " put the " + good.getName() + " in the cart");
-        timeout();
+        Timer.sleep((int) (timeoutOperation * customer.speedFactor()));
         return shoppingCart.size();
+    }
+
+    protected static int countBuyers() {
+        return incomingCounter - exitCounter;
     }
 }

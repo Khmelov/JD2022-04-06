@@ -12,4 +12,10 @@ public class Student extends Customer {
     public String toString() {
         return name;
     }
+
+    @Override
+    public int numberOfGoods() {
+        return RandomGenerator.get(0, 2);
+    }
+
 }

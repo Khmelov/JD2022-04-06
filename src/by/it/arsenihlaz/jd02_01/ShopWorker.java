@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ShopWorker extends Thread {
     private final Shop shop;
+    int number = 0;
 
     public ShopWorker(Shop shop) {
         this.shop = shop;
@@ -13,41 +14,27 @@ public class ShopWorker extends Thread {
     @Override
     public void run() {
         System.out.println(shop + " opened");
-        int number = 0;
+
         List<CustomerWorker> customerWorkerList = new ArrayList<>();
         int customerPerSecond;
         for (int time = 0; time < 120; time++) {
-            int numberOfBuyers = customerWorkerList.size();
-            System.out.println("количество покупателей " + customerWorkerList.size());
+            int numberOfBuyers = CustomerWorker.countBuyers();
             int second = time % 60;
-            if (second < 30 && numberOfBuyers < (second + 10)) {
-                customerPerSecond = RandomGenerator.get((40-numberOfBuyers)*2);
+
+            if (second < 30) {
+                customerPerSecond = RandomGenerator.get(10+second/2);
             } else if (second >= 30 && numberOfBuyers <= (40 + (30 - second))) {
-                customerPerSecond = RandomGenerator.get(40-numberOfBuyers);
-            } else customerPerSecond = RandomGenerator.get(1);
+                customerPerSecond = (40 + (30 - second)-numberOfBuyers);
+            } else customerPerSecond = 0;
 
             for (int i = 0; i < customerPerSecond; i++) {
-                int customerType = RandomGenerator.get(0, 99);
-                if (customerType < 25) {
-                    Customer pensioner = new Pensioner(++number);
-                    CustomerWorker pensionerWorker = new CustomerWorker(pensioner, shop);
-                    pensionerWorker.start();
-                    customerWorkerList.add(pensionerWorker);
-                } else if (customerType >= 25 && customerType < 50) {
-                    Customer customer = new Customer(++number);
-                    CustomerWorker customerWorker = new CustomerWorker(customer, shop);
-                    customerWorker.start();
-                    customerWorkerList.add(customerWorker);
-                } else {
-                    Customer student = new Student(++number);
-                    CustomerWorker studentWorker = new CustomerWorker(student, shop);
-                    studentWorker.start();
-                    customerWorkerList.add(studentWorker);
-                }
+                Customer customer = customerGenerator();
+                CustomerWorker customerWorker = new CustomerWorker(customer, shop);
+                customerWorker.start();
+                customerWorkerList.add(customerWorker);
             }
             Timer.sleep(1000);
-            customerWorkerList.removeIf(customerWorker -> customerWorker.getState() == State.TERMINATED);
-            System.out.println("количество покупателей " + customerWorkerList.size());
+            System.out.println("количество покупателей " + numberOfBuyers);
             System.out.println(second);
         }
 
@@ -59,6 +46,19 @@ public class ShopWorker extends Thread {
             }
         }
         System.out.println(shop + " closed");
+    }
+
+    private Customer customerGenerator() {
+        int customerType = RandomGenerator.get(0, 99);
+        Customer customer;
+        if (customerType < 25) {
+            customer = new Pensioner(++number);
+        } else if (customerType >= 75) {
+            customer = new Customer(++number);
+        } else {
+            customer = new Student(++number);
+        }
+        return customer;
     }
 
 }
