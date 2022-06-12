@@ -1,8 +1,20 @@
-package by.it.smirnov.jd02_02;
+package by.it.smirnov.jd02_02.entities.customer_types;
+
+import by.it.smirnov.jd02_02.utils.Randomizer;
 
 public class Customer {
 
     public final String name;
+
+    public boolean isWaiting() {
+        return waiting;
+    }
+
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
+    }
+
+    private boolean waiting;
     public Customer(int number) {
         this.name = "Customer №" + number;
     }
@@ -18,5 +30,9 @@ public class Customer {
 
     public int getSpeed(int millis) {
         return millis;
+    }
+
+    public Object getMonitor(){
+        return this;
     }
 }

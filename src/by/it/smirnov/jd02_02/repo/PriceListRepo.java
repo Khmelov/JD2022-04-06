@@ -1,4 +1,6 @@
-package by.it.smirnov.jd02_02;
+package by.it.smirnov.jd02_02.repo;
+
+import by.it.smirnov.jd02_02.utils.Randomizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

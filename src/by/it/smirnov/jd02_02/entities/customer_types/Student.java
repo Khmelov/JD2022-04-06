@@ -1,4 +1,6 @@
-package by.it.smirnov.jd02_02;
+package by.it.smirnov.jd02_02.entities.customer_types;
+
+import by.it.smirnov.jd02_02.utils.Randomizer;
 
 public class Student extends Customer {
 

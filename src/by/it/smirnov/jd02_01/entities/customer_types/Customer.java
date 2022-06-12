@@ -1,4 +1,4 @@
-package by.it.smirnov.jd02_01.customer_types;
+package by.it.smirnov.jd02_01.entities.customer_types;
 
 import by.it.smirnov.jd02_01.utils.Randomizer;
 

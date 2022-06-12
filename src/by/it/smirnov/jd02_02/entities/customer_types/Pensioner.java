@@ -1,6 +1,6 @@
-package by.it.smirnov.jd02_01.customer_types;
+package by.it.smirnov.jd02_02.entities.customer_types;
 
-public class Pensioner extends Customer{
+public class Pensioner extends Customer {
 
     public final String name;
 

@@ -1,6 +1,18 @@
-package by.it.smirnov.jd02_02;
+package by.it.smirnov.jd02_02.services;
+
+import by.it.smirnov.jd02_02.entities.Good;
+import by.it.smirnov.jd02_02.entities.ShoppingCart;
+import by.it.smirnov.jd02_02.entities.Store;
+import by.it.smirnov.jd02_02.entities.StoreQueue;
+import by.it.smirnov.jd02_02.entities.customer_types.Customer;
+import by.it.smirnov.jd02_02.interfaces.CustomerAction;
+import by.it.smirnov.jd02_02.interfaces.ShoppingCardAction;
+import by.it.smirnov.jd02_02.repo.PriceListRepo;
+import by.it.smirnov.jd02_02.utils.Randomizer;
+import by.it.smirnov.jd02_02.utils.Sleeper;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.StringJoiner;
 
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
@@ -17,6 +29,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         this.customer = customer;
         this.store = store;
         this.shoppingCart = null;
+        store.getManager().customerIn();
     }
 
     @Override
@@ -33,7 +46,9 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
             Good good = chooseGood();
             goodsTaken = putToCart(good);
         }
+        goToQueue();
         goOut();
+        store.getManager().customerOut();
     }
 
     @Override
@@ -63,6 +78,25 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     }
 
     @Override
+    public void goToQueue() {
+        StoreQueue storeQueue = store.getStoreQueue();
+        synchronized (customer.getMonitor()) {
+            System.out.println(customer + " goes to queue");
+            storeQueue.add(customer);
+            customer.setWaiting(true);
+            while (customer.isWaiting()){
+                try {
+                    customer.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            System.out.println(customer + " seeks for his money and/or banking cards in his huge pocket, \" +\n" +
+                    "                    \"buys goods and leaves the queue");
+        }
+    }
+
+    @Override
     public int putToCart(Good good) {
         this.shoppingCart.getShoppingCart().add(good);
         int timeout = Randomizer.get(100, 300);
@@ -83,8 +117,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
             System.out.println(customer + " bought nothing and went away very sad...");
         }
         else {
-            System.out.println(customer + " seeks for his money and/or banking cards in his huge pocket, " +
-                    "buys goods and leaves happy the " + store + " with " + goodsTaken + " goods:\n          "
+            System.out.println(customer + " leaves happy the " + store + " with " + goodsTaken + " goods:\n          "
                     + goods.toString());
         }
         ++customersLeft;

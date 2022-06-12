@@ -1,4 +1,6 @@
-package by.it.smirnov.jd02_01;
+package by.it.smirnov.jd02_01.interfaces;
+
+import by.it.smirnov.jd02_01.entities.Good;
 
 public interface CustomerAction {
     void enteredStore(); //вошел в магазин (мгновенно)

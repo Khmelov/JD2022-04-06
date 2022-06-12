@@ -1,10 +1,14 @@
-package by.it.smirnov.jd02_01;
+package by.it.smirnov.jd02_02.services;
 
-import by.it.smirnov.jd02_01.customer_types.Customer;
-import by.it.smirnov.jd02_01.customer_types.Pensioner;
-import by.it.smirnov.jd02_01.customer_types.Student;
-import by.it.smirnov.jd02_01.utils.Randomizer;
-import by.it.smirnov.jd02_01.utils.Sleeper;
+import by.it.smirnov.jd02_02.entities.Cashier;
+import by.it.smirnov.jd02_02.entities.Manager;
+import by.it.smirnov.jd02_02.entities.Store;
+import by.it.smirnov.jd02_02.entities.customer_types.Customer;
+import by.it.smirnov.jd02_02.entities.customer_types.Pensioner;
+import by.it.smirnov.jd02_02.entities.customer_types.Student;
+import by.it.smirnov.jd02_02.utils.Randomizer;
+import by.it.smirnov.jd02_02.utils.Sleeper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,28 +29,33 @@ public class StoreWorker extends Thread {
     public void run() {
         System.out.println(store + " opened");
         int counter = 0;
-        List<CustomerWorker> listCW = new ArrayList<>();
-        List<String> attendenceStats = new ArrayList<>();
-        for (int time = 0; time < 120; time++) {
+        List<Thread> threads = new ArrayList<>();
+        Manager manager = store.getManager();
+
+        for (int cashNumb = 1; cashNumb < 2; cashNumb++) {
+            Cashier cashier = new Cashier(cashNumb);
+            CashierWorker cashierWorker = new CashierWorker(cashier, store);
+            Thread thread = new Thread(cashierWorker);
+            threads.add(thread);
+            thread.start();
+        }
+        for (int time = 0; manager.storeOpened(); time++) {
             int inFlowBase = Randomizer.get(5, 15);
-            for (int i = 0; i < inFlowPerSec(inFlowBase, time) &&
+            for (int i = 0; manager.storeOpened() && i < inFlowPerSec(inFlowBase, time) &&
                     CustomerWorker.getInStoreCustomers() < entranceLimit(time); i++) {
                 Customer customer = getCustomer(++counter);
                 CustomerWorker customerWorker = new CustomerWorker(customer, store);
                 customerWorker.start();
-                listCW.add(customerWorker);
+                threads.add(customerWorker);
             }
             Sleeper.sleep(1000);
-            //attendenceStats.add(time + " " + CustomerWorker.getInStoreCustomers());
         }
-        for (CustomerWorker worker : listCW) {
-            while (worker.isAlive()) Sleeper.sleep(100);
+
+        for (Thread thread : threads) {
+            while (thread.isAlive()) Sleeper.sleep(100);
         }
         System.out.println(store + " closed");
-        for (String el : attendenceStats) {
-            System.out.println(el);
-        }
-    }
+   }
 
     public static Customer getCustomer(int counter){
         int type = Randomizer.get(1,4);

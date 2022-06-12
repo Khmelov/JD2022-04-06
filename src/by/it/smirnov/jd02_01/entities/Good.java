@@ -1,4 +1,4 @@
-package by.it.smirnov.jd02_01;
+package by.it.smirnov.jd02_01.entities;
 
 public class Good {
 

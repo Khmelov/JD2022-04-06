@@ -1,6 +1,11 @@
-package by.it.smirnov.jd02_01;
+package by.it.smirnov.jd02_01.services;
 
-import by.it.smirnov.jd02_01.customer_types.Customer;
+import by.it.smirnov.jd02_01.entities.customer_types.Customer;
+import by.it.smirnov.jd02_01.entities.Good;
+import by.it.smirnov.jd02_01.entities.ShoppingCart;
+import by.it.smirnov.jd02_01.entities.Store;
+import by.it.smirnov.jd02_01.interfaces.CustomerAction;
+import by.it.smirnov.jd02_01.interfaces.ShoppingCardAction;
 import by.it.smirnov.jd02_01.repo.PriceListRepo;
 import by.it.smirnov.jd02_01.utils.Randomizer;
 import by.it.smirnov.jd02_01.utils.Sleeper;

@@ -1,6 +1,6 @@
-package by.it.smirnov.jd02_01;
+package by.it.smirnov.jd02_02.entities;
 
-import by.it.smirnov.jd02_01.customer_types.Customer;
+import by.it.smirnov.jd02_02.entities.customer_types.Customer;
 
 import java.util.ArrayList;
 import java.util.List;

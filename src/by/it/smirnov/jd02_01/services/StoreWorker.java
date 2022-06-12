@@ -1,5 +1,11 @@
-package by.it.smirnov.jd02_02;
+package by.it.smirnov.jd02_01.services;
 
+import by.it.smirnov.jd02_01.entities.customer_types.Customer;
+import by.it.smirnov.jd02_01.entities.customer_types.Pensioner;
+import by.it.smirnov.jd02_01.entities.Store;
+import by.it.smirnov.jd02_01.entities.customer_types.Student;
+import by.it.smirnov.jd02_01.utils.Randomizer;
+import by.it.smirnov.jd02_01.utils.Sleeper;
 import java.util.ArrayList;
 import java.util.List;
 

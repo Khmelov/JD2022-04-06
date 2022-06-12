@@ -1,4 +1,4 @@
-package by.it.smirnov.jd02_02;
+package by.it.smirnov.jd02_02.utils;
 
 public class Sleeper {
 
