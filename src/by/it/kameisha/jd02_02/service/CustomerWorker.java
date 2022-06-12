@@ -1,5 +1,6 @@
 package by.it.kameisha.jd02_02.service;
 
+import by.it.kameisha.jd02_02.entity.Queue;
 import by.it.kameisha.jd02_02.repository.PriceListRepository;
 import by.it.kameisha.jd02_02.util.RandomGenerator;
 import by.it.kameisha.jd02_02.util.Timer;
@@ -28,6 +29,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         for (int i = 0; i < count; i++) {
             putToCart(chooseGood());
         }
+        goToQueue();
         goOut();
     }
 
@@ -39,13 +41,30 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public Good chooseGood() {
         System.out.println(customer + " started to choose goods");
-        int timeout = (int) (customer.getTimeoutFactor()*RandomGenerator.get(500, 2000));
+        int timeout = (int) (customer.getTimeoutFactor() * RandomGenerator.get(500, 2000));
         Timer.sleep(timeout);
         int indexRandomGood = RandomGenerator.get(repository.getGoodsList().size() - 1);
         Good good = new Good(repository.getGoodsList().get(indexRandomGood));
         System.out.println(customer + " choose " + good);
         System.out.println(customer + " finished to choose goods");
         return good;
+    }
+
+    @Override
+    public void goToQueue() {
+        Queue queue = shop.getQueue();
+        synchronized (customer.getMonitor()) {
+            System.out.println(customer + "go to Queue");
+            queue.add(customer);
+            customer.setWaiting(true);
+            while (customer.isWaiting())
+                try {
+                    customer.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            System.out.println(customer+"leaves the Queue");
+        }
     }
 
     @Override
@@ -56,14 +75,14 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void takeCart() {
         System.out.println(customer + " take a cart");
-        int timeout = (int) (customer.getTimeoutFactor()*RandomGenerator.get(100, 300));
+        int timeout = (int) (customer.getTimeoutFactor() * RandomGenerator.get(100, 300));
         Timer.sleep(timeout);
     }
 
     @Override
     public int putToCart(Good good) {
         customer.getShoppingCart().add(good);
-        int timeout = (int) (customer.getTimeoutFactor()*RandomGenerator.get(100, 300));
+        int timeout = (int) (customer.getTimeoutFactor() * RandomGenerator.get(100, 300));
         Timer.sleep(timeout);
         System.out.println(customer + " put " + good + " to cart. In cart " + customer.getShoppingCart().size());
         return customer.getShoppingCart().size();

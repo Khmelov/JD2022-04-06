@@ -2,9 +2,25 @@ package by.it.kameisha.jd02_02.entity;
 
 public class Shop {
     private final String name;
+    private final Queue queue;
+    private final Manager manager;
 
-    public Shop(String name) {
+    public String getName() {
+        return name;
+    }
+
+    public Queue getQueue() {
+        return queue;
+    }
+
+    public Shop(String name, Queue queue, Manager manager) {
         this.name = name;
+        this.queue = queue;
+        this.manager = manager;
+    }
+
+    public Manager getManager() {
+        return manager;
     }
 
     @Override

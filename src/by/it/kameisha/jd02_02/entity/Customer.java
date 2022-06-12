@@ -6,7 +6,17 @@ import java.util.List;
 public class Customer {
     private static long currentId = System.currentTimeMillis();
     private final String name;
+    private boolean waiting;
     private final long id;
+
+    public boolean isWaiting() {
+        return waiting;
+    }
+
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
+    }
+
     private final List<Good> shoppingCart = new ArrayList<>();
 
     public Customer(long number) {
@@ -30,8 +40,12 @@ public class Customer {
     public int getMaxCountGoods() {
         return 5;
     }
-      public double getTimeoutFactor() {
+
+    public double getTimeoutFactor() {
         return 1;
     }
 
+    public Object getMonitor() {
+        return this;
+    }
 }
