@@ -42,8 +42,10 @@ public class CashierWorker extends Thread implements CashierAction {
 
     @Override
     public void closeCash() {
-        System.out.println(cashier+ " closed "+cashBox.name()+"\n"+
-                "Total cash......"+cashBox.getTotalCash());
+        synchronized (System.out) {
+            System.out.println("\n" + cashier + " closed " + cashBox.name());
+            System.out.printf("%s%5.2f\n\n", "Total cash....", cashBox.getTotalCash());
+        }
     }
 
     @Override
@@ -52,9 +54,9 @@ public class CashierWorker extends Thread implements CashierAction {
         Customer customer = queue.extract();
         if (Objects.nonNull(customer)) {
             System.out.println(cashier + " started service " + customer);
-            cashBox.addSum(giveCheck(customer));
             int timeOut = RandomGenerator.get(2000, 5000);
             Timer.sleep(timeOut);
+            cashBox.addSum(giveCheck(customer));
             System.out.println(cashier + " finished service " + customer);
             synchronized (customer.getMonitor()) {
                 customer.isWaiting = false;
@@ -70,13 +72,16 @@ public class CashierWorker extends Thread implements CashierAction {
                 .map(Good::toString)
                 .toArray(String[]::new);
         double totalSum=0;
-        System.out.println("check for "+customer+":");
-        for (String good : goods) {
-            Double price = PriceListRepository.priceList.get(good);
-            totalSum+=price;
-            System.out.printf("%10s....%5f\n", good, price);
+        synchronized (System.out) {
+            System.out.println("\ncheck for " + customer + ":");
+            for (String good : goods) {
+                Double price = PriceListRepository.priceList.get(good);
+                totalSum += price;
+                System.out.printf("%10s....%5f\n", good, price);
+            }
+            System.out.println("--------");
+            System.out.printf("%s%.2f\n\n","Total sum: ", totalSum);
         }
-        System.out.println("--------\nTotal sum: "+totalSum+"\n");
         return totalSum;
     }
 }
