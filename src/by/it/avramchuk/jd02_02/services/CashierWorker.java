@@ -2,10 +2,7 @@ package by.it.avramchuk.jd02_02.services;
 
 import by.it._classwork_.jd02_02.util.RandomGenerator;
 import by.it._classwork_.jd02_02.util.Timer;
-import by.it.avramchuk.jd02_02.entity.Cashier;
-import by.it.avramchuk.jd02_02.entity.Customer;
-import by.it.avramchuk.jd02_02.entity.Shop;
-import by.it.avramchuk.jd02_02.entity.ShopQueue;
+import by.it.avramchuk.jd02_02.entity.*;
 import by.it.avramchuk.jd02_02.interfaces.CashierAction;
 
 import java.util.Objects;
@@ -63,6 +60,6 @@ public class CashierWorker extends Thread implements CashierAction {
                 customer.isWaiting = false;
                 customer.notify();
             }
-        }
+        } else {Thread.onSpinWait();}
     }
 }

@@ -32,7 +32,7 @@ implements CustomerAction, ShoppingCardAction {
             putToCart(nextGood);
         }
         System.out.println(customer+" finished. He choosed "+myCart.goodsInCart.size()+" goods");
-        goToQueue();
+        if (myCart.goodsInCart.size()!=0) goToQueue();
         goOut();
     }
 
