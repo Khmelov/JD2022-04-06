@@ -20,7 +20,7 @@ public class CashierWorker implements Runnable {
         System.out.println(cashier + " opened");
         Manager manager = shop.getManager();
         Queue queue = shop.getQueue();
-        while (manager.shopOpened()) {
+        while (!manager.shopClosed()) {
             Customer customer = queue.extract();
             if (Objects.nonNull(customer)) {
                 System.out.println(cashier + " started service " + customer);
@@ -32,11 +32,7 @@ public class CashierWorker implements Runnable {
                     customer.notify();
                 }
             } else {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                Thread.onSpinWait();
             }
         }
         System.out.println(cashier + " closed");

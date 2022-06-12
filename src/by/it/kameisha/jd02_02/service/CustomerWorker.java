@@ -19,6 +19,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         this.customer = customer;
         this.shop = shop;
         this.repository = repository;
+        shop.getManager().customerEnter();
     }
 
     @Override
@@ -54,7 +55,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     public void goToQueue() {
         Queue queue = shop.getQueue();
         synchronized (customer.getMonitor()) {
-            System.out.println(customer + "go to Queue");
+            System.out.println(customer + " go to Queue");
             queue.add(customer);
             customer.setWaiting(true);
             while (customer.isWaiting())
@@ -63,7 +64,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-            System.out.println(customer+"leaves the Queue");
+            System.out.println(customer + " leaves the Queue");
         }
     }
 

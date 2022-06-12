@@ -1,12 +1,9 @@
 package by.it.kameisha.jd02_02.service;
 
+import by.it.kameisha.jd02_02.entity.*;
 import by.it.kameisha.jd02_02.repository.PriceListRepository;
 import by.it.kameisha.jd02_02.util.RandomGenerator;
 import by.it.kameisha.jd02_02.util.Timer;
-import by.it.kameisha.jd02_02.entity.Customer;
-import by.it.kameisha.jd02_02.entity.Pensioner;
-import by.it.kameisha.jd02_02.entity.Shop;
-import by.it.kameisha.jd02_02.entity.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,27 +21,37 @@ public class ShopWorker extends Thread {
     public void run() {
         System.out.println(shop + " opened");
         int number = 0;
-        List<CustomerWorker> customerWorkerList = new ArrayList<>();
-        for (int timeMinute = 0; timeMinute < 2; timeMinute++) {
-            for (int timeSecond = 0; timeSecond < 60; timeSecond++) {
-                int countCustomersPerSecond = 0;
-                if (timeSecond < 30 && ShopWorker.activeCount() < timeSecond + 10) {
-                    countCustomersPerSecond = timeSecond + 10 - ShopWorker.activeCount();
-                } else if (timeSecond >= 30 && ShopWorker.activeCount() < 40 + (30 - timeSecond)) {
-                    countCustomersPerSecond = 40 + (30 - timeSecond) - ShopWorker.activeCount();
-                }
-                for (int i = 0; i < countCustomersPerSecond; i++) {
-                    Customer customer = createRandomCustomer(++number);
-                    CustomerWorker customerWorker = new CustomerWorker(customer, shop, repository);
-                    customerWorker.start();
-                    customerWorkerList.add(customerWorker);
+        List<Thread> threads = new ArrayList<>();
+        Manager manager = shop.getManager();
+        for (int numberCashier = 1;numberCashier<3;numberCashier++){
+            Cashier cashier = new Cashier(numberCashier);
+            CashierWorker cashierWorker = new CashierWorker(cashier, shop);
+            Thread thread = new Thread(cashierWorker);
+            threads.add(thread);
+            thread.start();
+        }
+        while (manager.shopOpened()) {
+            for (int timeMinute = 0; timeMinute < 2; timeMinute++) {
+                for (int timeSecond = 0; timeSecond < 60; timeSecond++) {
+                    int countCustomersPerSecond = 0;
+                    if (timeSecond < 30 && ShopWorker.activeCount() < timeSecond + 10) {
+                        countCustomersPerSecond = timeSecond + 10 - ShopWorker.activeCount();
+                    } else if (timeSecond >= 30 && ShopWorker.activeCount() < 40 + (30 - timeSecond)) {
+                        countCustomersPerSecond = 40 + (30 - timeSecond) - ShopWorker.activeCount();
+                    }
+                    for (int i = 0; manager.shopOpened() && i < countCustomersPerSecond; i++) {
+                        Customer customer = createRandomCustomer(++number);
+                        CustomerWorker customerWorker = new CustomerWorker(customer, shop, repository);
+                        customerWorker.start();
+                        threads.add(customerWorker);
+                    }
                 }
                 Timer.sleep(1000);
             }
         }
-        for (CustomerWorker customerWorker : customerWorkerList) {
+        for (Thread thread : threads) {
             try {
-                customerWorker.join();
+                thread.join();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
