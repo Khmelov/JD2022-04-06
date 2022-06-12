@@ -13,6 +13,10 @@ public class ShoppingCart {
         this.goodsInCart = new ArrayList<>();
     }
 
+    public List<Good> getGoodsInCart(){
+        return goodsInCart;
+    }
+
    public int addGoodToCart(Good good){
         goodsInCart.add(good);
         return goodsInCart.size();

@@ -79,6 +79,7 @@ implements CustomerAction, ShoppingCardAction {
         ShopQueue queue = shop.getQueue();
         synchronized (customer.getMonitor()){
             System.out.println(customer+" go to the queue");
+            customer.setMyCart(myCart);
             queue.add(customer);
             customer.isWaiting=true;
             while (customer.isWaiting){
