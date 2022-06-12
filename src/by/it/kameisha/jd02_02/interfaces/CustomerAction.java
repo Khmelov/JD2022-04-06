@@ -1,4 +1,6 @@
-package by.it.kameisha.jd02_02;
+package by.it.kameisha.jd02_02.interfaces;
+
+import by.it.kameisha.jd02_02.entity.Good;
 
 public interface CustomerAction {
     void enteredStore();//вошел в магазин (мгновенно)

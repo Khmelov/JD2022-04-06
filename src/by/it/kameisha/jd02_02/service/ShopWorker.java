@@ -1,4 +1,12 @@
-package by.it.kameisha.jd02_02;
+package by.it.kameisha.jd02_02.service;
+
+import by.it.kameisha.jd02_02.repository.PriceListRepository;
+import by.it.kameisha.jd02_02.util.RandomGenerator;
+import by.it.kameisha.jd02_02.util.Timer;
+import by.it.kameisha.jd02_02.entity.Customer;
+import by.it.kameisha.jd02_02.entity.Pensioner;
+import by.it.kameisha.jd02_02.entity.Shop;
+import by.it.kameisha.jd02_02.entity.Student;
 
 import java.util.ArrayList;
 import java.util.List;

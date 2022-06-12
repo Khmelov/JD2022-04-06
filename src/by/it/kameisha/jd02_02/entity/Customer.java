@@ -1,4 +1,4 @@
-package by.it.kameisha.jd02_02;
+package by.it.kameisha.jd02_02.entity;
 
 import java.util.ArrayList;
 import java.util.List;

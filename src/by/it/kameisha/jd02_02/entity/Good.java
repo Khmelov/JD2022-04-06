@@ -1,4 +1,4 @@
-package by.it.kameisha.jd02_02;
+package by.it.kameisha.jd02_02.entity;
 
 public class Good {
     private final String name;

@@ -1,4 +1,7 @@
-package by.it.kameisha.jd02_02;
+package by.it.kameisha.jd02_02.repository;
+
+import by.it.kameisha.jd02_02.entity.Good;
+import by.it.kameisha.jd02_02.util.Util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
