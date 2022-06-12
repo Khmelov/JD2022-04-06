@@ -15,7 +15,7 @@ public class ShopQueue {
     public synchronized Customer extract(){
         return queue.poll();
     }
-    public int getSize(){
+    public synchronized int getSize(){
        return queue.size();
     }
 }

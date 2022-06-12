@@ -27,6 +27,8 @@ public class ShopWorker extends Thread{
         for (int min = 0; min < 2; min++) {
             for (int sec = 0; sec < 60; sec++) {
                 int currentCount = getCurrentCount();
+                System.out.println("\n at " + sec + " second " + currentCount + " customers in the store\n" );
+
                 int countCustomerPerSecond = needToAdd(currentCount, sec);
                 for (int i = 0; i < countCustomerPerSecond; i++) {
                     Customer customer = defineCustomer();
@@ -36,7 +38,6 @@ public class ShopWorker extends Thread{
                 }
                 int cashierNeeded = cashierNeeded();
                 manager.regulateCountCashier(cashierNeeded);
-                System.out.println("\n at " + sec + " second " + currentCount + " customers in the store\n" );
                 Timer.sleep(1000);
             }
         }
@@ -59,7 +60,7 @@ public class ShopWorker extends Thread{
     private int getCurrentCount() {
         int currentCount = 0;
         for (CustomerWorker c : customerWorkerList) {
-            if (c.isAlive()) {
+            if (c.getState()!= State.TERMINATED) {
                 currentCount++;
             }
         }
