@@ -13,11 +13,11 @@ public class Customer {
         return waiting;
     }
 
+    private final List<Good> shoppingCart = new ArrayList<>();
+
     public void setWaiting(boolean waiting) {
         this.waiting = waiting;
     }
-
-    private final List<Good> shoppingCart = new ArrayList<>();
 
     public Customer(long number) {
         id = ++currentId;

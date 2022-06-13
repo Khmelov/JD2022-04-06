@@ -11,8 +11,8 @@ public class Runner {
         Manager manager = new Manager(100);
         Queue martInnQueue = new Queue();
         PriceListRepository repository = new PriceListRepository();
-        Shop shop = new Shop("MartInn", martInnQueue,manager);
-        ShopWorker shopWorker = new ShopWorker(shop, repository);
+        Shop shop = new Shop("MartInn", martInnQueue, manager, repository);
+        ShopWorker shopWorker = new ShopWorker(shop);
         shopWorker.start();
     }
 }

@@ -1,9 +1,12 @@
 package by.it.kameisha.jd02_02.entity;
 
+import by.it.kameisha.jd02_02.repository.PriceListRepository;
+
 public class Shop {
     private final String name;
     private final Queue queue;
     private final Manager manager;
+    private final PriceListRepository repository;
 
     public String getName() {
         return name;
@@ -13,14 +16,19 @@ public class Shop {
         return queue;
     }
 
-    public Shop(String name, Queue queue, Manager manager) {
+    public Shop(String name, Queue queue, Manager manager, PriceListRepository repository) {
         this.name = name;
         this.queue = queue;
         this.manager = manager;
+        this.repository = repository;
     }
 
     public Manager getManager() {
         return manager;
+    }
+
+    public PriceListRepository getRepository() {
+        return repository;
     }
 
     @Override

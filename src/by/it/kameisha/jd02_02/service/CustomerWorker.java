@@ -1,7 +1,6 @@
 package by.it.kameisha.jd02_02.service;
 
 import by.it.kameisha.jd02_02.entity.*;
-import by.it.kameisha.jd02_02.repository.PriceListRepository;
 import by.it.kameisha.jd02_02.util.RandomGenerator;
 import by.it.kameisha.jd02_02.util.Timer;
 import by.it.kameisha.jd02_02.interfaces.CustomerAction;
@@ -10,12 +9,10 @@ import by.it.kameisha.jd02_02.interfaces.ShoppingCardAction;
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
     private final Customer customer;
     private final Shop shop;
-    private final PriceListRepository repository;
 
-    public CustomerWorker(Customer customer, Shop shop, PriceListRepository repository) {
+    public CustomerWorker(Customer customer, Shop shop) {
         this.customer = customer;
         this.shop = shop;
-        this.repository = repository;
         shop.getManager().customerEnter();
     }
 
@@ -41,8 +38,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         System.out.println(customer + " started to choose goods");
         int timeout = (int) (customer.getTimeoutFactor() * RandomGenerator.get(500, 2000));
         Timer.sleep(timeout);
-        int indexRandomGood = RandomGenerator.get(repository.getGoodsList().size() - 1);
-        Good good = new Good(repository.getGoodsList().get(indexRandomGood));
+        int indexRandomGood = RandomGenerator.get(shop.getRepository().getGoodsList().size() - 1);
+        Good good = new Good(shop.getRepository().getGoodsList().get(indexRandomGood));
         System.out.println(customer + " choose " + good);
         System.out.println(customer + " finished to choose goods");
         return good;

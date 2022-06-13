@@ -1,7 +1,6 @@
 package by.it.kameisha.jd02_02.service;
 
 import by.it.kameisha.jd02_02.entity.*;
-import by.it.kameisha.jd02_02.repository.PriceListRepository;
 import by.it.kameisha.jd02_02.util.RandomGenerator;
 import by.it.kameisha.jd02_02.util.Timer;
 
@@ -10,11 +9,9 @@ import java.util.List;
 
 public class ShopWorker extends Thread {
     private final Shop shop;
-    private final PriceListRepository repository;
 
-    public ShopWorker(Shop shop, PriceListRepository repository) {
+    public ShopWorker(Shop shop) {
         this.shop = shop;
-        this.repository = repository;
     }
 
     @Override
@@ -23,7 +20,7 @@ public class ShopWorker extends Thread {
         int number = 0;
         List<Thread> threads = new ArrayList<>();
         Manager manager = shop.getManager();
-        for (int numberCashier = 1; numberCashier < 4; numberCashier++) {
+        for (int numberCashier = 1; numberCashier < 2; numberCashier++) {
             Cashier cashier = new Cashier(numberCashier);
             CashierWorker cashierWorker = new CashierWorker(cashier, shop);
             Thread thread = new Thread(cashierWorker);
@@ -40,7 +37,7 @@ public class ShopWorker extends Thread {
                 }
                 for (int i = 0; manager.shopOpened() && i < countCustomersPerSecond; i++) {
                     Customer customer = createRandomCustomer(++number);
-                    CustomerWorker customerWorker = new CustomerWorker(customer, shop, repository);
+                    CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                     customerWorker.start();
                     threads.add(customerWorker);
                 }
