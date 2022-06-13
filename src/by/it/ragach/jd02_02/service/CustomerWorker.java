@@ -1,12 +1,8 @@
 package by.it.ragach.jd02_02.service;
 
-import by.it.ragach.jd02_02.entity.PriceListRepo;
+import by.it.ragach.jd02_02.entity.*;
 import by.it.ragach.jd02_02.util.RandomGenerator;
-import by.it.ragach.jd02_02.entity.ShoppingCart;
 import by.it.ragach.jd02_02.util.Timer;
-import by.it.ragach.jd02_02.entity.Customer;
-import by.it.ragach.jd02_02.entity.Good;
-import by.it.ragach.jd02_02.entity.Shop;
 import by.it.ragach.jd02_02.interfaces.CustomerAction;
 import by.it.ragach.jd02_02.interfaces.ShoppingCardAction;
 
@@ -33,6 +29,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
             
         }
         System.out.println(customer + " stopped to choose goods");
+        goToQueue();
         goOut();
     }
 
@@ -64,6 +61,20 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         return good;
     }
 
+    @Override
+    public void goToQueue() {
+        Queue queue = shop.getQueue();
+        synchronized (customer){
+            System.out.println(customer+ " go to Queue");
+            queue.add(customer);
+            try {
+                customer.wait();// wait notify
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 
 
     @Override
