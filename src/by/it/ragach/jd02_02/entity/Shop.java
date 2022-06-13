@@ -4,11 +4,13 @@ public class Shop {
 
     private final String name;
     private final Queue queue;
+    private final Manager manager;
 
-    public Shop (String name, Queue queue){
+
+    public Shop (String name, Queue queue, Manager manager){
         this.name = name;
-
         this.queue = queue;
+        this.manager = manager;
     }
 
     public String getName() {
@@ -18,6 +20,11 @@ public class Shop {
     public Queue getQueue() {
         return queue;
     }
+
+    public Manager getManager() {
+        return manager;
+    }
+
 
     @Override
     public String toString() {

@@ -16,21 +16,23 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     public CustomerWorker(Customer customer, Shop shop) {
         this.customer = customer;
         this.shop = shop;
+        shop.getManager().customerEnter();
     }
 
     @Override
     public void run() {
         enteredStore();
         takeCart();
-        int amountOfGoods = RandomGenerator.get(2,5);
-        for (int i= 0; i < amountOfGoods;i++) {
+        int amountOfGoods = RandomGenerator.get(2, 5);
+        for (int i = 0; i < amountOfGoods; i++) {
             Good good = chooseGood();
             putToCart(good);
-            
+
         }
         System.out.println(customer + " stopped to choose goods");
         goToQueue();
         goOut();
+        shop.getManager().customerOut();
     }
 
     @Override
@@ -50,6 +52,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public Good chooseGood() {
+
         System.out.println(customer + " started to choose goods");
         int timeout = RandomGenerator.get(500, 2000);
         Timer.sleep(timeout);
@@ -64,18 +67,21 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void goToQueue() {
         Queue queue = shop.getQueue();
-        synchronized (customer){
-            System.out.println(customer+ " go to Queue");
+        synchronized (customer.getMonitor()) {
+            System.out.println(customer + " go to Queue");
             queue.add(customer);
-            try {
-                customer.wait();// wait notify
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            customer.setWaiting(true);
+            while (customer.isWaiting()) {
+                try {
+                    customer.wait();// wait notify
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
+            System.out.println(customer + " leaves the Queue");
         }
 
     }
-
 
     @Override
     public void goOut() {
@@ -86,7 +92,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public int putToCart(Good good) {
         shoppingCart.addGoods(good.getName(), good.getPrice());
-        int timeout = RandomGenerator.get(100,300);
+        int timeout = RandomGenerator.get(100, 300);
         Timer.sleep(timeout);
         return shoppingCart.size();
 

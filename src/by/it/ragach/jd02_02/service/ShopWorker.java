@@ -1,5 +1,7 @@
 package by.it.ragach.jd02_02.service;
 
+import by.it.ragach.jd02_02.entity.Cashier;
+import by.it.ragach.jd02_02.entity.Manager;
 import by.it.ragach.jd02_02.util.RandomGenerator;
 import by.it.ragach.jd02_02.util.Timer;
 import by.it.ragach.jd02_02.entity.Customer;
@@ -8,38 +10,50 @@ import by.it.ragach.jd02_02.entity.Shop;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopWorker extends Thread{
+public class ShopWorker extends Thread {
     private final Shop shop;
 
-    public ShopWorker (Shop shop){
+    public ShopWorker(Shop shop) {
         this.shop = shop;
     }
-    
+
     @Override
     public void run() {
-        System.out.println(shop+" opened");
-        int number=0;
-        List<CustomerWorker>customerWorkerList = new ArrayList<>();
+        System.out.println(shop + " opened");
+        int number = 0;
+        List<Thread> threads = new ArrayList<>();
+        Manager manager = shop.getManager();
 
-        for (int time = 0; time < 120; time++) {
+
+        for (int numberCashier = 1; numberCashier < 2; numberCashier++) {
+            Cashier cashier = new Cashier(numberCashier);
+            CashierWorker cashierWorker = new CashierWorker(cashier, shop);
+            Thread thread = new Thread(cashierWorker);
+            threads.add(thread);
+            thread.start();
+
+        }
+
+
+        while (manager.shopOpened()) {
             int countCustomerPerSecond = RandomGenerator.get(2);
-            for (int i = 0; i < countCustomerPerSecond; i++) {
+            for (int i = 0; manager.shopOpened() && i < countCustomerPerSecond; i++) {
                 Customer customer = new Customer(++number);
                 CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                 customerWorker.start();
-                customerWorkerList.add(customerWorker);
-                Timer.sleep(1000);
+                threads.add(customerWorker);
             }
+            Timer.sleep(1000);
         }
-        for (CustomerWorker customerWorker : customerWorkerList) {
+        for (Thread thread : threads) {
             try {
-                customerWorker.join();
+                thread.join();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
         }
-        System.out.println(shop+" closed");
+        System.out.println(shop + " closed");
     }
 
 }
