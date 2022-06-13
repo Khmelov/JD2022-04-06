@@ -20,13 +20,7 @@ public class ShopWorker extends Thread {
         for (int time = 0; time < 120; time++) {
             int numberOfBuyers = CustomerWorker.countBuyers();
             int second = time % 60;
-
-            if (second < 30) {
-                customerPerSecond = RandomGenerator.get(10+second/2);
-            } else if (second >= 30 && numberOfBuyers <= (40 + (30 - second))) {
-                customerPerSecond = (40 + (30 - second)-numberOfBuyers);
-            } else customerPerSecond = 0;
-
+            customerPerSecond = getCustomerPerSecond(numberOfBuyers, second);
             for (int i = 0; i < customerPerSecond; i++) {
                 Customer customer = customerGenerator();
                 CustomerWorker customerWorker = new CustomerWorker(customer, shop);
@@ -46,6 +40,16 @@ public class ShopWorker extends Thread {
             }
         }
         System.out.println(shop + " closed");
+    }
+
+    private int getCustomerPerSecond(int numberOfBuyers, int second) {
+        int customerPerSecond;
+        if (second < 30) {
+            customerPerSecond = RandomGenerator.get(10+ second /3);
+        } else if (second >= 30 && numberOfBuyers <= (40 + (30 - second))) {
+            customerPerSecond = (40 + (30 - second)- numberOfBuyers);
+        } else customerPerSecond = 0;
+        return customerPerSecond;
     }
 
     private Customer customerGenerator() {

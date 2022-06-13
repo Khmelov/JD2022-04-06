@@ -1,4 +1,10 @@
-package by.it.arsenihlaz.jd02_01;
+package by.it.arsenihlaz.jd02_02.service;
+
+import by.it.arsenihlaz.jd02_02.entity.*;
+import by.it.arsenihlaz.jd02_02.util.RandomGenerator;
+import by.it.arsenihlaz.jd02_02.util.Timer;
+import by.it.arsenihlaz.jd02_02.interfaces.CustomerAction;
+import by.it.arsenihlaz.jd02_02.interfaces.ShoppingCardAction;
 
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
     private final Customer customer;
@@ -14,9 +20,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     public CustomerWorker(Customer customer, Shop shop) {
         this.customer = customer;
         this.shop = shop;
-        synchronized (incomingMonitor){
-            incomingCounter++;
-        }
+        shop.getManager().customerEnter();
     }
 
     @Override
@@ -35,12 +39,17 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         }
         System.out.println(customer + " finished choosing goods");
         System.out.println(customer + " in the shopping cart " + shoppingCart.size() + " goods");
+        goQueue();
         goOut();
+        shop.getManager().customerOut();
     }
 
     @Override
     public void enteredStore() {
         System.out.println(customer + " enter to the " + shop);
+        synchronized (incomingMonitor) {
+            incomingCounter++;
+        }
     }
 
     @Override
@@ -54,9 +63,27 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     }
 
     @Override
+    public void goQueue() {
+        Queue queue = shop.getQueue();
+        synchronized (customer.getMonitor()) {
+            System.out.println(customer + " went to the queue");
+            queue.add(customer);
+            customer.setWaiting(true);
+            while (customer.isWaiting()) {
+                try {
+                    customer.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            System.out.println(customer + " left the queue");
+        }
+    }
+
+    @Override
     public void goOut() {
         System.out.println(customer + " leaves " + shop);
-        synchronized (exitMonitor){
+        synchronized (exitMonitor) {
             exitCounter++;
         }
     }
@@ -81,4 +108,5 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
             return incomingCounter - exitCounter;
         }
     }
+
 }
