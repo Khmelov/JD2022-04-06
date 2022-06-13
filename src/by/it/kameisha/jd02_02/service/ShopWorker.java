@@ -27,7 +27,7 @@ public class ShopWorker extends Thread {
             Cashier cashier = new Cashier(numberCashier);
             CashierWorker cashierWorker = new CashierWorker(cashier, shop);
             Thread thread = new Thread(cashierWorker);
-            threads.add(thread);
+//            threads.add(thread);
             thread.start();
         }
         while (manager.shopOpened()) {

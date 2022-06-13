@@ -1,12 +1,9 @@
 package by.it.kameisha.jd02_02.service;
 
-import by.it.kameisha.jd02_02.entity.Queue;
+import by.it.kameisha.jd02_02.entity.*;
 import by.it.kameisha.jd02_02.repository.PriceListRepository;
 import by.it.kameisha.jd02_02.util.RandomGenerator;
 import by.it.kameisha.jd02_02.util.Timer;
-import by.it.kameisha.jd02_02.entity.Customer;
-import by.it.kameisha.jd02_02.entity.Good;
-import by.it.kameisha.jd02_02.entity.Shop;
 import by.it.kameisha.jd02_02.interfaces.CustomerAction;
 import by.it.kameisha.jd02_02.interfaces.ShoppingCardAction;
 
@@ -69,7 +66,9 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     }
 
     @Override
-    public void goOut() {
+    public synchronized void goOut() {
+        Manager manager = shop.getManager();
+        manager.customerOut();
         System.out.println(customer + " leaves the shop " + shop);
     }
 
