@@ -25,4 +25,6 @@ public class StoreConstant {
     public static final int CUSTOMER_PER_CASHIER = 5;
     public static final int MAX_CASHIER_COUNT = 5;
     public static final int DEFAULT_CASHIER_COUNT = 2;
+
+    public static final boolean SIMPLY_CASHIER_MODE = true;
 }

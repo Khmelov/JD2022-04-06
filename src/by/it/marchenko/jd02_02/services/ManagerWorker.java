@@ -8,6 +8,9 @@ public class ManagerWorker implements ManagerAction {
     private final int plan;
 
     private volatile int totalCustomerCount;
+    private volatile int notServicedCustomerCount;
+
+//    private volatile int currentCashierCount = 0;
 
     public ManagerWorker(Manager manager) {
         this.manager = manager;
@@ -39,4 +42,32 @@ public class ManagerWorker implements ManagerAction {
     public Manager getManager() {
         return manager;
     }
+
+    @Override
+    public void increaseNotServicedCustomerCount() {
+        synchronized (manager) {
+            notServicedCustomerCount++;
+        }
+    }
+
+    @Override
+    public int getNotServicedCustomerCount() {
+        return notServicedCustomerCount;
+    }
+/*
+    public int getCurrentCashierCount() {
+        synchronized (this) {
+            return currentCashierCount;
+        }
+    }
+
+    public void setCurrentCashierCount(int currentCashierCount) {
+        synchronized (this) {
+            this.currentCashierCount = currentCashierCount;
+        }
+    }
+
+
+ */
+
 }

@@ -8,4 +8,8 @@ public interface ManagerAction {
     void increaseTotalCustomerCount();
 
     int getTotalCustomerCount();
+
+    void increaseNotServicedCustomerCount();
+
+    int getNotServicedCustomerCount();
 }

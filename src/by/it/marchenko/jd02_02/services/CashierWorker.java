@@ -12,6 +12,7 @@ public class CashierWorker extends Thread {
     public static final int MAX_CASHIER_OPERATION_TIME = 5000;
     public static final String START_OPERATION = " start operation with ";
     public static final String FINISH_SERVICE = "finished service by ";
+    public static final boolean WAIT_ENABLED = true;
 
     private final Cashier cashier;
     private final Store store;
@@ -33,7 +34,7 @@ public class CashierWorker extends Thread {
         initCashierWorker();
         out.println("\t\t\t" + cashier + " start operation in the " + store);
 
-        while (managerWorker.storeOpened()) {
+        while (storeQueue.getSize() > 0 && managerWorker.storeOpened()) {
             Customer customer = storeQueue.remove();
             if (Objects.nonNull(customer)) {
                 performOperation(customer);
@@ -42,12 +43,20 @@ public class CashierWorker extends Thread {
                     customer.notify();
                 }
             } else {
-                //store.
-                // TODO print cashier result and decrease amount of current cashier
-                break;
-                //Thread.onSpinWait();
+                // TODO ??? print cashier result and decrease amount of current cashier
+                Thread.onSpinWait();
+                cashier.setWaitEnabled(WAIT_ENABLED);
+                /*
+                try {
+                    cashier.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+*/
             }
         }
+        out.printf("%s finished work. Serviced customer: %d. Not serviced by all cashiers: %d%n",
+                cashier, cashier.getServicedCustomerCount(), managerWorker.getNotServicedCustomerCount());
     }
 
     private void performOperation(Customer customer) {
@@ -59,11 +68,14 @@ public class CashierWorker extends Thread {
         double checkAmount = shoppingCart.calculateCheckAmount();
         double totalReceipts = cashier.getReceipts() + checkAmount;
         cashier.setReceipts(totalReceipts);
-        //out.println("\t\t\t" + cashier + FINISH_SERVICE + customer + " total bill: " + checkAmount);
-        out.println(customer + FINISH_SERVICE + cashier + ". Total bill: " + checkAmount +
-                ". Total cash: " + totalReceipts);
-        out.println(shoppingCart.getBill());
-
+        cashier.increaseServicedCustomerCount();
+        synchronized (out) {
+            out.println(customer + FINISH_SERVICE + cashier + ". Total bill: " + checkAmount +
+                    //".\n Total cash: " + totalReceipts +
+                    //". Total customer count: " + cashier.getServicedCustomerCount() +
+                    ". Not serviced by all cashiers: " + managerWorker.getNotServicedCustomerCount());
+            out.println(shoppingCart.getBill());
+        }
     }
 
     private void initCashierWorker() {

@@ -1,6 +1,7 @@
 package by.it.marchenko.jd02_02.models;
 
-import by.it.marchenko.jd02_02.constants.StoreConstant;
+import static by.it.marchenko.jd02_02.constants.StoreConstant.*;
+
 import by.it.marchenko.jd02_02.interfaces.StoreQueueAction;
 
 import java.util.ArrayDeque;
@@ -37,8 +38,10 @@ public class StoreQueue implements StoreQueueAction {
     @Override
     public int getExpectedCashierCount(boolean mode) {
         synchronized (storeQueue) {
-            int expectedCashierCount = (int) Math.ceil(storeQueue.size() / (double) StoreConstant.CUSTOMER_PER_CASHIER);
-            return mode ? StoreConstant.DEFAULT_CASHIER_COUNT : Math.min(expectedCashierCount, StoreConstant.MAX_CASHIER_COUNT);
+            int expectedCashierCount = (int) Math.ceil(storeQueue.size() / (double) CUSTOMER_PER_CASHIER);
+            return mode ?
+                    DEFAULT_CASHIER_COUNT :
+                    Math.min(expectedCashierCount, MAX_CASHIER_COUNT);
         }
     }
 }

@@ -36,9 +36,12 @@ public class StoreWorker extends Thread {
     private Manager manager;
     private ManagerWorker managerWorker;
     private Delayer delayer;
+    private CashierPull cashierPull;
 
     private volatile int currentCustomerCount = 0;
-    private volatile int currentCashierCount = 0;
+
+    Set<Thread> storeThreadSet;
+    Set<CashierWorker> cashierWorkerSet = new HashSet<>();
 
     public StoreWorker(StockRepo stockRepo, Store store, GoodRepo goodRepo, PriceListRepo priceRepo,
                        Printer out) {
@@ -47,25 +50,26 @@ public class StoreWorker extends Thread {
         this.out = out;
         this.store = store;
         this.goodRepo = goodRepo;
+        this.storeThreadSet = new HashSet<>();
+
     }
 
     @Override
     public void run() {
         storeInit();
         openStore();
+
         new CustomerChecker(this, managerWorker).start();
 
         workStore();
         closeStore();
-
-        out.printf("Total customer count: %s%n", managerWorker.getTotalCustomerCount());
-        out.printf("Current customer count: %s%n", currentCustomerCount);
     }
 
     private void storeInit() {
         manager = store.getManager();
         managerWorker = new ManagerWorker(manager);
         delayer = new Delayer();
+        cashierPull = new CashierPull();
 
         StockWorker stockWorker = new StockWorker(stockRepo, goodRepo, priceRepo);
         out.print(STOCK_INIT_IN_PROGRESS);
@@ -82,8 +86,6 @@ public class StoreWorker extends Thread {
     }
 
     private void workStore() {
-        Set<CustomerWorker> customerWorkerSet = new HashSet<>();
-
         for (int workTime = 0; managerWorker.storeOpened(); workTime++) {
             //int customerCountPerSecond = generateCustomerCountPerSecond(SIMPLY_CUSTOMER_LIMITATION);
             int customerCountPerSecond = generateCustomerCountPerSecond(workTime);
@@ -93,25 +95,33 @@ public class StoreWorker extends Thread {
                 Customer customer = generateCustomer();
                 CustomerWorker customerWorker = new CustomerWorker(customer, store,
                         goodRepo, stockRepo, priceRepo, out, this);
-                customerWorkerSet.add(customerWorker);
+                storeThreadSet.add(customerWorker);
                 managerWorker.increaseTotalCustomerCount();
                 customerWorker.start();
             }
             delayer.performDelay(REAL_ONE_SECOND);
         }
+        joinCustomerAndCashierThreads();
+    }
 
-        for (CustomerWorker customerWorker : customerWorkerSet) {
+    private void joinCustomerAndCashierThreads() {
+        storeThreadSet.addAll(cashierWorkerSet);
+        for (Thread storeThread : storeThreadSet) {
             try {
-                customerWorker.join();
+                storeThread.join();
             } catch (InterruptedException e) {
                 throw new StoreException(INTERRUPTED_EXCEPTION_MESSAGE, e);
             }
-
         }
     }
 
     private void closeStore() {
         out.printf("%s%s%s%n", store, CLOSED_MESSAGE, manager);
+        out.printf("Total customer count  : %3d%n", managerWorker.getTotalCustomerCount());
+        // TODO investigate why notServicedCustomer here always is equal to 0
+        //out.printf("Not serviced customers: %3d%n", managerWorker.getNotServicedCustomerCount());
+        cashierPull.printCashiers(out);
+
     }
 
     private int generateCustomerCountPerSecond(int time) {
@@ -162,20 +172,50 @@ public class StoreWorker extends Thread {
         }
     }
 
-    public int getCurrentCashierCount() {
-        synchronized (store.getMonitor()) {
-            return currentCashierCount;
-        }
-    }
-
-    public void setCurrentCashierCount(int currentCashierCount) {
-        synchronized (store.getMonitor()) {
-            this.currentCashierCount = currentCashierCount;
-        }
-    }
-
     @SuppressWarnings("unused")
     public ManagerWorker getManagerWorker() {
         return managerWorker;
+    }
+
+    public CashierPull getCashierPull() {
+        return cashierPull;
+    }
+
+    public void generateCashier(StoreQueue storeQueue) {
+        synchronized (store.getMonitor()) {
+            int expectedCashierCount = storeQueue.getExpectedCashierCount(!SIMPLY_CASHIER_MODE);
+
+            int totalCashierCount = cashierPull.getSize();
+            int deltaCashier = expectedCashierCount - totalCashierCount;
+
+            int cashierOnWorkCount = cashierPull.getCashierOnWorkCount();
+            int deltaOnWorkCashier = expectedCashierCount - cashierOnWorkCount;
+
+            if (deltaCashier > 0) {
+                //TODO notifyAll cashiers;
+                cashierPull.setCashierOnWorkCount(totalCashierCount);
+                //cashierPull.setOnWorkStatus(totalCashierCount, true);
+
+                for (int i = 0; i < deltaCashier; i++) {
+                    Cashier cashier = new Cashier();
+                    cashierPull.add(cashier);
+                    cashierPull.setCashierOnWorkCount(++cashierOnWorkCount);
+                    CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
+                    cashierWorkerSet.add(cashierWorker);
+                    //storeThreadSet.add(cashierWorker);
+                    cashierWorker.start();
+                }
+            } else {
+                cashierPull.setCashierOnWorkCount(cashierOnWorkCount + deltaOnWorkCashier);
+                if (deltaOnWorkCashier > 0) {
+                    //TODO notify deltaOnWork cashiers
+                    //cashierPull.setOnWorkStatus(deltaOnWorkCashier, true);
+
+                } else {
+                    // TODO wait deltaOnWork cashiers
+                    //cashierPull.setOnWorkStatus(deltaOnWorkCashier, false)
+                }
+            }
+        }
     }
 }

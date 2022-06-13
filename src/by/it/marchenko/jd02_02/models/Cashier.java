@@ -5,15 +5,21 @@ import by.it.marchenko.jd02_02.constants.CashierConstant;
 public class Cashier {
     private static int startID = CashierConstant.DEFAULT_START_ID;
 
-    private final int id;
     private final String name;
 
     private double receipts;
+    private boolean waitEnabled;
+    private int servicedCustomerCount;
+
+    private boolean onWork;
+    //int id;
 
     public Cashier() {
-        this.id = startID++;
-        this.name = CashierConstant.CASHIER_DEFAULT_NAME + id;
+        //this.id = startID++;
+        this.name = CashierConstant.CASHIER_DEFAULT_NAME + startID++;
         this.receipts = 0;
+        this.servicedCustomerCount = 0;
+        this.onWork = true;
     }
 
     public double getReceipts() {
@@ -22,6 +28,30 @@ public class Cashier {
 
     public void setReceipts(double receipts) {
         this.receipts = receipts;
+    }
+
+    public boolean isWaitEnabled() {
+        return waitEnabled;
+    }
+
+    public void setWaitEnabled(boolean waitEnabled) {
+        this.waitEnabled = waitEnabled;
+    }
+
+    public void increaseServicedCustomerCount() {
+        this.servicedCustomerCount++;
+    }
+
+    public int getServicedCustomerCount() {
+        return servicedCustomerCount;
+    }
+
+    public boolean isOnWork() {
+        return onWork;
+    }
+
+    public void setOnWork(boolean onWork) {
+        this.onWork = onWork;
     }
 
     @Override
