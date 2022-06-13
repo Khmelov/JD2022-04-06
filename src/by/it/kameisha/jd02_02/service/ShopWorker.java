@@ -23,31 +23,29 @@ public class ShopWorker extends Thread {
         int number = 0;
         List<Thread> threads = new ArrayList<>();
         Manager manager = shop.getManager();
-        for (int numberCashier = 1;numberCashier<3;numberCashier++){
+        for (int numberCashier = 1; numberCashier < 4; numberCashier++) {
             Cashier cashier = new Cashier(numberCashier);
             CashierWorker cashierWorker = new CashierWorker(cashier, shop);
             Thread thread = new Thread(cashierWorker);
-//            threads.add(thread);
+            threads.add(thread);
             thread.start();
         }
         while (manager.shopOpened()) {
-            for (int timeMinute = 0; timeMinute < 2; timeMinute++) {
-                for (int timeSecond = 0; timeSecond < 60; timeSecond++) {
-                    int countCustomersPerSecond = 0;
-                    if (timeSecond < 30 && ShopWorker.activeCount() < timeSecond + 10) {
-                        countCustomersPerSecond = timeSecond + 10 - ShopWorker.activeCount();
-                    } else if (timeSecond >= 30 && ShopWorker.activeCount() < 40 + (30 - timeSecond)) {
-                        countCustomersPerSecond = 40 + (30 - timeSecond) - ShopWorker.activeCount();
-                    }
-                    for (int i = 0; manager.shopOpened() && i < countCustomersPerSecond; i++) {
-                        Customer customer = createRandomCustomer(++number);
-                        CustomerWorker customerWorker = new CustomerWorker(customer, shop, repository);
-                        customerWorker.start();
-                        threads.add(customerWorker);
-                    }
+            for (int timeSecond = 0; timeSecond < 60; timeSecond++) {
+                int countCustomersPerSecond = 0;
+                if (timeSecond < 30 && ShopWorker.activeCount() < timeSecond + 10) {
+                    countCustomersPerSecond = timeSecond + 10 - ShopWorker.activeCount();
+                } else if (timeSecond >= 30 && ShopWorker.activeCount() < 40 + (30 - timeSecond)) {
+                    countCustomersPerSecond = 40 + (30 - timeSecond) - ShopWorker.activeCount();
                 }
-                Timer.sleep(1000);
+                for (int i = 0; manager.shopOpened() && i < countCustomersPerSecond; i++) {
+                    Customer customer = createRandomCustomer(++number);
+                    CustomerWorker customerWorker = new CustomerWorker(customer, shop, repository);
+                    customerWorker.start();
+                    threads.add(customerWorker);
+                }
             }
+            Timer.sleep(1000);
         }
         for (Thread thread : threads) {
             try {
