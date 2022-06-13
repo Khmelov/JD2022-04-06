@@ -43,7 +43,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
             Good good = chooseGood();
             goodsTaken = putToCart(good);
         }
-        goToQueue();
+        if (chosenGoodsNumber>0) goToQueue();
         goOut();
         store.getManager().customerOut();
     }

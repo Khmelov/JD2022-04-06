@@ -41,15 +41,12 @@ public class CashierWorker implements Runnable {
                 }
             } else {
                 //Thread.onSpinWait();
-                try {
-                    //noinspection BusyWait
-                    Thread.sleep(10); //bad
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                break;
             }
         }
-        System.out.println(cashier + " closed\n" + cashier + " revenue = " + new DecimalFormat( "###,###.##" ).format(cashier.revenue));
+        store.cashiersAtWork--;
+        System.out.println(cashier + " closed\n" + cashier + " revenue = "
+                + new DecimalFormat("###,###.##").format(cashier.revenue));
     }
 
     private void proceedPayments(Customer customer) {
@@ -61,7 +58,7 @@ public class CashierWorker implements Runnable {
         for (Good good : cart) {
             price = PriceListRepo.priceList.get(good.getName());
             total += price;
-            cheque.add(String.format(Locale.ENGLISH,"          %s - %-7.2f", good.getName(), price));
+            cheque.add(String.format(Locale.ENGLISH, "          %s - %-7.2f", good.getName(), price));
         }
         cheque.add("          ==========").add("          TOTAL: " + total);
         System.out.println(cheque);

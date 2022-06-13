@@ -4,6 +4,7 @@ public class Store {
 
     private final String name;
     private final StoreQueue storeQueue;
+    public int cashiersAtWork;
 
     public Manager getManager() {
         return manager;
