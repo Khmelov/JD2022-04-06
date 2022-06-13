@@ -1,17 +1,18 @@
 package by.it.smirnov.jd02_02.services;
 
-import by.it.smirnov.jd02_02.entities.Cashier;
-import by.it.smirnov.jd02_02.entities.Manager;
-import by.it.smirnov.jd02_02.entities.Store;
-import by.it.smirnov.jd02_02.entities.StoreQueue;
+import by.it.smirnov.jd02_02.entities.*;
 import by.it.smirnov.jd02_02.entities.customer_types.Customer;
+import by.it.smirnov.jd02_02.repo.PriceListRepo;
 import by.it.smirnov.jd02_02.utils.Randomizer;
 import by.it.smirnov.jd02_02.utils.Sleeper;
 
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
-import java.util.Queue;
+import java.util.StringJoiner;
 
-public class CashierWorker implements Runnable{
+public class CashierWorker implements Runnable {
 
     private final Cashier cashier;
     private final Store store;
@@ -26,19 +27,19 @@ public class CashierWorker implements Runnable{
         System.out.println(cashier + " opened");
         Manager manager = store.getManager();
         StoreQueue storeQueue = store.getStoreQueue();
-        while (!manager.storeClosed()){
+        while (!manager.storeClosed()) {
             Customer customer = storeQueue.extract();
-            if(Objects.nonNull(customer)) {
+            if (Objects.nonNull(customer)) {
                 System.out.println(cashier + " starts serving " + customer);
                 int timeout = Randomizer.get(2000, 5000);
                 Sleeper.sleep(timeout);
+                proceedPayments(customer);
                 System.out.println(cashier + " finished serving " + customer);
-                synchronized (customer.getMonitor()){
+                synchronized (customer.getMonitor()) {
                     customer.setWaiting(false);
                     customer.notify();
                 }
-            }
-            else {
+            } else {
                 //Thread.onSpinWait();
                 try {
                     //noinspection BusyWait
@@ -48,6 +49,22 @@ public class CashierWorker implements Runnable{
                 }
             }
         }
-        System.out.println(cashier + " closed");
+        System.out.println(cashier + " closed\n" + cashier + " revenue = " + new DecimalFormat( "###,###.##" ).format(cashier.revenue));
+    }
+
+    private void proceedPayments(Customer customer) {
+        List<Good> cart = customer.shoppingCart.getShoppingCart();
+        double total = 0.0;
+        double price;
+        StringJoiner cheque = new StringJoiner("\n");
+        cheque.add(customer + "'s cheque:");
+        for (Good good : cart) {
+            price = PriceListRepo.priceList.get(good.getName());
+            total += price;
+            cheque.add(String.format(Locale.ENGLISH,"          %s - %-7.2f", good.getName(), price));
+        }
+        cheque.add("          ==========").add("          TOTAL: " + total);
+        System.out.println(cheque);
+        cashier.revenue += total;
     }
 }

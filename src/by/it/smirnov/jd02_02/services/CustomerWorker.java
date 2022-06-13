@@ -12,14 +12,12 @@ import by.it.smirnov.jd02_02.utils.Randomizer;
 import by.it.smirnov.jd02_02.utils.Sleeper;
 
 import java.util.List;
-import java.util.Queue;
 import java.util.StringJoiner;
 
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
 
     private final Customer customer;
     private final Store store;
-    private ShoppingCart shoppingCart;
     public static int customersEntered = 0;
     public static int customersLeft = 0;
 
@@ -28,7 +26,6 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     public CustomerWorker(Customer customer, Store store) {
         this.customer = customer;
         this.store = store;
-        this.shoppingCart = null;
         store.getManager().customerIn();
     }
 
@@ -59,7 +56,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void takeCart() {
-        this.shoppingCart = new ShoppingCart(customer, store);
+        customer.shoppingCart = new ShoppingCart(customer, store);
         int timeout = customer.getSpeed(Randomizer.get(100, 300));
         Sleeper.sleep(timeout);
         System.out.println(customer + " takes shopping cart");
@@ -78,6 +75,16 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     }
 
     @Override
+    public int putToCart(Good good) {
+        customer.shoppingCart.getShoppingCart().add(good);
+        int timeout = Randomizer.get(100, 300);
+        Sleeper.sleep(timeout);
+        System.out.println(customer + " put chosen good to cart");
+        int goodsInCart = customer.shoppingCart.getShoppingCart().size();
+        return goodsInCart;
+    }
+
+    @Override
     public void goToQueue() {
         StoreQueue storeQueue = store.getStoreQueue();
         synchronized (customer.getMonitor()) {
@@ -91,24 +98,14 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
                     throw new RuntimeException(e);
                 }
             }
-            System.out.println(customer + " seeks for his money and/or banking cards in his huge pocket, \" +\n" +
-                    "                    \"buys goods and leaves the queue");
+            System.out.println(customer + " seeks for his money and/or banking cards in his huge pocket, \n" +
+                                        "buys goods and leaves the queue");
         }
     }
 
     @Override
-    public int putToCart(Good good) {
-        this.shoppingCart.getShoppingCart().add(good);
-        int timeout = Randomizer.get(100, 300);
-        Sleeper.sleep(timeout);
-        System.out.println(customer + " put chosen good to cart");
-        int goodsInCart = this.shoppingCart.getShoppingCart().size();
-        return goodsInCart;
-    }
-
-    @Override
     public void goOut() {
-        List<Good> goodsList = this.shoppingCart.getShoppingCart();
+        List<Good> goodsList = customer.shoppingCart.getShoppingCart();
         StringJoiner goods = new StringJoiner("\n          ");
         for (Good good : goodsList) {
             goods = goods.add(good.getName());

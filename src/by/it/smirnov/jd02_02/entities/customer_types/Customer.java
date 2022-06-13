@@ -1,10 +1,13 @@
 package by.it.smirnov.jd02_02.entities.customer_types;
 
+import by.it.smirnov.jd02_02.entities.ShoppingCart;
 import by.it.smirnov.jd02_02.utils.Randomizer;
 
 public class Customer {
 
     public final String name;
+
+    public ShoppingCart shoppingCart;
 
     public boolean isWaiting() {
         return waiting;
