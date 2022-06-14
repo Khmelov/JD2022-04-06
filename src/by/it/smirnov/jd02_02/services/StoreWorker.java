@@ -12,6 +12,9 @@ import by.it.smirnov.jd02_02.utils.Sleeper;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.it.smirnov.jd02_02.repo.Wordings.CLOSE;
+import static by.it.smirnov.jd02_02.repo.Wordings.OPEN;
+
 public class StoreWorker extends Thread {
     private final Store store;
     private List<Thread> threads;
@@ -28,7 +31,7 @@ public class StoreWorker extends Thread {
 
     @Override
     public void run() {
-        System.out.println(store + " opened");
+        System.out.printf(OPEN, store);
         int counter = 0;
         threads = new ArrayList<>();
         Manager manager = store.getManager();
@@ -49,7 +52,7 @@ public class StoreWorker extends Thread {
         for (Thread thread : threads) {
             while (thread.isAlive()) Sleeper.sleep(100);
         }
-        System.out.println(store + " closed");
+        System.out.printf(CLOSE, store);
     }
 
     private void openCashiers() {

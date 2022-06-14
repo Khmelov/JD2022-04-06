@@ -8,9 +8,10 @@ import by.it.smirnov.jd02_02.utils.Sleeper;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.StringJoiner;
+
+import static by.it.smirnov.jd02_02.repo.Wordings.*;
 
 public class CashierWorker implements Runnable {
 
@@ -24,17 +25,17 @@ public class CashierWorker implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(cashier + " opened");
+        System.out.printf(OPEN, cashier);
         Manager manager = store.getManager();
         StoreQueue storeQueue = store.getStoreQueue();
-        while (!manager.storeClosed()) {
+        while (true) {
             Customer customer = storeQueue.extract();
             if (Objects.nonNull(customer)) {
-                System.out.println(cashier + " starts serving " + customer);
+                System.out.printf(CASH_SERVE, cashier, customer);
                 int timeout = Randomizer.get(2000, 5000);
                 Sleeper.sleep(timeout);
                 proceedPayments(customer);
-                System.out.println(cashier + " finished serving " + customer);
+                System.out.printf(CASH_SERVE_OFF, cashier, customer);
                 synchronized (customer.getMonitor()) {
                     customer.setWaiting(false);
                     customer.notify();
@@ -45,8 +46,7 @@ public class CashierWorker implements Runnable {
             }
         }
         store.cashiersAtWork--;
-        System.out.println(cashier + " closed\n" + cashier + " revenue = "
-                + new DecimalFormat("###,###.##").format(cashier.revenue));
+        System.out.printf(CLOSE_REVENUE, cashier, new DecimalFormat(DECIMAL).format(cashier.revenue));
     }
 
     private void proceedPayments(Customer customer) {
@@ -54,13 +54,14 @@ public class CashierWorker implements Runnable {
         double total = 0.0;
         double price;
         StringJoiner cheque = new StringJoiner("\n");
-        cheque.add(customer + "'s cheque:");
+        cheque.add(customer + CHEQUE).add(CHEQUE_DIV);
         for (Good good : cart) {
             price = PriceListRepo.priceList.get(good.getName());
             total += price;
-            cheque.add(String.format(Locale.ENGLISH, "          %s - %-7.2f", good.getName(), price));
+            cheque.add(String.format(CHEQUE_POS, good.getName(), price));
         }
-        cheque.add("          ==========").add("          TOTAL: " + total);
+        cheque.add(CHEQUE_DIV).add(String.format(CHEQUE_TOTAL, new DecimalFormat(DECIMAL).format(total)))
+                .add(CHEQUE_DIV);
         System.out.println(cheque);
         cashier.revenue += total;
     }

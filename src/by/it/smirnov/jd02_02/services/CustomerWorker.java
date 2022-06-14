@@ -14,8 +14,9 @@ import by.it.smirnov.jd02_02.utils.Sleeper;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
+import static by.it.smirnov.jd02_02.repo.Wordings.*;
 
+public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
     private final Customer customer;
     private final Store store;
     public static int customersEntered = 0;
@@ -50,7 +51,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void enteredStore() {
-        System.out.println(customer + " entered the " + store);
+        System.out.printf(ENTER, customer, store);
         ++customersEntered;
     }
 
@@ -59,18 +60,17 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         customer.shoppingCart = new ShoppingCart(customer, store);
         int timeout = customer.getSpeed(Randomizer.get(100, 300));
         Sleeper.sleep(timeout);
-        System.out.println(customer + " takes shopping cart");
+        System.out.printf(TAKE_CART, customer);
     }
 
     @Override
     public Good chooseGood() {
-        if (goodsTaken == 0) System.out.println(customer + " starts to choose goods");
-        else System.out.println(customer + " starts seeking for another gear, and for sure will find it in our store");
+        if (goodsTaken == 0) System.out.printf(CHOOSE, customer);
+        else System.out.printf(CHOOSE_MORE, customer);
         int timeout = Randomizer.get(500, 2000);
         Sleeper.sleep(timeout);
         Good good = new Good(PriceListRepo.getRandomGoodName());
-        System.out.println(customer + " has already chosen his damn good (" +
-                good.getName() + ")");
+        System.out.printf(CHOSEN, customer, good.getName());
         return good;
     }
 
@@ -79,7 +79,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         customer.shoppingCart.getShoppingCart().add(good);
         int timeout = Randomizer.get(100, 300);
         Sleeper.sleep(timeout);
-        System.out.println(customer + " put chosen good to cart");
+        System.out.printf(PUT, customer);
         int goodsInCart = customer.shoppingCart.getShoppingCart().size();
         return goodsInCart;
     }
@@ -88,7 +88,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     public void goToQueue() {
         StoreQueue storeQueue = store.getStoreQueue();
         synchronized (customer.getMonitor()) {
-            System.out.println(customer + " goes to queue");
+            System.out.printf(QUEUE_IN, customer);
             storeQueue.add(customer);
             customer.setWaiting(true);
             while (customer.isWaiting()){
@@ -98,24 +98,17 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
                     throw new RuntimeException(e);
                 }
             }
-            System.out.println(customer + " seeks for his money and/or banking cards in his huge pocket, \n" +
-                                        "buys goods and leaves the queue");
+            System.out.printf(QUEUE_OUT, customer);
         }
     }
 
     @Override
     public void goOut() {
-        List<Good> goodsList = customer.shoppingCart.getShoppingCart();
-        StringJoiner goods = new StringJoiner("\n          ");
-        for (Good good : goodsList) {
-            goods = goods.add(good.getName());
-        }
         if (goodsTaken == 0) {
-            System.out.println(customer + " bought nothing and went away very sad...");
+            System.out.printf(AWAY_SAD, customer);
         }
         else {
-            System.out.println(customer + " leaves happy the " + store + " with " + goodsTaken + " goods:\n          "
-                    + goods.toString());
+            System.out.printf(AWAY_HAPPY, customer, store, goodsTaken);
         }
         ++customersLeft;
     }
