@@ -32,7 +32,6 @@ public class CashierWorker implements Runnable {
                 Timer.sleep(timeout);
                 double checkCost = calculationCheckCost(customer);
                 cashier.setRevenue(checkCost);
-                System.out.println("total check amount for the " + customer + " will be " + checkCost);
                 System.out.println(cashier + " finished serving the " + customer);
 
                 synchronized (customer.getMonitor()) {
@@ -41,26 +40,28 @@ public class CashierWorker implements Runnable {
                 }
             } else {
                 Thread.onSpinWait();
-//                try {
-//                    Thread.sleep(10);
-//                } catch (InterruptedException e) {
-//                   throw new RuntimeException(e);
-//                }
             }
         }
-        System.out.println(cashier + " closed. Revenue = " + cashier.getRevenue());
+        System.out.printf("%10s closed. Revenue = %.2f\n", cashier, cashier.getRevenue());
     }
 
     private double calculationCheckCost(Customer customer) {
-
         ShoppingCart shoppingCart = customer.getShoppingCart();
         Map<String, Double> cart = shoppingCart.getCart();
         Set<String> nameGoods = cart.keySet();
         double sumGoodPrice = 0.0;
-        for (String nameGood : nameGoods) {
-            Double priceGood = cart.get(nameGood);
-            System.out.println(cashier + " count check for " + customer + ": " + nameGood + " with a price " + priceGood);
-            sumGoodPrice += priceGood;
+        int position = 0;
+        synchronized (System.out) {
+            System.out.println(cashier + " began to print check for " + customer + ":");
+            System.out.println("-".repeat(25));
+            for (String nameGood : nameGoods) {
+                Double priceGood = cart.get(nameGood);
+                System.out.printf("%2d) %-15s  %.2f\n", ++position, nameGood, priceGood);
+                sumGoodPrice += priceGood;
+            }
+            System.out.println("-".repeat(25));
+            System.out.printf("total check amount: %.2f\n", sumGoodPrice);
+            System.out.println("-".repeat(25));
         }
         return sumGoodPrice;
     }

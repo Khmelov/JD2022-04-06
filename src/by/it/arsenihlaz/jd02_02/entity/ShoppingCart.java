@@ -16,7 +16,7 @@ public class ShoppingCart {
         int count = 0;
         if (cart.containsKey(name)) {
             count++;
-            String newName = "additional #" + count + " " + name;
+            String newName = name + " #" + count;
             cart.put(newName, price);
         } else cart.put(name, price);
     }
