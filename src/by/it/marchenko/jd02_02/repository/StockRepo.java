@@ -10,21 +10,13 @@ public class StockRepo implements StockAction {
     private final Map<Integer, Integer> stockRepo = new HashMap<>();
 
     @Override
-    public void addGoodIDToStock(int id, int amount) {
-        if (stockRepo.containsKey(id)) {
-            stockRepo.put(id, amount + stockRepo.get(id));
-        } else {
-            stockRepo.put(id, amount);
-        }
+    public Map<Integer, Integer> getStockRepo() {
+        return new HashMap<>(stockRepo);
     }
 
     @Override
-    public int getAmountOfGood(int id) {
-        return stockRepo.get(id);
-    }
-
-    public Map<Integer, Integer> getStockRepo() {
-        return new HashMap<>(stockRepo);
+    public int getStockSize() {
+        return stockRepo.size();
     }
 
     @Override
@@ -38,18 +30,21 @@ public class StockRepo implements StockAction {
     }
 
     @Override
-    public int getStockSize() {
-        return stockRepo.size();
-    }
-
-    @Override
     public boolean getFromStock(int id) {
         int recentAtStock = stockRepo.get(id);
         if (recentAtStock > 0) {
             stockRepo.replace(id, recentAtStock - 1);
-            // TODO implement remove good from stock if recentAtStock=0
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void addGoodIDToStock(int id, int amount) {
+        if (stockRepo.containsKey(id)) {
+            stockRepo.put(id, amount + stockRepo.get(id));
+        } else {
+            stockRepo.put(id, amount);
+        }
     }
 }
