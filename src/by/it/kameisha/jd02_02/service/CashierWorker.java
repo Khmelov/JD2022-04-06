@@ -51,18 +51,18 @@ public class CashierWorker implements Runnable {
         List<Good> shoppingCart = customer.getShoppingCart();
         Map<Good, Integer> priceList = shop.getRepository().getPriceList();
         int revenue = 0;
-        StringJoiner joiner = new StringJoiner("\n");
-        joiner.add(String.format("%10s print check to %10s", cashier, customer));
+        StringJoiner check = new StringJoiner("\n");
+        check.add(String.format("%10s print check to %10s", cashier, customer));
         for (Good good : shoppingCart) {
             for (Map.Entry<Good, Integer> entry : priceList.entrySet()) {
                 if (good.toString().equals(entry.getKey().toString())) {
-                    joiner.add(String.format("%15s...........%-10d", good, entry.getValue()));
+                    check.add(String.format("%15s...........%-10d", good, entry.getValue()));
                     revenue = revenue + entry.getValue();
                 }
             }
         }
-        joiner.add(String.format("%15s:..........%-10d", "total", revenue));
-        System.out.println(joiner);
+        check.add(String.format("%15s:..........%-10d", "total", revenue));
+        System.out.println(check);
         return revenue;
     }
 }
