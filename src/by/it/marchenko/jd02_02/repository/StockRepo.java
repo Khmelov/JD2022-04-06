@@ -16,7 +16,6 @@ public class StockRepo implements StockAction {
         } else {
             stockRepo.put(id, amount);
         }
-        //return stockRepo.get(id);
     }
 
     @Override
@@ -53,6 +52,4 @@ public class StockRepo implements StockAction {
         }
         return false;
     }
-
-
 }

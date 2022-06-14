@@ -7,6 +7,7 @@ import by.it.marchenko.jd02_02.utility.CustomerChecker;
 import by.it.marchenko.jd02_02.utility.Delayer;
 import by.it.marchenko.jd02_02.utility.RandomGenerator;
 import by.it.marchenko.jd02_02.Printer;
+import by.it.marchenko.jd02_02.utility.StockAuditor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,13 +39,15 @@ public class StoreWorker extends Thread {
     private ManagerWorker managerWorker;
     private Delayer delayer;
     private CashierPull cashierPull;
+    private StockAuditor auditor;
 
     private volatile int currentCustomerCount = 0;
     private volatile int currentCashierCount = 0;
 
     Set<Thread> storeThreadSet;
     Set<CashierWorker> cashierWorkerSet = new HashSet<>();
-    //int currentCashierCount = 0;
+    double initialBalance;
+    double finalBalance;
 
     public StoreWorker(StockRepo stockRepo, Store store, GoodRepo goodRepo, PriceListRepo priceRepo,
                        Printer out) {
@@ -81,6 +84,8 @@ public class StoreWorker extends Thread {
             out.print(INIT_PROGRESS_INDICATOR_SYMBOL);
             new Delayer().performDelay(INIT_PROGRESS_DELAY_TIME);
         }
+        auditor = new StockAuditor(stockRepo, priceRepo);
+        initialBalance = auditor.checkStockBalance();
         out.println(STOCK_INIT_FINISHED);
     }
 
@@ -124,7 +129,10 @@ public class StoreWorker extends Thread {
         // TODO investigate why notServicedCustomer here always is equal to 0
         //out.printf("Not serviced customers: %3d%n", managerWorker.getNotServicedCustomerCount());
         cashierPull.printCashiers(out);
-
+        out.printf("Stock initial balance: %20.2f $%n", initialBalance);
+        finalBalance = auditor.checkStockBalance();
+        out.printf("Stock final balance  : %20.2f $%n", finalBalance);
+        out.printf("Stock difference     : %20.2f $%n", initialBalance - finalBalance);
     }
 
     private int generateCustomerCountPerSecond(int time) {
