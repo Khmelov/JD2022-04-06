@@ -11,7 +11,7 @@ public class Cashier {
     private boolean waitEnabled;
     private int servicedCustomerCount;
 
-    private boolean onWork;
+    private volatile boolean onWork;
     //int id;
 
     public Cashier() {
@@ -20,6 +20,8 @@ public class Cashier {
         this.receipts = 0;
         this.servicedCustomerCount = 0;
         this.onWork = true;
+
+        this.waitEnabled = false;
     }
 
     public double getReceipts() {
@@ -50,8 +52,8 @@ public class Cashier {
         return onWork;
     }
 
-    public void setOnWork(boolean onWork) {
-        this.onWork = onWork;
+    public void setOnWork(boolean status) {
+        this.onWork = status;
     }
 
     @Override

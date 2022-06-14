@@ -8,7 +8,7 @@ public class Delayer {
 
     private final double speedDownCoefficient;
 
-    public static final int TEST_SPEED_UP_COEFFICIENT = 50 * 1;
+    public static final int TEST_SPEED_UP_COEFFICIENT = 20;
     public static final int NORMAL_MODE = 1;
 
     public Delayer(double speedDownCoefficient) {

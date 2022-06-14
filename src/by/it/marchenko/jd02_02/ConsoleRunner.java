@@ -16,18 +16,19 @@ public class ConsoleRunner {
 
     public static void main(String[] args) {
         Printer printer = new Printer(System.out);
-        Manager manager = new Manager(MANAGER_NAME);
 
+        Manager manager = new Manager(MANAGER_NAME);
         ManagerWorker managerWorker = new ManagerWorker(manager);
 
         StoreQueue storeQueue = new StoreQueue();
         Store store = new Store(STORE_NAME, storeQueue, managerWorker);
+
         StockRepo stockRepo = new StockRepo();
         GoodRepo goodRepo = new GoodRepo();
         PriceListRepo priceRepo = new PriceListRepo();
+
         StoreWorker storeWorker = new StoreWorker(stockRepo, store,
                 goodRepo, priceRepo, printer);
-
         storeWorker.start();
     }
 }

@@ -3,15 +3,17 @@ package by.it.marchenko.jd02_02.models;
 import by.it.marchenko.jd02_02.Printer;
 import by.it.marchenko.jd02_02.interfaces.CashierPullAction;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 
 public class CashierPull implements CashierPullAction {
-    private final List<Cashier> cashierPull;
+    //private final List<Cashier> cashierPull;
+    private final Deque<Cashier> cashierPull;
     private volatile int cashierOnWorkCount;
 
     public CashierPull() {
-        this.cashierPull = new ArrayList<>();
+        this.cashierPull = new ArrayDeque<>();
+        //this.cashierPull = new LinkedList<>();
         cashierOnWorkCount = 0;
     }
 
@@ -23,16 +25,66 @@ public class CashierPull implements CashierPullAction {
     }
 
     @Override
-    public boolean add(Cashier cashier) {
-        synchronized (cashierPull) {
-            return cashierPull.add(cashier);
+    public Cashier notifyOnSleepCashier() {
+        Cashier cashier;// = null;
+        while (true) {
+            cashier = cashierPull.pollLast();
+            assert cashier != null;
+            if (!cashier.isOnWork()) {
+                cashier.setOnWork(true);
+                cashierPull.offerFirst(cashier);
+                break;
+            }
+        }
+        return cashier;
+    }
+
+    @Override
+    public void lullOnWorkCashier() {
+        Cashier cashier;
+        while (true) {
+            cashier = cashierPull.pollFirst();
+            assert cashier != null;
+            if (cashier.isOnWork()) {
+                cashier.setOnWork(false);
+                cashierPull.offerLast(cashier);
+                break;
+            }
         }
     }
 
     @Override
-    public Cashier remove() {
+    public boolean add(Cashier cashier) {
         synchronized (cashierPull) {
-            return cashierPull.remove(cashierPull.size() - 1);
+            //cashierPull.
+            return cashierPull.offerLast(cashier);
+        }
+    }
+
+
+    @Override
+    public Cashier changeCashierStatus() {
+
+        synchronized (this.getMonitor()) {
+            Cashier cashier = cashierPull.pollLast();//pollFirst();
+            if (cashier != null) {
+                boolean cashierOnWork = cashier.isOnWork();
+                cashier.setOnWork(!cashierOnWork);
+                cashierPull.addLast(cashier);
+                //if (cashierOnWork) {
+                //    try {
+                //        cashier.wait();
+                //    } catch (InterruptedException e) {
+                //        throw new StoreException("Incorrect cashier sleeping", e);
+                //    }
+                //} else {
+                //    cashier.notify();
+                //}
+
+            }
+            //return cashierPull.remove(cashierPull.size() - 1);
+            //cashierPull.removeFirst()
+            return cashier;
         }
     }
 
@@ -45,28 +97,6 @@ public class CashierPull implements CashierPullAction {
     public void setCashierOnWorkCount(int cashierOnWorkCount) {
         synchronized (cashierPull) {
             this.cashierOnWorkCount = cashierOnWorkCount;
-        }
-    }
-
-    public boolean setOnWorkStatus(int count, boolean status) {
-        synchronized (cashierPull) {
-            int currentCount = 0;
-            for (Cashier cashier : cashierPull) {
-                if (currentCount == count) {
-                    break;
-                }
-                if (!cashier.isOnWork()) {
-                    cashier.setOnWork(status);
-                    currentCount++;
-                }
-            }
-            //for (int i = 0; i < cashierPull.size() - 1 || currentCount > count; i++) {
-            //    if (!cashierPull.get(i).isOnWork()) {
-            //        cashierPull.get(i).setOnWork(status);
-            //        currentCount++;
-            //    }
-            //}
-            return currentCount == count;
         }
     }
 
@@ -84,6 +114,10 @@ public class CashierPull implements CashierPullAction {
         }
         out.printf("Total receipts: %27.2f $, total serviced customers: %3d%n", sumReceipts, customerCount);
         //out.println("Not serviced customer: ");
+    }
+
+    public Object getMonitor() {
+        return cashierPull.getFirst();
     }
 }
 

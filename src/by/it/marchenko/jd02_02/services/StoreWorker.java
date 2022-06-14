@@ -13,6 +13,7 @@ import java.util.Set;
 
 import static by.it.marchenko.jd02_02.constants.StoreConstant.*;
 import static by.it.marchenko.jd02_02.constants.StoreExceptionConstant.INTERRUPTED_EXCEPTION_MESSAGE;
+import static java.lang.Math.*;
 
 public class StoreWorker extends Thread {
 
@@ -39,9 +40,11 @@ public class StoreWorker extends Thread {
     private CashierPull cashierPull;
 
     private volatile int currentCustomerCount = 0;
+    private volatile int currentCashierCount = 0;
 
     Set<Thread> storeThreadSet;
     Set<CashierWorker> cashierWorkerSet = new HashSet<>();
+    //int currentCashierCount = 0;
 
     public StoreWorker(StockRepo stockRepo, Store store, GoodRepo goodRepo, PriceListRepo priceRepo,
                        Printer out) {
@@ -136,7 +139,7 @@ public class StoreWorker extends Thread {
         } else {
             double expectedAvgCustomerCount =
                     (expectedMinCustomerCount + expectedMaxCustomerCount) / 2d;
-            return (int) (Math.round(expectedAvgCustomerCount - currentCustomerCount));
+            return (int) (round(expectedAvgCustomerCount - currentCustomerCount));
         }
     }
 
@@ -184,36 +187,26 @@ public class StoreWorker extends Thread {
     public void generateCashier(StoreQueue storeQueue) {
         synchronized (store.getMonitor()) {
             int expectedCashierCount = storeQueue.getExpectedCashierCount(!SIMPLY_CASHIER_MODE);
+            int deltaCashierCount = expectedCashierCount - currentCashierCount;
+            for (int i = 0, n = abs(deltaCashierCount); i < n; i++) {
+                Cashier cashier;
+                if (deltaCashierCount > 0) {
+                    int totalCashierCount = cashierPull.getSize();
+                    if (totalCashierCount <= currentCashierCount) {
+                        cashier = new Cashier();
+                        cashierPull.add(cashier);
 
-            int totalCashierCount = cashierPull.getSize();
-            int deltaCashier = expectedCashierCount - totalCashierCount;
-
-            int cashierOnWorkCount = cashierPull.getCashierOnWorkCount();
-            int deltaOnWorkCashier = expectedCashierCount - cashierOnWorkCount;
-
-            if (deltaCashier > 0) {
-                //TODO notifyAll cashiers;
-                cashierPull.setCashierOnWorkCount(totalCashierCount);
-                //cashierPull.setOnWorkStatus(totalCashierCount, true);
-
-                for (int i = 0; i < deltaCashier; i++) {
-                    Cashier cashier = new Cashier();
-                    cashierPull.add(cashier);
-                    cashierPull.setCashierOnWorkCount(++cashierOnWorkCount);
+                    } else {
+                        cashier = cashierPull.notifyOnSleepCashier();
+                    }
                     CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
                     cashierWorkerSet.add(cashierWorker);
-                    //storeThreadSet.add(cashierWorker);
+                    currentCashierCount++;
                     cashierWorker.start();
-                }
-            } else {
-                cashierPull.setCashierOnWorkCount(cashierOnWorkCount + deltaOnWorkCashier);
-                if (deltaOnWorkCashier > 0) {
-                    //TODO notify deltaOnWork cashiers
-                    //cashierPull.setOnWorkStatus(deltaOnWorkCashier, true);
 
-                } else {
-                    // TODO wait deltaOnWork cashiers
-                    //cashierPull.setOnWorkStatus(deltaOnWorkCashier, false)
+                } else if (deltaCashierCount < 0) {
+                    currentCashierCount--;
+                    cashierPull.lullOnWorkCashier();
                 }
             }
         }

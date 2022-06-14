@@ -1,11 +1,16 @@
 package by.it.marchenko.jd02_02.services;
 
 import by.it.marchenko.jd02_02.Printer;
+import by.it.marchenko.jd02_02.exception.StoreException;
 import by.it.marchenko.jd02_02.models.*;
 import by.it.marchenko.jd02_02.utility.Delayer;
 import by.it.marchenko.jd02_02.utility.RandomGenerator;
 
 import java.util.Objects;
+
+import static by.it.marchenko.jd02_02.utility.CustomerChecker.ANSI_RESET;
+import static by.it.marchenko.jd02_02.utility.CustomerChecker.ANSI_YELLOW;
+import static by.it.marchenko.jd02_02.utility.CustomerChecker.ANSI_RED;
 
 public class CashierWorker extends Thread {
     public static final int MIN_CASHIER_OPERATION_TIME = 2000;
@@ -32,9 +37,17 @@ public class CashierWorker extends Thread {
     @Override
     public void run() {
         initCashierWorker();
-        out.println("\t\t\t" + cashier + " start operation in the " + store);
+        out.println(ANSI_YELLOW + cashier + " start operation in the " + store +
+                ". Queue size: " + storeQueue.getSize() + ANSI_RESET);
 
-        while (storeQueue.getSize() > 0 && managerWorker.storeOpened()) {
+
+        while (storeQueue.getSize() > 0 && managerWorker.storeOpened() && cashier.isOnWork()) {
+            //synchronized (cashier) {
+            //if (!cashier.isOnWork()) {
+            //    break;
+            //}
+            //}
+
             Customer customer = storeQueue.remove();
             if (Objects.nonNull(customer)) {
                 performOperation(customer);
@@ -43,20 +56,14 @@ public class CashierWorker extends Thread {
                     customer.notify();
                 }
             } else {
-                // TODO ??? print cashier result and decrease amount of current cashier
                 Thread.onSpinWait();
-                cashier.setWaitEnabled(WAIT_ENABLED);
-                /*
-                try {
-                    cashier.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-*/
             }
         }
-        out.printf("%s finished work. Serviced customer: %d. Not serviced by all cashiers: %d%n",
-                cashier, cashier.getServicedCustomerCount(), managerWorker.getNotServicedCustomerCount());
+        out.printf("%s%s finished work. Serviced customer: %d. Not serviced by all cashiers: %d%n" +
+                        "customer count in the queue: %d%n%s",
+                ANSI_RED, cashier, cashier.getServicedCustomerCount(),
+                managerWorker.getNotServicedCustomerCount(), storeQueue.getSize(),
+                ANSI_RESET);
     }
 
     private void performOperation(Customer customer) {
@@ -71,9 +78,10 @@ public class CashierWorker extends Thread {
         cashier.increaseServicedCustomerCount();
         synchronized (out) {
             out.println(customer + FINISH_SERVICE + cashier + ". Total bill: " + checkAmount +
-                    //".\n Total cash: " + totalReceipts +
-                    //". Total customer count: " + cashier.getServicedCustomerCount() +
-                    ". Not serviced by all cashiers: " + managerWorker.getNotServicedCustomerCount());
+                    ".\n Total cash: " + totalReceipts +
+                    ". Total customer count: " + cashier.getServicedCustomerCount() +
+                    ".\n Not serviced by all cashiers: " + managerWorker.getNotServicedCustomerCount() +
+                    ". Current customer in the queue: " + storeQueue.getSize());
             out.println(shoppingCart.getBill());
         }
     }

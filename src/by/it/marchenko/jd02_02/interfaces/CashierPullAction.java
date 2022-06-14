@@ -5,7 +5,11 @@ import by.it.marchenko.jd02_02.models.Cashier;
 public interface CashierPullAction {
     boolean add(Cashier cashier);
 
-    Cashier remove();
+    Cashier changeCashierStatus();
 
     int getSize();
+
+    Cashier notifyOnSleepCashier();
+
+    void lullOnWorkCashier();
 }
