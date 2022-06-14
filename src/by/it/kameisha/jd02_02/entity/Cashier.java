@@ -8,7 +8,7 @@ public class Cashier {
         return revenue;
     }
 
-    public synchronized void addRevenue(int revenue) {
+    public void addRevenue(int revenue) {
         this.revenue = this.revenue+revenue;
     }
 

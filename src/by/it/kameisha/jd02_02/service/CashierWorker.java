@@ -25,24 +25,13 @@ public class CashierWorker implements Runnable {
         while (!manager.shopClosed()) {
             Customer customer = queue.extract();
             if (Objects.nonNull(customer)) {
-                System.out.println(cashier + " started service " + customer);
-                int timeout = RandomGenerator.get(2000, 5000);
-                Timer.sleep(timeout);
-                List<Good> shoppingCart = customer.getShoppingCart();
-                Map<Good, Integer> priceList = shop.getRepository().getPriceList();
-                int revenue = 0;
-                for (Good good : shoppingCart) {
-                    for (Map.Entry<Good, Integer> entry : priceList.entrySet()) {
-                        if (good.toString().equals(entry.getKey().toString())) {
-                            System.out.println(good + " " + entry.getValue());
-                            revenue = revenue + entry.getValue();
-                        }
-                    }
-                }
-                System.out.println("total: " + revenue);
-                cashier.addRevenue(revenue);
-                System.out.println(cashier + " finished service " + customer);
                 synchronized (customer.getMonitor()) {
+                    System.out.println(cashier + " started service " + customer);
+                    int timeout = RandomGenerator.get(2000, 5000);
+                    Timer.sleep(timeout);
+                    int revenue = printCheck(customer);
+                    cashier.addRevenue(revenue);
+                    System.out.println(cashier + " finished service " + customer);
                     customer.setWaiting(false);
                     customer.notify();
                 }
@@ -51,5 +40,22 @@ public class CashierWorker implements Runnable {
             }
         }
         System.out.println(cashier + " closed. Total revenue: " + cashier.getRevenue());
+    }
+
+    private int printCheck(Customer customer) {
+        List<Good> shoppingCart = customer.getShoppingCart();
+        Map<Good, Integer> priceList = shop.getRepository().getPriceList();
+        int revenue = 0;
+        System.out.printf("%10s print check to %10s%n", cashier, customer);
+        for (Good good : shoppingCart) {
+            for (Map.Entry<Good, Integer> entry : priceList.entrySet()) {
+                if (good.toString().equals(entry.getKey().toString())) {
+                    System.out.printf("%15s...........%-10d%n", good, entry.getValue());
+                    revenue = revenue + entry.getValue();
+                }
+            }
+        }
+        System.out.printf("%14s:...........%-10d%n", "total", revenue);
+        return revenue;
     }
 }
