@@ -4,11 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShoppingCart {
+    private final Customer customer;
     Map<String, Double> cart = new HashMap<>();
 
+    public ShoppingCart(Customer customer) {
+        this.customer = customer;
+        this.cart = getCart();
+    }
+
     public void addGoods(String name, double price) {
-        cart.put(name, price);
-       // return cart.size();
+        int count = 0;
+        if (cart.containsKey(name)) {
+            count++;
+            String newName = "additional #" + count + " " + name;
+            cart.put(newName, price);
+        } else cart.put(name, price);
+    }
+
+    public Map<String, Double> getCart() {
+        return cart;
     }
 
     public int size() {

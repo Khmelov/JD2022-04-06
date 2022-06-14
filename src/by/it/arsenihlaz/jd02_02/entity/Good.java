@@ -6,7 +6,6 @@ public class Good extends PriceListRepo {
     private final double price;
 
     public Good(String name, double price) {
-
         this.name = name;
         this.price = PriceListRepo.getPrice(name);
     }

@@ -10,6 +10,7 @@ import java.util.List;
 public class ShopWorker extends Thread {
     private final Shop shop;
     int number = 0;
+
     public ShopWorker(Shop shop) {
         this.shop = shop;
     }
@@ -29,28 +30,28 @@ public class ShopWorker extends Thread {
         }
 
         int customerPerSecond;
+        int time = 0;
         while (manager.shopOpened()) {
-            for (int time = 0; time < 120; time++) {
 
-                int numberOfBuyers = CustomerWorker.countBuyers();
-                int second = time % 60;
+            int numberOfBuyers = CustomerWorker.countBuyers();
+            int second = time % 60;
 
-                if (second < 30) {
-                    customerPerSecond = RandomGenerator.get(10 + second / 2);
-                } else if (second >= 30 && numberOfBuyers <= (40 + (30 - second))) {
-                    customerPerSecond = (40 + (30 - second) - numberOfBuyers);
-                } else customerPerSecond = 0;
+            if (second < 30 && numberOfBuyers <= (10 + second)) {
+                customerPerSecond = RandomGenerator.get((10 + second) / 2);
+            } else if (second >= 30 && numberOfBuyers <= (40 + (30 - second))) {
+                customerPerSecond = RandomGenerator.get(40 + (30 - second) - numberOfBuyers);
+            } else customerPerSecond = 0;
 
-                for (int i = 0; manager.shopOpened() && i < customerPerSecond; i++) {
-                    Customer customer = customerGenerator();
-                    CustomerWorker customerWorker = new CustomerWorker(customer, shop);
-                    customerWorker.start();
-                    threads.add(customerWorker);
-                }
-                Timer.sleep(1000);
-                System.out.println("количество покупателей " + numberOfBuyers);
-                System.out.println(second);
+            for (int i = 0; manager.shopOpened() && i < customerPerSecond; i++) {
+                Customer customer = customerGenerator();
+                CustomerWorker customerWorker = new CustomerWorker(customer, shop);
+                customerWorker.start();
+                threads.add(customerWorker);
             }
+            time++;
+            Timer.sleep(1000);
+            System.out.println("количество покупателей " + numberOfBuyers);
+            System.out.println(second);
         }
 
         for (Thread thread : threads) {

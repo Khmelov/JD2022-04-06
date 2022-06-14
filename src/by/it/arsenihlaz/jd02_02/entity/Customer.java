@@ -7,6 +7,15 @@ public class Customer {
 
     public final String name;
     private boolean waiting;
+    public ShoppingCart shoppingCart;
+
+    public ShoppingCart getShoppingCart() {
+        return this.shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
 
     public boolean isWaiting() {
         return waiting;
