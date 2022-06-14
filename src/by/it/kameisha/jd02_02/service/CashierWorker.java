@@ -7,6 +7,7 @@ import by.it.kameisha.jd02_02.util.Timer;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class CashierWorker implements Runnable {
     private final Cashier cashier;
@@ -26,12 +27,7 @@ public class CashierWorker implements Runnable {
             Customer customer = queue.extract();
             if (Objects.nonNull(customer)) {
                 synchronized (customer.getMonitor()) {
-                    System.out.println(cashier + " started service " + customer);
-                    int timeout = RandomGenerator.get(2000, 5000);
-                    Timer.sleep(timeout);
-                    int revenue = printCheck(customer);
-                    cashier.addRevenue(revenue);
-                    System.out.println(cashier + " finished service " + customer);
+                    serveCustomer(customer);
                     customer.setWaiting(false);
                     customer.notify();
                 }
@@ -42,20 +38,31 @@ public class CashierWorker implements Runnable {
         System.out.println(cashier + " closed. Total revenue: " + cashier.getRevenue());
     }
 
+    private void serveCustomer(Customer customer) {
+        System.out.println(cashier + " started service " + customer);
+        int timeout = RandomGenerator.get(2000, 5000);
+        Timer.sleep(timeout);
+        int revenue = printCheck(customer);
+        cashier.addRevenue(revenue);
+        System.out.println(cashier + " finished service " + customer);
+    }
+
     private int printCheck(Customer customer) {
         List<Good> shoppingCart = customer.getShoppingCart();
         Map<Good, Integer> priceList = shop.getRepository().getPriceList();
         int revenue = 0;
-        System.out.printf("%10s print check to %10s%n", cashier, customer);
+        StringJoiner joiner = new StringJoiner("\n");
+        joiner.add(String.format("%10s print check to %10s", cashier, customer));
         for (Good good : shoppingCart) {
             for (Map.Entry<Good, Integer> entry : priceList.entrySet()) {
                 if (good.toString().equals(entry.getKey().toString())) {
-                    System.out.printf("%15s...........%-10d%n", good, entry.getValue());
+                    joiner.add(String.format("%15s...........%-10d", good, entry.getValue()));
                     revenue = revenue + entry.getValue();
                 }
             }
         }
-        System.out.printf("%14s:...........%-10d%n", "total", revenue);
+        joiner.add(String.format("%15s:..........%-10d", "total", revenue));
+        System.out.println(joiner);
         return revenue;
     }
 }

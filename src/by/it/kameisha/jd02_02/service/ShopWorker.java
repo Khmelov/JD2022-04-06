@@ -20,7 +20,7 @@ public class ShopWorker extends Thread {
         int number = 0;
         List<Thread> threads = new ArrayList<>();
         Manager manager = shop.getManager();
-        for (int numberCashier = 1; numberCashier < 3; numberCashier++) {
+        for (int numberCashier = 1; numberCashier < 11; numberCashier++) {
             Cashier cashier = new Cashier(numberCashier);
             CashierWorker cashierWorker = new CashierWorker(cashier, shop);
             Thread thread = new Thread(cashierWorker);
@@ -29,12 +29,7 @@ public class ShopWorker extends Thread {
         }
         while (manager.shopOpened()) {
             for (int timeSecond = 0; timeSecond < 60; timeSecond++) {
-                int countCustomersPerSecond = 0;
-                if (timeSecond < 30 && ShopWorker.activeCount() < timeSecond + 10) {
-                    countCustomersPerSecond = timeSecond + 10 - ShopWorker.activeCount();
-                } else if (timeSecond >= 30 && ShopWorker.activeCount() < 40 + (30 - timeSecond)) {
-                    countCustomersPerSecond = 40 + (30 - timeSecond) - ShopWorker.activeCount();
-                }
+                int countCustomersPerSecond = getCountCustomersPerSecond(timeSecond);
                 for (int i = 0; manager.shopOpened() && i < countCustomersPerSecond; i++) {
                     Customer customer = createRandomCustomer(++number);
                     CustomerWorker customerWorker = new CustomerWorker(customer, shop);
@@ -52,6 +47,16 @@ public class ShopWorker extends Thread {
             }
         }
         System.out.println(shop + " closed");
+    }
+
+    private int getCountCustomersPerSecond(int timeSecond) {
+        int countCustomersPerSecond = 0;
+        if (timeSecond < 30 && ShopWorker.activeCount() < timeSecond + 10) {
+            countCustomersPerSecond = timeSecond + 10 - ShopWorker.activeCount();
+        } else if (timeSecond >= 30 && ShopWorker.activeCount() < 40 + (30 - timeSecond)) {
+            countCustomersPerSecond = 40 + (30 - timeSecond) - ShopWorker.activeCount();
+        }
+        return countCustomersPerSecond;
     }
 
     private Customer createRandomCustomer(int number) {
