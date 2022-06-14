@@ -19,9 +19,6 @@ import static by.it.smirnov.jd02_02.repo.Wordings.*;
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
     private final Customer customer;
     private final Store store;
-    public static int customersEntered = 0;
-    public static int customersLeft = 0;
-
     private int goodsTaken;
 
     public CustomerWorker(Customer customer, Store store) {
@@ -52,7 +49,6 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void enteredStore() {
         System.out.printf(ENTER, customer, store);
-        ++customersEntered;
     }
 
     @Override
@@ -110,10 +106,5 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         else {
             System.out.printf(AWAY_HAPPY, customer, store, goodsTaken);
         }
-        ++customersLeft;
-    }
-
-    public static int getInStoreCustomers() {
-        return customersEntered - customersLeft;
     }
 }

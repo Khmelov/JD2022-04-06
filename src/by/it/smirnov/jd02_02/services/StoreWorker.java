@@ -40,7 +40,7 @@ public class StoreWorker extends Thread {
             openCashiers();
             int inFlowBase = Randomizer.get(5, 15);
             for (int i = 0; manager.storeOpened() && i < inFlowPerSec(inFlowBase, time) &&
-                    CustomerWorker.getInStoreCustomers() < entranceLimit(time); i++) {
+                    manager.getInStoreCustomers() < entranceLimit(time); i++) {
                 Customer customer = getCustomer(++counter);
                 CustomerWorker customerWorker = new CustomerWorker(customer, store);
                 customerWorker.start();

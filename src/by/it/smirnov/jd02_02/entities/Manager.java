@@ -3,6 +3,15 @@ package by.it.smirnov.jd02_02.entities;
 public class Manager {
 
     private final int plan;
+
+    public int getCountIn() {
+        return countIn;
+    }
+
+    public int getCountOut() {
+        return countOut;
+    }
+
     private volatile int countIn;
     private volatile int countOut;
 
@@ -24,5 +33,9 @@ public class Manager {
 
     public synchronized void customerOut(){
         countOut++;
+    }
+
+    public synchronized int getInStoreCustomers() {
+        return countIn - countOut;
     }
 }
