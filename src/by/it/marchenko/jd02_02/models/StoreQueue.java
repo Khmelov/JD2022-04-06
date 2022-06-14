@@ -36,7 +36,7 @@ public class StoreQueue implements StoreQueueAction {
     }
 
     @Override
-    public int getExpectedCashierCount(boolean mode) {
+    public int calcExpectedCashierCount(boolean mode) {
         synchronized (storeQueue) {
             int expectedCashierCount = (int) Math.ceil(storeQueue.size() / (double) CUSTOMER_PER_CASHIER);
             return mode ?
