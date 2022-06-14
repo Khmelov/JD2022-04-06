@@ -20,7 +20,7 @@ public class ShopWorker extends Thread {
         int number = 0;
         List<Thread> threads = new ArrayList<>();
         Manager manager = shop.getManager();
-        for (int numberCashier = 1; numberCashier < 11; numberCashier++) {
+        for (int numberCashier = 1; numberCashier < 3; numberCashier++) {
             Cashier cashier = new Cashier(numberCashier);
             CashierWorker cashierWorker = new CashierWorker(cashier, shop);
             Thread thread = new Thread(cashierWorker);
