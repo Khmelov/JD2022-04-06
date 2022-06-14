@@ -1,17 +1,15 @@
 package by.it.marchenko.jd02_02.interfaces;
 
+import java.util.Map;
+
 public interface StockAction {
-    void addGoodIDToStock(int id, int amount);
-
-    @SuppressWarnings("unused")
-    int getAmountOfGood(int id);
-
-    int getOccupiedPlace();
+    Map<Integer, Integer> getStockRepo();
 
     int getStockSize();
 
+    int getOccupiedPlace();
+
     boolean getFromStock(int id);
 
-    //boolean
-
+    void addGoodIDToStock(int id, int amount);
 }
