@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class Queue {
-    private Deque <Customer> deque;
+    private final Deque <Customer> deque;
 
     public Queue (){
         deque= new ArrayDeque<>();

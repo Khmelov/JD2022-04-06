@@ -22,6 +22,10 @@ private  static long currentId = System.currentTimeMillis();
 
     }
 
+    public Object getMonitor(){
+        return this;
+    }
+
     @Override
     public String toString() {
         return name;

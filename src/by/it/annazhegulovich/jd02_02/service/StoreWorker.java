@@ -1,5 +1,7 @@
 package by.it.annazhegulovich.jd02_02.service;
 
+import by.it.annazhegulovich.jd02_02.entity.Cashier;
+import by.it.annazhegulovich.jd02_02.entity.Manager;
 import by.it.annazhegulovich.jd02_02.util.RandomGenerator;
 import by.it.annazhegulovich.jd02_02.util.Timer;
 import by.it.annazhegulovich.jd02_02.entity.Customer;
@@ -20,20 +22,29 @@ public class StoreWorker extends Thread{
     public void run() {
         System.out.println(store + " opened");
         int number=0;
-        List<CustomerWorker> customerWorkerList=new ArrayList<>();
-        for (int time = 0; time < 120; time++) {
+        List<Thread> threads=new ArrayList<>();
+        Manager manager = store.getManager();
+
+        for (int numberCashier = 1; numberCashier < 2; numberCashier++) {
+            Cashier cashier = new Cashier(numberCashier);
+            CashierWorker cashierWorker = new CashierWorker(cashier, store);
+            Thread thread = new Thread(cashierWorker);
+            threads.add(thread);
+            thread.start();
+        }
+        while (manager.storeOpened()) {
             int countCustomerPerSecond = RandomGenerator.get(2);
             for (int i = 0; i < countCustomerPerSecond; i++) {
                 Customer customer = new Customer(++number);
                 CustomerWorker customerWorker = new CustomerWorker(customer, store);
                 customerWorker.start();
-                customerWorkerList.add(customerWorker);
-                Timer.sleep(1000);
+                threads.add(customerWorker);
             }
+            Timer.sleep(1000);
         }
-        for (CustomerWorker customerWorker : customerWorkerList) {
+        for (Thread thread: threads) {
             try {
-                customerWorker.join();
+                thread.join();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

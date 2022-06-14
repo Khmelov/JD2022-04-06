@@ -15,6 +15,7 @@ public class CustomerWorker extends Thread implements CustomerAction {
     public CustomerWorker(Customer customer, Store store) {
         this.customer = customer;
         this.store = store;
+        store.getManager().customerEnter();
     }
 
     @Override
@@ -23,6 +24,7 @@ public class CustomerWorker extends Thread implements CustomerAction {
         chooseGood(); //выбрал товар (от 0,5 до 2 секунд)
         gotoQueue();
         goOut();//отправился на выход(мгновенно)
+        store.getManager().customerOut();
     }
 
     @Override
@@ -43,8 +45,8 @@ public class CustomerWorker extends Thread implements CustomerAction {
 
     @Override
     public void gotoQueue() {
-        Queue deque = store.getDeque();
-        synchronized (customer) {
+        Queue deque = store.getQueue();
+        synchronized (customer.getMonitor()) {
             System.out.println(customer+" go to Queue");
             deque.add(customer);
             customer.setWaiting(true);

@@ -2,12 +2,12 @@ package by.it.annazhegulovich.jd02_02.entity;
 
 public class Store {
 private final String name;
-private final Queue deque;
+private final Queue queue;
 private final Manager manager;
 
     public Store(String name, Queue deque, Manager manager) {
         this.name = name;
-        this.deque = deque;
+        this.queue = deque;
         this.manager = manager;
     }
 
@@ -26,6 +26,6 @@ private final Manager manager;
     }
 
     public Queue getQueue() {
-        return deque;
+        return queue;
     }
 }

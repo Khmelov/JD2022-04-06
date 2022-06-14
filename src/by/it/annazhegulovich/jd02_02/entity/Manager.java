@@ -2,8 +2,8 @@ package by.it.annazhegulovich.jd02_02.entity;
 
 public class Manager {
     private final int plan;
-    private int countIn;
-    private int countOut;
+    private volatile int countIn;
+    private volatile int countOut;
 
     public Manager(int plan) {
         this.plan = plan;
@@ -13,5 +13,12 @@ public class Manager {
     }
     public boolean storeClosed(){
         return countOut== plan;
+    }
+    public synchronized void customerEnter(){
+        countIn++;
+    }
+
+    public synchronized void customerOut(){
+        countOut++;
     }
 }

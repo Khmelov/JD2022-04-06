@@ -7,4 +7,9 @@ public class Cashier {
     public Cashier(int number) {
         this.name = "cashier №" + number;
     }
+
+    @Override
+    public String toString() {
+        return "\t" + name ;
+    }
 }
