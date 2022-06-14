@@ -57,7 +57,6 @@ public class StoreWorker extends Thread {
         this.store = store;
         this.goodRepo = goodRepo;
         this.storeThreadSet = new HashSet<>();
-
     }
 
     @Override
@@ -65,7 +64,7 @@ public class StoreWorker extends Thread {
         storeInit();
         openStore();
 
-        new CustomerChecker(this, managerWorker).start();
+        //new CustomerChecker(this, managerWorker).start();
 
         workStore();
         closeStore();
@@ -218,5 +217,13 @@ public class StoreWorker extends Thread {
                 }
             }
         }
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public int getCurrentCashierCount() {
+        return currentCashierCount;
     }
 }
