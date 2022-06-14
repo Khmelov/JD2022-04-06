@@ -22,16 +22,11 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     public void run() {
         enteredStore();
         takeCart();
-        System.out.printf(Constants.STARTED_CHOOSE_GOODS_MSG, customer);
-        int goodsQuantity = RandomGenerator.getRandomInt(customer.getMinGood(), customer.getMaxGood());
-        for (int i = 0; i < goodsQuantity; i++) {
-            Good good = chooseGood();
-            putToCart(good);
+        chooseGoods();
+        if (customer.getShoppingCart().getGoodsCount() > 0) {
+            goToQueue();
         }
-        System.out.printf(Constants.FINISHED_CHOOSE_GOODS_MSG, customer);
-        goToQueue();
         goOut();
-        store.getManager().customerOut();
     }
 
     @Override
@@ -45,6 +40,16 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         customer.setShoppingCart(shoppingCart);
     }
 
+    private void chooseGoods() {
+        System.out.printf(Constants.STARTED_CHOOSE_GOODS_MSG, customer);
+        int goodsQuantity = RandomGenerator.getRandomInt(customer.getMinGood(), customer.getMaxGood());
+        for (int i = 0; i < goodsQuantity; i++) {
+            Good good = chooseGood();
+            putToCart(good);
+        }
+        System.out.printf(Constants.FINISHED_CHOOSE_GOODS_MSG, customer);
+    }
+
     @Override
     public Good chooseGood() {
         int timeout = RandomGenerator.getRandomInt((int) (Constants.MIN_SELECTION_SPEED * customer.getSelectionSpeed()),
@@ -53,6 +58,13 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         Good good = ChooseHelper.getRandomGood(store.getPriceListRepo());
         System.out.printf(Constants.CHOSEN_GOOD_MSG, customer, good);
         return good;
+    }
+
+    @Override
+    public int putToCart(Good good) {
+        ShoppingCart shoppingCart = customer.getShoppingCart();
+        shoppingCart.addGoodToCart(good);
+        return shoppingCart.getGoodsCount();
     }
 
     @Override
@@ -74,14 +86,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     }
 
     @Override
-    public int putToCart(Good good) {
-        ShoppingCart shoppingCart = customer.getShoppingCart();
-        shoppingCart.addGoodToCart(good);
-        return shoppingCart.getGoodsCount();
-    }
-
-    @Override
     public void goOut() {
         System.out.printf(Constants.LEFT_STORE_MSG, customer);
+        store.getManager().customerOut();
     }
 }

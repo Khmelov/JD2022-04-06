@@ -45,6 +45,12 @@ public class Constants {
     public static final String SPACE = " ";
     public static final String BILL_LINE = "%s -> %.2f";
     public static final String BILL_TOTAL = "Total: %.2f";
+    public static final String CASHIER_TOTAL = "%s total: %.2f";
+    public static final String CASHIER_REVENUE = "%s revenue %.2f%n";
+    public static final int COLUMN_WIDTH = 20;
+    public static final int COLUMN_SEPARATOR = 5;
+    public static final int TOTAL_OFFSET = 120;
+    public static final int CASHIERS_NUMBER = 5;
     static final String ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     static final String ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
 }

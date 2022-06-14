@@ -20,12 +20,9 @@ public class StoreWorker extends Thread {
     public void run() {
         System.out.printf(Constants.STORE_OPENED_MSG, store);
         List<Thread> threads = new ArrayList<>();
-        for (int i = 1; i <= 2; i++) {
-            Cashier cashier = new Cashier(i);
-            CashierWorker cashierWorker = new CashierWorker(cashier, store);
-            cashierWorker.start();
-            threads.add(cashierWorker);
-        }
+        ManagerWorker managerWorker = new ManagerWorker(store);
+        managerWorker.start();
+        threads.add(managerWorker);
         Manager manager = store.getManager();
         produceCustomers(threads, manager);
         closeStoreAfterLastCustomer(threads);
@@ -34,7 +31,8 @@ public class StoreWorker extends Thread {
 
     private void produceCustomers(List<Thread> customerWorkers, Manager manager) {
         while (manager.storeOpened()) {
-            for (int second = Constants.FIRST_SECOND; manager.storeOpened() && second <= Constants.LAST_SECOND; second++) {
+            for (int second = Constants.FIRST_SECOND; manager.storeOpened()
+                    && second <= Constants.LAST_SECOND; second++) {
                 int maxCustomerToEnter = getMaxCustomerToEnter(second);
                 if (maxCustomerToEnter > 0) {
                     createCustomer(customerWorkers, manager, maxCustomerToEnter);
@@ -61,21 +59,17 @@ public class StoreWorker extends Thread {
         } else {
             maxQuantity = Constants.MAX_QUANTITY + (Constants.MIDDLE_SECOND - second);
         }
-        int maxCustomerToEnter = maxQuantity - store.getManager().getCustomerQuantity();
-        return maxCustomerToEnter;
+        return maxQuantity - store.getManager().getCustomerQuantity();
     }
 
     private Customer getRandomCustomer() {
         String name = RandomGenerator.getRandomText(Constants.CUSTOMER_NAME_LENGTH);
         int chance = RandomGenerator.getRandomInt(1, 4);
-        switch (chance) {
-            case 1:
-                return new Pensioner(name);
-            case 2:
-                return new Customer(name);
-            default:
-                return new Student(name);
-        }
+        return switch (chance) {
+            case 1 -> new Pensioner(name);
+            case 2 -> new Customer(name);
+            default -> new Student(name);
+        };
     }
 
     private void closeStoreAfterLastCustomer(List<Thread> threads) {

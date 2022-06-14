@@ -5,7 +5,7 @@ import java.util.Deque;
 
 public class Queue {
 
-    private Deque<Customer> deque;
+    private final Deque<Customer> deque;
 
     public Queue() {
         deque = new ArrayDeque<>();
@@ -24,5 +24,9 @@ public class Queue {
         return "Queue{" +
                 "deque=" + deque +
                 '}';
+    }
+
+    public int getSize() {
+        return deque.size();
     }
 }

@@ -14,7 +14,6 @@ public class ChooseHelper {
     public static Good getRandomGood(PriceListRepo priceListRepo) {
         Map<Good, Double> priceList = priceListRepo.getPriceList();
         List<Good> goods = new ArrayList<>(priceList.keySet());
-        Good good = goods.get(RandomGenerator.getRandomInt(goods.size() - 1));
-        return good;
+        return goods.get(RandomGenerator.getRandomInt(goods.size() - 1));
     }
 }

@@ -1,7 +1,6 @@
 package by.it.machuga.jd02_02.service;
 
 import by.it.machuga.jd02_02.entity.*;
-import by.it.machuga.jd02_02.util.Constants;
 import by.it.machuga.jd02_02.util.RandomGenerator;
 import by.it.machuga.jd02_02.util.Timer;
 
@@ -23,10 +22,10 @@ public class CashierWorker extends Thread {
 
     @Override
     public void run() {
-        System.out.printf(Constants.CASHIER_OPENED_MSG, cashier);
+        System.out.printf(CASHIER_OPENED_MSG, cashier);
         Manager manager = store.getManager();
         Queue queue = store.getQueue();
-        while (!manager.storeClosed()) {
+        while (!manager.storeClosed() && cashier.isOpened()) {
             Customer customer = queue.extract();
             if (Objects.nonNull(customer)) {
                 System.out.printf(STARTED_SERVICE_MSG, cashier, customer);
@@ -39,20 +38,10 @@ public class CashierWorker extends Thread {
                     customer.setWaiting(false);
                     customer.notify();
                 }
-            } else {
-                Thread.onSpinWait();
             }
         }
-        System.out.printf(Constants.CASHIER_CLOSED_MSG, cashier);
+        System.out.printf(CASHIER_CLOSED_MSG, cashier);
         printRevenue();
-    }
-
-    private void printRevenue() {
-        System.out.printf("%s revenue %.2f%n", cashier, cashier.getRevenue());
-    }
-
-    private void printBill(String bill) {
-        System.out.println(bill);
     }
 
     private String processShoppingCart(ShoppingCart shoppingCart) {
@@ -61,21 +50,34 @@ public class CashierWorker extends Thread {
         }
         List<Good> goods = shoppingCart.getGoods();
         double billTotal = 0;
+        int offset = COLUMN_SEPARATOR * cashier.getNumber() + COLUMN_WIDTH * (cashier.getNumber() - 1);
         StringJoiner stringJoiner = new StringJoiner(NEW_LINE);
-        stringJoiner.add(SPACE.repeat(15) + cashier + BILL + billNumber);
+        stringJoiner.add(SPACE.repeat(offset) + cashier + BILL + billNumber);
         for (Good good : goods) {
             double price = store.getPriceListRepo().getPrice(good);
-            stringJoiner.add(SPACE.repeat(15) + String.format(BILL_LINE, good, price));
+            stringJoiner.add(SPACE.repeat(offset) + String.format(BILL_LINE, good, price));
             billTotal += price;
         }
-        stringJoiner.add(SPACE.repeat(15) + String.format(BILL_TOTAL, billTotal));
         incrementRevenue(billTotal);
+        stringJoiner.add(SPACE.repeat(offset) + String.format(BILL_TOTAL, billTotal) + SPACE.repeat(TOTAL_OFFSET - offset)
+                + String.format(CASHIER_TOTAL, cashier, cashier.getRevenue()));
         return stringJoiner.toString();
+    }
+
+    private void printBill(String bill) {
+        System.out.println(bill);
+    }
+
+    private void printRevenue() {
+        System.out.printf(CASHIER_REVENUE, cashier, cashier.getRevenue());
     }
 
     public void incrementRevenue(double revenue) {
         double newRevenue = cashier.getRevenue() + revenue;
         cashier.setRevenue(newRevenue);
     }
-}
 
+    public Cashier getCashier() {
+        return cashier;
+    }
+}

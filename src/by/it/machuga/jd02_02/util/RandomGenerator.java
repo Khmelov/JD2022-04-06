@@ -1,6 +1,5 @@
 package by.it.machuga.jd02_02.util;
 
-import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomGenerator {
