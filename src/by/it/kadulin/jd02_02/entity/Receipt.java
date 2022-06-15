@@ -29,28 +29,16 @@ public class Receipt {
         }
         return price;
     }
-
-//    public void print() {
-//        int count = 1;
-//        System.out.println("\t" + cashier + ":");
-//        for (Good good : listOfGoodsBuy) {
-//            System.out.printf("\t#%2d %30s: %5.2f\n", count, good.getName(), good.getPrice());
-//            count++;
-//        }
-//        System.out.printf("\t%s%5.2f\n", "Total price: ", getTotalPrice());
-//    }
-
+    
     public void createTable() {
-        synchronized (CashierWorker.getMonitorCashier()) {
-        String start = "╔═════════════════╦═════════════════╦═════════════════╦═════════════════╦═════════════════╗"; // 17
-        System.out.println(start);
-        String labels= "║   Cashier #1    ║   Cashier #2    ║   Cashier #3    ║   Cashier #4    ║   Cashier #5    ║";
-        System.out.println(labels);
-        String postLabels = "╠═════════════════╬═════════════════╬═════════════════╬═════════════════╬═════════════════╣";
-        System.out.println(postLabels);
+            String start = "╔═════════════════╦═════════════════╦═════════════════╦═════════════════╦═════════════════╗"; // 17
+            System.out.println(start);
+            String labels = "║   Cashier #1    ║   Cashier #2    ║   Cashier #3    ║   Cashier #4    ║   Cashier #5    ║";
+            System.out.println(labels);
+            String postLabels = "╠═════════════════╬═════════════════╬═════════════════╬═════════════════╬═════════════════╣";
+            System.out.println(postLabels);
         switch (cashier.getCashierNumber()) {
-            case 1: {
-
+            case 1 -> {
                 for (Good good : listOfGoodsBuy) {
                     String goodName = good.getName();
                     if (goodName.length() > 15) {
@@ -66,9 +54,8 @@ public class Receipt {
                 System.out.println(totalPrice);
                 String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝";
                 System.out.println(postGoods);
-                break;
             }
-            case 2: {
+            case 2 -> {
                 for (Good good : listOfGoodsBuy) {
                     String goodName = good.getName();
                     if (goodName.length() > 15) {
@@ -84,9 +71,8 @@ public class Receipt {
                 System.out.println(totalPrice);
                 String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝";
                 System.out.println(postGoods);
-                break;
             }
-            case 3: {
+            case 3 -> {
                 for (Good good : listOfGoodsBuy) {
                     String goodName = good.getName();
                     if (goodName.length() > 15) {
@@ -102,9 +88,8 @@ public class Receipt {
                 System.out.println(totalPrice);
                 String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝";
                 System.out.println(postGoods);
-                break;
             }
-            case 4: {
+            case 4 -> {
                 for (Good good : listOfGoodsBuy) {
                     String goodName = good.getName();
                     if (goodName.length() > 15) {
@@ -120,9 +105,8 @@ public class Receipt {
                 System.out.println(totalPrice);
                 String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝";
                 System.out.println(postGoods);
-                break;
             }
-            case 5: {
+            case 5 -> {
                 for (Good good : listOfGoodsBuy) {
                     String goodName = good.getName();
                     if (goodName.length() > 15) {
@@ -138,9 +122,7 @@ public class Receipt {
                 System.out.println(totalPrice);
                 String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝";
                 System.out.println(postGoods);
-                break;
             }
         }
         }
-    }
 }

@@ -76,8 +76,8 @@ public class BuyerWorker extends Thread implements CustomerAction, ShoppingCardA
 
     @Override
     public void goToQueue() {
+
         Queue queue = shop.getQueue();
-        // не до конца ясно, что за монитор
         synchronized (buyer) {
             System.out.println(buyer + " go to Queue");
             queue.add(buyer);
