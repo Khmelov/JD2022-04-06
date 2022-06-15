@@ -18,7 +18,7 @@ public class Queue {
         }
     }
 
-    public Customer extract(){
+    public synchronized Customer extract(){
         return deque.poll();
     }
 }
