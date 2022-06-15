@@ -5,16 +5,24 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
+    private final Repository repository;
+    private final VarCreator varCreator;
+
+    public Parser(Repository repository, VarCreator varCreator) {
+        this.repository = repository;
+        this.varCreator = varCreator;
+    }
+
     public Var calc(String expression) throws CalcException {
         expression = expression.trim().replaceAll(Patterns.SPACES, "");
         String[] parts = expression.split(Patterns.MATH_OPERATIONS, 2);
 
         if (parts.length == 1) {
-            return Var.createVar(parts[0]);
+            return varCreator.createVar(parts[0]);
         }
 
         String rightOperand = parts[1];
-        Var right = Var.createVar(rightOperand);
+        Var right = varCreator.createVar(rightOperand);
 
         Pattern pattern = Pattern.compile(Patterns.MATH_OPERATIONS);
         Matcher matcher = pattern.matcher(expression);
@@ -23,11 +31,11 @@ public class Parser {
             String operation = matcher.group();
 
             if (operation.equals("=")) {
-                return Var.save(parts[0], right);
+                return repository.save(parts[0], right);
             }
 
             String leftOperand = parts[0];
-            Var left = Var.createVar(leftOperand);
+            Var left = varCreator.createVar(leftOperand);
 
             switch (operation) {
                 case "+":
