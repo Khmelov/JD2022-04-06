@@ -195,29 +195,29 @@ public class StoreWorker extends Thread implements StoreAction {
     }
 
     @Override
-    public synchronized void generateCashier(StoreQueue storeQueue) {
-        //synchronized (store.getMonitor()) {
-        int expectedCashierCount = storeQueue.calcExpectedCashierCount(!SIMPLY_CASHIER_MODE);
-        int deltaCashierCount = expectedCashierCount - currentCashierCount;
-        for (int i = 0, n = abs(deltaCashierCount); i < n; i++) {
-            Cashier cashier;
-            if (deltaCashierCount > 0) {
-                int totalCashierCount = cashierPull.getSize();
-                if (totalCashierCount <= currentCashierCount) {
-                    cashier = new Cashier();
-                    cashierPull.add(cashier);
-                } else {
-                    cashier = cashierPull.notifyOnSleepCashier();
+    public void generateCashier(StoreQueue storeQueue) {
+        synchronized (store.getMonitor()) {
+            int expectedCashierCount = storeQueue.calcExpectedCashierCount(!SIMPLY_CASHIER_MODE);
+            int deltaCashierCount = expectedCashierCount - currentCashierCount;
+            for (int i = 0, n = abs(deltaCashierCount); i < n; i++) {
+                Cashier cashier;
+                if (deltaCashierCount > 0) {
+                    int totalCashierCount = cashierPull.getSize();
+                    if (totalCashierCount <= currentCashierCount) {
+                        cashier = new Cashier();
+                        cashierPull.add(cashier);
+                    } else {
+                        cashier = cashierPull.notifyOnSleepCashier();
+                    }
+                    CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
+                    cashierWorkerSet.add(cashierWorker);
+                    currentCashierCount++;
+                    cashierWorker.start();
+                } else if (deltaCashierCount < 0) {
+                    currentCashierCount--;
+                    cashierPull.lullOnWorkCashier();
                 }
-                CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
-                cashierWorkerSet.add(cashierWorker);
-                currentCashierCount++;
-                cashierWorker.start();
-            } else if (deltaCashierCount < 0) {
-                currentCashierCount--;
-                cashierPull.lullOnWorkCashier();
             }
         }
-        //}
     }
 }
