@@ -1,7 +1,7 @@
 package by.it.marchenko.jd02_03.models;
 
-import static by.it.marchenko.jd02_02.constants.CustomerConstant.PENSIONER;
-import static by.it.marchenko.jd02_02.constants.CustomerConstant.PENSIONER_SPEED_DOWN_COEFFICIENT;
+import static by.it.marchenko.jd02_03.constants.CustomerConstant.PENSIONER;
+import static by.it.marchenko.jd02_03.constants.CustomerConstant.PENSIONER_SPEED_DOWN_COEFFICIENT;
 
 public class Pensioner extends Customer {
 

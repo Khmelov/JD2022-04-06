@@ -2,9 +2,9 @@ package by.it.marchenko.jd02_03.utility;
 
 import by.it.marchenko.jd02_03.exception.StoreException;
 
-import static by.it.marchenko.jd02_02.constants.StoreExceptionConstant.INTERRUPTED_EXCEPTION_MESSAGE;
-import static by.it.marchenko.jd02_02.constants.UtilityConstant.NORMAL_MODE;
-import static by.it.marchenko.jd02_02.constants.UtilityConstant.TEST_SPEED_UP_COEFFICIENT;
+import static by.it.marchenko.jd02_03.constants.StoreExceptionConstant.INTERRUPTED_EXCEPTION_MESSAGE;
+import static by.it.marchenko.jd02_03.constants.UtilityConstant.NORMAL_MODE;
+import static by.it.marchenko.jd02_03.constants.UtilityConstant.TEST_SPEED_UP_COEFFICIENT;
 
 public class Delayer {
     private final double speedDownCoefficient;

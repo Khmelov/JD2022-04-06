@@ -5,7 +5,7 @@ import by.it.marchenko.jd02_03.interfaces.StoreQueueAction;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-import static by.it.marchenko.jd02_02.constants.StoreConstant.*;
+import static by.it.marchenko.jd02_03.constants.StoreConstant.*;
 
 public class StoreQueue implements StoreQueueAction {
     private final Queue<Customer> storeQueue;

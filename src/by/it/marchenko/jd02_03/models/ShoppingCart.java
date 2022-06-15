@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-import static by.it.marchenko.jd02_02.constants.GoodConstants.*;
+import static by.it.marchenko.jd02_03.constants.GoodConstants.*;
 
 public class ShoppingCart {
 

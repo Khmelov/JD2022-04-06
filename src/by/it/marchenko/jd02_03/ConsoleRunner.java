@@ -9,8 +9,8 @@ import by.it.marchenko.jd02_03.repository.StockRepo;
 import by.it.marchenko.jd02_03.services.ManagerWorker;
 import by.it.marchenko.jd02_03.services.StoreWorker;
 
-import static by.it.marchenko.jd02_02.constants.StoreConstant.MANAGER_NAME;
-import static by.it.marchenko.jd02_02.constants.StoreConstant.STORE_NAME;
+import static by.it.marchenko.jd02_03.constants.StoreConstant.MANAGER_NAME;
+import static by.it.marchenko.jd02_03.constants.StoreConstant.STORE_NAME;
 
 public class ConsoleRunner {
     public static void main(String[] args) {

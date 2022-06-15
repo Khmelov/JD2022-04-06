@@ -1,7 +1,7 @@
 package by.it.marchenko.jd02_03.models;
 
-import static by.it.marchenko.jd02_02.constants.ManagerConstant.*;
-import static by.it.marchenko.jd02_02.constants.StoreConstant.COMPLEX_CUSTOMER_LIMITATION;
+import static by.it.marchenko.jd02_03.constants.ManagerConstant.*;
+import static by.it.marchenko.jd02_03.constants.StoreConstant.COMPLEX_CUSTOMER_LIMITATION;
 
 public class Manager {
     private static int startID = START_ID_INITIAL_VALUE;

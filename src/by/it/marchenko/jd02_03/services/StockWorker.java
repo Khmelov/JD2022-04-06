@@ -6,8 +6,8 @@ import by.it.marchenko.jd02_03.repository.PriceListRepo;
 import by.it.marchenko.jd02_03.repository.StockRepo;
 import by.it.marchenko.jd02_03.utility.RandomGenerator;
 
-import static by.it.marchenko.jd02_02.constants.StockConstant.*;
-import static by.it.marchenko.jd02_02.constants.StoreExceptionConstant.GOOD_WORKER_WAS_INTERRUPTED;
+import static by.it.marchenko.jd02_03.constants.StockConstant.*;
+import static by.it.marchenko.jd02_03.constants.StoreExceptionConstant.GOOD_WORKER_WAS_INTERRUPTED;
 
 public class StockWorker extends Thread {
     private final StockRepo stockRepo;

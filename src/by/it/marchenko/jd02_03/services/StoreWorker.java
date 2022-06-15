@@ -14,10 +14,10 @@ import by.it.marchenko.jd02_03.utility.StockAuditor;
 import java.util.HashSet;
 import java.util.Set;
 
-import static by.it.marchenko.jd02_02.constants.CustomerConstant.*;
-import static by.it.marchenko.jd02_02.constants.StoreConstant.*;
-import static by.it.marchenko.jd02_02.constants.StoreExceptionConstant.INTERRUPT_CASHIERS_AND_CUSTOMERS_JOINING;
-import static by.it.marchenko.jd02_02.constants.StoreExceptionConstant.STOCK_WORKER_WAS_INTERRUPTED;
+import static by.it.marchenko.jd02_03.constants.CustomerConstant.*;
+import static by.it.marchenko.jd02_03.constants.StoreConstant.*;
+import static by.it.marchenko.jd02_03.constants.StoreExceptionConstant.INTERRUPT_CASHIERS_AND_CUSTOMERS_JOINING;
+import static by.it.marchenko.jd02_03.constants.StoreExceptionConstant.STOCK_WORKER_WAS_INTERRUPTED;
 import static java.lang.Math.abs;
 import static java.lang.Math.round;
 

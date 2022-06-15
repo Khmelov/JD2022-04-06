@@ -10,8 +10,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import static by.it.marchenko.jd02_02.constants.StoreConstant.REAL_ONE_SECOND;
-import static by.it.marchenko.jd02_02.constants.StoreConstant.WORK_TIME;
+import static by.it.marchenko.jd02_03.constants.StoreConstant.REAL_ONE_SECOND;
+import static by.it.marchenko.jd02_03.constants.StoreConstant.WORK_TIME;
 
 public class CustomerChecker extends Thread {
     public static final int SCALE = 2;

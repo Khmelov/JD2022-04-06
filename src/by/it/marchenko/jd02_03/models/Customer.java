@@ -2,7 +2,7 @@ package by.it.marchenko.jd02_03.models;
 
 import by.it.marchenko.jd02_03.utility.RandomGenerator;
 
-import static by.it.marchenko.jd02_02.constants.CustomerConstant.*;
+import static by.it.marchenko.jd02_03.constants.CustomerConstant.*;
 
 
 public class Customer {

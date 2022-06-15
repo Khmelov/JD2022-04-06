@@ -13,8 +13,8 @@ import by.it.marchenko.jd02_03.utility.RandomGenerator;
 
 import java.util.Objects;
 
-import static by.it.marchenko.jd02_02.constants.CustomerConstant.*;
-import static by.it.marchenko.jd02_02.exception.StoreException.WAITING_IN_QUEUE_WAS_INTERRUPTED;
+import static by.it.marchenko.jd02_03.constants.CustomerConstant.*;
+import static by.it.marchenko.jd02_03.exception.StoreException.WAITING_IN_QUEUE_WAS_INTERRUPTED;
 
 public class CustomerWorker extends Thread
         implements CustomerAction, ShoppingCardAction {

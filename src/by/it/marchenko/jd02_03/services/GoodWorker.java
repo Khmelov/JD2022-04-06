@@ -9,7 +9,7 @@ import by.it.marchenko.jd02_03.utility.RandomGenerator;
 import java.util.Map;
 import java.util.Set;
 
-import static by.it.marchenko.jd02_02.constants.GoodConstants.*;
+import static by.it.marchenko.jd02_03.constants.GoodConstants.*;
 
 public class GoodWorker extends Thread {
 

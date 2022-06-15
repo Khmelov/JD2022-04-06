@@ -2,8 +2,8 @@ package by.it.marchenko.jd02_03.models;
 
 import by.it.marchenko.jd02_03.services.ManagerWorker;
 
-import static by.it.marchenko.jd02_02.constants.StoreConstant.STORE;
-import static by.it.marchenko.jd02_02.constants.StoreConstant.STORE_START_ID;
+import static by.it.marchenko.jd02_03.constants.StoreConstant.STORE;
+import static by.it.marchenko.jd02_03.constants.StoreConstant.STORE_START_ID;
 
 public class Store {
     private static int startID = STORE_START_ID;

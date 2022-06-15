@@ -1,6 +1,6 @@
 package by.it.marchenko.jd02_03.models;
 
-import static by.it.marchenko.jd02_02.constants.CustomerConstant.*;
+import static by.it.marchenko.jd02_03.constants.CustomerConstant.*;
 
 public class Student extends Customer {
 

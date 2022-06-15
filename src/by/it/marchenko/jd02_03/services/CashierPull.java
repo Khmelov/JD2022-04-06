@@ -6,7 +6,7 @@ import by.it.marchenko.jd02_03.models.Cashier;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static by.it.marchenko.jd02_02.constants.CashierConstant.*;
+import static by.it.marchenko.jd02_03.constants.CashierConstant.*;
 
 
 public class CashierPull implements CashierPullAction {
