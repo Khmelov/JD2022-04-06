@@ -44,7 +44,7 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public int size() {
-        return size;
+        return this.size;
     }
 
     @Override
@@ -57,14 +57,15 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        T[] a = (T[]) c.toArray();
-        int numNew = a.length;
-        if (numNew == 0) {
-            return false;
+        T[] arrayForAdd = (T[]) c.toArray();
+        boolean elementAdded = false;
+        for (T elementForAdd : arrayForAdd) {
+            if (!this.contains(elementForAdd)) {
+                this.add(elementForAdd);
+                elementAdded = true;
+            }
         }
-        System.arraycopy(a, 0, elements, size, numNew);
-        size = size + numNew;
-        return true;
+        return elementAdded;
     }
 
 
@@ -80,14 +81,15 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        boolean modified = false;
-        for (int i = 0; i < size; i++) {
-            if (c.contains(elements[i])) {
-                remove(elements[i]);
-                modified = true;
+        T[] arrayForRemove = (T[]) c.toArray();
+        boolean elementRemoved = false;
+        for (T elementForRemove : arrayForRemove) {
+            if (this.contains(elementForRemove)) {
+                this.remove(elementForRemove);
+                elementRemoved = true;
             }
         }
-        return modified;
+        return elementRemoved;
     }
 
     @Override
@@ -128,7 +130,14 @@ public class SetC<T> implements Set<T> {
 
     //--------------------------------------------------------------------
 
+
     //--------------------------------------------------------------------
+    @Override
+    public void clear() {
+        while (!isEmpty()) {
+            elements[size--] = null;
+        }
+    }
 
     @Override
     public Iterator<T> iterator() {
@@ -165,11 +174,6 @@ public class SetC<T> implements Set<T> {
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
-    }
-
-    @Override
-    public void clear() {
-
     }
 
 }
