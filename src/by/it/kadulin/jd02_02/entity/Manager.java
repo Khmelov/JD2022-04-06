@@ -32,14 +32,6 @@ public class Manager {
         return countOut;
     }
 
-//    public boolean shopOpened() {
-//        return isShopOpened;
-//    }
-//
-//    public boolean shopClosed() {
-//        return countOut == plan;
-//    }
-
     public synchronized void buyerEnter() {
         countIn++;
     }

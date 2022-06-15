@@ -29,14 +29,13 @@ public class Receipt {
         }
         return price;
     }
-    
+
     public void createTable() {
-            String start = "╔═════════════════╦═════════════════╦═════════════════╦═════════════════╦═════════════════╗"; // 17
-            System.out.println(start);
-            String labels = "║   Cashier #1    ║   Cashier #2    ║   Cashier #3    ║   Cashier #4    ║   Cashier #5    ║";
-            System.out.println(labels);
-            String postLabels = "╠═════════════════╬═════════════════╬═════════════════╬═════════════════╬═════════════════╣";
-            System.out.println(postLabels);
+        StringBuilder result = new StringBuilder();
+        String start = "╔═════════════════╦═════════════════╦═════════════════╦═════════════════╦═════════════════╗\n"; // 17
+        String labels = "║   Cashier #1    ║   Cashier #2    ║   Cashier #3    ║   Cashier #4    ║   Cashier #5    ║\n";
+        String postLabels = "╠═════════════════╬═════════════════╬═════════════════╬═════════════════╬═════════════════╣\n";
+        result.append(start).append(labels).append(postLabels);
         switch (cashier.getCashierNumber()) {
             case 1 -> {
                 for (Good good : listOfGoodsBuy) {
@@ -45,15 +44,13 @@ public class Receipt {
                         String substring = goodName.substring(0, 11);
                         goodName = substring + "...";
                     }
-                    String goods = String.format("║ %-15s ║                 ║                 ║                 ║                 ║", goodName);
-                    System.out.println(goods);
-                    String price = String.format("║ %15.2f ║                 ║                 ║                 ║                 ║", good.getPrice());
-                    System.out.println(price);
+                    String goods = String.format("║ %-15s ║                 ║                 ║                 ║                 ║\n", goodName);
+                    String price = String.format("║ %15.2f ║                 ║                 ║                 ║                 ║\n", good.getPrice());
+                    result.append(goods).append(price);
                 }
-                String totalPrice = String.format("║ %-15s ║                 ║                 ║                 ║                 ║\n║ %15.2f ║                 ║                 ║                 ║                 ║", "Total price", getTotalPrice());
-                System.out.println(totalPrice);
-                String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝";
-                System.out.println(postGoods);
+                String totalPrice = String.format("║ %-15s ║                 ║                 ║                 ║                 ║\n║ %15.2f ║                 ║                 ║                 ║                 ║\n", "Total price", getTotalPrice());
+                String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝\n";
+                result.append(totalPrice).append(postGoods);
             }
             case 2 -> {
                 for (Good good : listOfGoodsBuy) {
@@ -62,15 +59,13 @@ public class Receipt {
                         String substring = goodName.substring(0, 11);
                         goodName = substring + "...";
                     }
-                    String goods = String.format("║                 ║ %-15s ║                 ║                 ║                 ║", goodName);
-                    System.out.println(goods);
-                    String price = String.format("║                 ║ %15.2f ║                 ║                 ║                 ║", good.getPrice());
-                    System.out.println(price);
+                    String goods = String.format("║                 ║ %-15s ║                 ║                 ║                 ║\n", goodName);
+                    String price = String.format("║                 ║ %15.2f ║                 ║                 ║                 ║\n", good.getPrice());
+                    result.append(goods).append(price);
                 }
-                String totalPrice = String.format("║                 ║ %-15s ║                 ║                 ║                 ║\n║                 ║ %15.2f ║                 ║                 ║                 ║", "Total price", getTotalPrice());
-                System.out.println(totalPrice);
-                String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝";
-                System.out.println(postGoods);
+                String totalPrice = String.format("║                 ║ %-15s ║                 ║                 ║                 ║\n║                 ║ %15.2f ║                 ║                 ║                 ║\n", "Total price", getTotalPrice());
+                String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝\n";
+                result.append(totalPrice).append(postGoods);
             }
             case 3 -> {
                 for (Good good : listOfGoodsBuy) {
@@ -79,15 +74,13 @@ public class Receipt {
                         String substring = goodName.substring(0, 11);
                         goodName = substring + "...";
                     }
-                    String goods = String.format("║                 ║                 ║ %-15s ║                 ║                 ║", goodName);
-                    System.out.println(goods);
-                    String price = String.format("║                 ║                 ║ %15.2f ║                 ║                 ║", good.getPrice());
-                    System.out.println(price);
+                    String goods = String.format("║                 ║                 ║ %-15s ║                 ║                 ║\n", goodName);
+                    String price = String.format("║                 ║                 ║ %15.2f ║                 ║                 ║\n", good.getPrice());
+                    result.append(goods).append(price);
                 }
-                String totalPrice = String.format("║                 ║                 ║ %-15s ║                 ║                 ║\n║                 ║                 ║ %15.2f ║                 ║                 ║", "Total price", getTotalPrice());
-                System.out.println(totalPrice);
-                String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝";
-                System.out.println(postGoods);
+                String totalPrice = String.format("║                 ║                 ║ %-15s ║                 ║                 ║\n║                 ║                 ║ %15.2f ║                 ║                 ║\n", "Total price", getTotalPrice());
+                String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝\n";
+                result.append(totalPrice).append(postGoods);
             }
             case 4 -> {
                 for (Good good : listOfGoodsBuy) {
@@ -96,15 +89,13 @@ public class Receipt {
                         String substring = goodName.substring(0, 11);
                         goodName = substring + "...";
                     }
-                    String goods = String.format("║                 ║                 ║                 ║ %-15s ║                 ║", goodName);
-                    System.out.println(goods);
-                    String price = String.format("║                 ║                 ║                 ║ %15.2f ║                 ║", good.getPrice());
-                    System.out.println(price);
+                    String goods = String.format("║                 ║                 ║                 ║ %-15s ║                 ║\n", goodName);
+                    String price = String.format("║                 ║                 ║                 ║ %15.2f ║                 ║\n", good.getPrice());
+                    result.append(goods).append(price);
                 }
-                String totalPrice = String.format("║                 ║                 ║                 ║ %-15s ║                 ║\n║                 ║                 ║                 ║ %15.2f ║                 ║", "Total price", getTotalPrice());
-                System.out.println(totalPrice);
-                String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝";
-                System.out.println(postGoods);
+                String totalPrice = String.format("║                 ║                 ║                 ║ %-15s ║                 ║\n║                 ║                 ║                 ║ %15.2f ║                 ║\n", "Total price", getTotalPrice());
+                String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝\n";
+                result.append(totalPrice).append(postGoods);
             }
             case 5 -> {
                 for (Good good : listOfGoodsBuy) {
@@ -113,16 +104,15 @@ public class Receipt {
                         String substring = goodName.substring(0, 11);
                         goodName = substring + "...";
                     }
-                    String goods = String.format("║                 ║                 ║                 ║                 ║ %-15s ║", goodName);
-                    System.out.println(goods);
-                    String price = String.format("║                 ║                 ║                 ║                 ║ %15.2f ║", good.getPrice());
-                    System.out.println(price);
+                    String goods = String.format("║                 ║                 ║                 ║                 ║ %-15s ║\n", goodName);
+                    String price = String.format("║                 ║                 ║                 ║                 ║ %15.2f ║\n", good.getPrice());
+                    result.append(goods).append(price);
                 }
-                String totalPrice = String.format("║                 ║                 ║                 ║                 ║ %-15s ║\n║                 ║                 ║                 ║                 ║ %15.2f ║", "Total price", getTotalPrice());
-                System.out.println(totalPrice);
-                String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝";
-                System.out.println(postGoods);
+                String totalPrice = String.format("║                 ║                 ║                 ║                 ║ %-15s ║\n║                 ║                 ║                 ║                 ║ %15.2f ║\n", "Total price", getTotalPrice());
+                String postGoods = "╚═════════════════╩═════════════════╩═════════════════╩═════════════════╩═════════════════╝\n";
+                result.append(totalPrice).append(postGoods);
             }
         }
-        }
+        System.out.println(result);
+    }
 }
