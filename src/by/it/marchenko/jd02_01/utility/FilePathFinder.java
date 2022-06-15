@@ -1,8 +1,8 @@
-package by.it.marchenko.jd01_15;
+package by.it.marchenko.jd02_01.utility;
 
 import java.io.File;
 
-public class Util {
+public class FilePathFinder {
     public static final String EMPTY_STRING = "";
     public static final String PACKAGE_DIR_SEPARATOR = ".";
     public static final String FILE_EXTENSION_PATTERN = "\\.(.+)";
@@ -32,7 +32,7 @@ public class Util {
         return File.separator.concat(SOURCE_DIR).concat(File.separator).concat(relPath);
     }
 
-    public File getCurrentFolderPath() {
-        return new File(getFilePath(EMPTY_STRING));
+    public static File getRootFolderPath() {
+        return new File(getFilePath(EMPTY_STRING)).getParentFile();
     }
 }
