@@ -1,16 +1,16 @@
 package by.it.marchenko.jd02_02.services;
 
+import by.it.marchenko.jd02_02.constants.StoreExceptionConstant;
+import by.it.marchenko.jd02_02.exception.StoreException;
 import by.it.marchenko.jd02_02.repository.GoodRepo;
 import by.it.marchenko.jd02_02.repository.PriceListRepo;
 import by.it.marchenko.jd02_02.repository.StockRepo;
-import by.it.marchenko.jd02_02.utility.Delayer;
 import by.it.marchenko.jd02_02.utility.RandomGenerator;
 
 import static by.it.marchenko.jd02_02.constants.StockConstant.*;
-import static by.it.marchenko.jd02_02.services.StoreWorker.INIT_PROGRESS_DELAY_TIME;
+import static by.it.marchenko.jd02_02.constants.StoreExceptionConstant.GOOD_WORKER_WAS_INTERRUPTED;
 
 public class StockWorker extends Thread {
-
     private final StockRepo stockRepo;
     private final GoodRepo goodRepo;
     private final PriceListRepo priceRepo;
@@ -27,10 +27,11 @@ public class StockWorker extends Thread {
         initStock(goodsPositionCount);
         GoodWorker goodWorker = new GoodWorker(goodRepo, stockRepo, priceRepo);
         goodWorker.start();
-        while (goodWorker.isAlive()) {
-            new Delayer().performDelay(INIT_PROGRESS_DELAY_TIME);
+        try {
+            goodWorker.join();
+        } catch (InterruptedException e) {
+            throw new StoreException(GOOD_WORKER_WAS_INTERRUPTED, e);
         }
-
     }
 
     private void initStock(int goodsPositionCount) {
