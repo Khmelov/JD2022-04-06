@@ -1,22 +1,25 @@
-package by.it.marchenko.jd02_02.services;
+package by.it.marchenko.jd02_03.services;
 
-import by.it.marchenko.jd02_02.interfaces.StoreAction;
-import by.it.marchenko.jd02_02.models.*;
-import by.it.marchenko.jd02_02.repository.*;
-import by.it.marchenko.jd02_02.exception.StoreException;
-import by.it.marchenko.jd02_02.utility.Delayer;
-import by.it.marchenko.jd02_02.utility.RandomGenerator;
-import by.it.marchenko.jd02_02.utility.StockAuditor;
-import by.it.marchenko.jd02_02.Printer;
-import by.it.marchenko.jd02_02.utility.CustomerChecker;
+import by.it.marchenko.jd02_03.Printer;
+import by.it.marchenko.jd02_03.exception.StoreException;
+import by.it.marchenko.jd02_03.interfaces.StoreAction;
+import by.it.marchenko.jd02_03.models.*;
+import by.it.marchenko.jd02_03.repository.GoodRepo;
+import by.it.marchenko.jd02_03.repository.PriceListRepo;
+import by.it.marchenko.jd02_03.repository.StockRepo;
+import by.it.marchenko.jd02_03.utility.Delayer;
+import by.it.marchenko.jd02_03.utility.RandomGenerator;
+import by.it.marchenko.jd02_03.utility.StockAuditor;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static java.lang.Math.*;
 import static by.it.marchenko.jd02_02.constants.CustomerConstant.*;
 import static by.it.marchenko.jd02_02.constants.StoreConstant.*;
-import static by.it.marchenko.jd02_02.constants.StoreExceptionConstant.*;
+import static by.it.marchenko.jd02_02.constants.StoreExceptionConstant.INTERRUPT_CASHIERS_AND_CUSTOMERS_JOINING;
+import static by.it.marchenko.jd02_02.constants.StoreExceptionConstant.STOCK_WORKER_WAS_INTERRUPTED;
+import static java.lang.Math.abs;
+import static java.lang.Math.round;
 
 public class StoreWorker extends Thread implements StoreAction {
     private final Printer out;
