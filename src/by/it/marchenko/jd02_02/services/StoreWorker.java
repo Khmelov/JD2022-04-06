@@ -56,7 +56,7 @@ public class StoreWorker extends Thread implements StoreAction {
     public void run() {
         storeInit();
         openStore();
-        new CustomerChecker(this, managerWorker).start(); //  remove comments for enable checks
+        //new CustomerChecker(this, managerWorker).start(); //  remove comments for enable checks
         workStore();
         closeStore();
     }
