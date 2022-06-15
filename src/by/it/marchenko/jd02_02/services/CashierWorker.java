@@ -1,7 +1,6 @@
 package by.it.marchenko.jd02_02.services;
 
 import by.it.marchenko.jd02_02.Printer;
-import by.it.marchenko.jd02_02.exception.StoreException;
 import by.it.marchenko.jd02_02.models.*;
 import by.it.marchenko.jd02_02.utility.Delayer;
 import by.it.marchenko.jd02_02.utility.RandomGenerator;
@@ -17,7 +16,6 @@ public class CashierWorker extends Thread {
     public static final int MAX_CASHIER_OPERATION_TIME = 5000;
     public static final String START_OPERATION = " start operation with ";
     public static final String FINISH_SERVICE = "finished service by ";
-    public static final boolean WAIT_ENABLED = true;
 
     private final Cashier cashier;
     private final Store store;
@@ -39,15 +37,8 @@ public class CashierWorker extends Thread {
         initCashierWorker();
         out.println(ANSI_YELLOW + cashier + " start operation in the " + store +
                 ". Queue size: " + storeQueue.getSize() + ANSI_RESET);
-
-
-        while (storeQueue.getSize() > 0 && managerWorker.storeOpened() && cashier.isOnWork()) {
-            //synchronized (cashier) {
-            //if (!cashier.isOnWork()) {
-            //    break;
-            //}
-            //}
-
+        //System.out.println("We are here. cashiers: "+ managerWorker.storeOpened());
+        while (storeQueue.getSize() > 0 /*&& managerWorker.storeOpened()*/ && cashier.isOnWork()) {
             Customer customer = storeQueue.remove();
             if (Objects.nonNull(customer)) {
                 performOperation(customer);
@@ -59,6 +50,7 @@ public class CashierWorker extends Thread {
                 Thread.onSpinWait();
             }
         }
+        System.out.println("We are here2: ");
         out.printf("%s%s finished work. Serviced customer: %d. Not serviced by all cashiers: %d%n" +
                         "customer count in the queue: %d%n%s",
                 ANSI_RED, cashier, cashier.getServicedCustomerCount(),

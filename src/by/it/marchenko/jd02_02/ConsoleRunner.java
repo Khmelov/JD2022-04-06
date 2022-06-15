@@ -9,11 +9,9 @@ import by.it.marchenko.jd02_02.repository.StockRepo;
 import by.it.marchenko.jd02_02.services.ManagerWorker;
 import by.it.marchenko.jd02_02.services.StoreWorker;
 
+import static by.it.marchenko.jd02_02.constants.StoreConstant.*;
+
 public class ConsoleRunner {
-    public static final String STORE_NAME = "Green";
-    public static final String MANAGER_NAME = "Ivan Drago";
-
-
     public static void main(String[] args) {
         Printer printer = new Printer(System.out);
 
@@ -27,7 +25,7 @@ public class ConsoleRunner {
         GoodRepo goodRepo = new GoodRepo();
         PriceListRepo priceRepo = new PriceListRepo();
 
-        StoreWorker storeWorker = new StoreWorker(stockRepo, store,
+        StoreWorker storeWorker = new StoreWorker(store, stockRepo,
                 goodRepo, priceRepo, printer);
         storeWorker.start();
     }

@@ -1,10 +1,11 @@
 package by.it.marchenko.jd02_02.constants;
 
 public class GoodConstants {
+    public static final String GOOD_NAME_FORMAT = "Good #%d";
     // price = price/CENT IN DOLLAR
     public static final int MIN_GOOD_PRICE = 1;
-    public static final int MAX_GOOD_PRICE = 100;//_000;
-    public static final int CENT_IN_DOLLAR = 1;//00;
+    public static final int MAX_GOOD_PRICE = 1000;
+    public static final int CENT_IN_DOLLAR = 100;
 
     // good formatted output
     public static final String DEFAULT_CURRENCY = "$";

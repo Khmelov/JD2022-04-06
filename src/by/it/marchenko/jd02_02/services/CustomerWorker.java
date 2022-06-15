@@ -27,7 +27,7 @@ public class CustomerWorker extends Thread
     public static final boolean GOOD_PRESENT = true;
     public static final String GO_TO_THE_QUEUE = "go to the queue.";
     public static final boolean ENABLE_WAITING = true;
-    public static final boolean SIMPLY_CASHIER_MODE = true;
+    //public static final boolean SIMPLY_CASHIER_MODE = true;
     public static final String LIVED_THE_QUEUE = "lived the queue";
 
     private final Printer out;
@@ -151,7 +151,7 @@ public class CustomerWorker extends Thread
             synchronized (customer.getMonitor()) {
                 storeQueue.add(customer);
                 storeWorker.generateCashier(storeQueue);
-                //manageCashier(storeQueue);
+
                 waitCashierOperation();
             }
             out.println(customer + LIVED_THE_QUEUE);
@@ -162,8 +162,10 @@ public class CustomerWorker extends Thread
 
     private void waitCashierOperation() {
         customer.setWaitingEnabled(ENABLE_WAITING);
+
         while (customer.isWaitingEnabled()) {
             try {
+                System.out.println("We are here. cashiers: " + storeWorker.getCurrentCashierCount());
                 customer.wait();
             } catch (InterruptedException e) {
                 throw new StoreException(WAITING_IN_QUEUE_WAS_INTERRUPTED, e);
@@ -176,91 +178,4 @@ public class CustomerWorker extends Thread
         out.println(customer + LEAVED + store);
         storeWorker.changeCustomerCurrentCount(-1);
     }
-
-    private void manageCashier(StoreQueue storeQueue) {
-
-        //managerWorker.getQueueCustomerCount();
-
-        //storeWorker.getCashierPull();
-
-
-        //int currentCashierCount = storeWorker.getCurrentCashierCount();
-        //int currentCashierCount = managerWorker.getCurrentCashierCount();
-        synchronized (storeQueue) {
-            int expectedCashierCount = storeQueue.getExpectedCashierCount(!SIMPLY_CASHIER_MODE);
-
-            int totalCashierCount = cashierPull.getSize();
-            int deltaCashier = expectedCashierCount - totalCashierCount;
-
-            int cashierOnWorkCount = cashierPull.getCashierOnWorkCount();
-            int deltaOnWorkCashier = expectedCashierCount - cashierOnWorkCount;
-
-            if (deltaCashier > 0) {
-                //TODO notifyAll cashiers;
-                cashierPull.setCashierOnWorkCount(totalCashierCount);
-                //cashierPull.setOnWorkStatus(totalCashierCount, true);
-
-                for (int i = 0; i < deltaCashier; i++) {
-                    Cashier cashier = new Cashier();
-                    cashierPull.add(cashier);
-                    cashierPull.setCashierOnWorkCount(++cashierOnWorkCount);
-                    CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
-                    cashierWorker.start();
-                }
-            } else {
-                cashierPull.setCashierOnWorkCount(cashierOnWorkCount + deltaOnWorkCashier);
-                if (deltaOnWorkCashier > 0) {
-                    //TODO notify deltaOnWork cashiers
-                    //cashierPull.setOnWorkStatus(deltaOnWorkCashier, true);
-
-                } else {
-                    // TODO wait deltaOnWork cashiers
-                    //cashierPull.setOnWorkStatus(deltaOnWorkCashier, false)
-                }
-            }
-        }
-
-/*
-        int deltaRestCashier = deltaCashier + cashierOnWorkCount;
-        if (deltaCashier >= 0) {
-            for (int i = 0; i < deltaCashier; i++) {
-                Cashier cashier = new Cashier();
-                cashierPull.add(cashier);
-                cashierPull.setCashierOnWorkCount(++cashierOnWorkCount);
-                CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
-                cashierWorker.start();
-            }
-        } else {
-            Cashier cashier = cashierPull.remove();
-            //cashier.wait();
-        }
-
-        //Set<CashierWorker> cashierWorkerSet = new HashSet<>();
-        //while (true) {
-        while (totalCashierCount < 2) {
-            int expectedCashierCount = storeQueue.getExpectedCashierCount(SIMPLY_CASHIER_MODE);
-            if (expectedCashierCount == totalCashierCount) {
-                break;
-            }
-            if (expectedCashierCount > totalCashierCount) {
-                Cashier cashier = new Cashier();
-                //storeWorker.setCurrentCashierCount(++currentCashierCount);
-                CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
-                managerWorker.setCurrentCashierCount(++totalCashierCount);
-                //cashierWorkerSet.add(cashierWorker);
-                //cashierWorkerSet.
-                cashierWorker.start();
-            }
-            // TODO remove cashierWorker after performing operation
-
-        }
-        // while (expectedCashierCount < currentCashierCount) {
-        //     currentCashierCount--;
-        // }
-        //if (expectedCashierCount>currentCashierCount){}
-        //storeQueue.
-
- */
-    }
-
 }

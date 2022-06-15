@@ -28,4 +28,7 @@ public class CustomerConstant {
     public static final int MAX_PUT_CART_TIME = 300;
 
     public static final int CUSTOMER_START_ID = 1;
+    public static final int MAX_PROBABILITY = 100;
+    public static final int STUDENT_PROBABILITY = 50;
+    public static final int PENSIONER_PROBABILITY = 25;
 }

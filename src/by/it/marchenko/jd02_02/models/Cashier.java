@@ -52,7 +52,7 @@ public class Cashier {
         return onWork;
     }
 
-    public void setOnWork(boolean status) {
+    public void setStatus(boolean status) {
         this.onWork = status;
     }
 
