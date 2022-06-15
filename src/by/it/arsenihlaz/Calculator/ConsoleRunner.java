@@ -8,7 +8,9 @@ public class ConsoleRunner {
 
     public static void main(String[] args) {
         Printer printer = new Printer();
-        Parser parser = new Parser();
+        VarMapRepository repository = new VarMapRepository();
+        VarCreator varCreator = new VarCreator(repository);
+        Parser parser = new Parser(repository, varCreator);
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
             String expression = scanner.nextLine();
