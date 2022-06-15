@@ -16,7 +16,6 @@ public class GoodWorker extends Thread {
     private final GoodRepo goodRepo;
     private final StockRepo stockRepo;
     private final PriceListRepo priceListRepo;
-    private double initBalance = 0d;
 
     public GoodWorker(GoodRepo goodRepo, StockRepo stockRepo, PriceListRepo priceListRepo) {
         this.stockRepo = stockRepo;
@@ -26,23 +25,16 @@ public class GoodWorker extends Thread {
 
     @Override
     public void run() {
-        initGood();
-        //stockRepo.
-    }
-
-    private void initGood() {
         Map<Integer, Integer> stockRepo = this.stockRepo.getStockRepo();
         Set<Map.Entry<Integer, Integer>> entries = stockRepo.entrySet();
         for (Map.Entry<Integer, Integer> entry : entries) {
             Integer goodID = entry.getKey();
-            String goodName = String.format("Good #%d", goodID);
-            goodRepo.addName(goodID, goodName);
-            double price = RandomGenerator.getRandom(MIN_GOOD_PRICE, MAX_GOOD_PRICE) / (double) CENT_IN_DOLLAR;
+            String goodName = String.format(GOOD_NAME_FORMAT, goodID);
+            double price =
+                    RandomGenerator.getRandom(MIN_GOOD_PRICE, MAX_GOOD_PRICE) / (double) CENT_IN_DOLLAR;
+            goodRepo.setName(goodID, goodName);
             priceListRepo.setPrice(goodID, price);
-            Integer goodCount = entry.getValue();
-            initBalance += goodCount * price;
         }
-
     }
 
     public Good findGoodFromID(int id) {
@@ -50,5 +42,4 @@ public class GoodWorker extends Thread {
         double price = priceListRepo.getPrice(id);
         return new Good(id, name, price);
     }
-
 }
