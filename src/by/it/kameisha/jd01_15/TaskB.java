@@ -7,21 +7,21 @@ import java.io.*;
 public class TaskB {
     public static void main(String[] args) {
         String pathClass = Util.getPath(TaskA.class, TaskB.class.getSimpleName() + ".java");
-        //comment 1
         String pathTxtFile = Util.getPath(TaskA.class, TaskB.class.getSimpleName() + ".txt");
         printClass(pathClass, pathTxtFile);
         /*
         block 1
          */
         StringBuilder result = readTxtFile(pathTxtFile);
+        //comment 1
         System.out.println(result);
     }
 
     private static StringBuilder readTxtFile(String pathTxtFile) {
         StringBuilder result = new StringBuilder();
-        try(BufferedReader reader = new BufferedReader(new FileReader(pathTxtFile))){
-            while(reader.ready()){
-                char symbol = (char)reader.read();
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathTxtFile))) {
+            while (reader.ready()) {
+                char symbol = (char) reader.read();
                 result.append(symbol);
             }
         } catch (IOException e) {
@@ -48,7 +48,7 @@ public class TaskB {
                         reader.readLine();
                     } else if (second == 42) {
                         String line = "";
-                        while(!line.contains("*/")){
+                        while (!line.contains("*/")) {
                             line = reader.readLine();
                         }
                     }
