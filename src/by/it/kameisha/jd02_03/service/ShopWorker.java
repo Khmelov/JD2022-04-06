@@ -29,15 +29,13 @@ public class ShopWorker extends Thread {
         }
         threadPoolCashiers.shutdown();
         while (manager.shopOpened()) {
-            int timeSecond;
-            for (timeSecond = 0; timeSecond < 60; timeSecond++) {
+            for (int timeSecond = 0; timeSecond < 60; timeSecond++) {
                 int countCustomersPerSecond = getCountCustomersPerSecond(timeSecond);
                 for (int i = 0; manager.shopOpened() && i < countCustomersPerSecond; i++) {
                     Customer customer = createRandomCustomer(++number);
                     CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                     customerWorker.start();
                 }
-                System.out.println(CustomerWorker.activeCount()+"-".repeat(40)+timeSecond);
                 Timer.sleep(1000);
             }
         }

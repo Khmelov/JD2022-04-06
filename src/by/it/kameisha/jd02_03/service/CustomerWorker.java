@@ -22,14 +22,14 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void run() {
         enteredStore();
-  //      try {
-   //         semaphore.acquire();
+        try {
+            semaphore.acquire();
             takeCart();
             putRandomGoodsToCart();
-  //      } catch (InterruptedException e) {
-   //         throw new RuntimeException(e);
-   //     }
-    //    semaphore.release();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        semaphore.release();
         goToQueue();
         goOut();
     }
