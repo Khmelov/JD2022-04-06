@@ -32,7 +32,13 @@ public class CashierWorker implements Runnable {
                     customer.notify();
                 }
             } else {
-                Thread.onSpinWait();
+                synchronized (shop.getQueue()){
+                    try {
+                        queue.wait(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         }
         System.out.println(cashier + " closed. Total revenue: " + cashier.getRevenue());

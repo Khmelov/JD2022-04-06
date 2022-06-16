@@ -63,7 +63,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     }
 
     @Override
-    public synchronized void goOut() {
+    public void goOut() {
         Manager manager = shop.getManager();
         manager.customerOut();
         System.out.println(customer + " leaves the shop " + shop);

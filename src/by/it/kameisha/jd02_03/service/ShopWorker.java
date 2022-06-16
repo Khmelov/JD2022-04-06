@@ -22,7 +22,7 @@ public class ShopWorker extends Thread {
         int number = 0;
         Manager manager = shop.getManager();
         ExecutorService threadPoolCashiers = Executors.newFixedThreadPool(N_CASHIERS_THREADS);
-        for (int numberCashier = 1; numberCashier < 3; numberCashier++) {
+        for (int numberCashier = 1; numberCashier <= 2; numberCashier++) {
             Cashier cashier = new Cashier(numberCashier);
             CashierWorker cashierWorker = new CashierWorker(cashier, shop);
             threadPoolCashiers.submit(cashierWorker);
