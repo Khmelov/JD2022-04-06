@@ -38,8 +38,8 @@ public class ShopWorker extends Thread {
                     customerWorker.start();
                 }
                 System.out.println(CustomerWorker.activeCount()+"-".repeat(40)+timeSecond);
+                Timer.sleep(1000);
             }
-            Timer.sleep(1000);
         }
         waitTermination(threadPoolCashiers);
         System.out.println(shop + " closed ");
