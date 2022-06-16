@@ -29,13 +29,15 @@ public class ShopWorker extends Thread {
         }
         threadPoolCashiers.shutdown();
         while (manager.shopOpened()) {
-            for (int timeSecond = 0; timeSecond < 60; timeSecond++) {
+            int timeSecond;
+            for (timeSecond = 0; timeSecond < 60; timeSecond++) {
                 int countCustomersPerSecond = getCountCustomersPerSecond(timeSecond);
                 for (int i = 0; manager.shopOpened() && i < countCustomersPerSecond; i++) {
                     Customer customer = createRandomCustomer(++number);
                     CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                     customerWorker.start();
                 }
+                System.out.println(CustomerWorker.activeCount()+"-".repeat(40)+timeSecond);
             }
             Timer.sleep(1000);
         }
@@ -56,10 +58,10 @@ public class ShopWorker extends Thread {
 
     private int getCountCustomersPerSecond(int timeSecond) {
         int countCustomersPerSecond = 0;
-        if (timeSecond < 30 && ShopWorker.activeCount() < timeSecond + 10) {
-            countCustomersPerSecond = timeSecond + 10 - ShopWorker.activeCount();
-        } else if (timeSecond >= 30 && ShopWorker.activeCount() < 40 + (30 - timeSecond)) {
-            countCustomersPerSecond = 40 + (30 - timeSecond) - ShopWorker.activeCount();
+        if (timeSecond < 30 && CustomerWorker.activeCount() < timeSecond + 10) {
+            countCustomersPerSecond = timeSecond + 10 - CustomerWorker.activeCount();
+        } else if (timeSecond >= 30 && CustomerWorker.activeCount() < 40 + (30 - timeSecond)) {
+            countCustomersPerSecond = 40 + (30 - timeSecond) - CustomerWorker.activeCount();
         }
         return countCustomersPerSecond;
     }

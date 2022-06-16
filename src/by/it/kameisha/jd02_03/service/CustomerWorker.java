@@ -6,7 +6,10 @@ import by.it.kameisha.jd02_03.util.Timer;
 import by.it.kameisha.jd02_03.interfaces.CustomerAction;
 import by.it.kameisha.jd02_03.interfaces.ShoppingCardAction;
 
+import java.util.concurrent.Semaphore;
+
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
+    private final Semaphore semaphore = new Semaphore(20);
     private final Customer customer;
     private final Shop shop;
 
@@ -19,13 +22,23 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void run() {
         enteredStore();
-        takeCart();
+        try {
+            semaphore.acquire();
+            takeCart();
+            putRandomGoodsToCart();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        semaphore.release();
+        goToQueue();
+        goOut();
+    }
+
+    private void putRandomGoodsToCart() {
         int count = RandomGenerator.get(customer.getMinCountGoods(), customer.getMaxCountGoods());
         for (int i = 0; i < count; i++) {
             putToCart(chooseGood());
         }
-        goToQueue();
-        goOut();
     }
 
     @Override
