@@ -17,6 +17,7 @@ public class StoreConstant {
     public static final int MAX_CUSTOMERS_COUNT_PER_SECOND = 2;
     public static final int MAX_CUSTOMER_COUNT = 100;
 
+
     public static final boolean SIMPLY_CUSTOMER_LIMITATION = true;
     public static final boolean COMPLEX_CUSTOMER_LIMITATION = false;
 
@@ -28,14 +29,17 @@ public class StoreConstant {
     public static final double MAX_COUNTER_TEMP =
             (double) ((MAX_MIDDLE_MINUTE_CUSTOMER_AMOUNT - STARTED_CUSTOMER_AMOUNT)) / HALF_A_MINUTE;
 
+
     public static final int STORE_START_ID = 1;
-    public static final int CUSTOMER_PER_CASHIER = 5;
+    public static final int CUSTOMERS_PER_CASHIER = 5;
     public static final int MAX_CASHIER_COUNT = 5;
     public static final int DEFAULT_CASHIER_COUNT = 2;
+    public static final int QUEUE_LIMIT = 30;
 
     public static final boolean SIMPLY_CASHIER_MODE = true;
     public static final int INIT_PROGRESS_DELAY_TIME = 20;
     public static final String STOCK_INIT_IN_PROGRESS = "Stock init in progress";
     public static final String STOCK_INIT_FINISHED = "\nStock init finished.";
     public static final String OPEN_STORE_FORMAT = "%s%s%s%n";
+
 }

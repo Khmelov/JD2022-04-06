@@ -5,7 +5,7 @@ import by.it.marchenko.jd02_03.models.Customer;
 public interface StoreQueueAction {
     int getSize();
 
-    boolean add(Customer customer);
+    void add(Customer customer);
 
     Customer remove();
 

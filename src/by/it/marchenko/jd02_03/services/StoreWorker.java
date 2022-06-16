@@ -7,6 +7,7 @@ import by.it.marchenko.jd02_03.models.*;
 import by.it.marchenko.jd02_03.repository.GoodRepo;
 import by.it.marchenko.jd02_03.repository.PriceListRepo;
 import by.it.marchenko.jd02_03.repository.StockRepo;
+import by.it.marchenko.jd02_03.utility.CustomerChecker;
 import by.it.marchenko.jd02_03.utility.Delayer;
 import by.it.marchenko.jd02_03.utility.RandomGenerator;
 import by.it.marchenko.jd02_03.utility.StockAuditor;
@@ -59,7 +60,7 @@ public class StoreWorker extends Thread implements StoreAction {
     public void run() {
         storeInit();
         openStore();
-        //new CustomerChecker(this, managerWorker).start(); //  remove comments for enable checks
+        new CustomerChecker(this, managerWorker).start(); //  remove comments for enable checks
         workStore();
         closeStore();
     }
