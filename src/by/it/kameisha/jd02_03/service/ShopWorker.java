@@ -4,10 +4,12 @@ import by.it.kameisha.jd02_03.entity.*;
 import by.it.kameisha.jd02_03.util.RandomGenerator;
 import by.it.kameisha.jd02_03.util.Timer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ShopWorker extends Thread {
+    public static final int N_CASHIERS_THREADS = 5;
     private final Shop shop;
 
     public ShopWorker(Shop shop) {
@@ -18,15 +20,14 @@ public class ShopWorker extends Thread {
     public void run() {
         System.out.println(shop + " opened");
         int number = 0;
-        List<Thread> threads = new ArrayList<>();
         Manager manager = shop.getManager();
+        ExecutorService threadPoolCashiers = Executors.newFixedThreadPool(N_CASHIERS_THREADS);
         for (int numberCashier = 1; numberCashier < 3; numberCashier++) {
             Cashier cashier = new Cashier(numberCashier);
             CashierWorker cashierWorker = new CashierWorker(cashier, shop);
-            Thread thread = new Thread(cashierWorker);
-            threads.add(thread);
-            thread.start();
+            threadPoolCashiers.submit(cashierWorker);
         }
+        threadPoolCashiers.shutdown();
         while (manager.shopOpened()) {
             for (int timeSecond = 0; timeSecond < 60; timeSecond++) {
                 int countCustomersPerSecond = getCountCustomersPerSecond(timeSecond);
@@ -34,19 +35,23 @@ public class ShopWorker extends Thread {
                     Customer customer = createRandomCustomer(++number);
                     CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                     customerWorker.start();
-                    threads.add(customerWorker);
                 }
             }
             Timer.sleep(1000);
         }
-        for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        waitTermination(threadPoolCashiers);
+        System.out.println(shop + " closed ");
+    }
+
+    private void waitTermination(ExecutorService threadPool) {
+        try {
+            do {
+                Thread.onSpinWait();
             }
+            while (!threadPool.awaitTermination(1, TimeUnit.SECONDS));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        System.out.println(shop + " closed");
     }
 
     private int getCountCustomersPerSecond(int timeSecond) {
