@@ -1,7 +1,5 @@
 package by.it.kameisha.jd02_03.entity;
 
-import by.it.kameisha.jd02_03.entity.Customer;
-
 public class Student extends Customer {
     private final String name;
 
