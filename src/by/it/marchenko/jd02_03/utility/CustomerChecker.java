@@ -62,9 +62,10 @@ public class CustomerChecker extends Thread {
 
             //System.out.println(checkResult);
         }
-        /*
+
         System.out.println("Current customer count per second");
         printResult(currentList);
+        /*
         System.out.println("Queue size per second");
         printResult(queueList);
         System.out.println("Current cashier count per second");

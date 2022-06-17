@@ -42,6 +42,7 @@ public class StoreWorker extends Thread implements StoreAction {
     private final Semaphore shoppingCartLimiter;
     private final AtomicInteger shoppingRoomCustomerCount;
     private final AtomicInteger shoppingCartCount;
+    private final AtomicInteger atomicCurrentCustomerCount;
 
     private Manager manager;
     private ManagerWorker managerWorker;
@@ -50,7 +51,7 @@ public class StoreWorker extends Thread implements StoreAction {
     private StockAuditor auditor;
     private ExecutorService cashierExecutorService;
 
-    private volatile int currentCustomerCount;
+    //private volatile int currentCustomerCount;
     private volatile int currentCashierCount;
 
 
@@ -70,7 +71,8 @@ public class StoreWorker extends Thread implements StoreAction {
         this.cashierWorkerSet = new HashSet<>();
         this.shoppingRoomCustomerLimiter = new Semaphore(SHOPPING_ROOM_CUSTOMER_LIMIT);
         this.shoppingCartLimiter = new Semaphore(SHOPPING_CART_LIMIT);
-        currentCustomerCount = 0;
+        //currentCustomerCount = 0;
+        atomicCurrentCustomerCount = new AtomicInteger(0);
         currentCashierCount = 0;
         shoppingRoomCustomerCount = new AtomicInteger(SHOPPING_ROOM_INITIAL_CUSTOMER_COUNT);
         shoppingCartCount = new AtomicInteger(SHOPPING_CART_INITIAL_VALUE);
@@ -155,6 +157,7 @@ public class StoreWorker extends Thread implements StoreAction {
         int calcTime = (timePeriod < ONE_MINUTE / 2) ? timePeriod : ONE_MINUTE - timePeriod;
         double expectedMinCustomerCount = (MIN_COUNTER_TEMP * calcTime + STARTED_CUSTOMER_AMOUNT);
         double expectedMaxCustomerCount = (MAX_COUNTER_TEMP * calcTime + STARTED_CUSTOMER_AMOUNT);
+        int currentCustomerCount = atomicCurrentCustomerCount.intValue();
         if (currentCustomerCount > expectedMaxCustomerCount) {
             return 0;
         } else if (currentCustomerCount < expectedMinCustomerCount) {
@@ -210,7 +213,8 @@ public class StoreWorker extends Thread implements StoreAction {
 
     @Override
     public int getCurrentCustomerCount() {
-        return currentCustomerCount;
+        //return currentCustomerCount;
+        return atomicCurrentCustomerCount.intValue();
     }
 
     @Override
@@ -230,9 +234,10 @@ public class StoreWorker extends Thread implements StoreAction {
 
     @Override
     public void changeCustomerCurrentCount(int increment) {
-        synchronized (store.getMonitor()) {
-            currentCustomerCount += increment;
-        }
+        atomicCurrentCustomerCount.getAndAdd(increment);
+        //synchronized (store.getMonitor()) {
+        //    currentCustomerCount += increment;
+        //}
     }
 
     @Override
