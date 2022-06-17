@@ -189,7 +189,7 @@ public class StoreWorker extends Thread implements StoreAction {
 
     @Override
     public void changeCustomerCurrentCount(int increment) {
-        synchronized (store) {
+        synchronized (store.getMonitor()) {
             currentCustomerCount += increment;
         }
     }
