@@ -29,10 +29,17 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void run() {
         enteredStore();
-        takeCart();
-        putRandomGoodsToCart();
-        goToQueue();
-        goOut();
+        try {
+            semaphoreCarts.acquire();
+            takeCart();
+            putRandomGoodsToCart();
+            goToQueue();
+            goOut();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            semaphoreCarts.release();
+        }
     }
 
     private void putRandomGoodsToCart() {
@@ -44,8 +51,18 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        } finally {
+            semaphoreCustomersChoosingGoods.release();
         }
-        semaphoreCustomersChoosingGoods.release();
+    }
+
+    @Override
+    public void takeCart() {
+        System.out.println(customer + " take a cart");
+        int timeout = (int) (customer.getTimeoutFactor()
+                * RandomGenerator.get(MIN_TIMEOUT_CART, MAX_TIMEOUT_CART));
+        Timer.sleep(timeout);
+
     }
 
     @Override
@@ -88,20 +105,6 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         Manager manager = shop.getManager();
         manager.customerOut();
         System.out.println(customer + " leaves the shop " + shop);
-    }
-
-    @Override
-    public void takeCart() {
-        try {
-            semaphoreCarts.acquire();
-            System.out.println(customer + " take a cart");
-            int timeout = (int) (customer.getTimeoutFactor()
-                    * RandomGenerator.get(MIN_TIMEOUT_CART, MAX_TIMEOUT_CART));
-            Timer.sleep(timeout);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        semaphoreCarts.release();
     }
 
     @Override

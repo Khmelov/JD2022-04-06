@@ -10,9 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 public class ShopWorker extends Thread {
     public static final int N_CASHIERS_THREADS = 5;
-    public static final int TIMEOUT_SLEEP = 1000;
-    public static final int MIN_NUMBER_CASHIER = 1;
     public static final int MAX_NUMBER_CASHIER = 5;
+    public static final int MIN_NUMBER_CASHIER = 1;
+    public static final int TIMEOUT_SLEEP = 1000;
+    public static final int TIMEOUT_AWAIT_TERMINATION_SECONDS = 1;
     private final Shop shop;
 
     public ShopWorker(Shop shop) {
@@ -22,15 +23,17 @@ public class ShopWorker extends Thread {
     @Override
     public void run() {
         System.out.println(shop + " opened");
-        int number = 0;
-        Manager manager = shop.getManager();
         ExecutorService threadPoolCashiers = Executors.newFixedThreadPool(N_CASHIERS_THREADS);
-        for (int numberCashier = MIN_NUMBER_CASHIER; numberCashier <= MAX_NUMBER_CASHIER; numberCashier++) {
-            Cashier cashier = new Cashier(numberCashier);
-            CashierWorker cashierWorker = new CashierWorker(cashier, shop);
-            threadPoolCashiers.submit(cashierWorker);
-        }
+        createCashierThreads(threadPoolCashiers);
         threadPoolCashiers.shutdown();
+        createCustomerWorkerPerSecond();
+        waitTermination(threadPoolCashiers);
+        System.out.println(shop + " closed ");
+    }
+
+    private void createCustomerWorkerPerSecond() {
+        Manager manager = shop.getManager();
+        int number = 0;
         while (manager.shopOpened()) {
             for (int timeSecond = 0; timeSecond < 60; timeSecond++) {
                 int countCustomersPerSecond = getCountCustomersPerSecond(timeSecond);
@@ -42,8 +45,14 @@ public class ShopWorker extends Thread {
                 Timer.sleep(TIMEOUT_SLEEP);
             }
         }
-        waitTermination(threadPoolCashiers);
-        System.out.println(shop + " closed ");
+    }
+
+    private void createCashierThreads(ExecutorService threadPoolCashiers) {
+        for (int numberCashier = MIN_NUMBER_CASHIER; numberCashier <= MAX_NUMBER_CASHIER; numberCashier++) {
+            Cashier cashier = new Cashier(numberCashier);
+            CashierWorker cashierWorker = new CashierWorker(cashier, shop);
+            threadPoolCashiers.submit(cashierWorker);
+        }
     }
 
     private void waitTermination(ExecutorService threadPool) {
@@ -51,7 +60,7 @@ public class ShopWorker extends Thread {
             do {
                 Thread.onSpinWait();
             }
-            while (!threadPool.awaitTermination(1, TimeUnit.SECONDS));
+            while (!threadPool.awaitTermination(TIMEOUT_AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
