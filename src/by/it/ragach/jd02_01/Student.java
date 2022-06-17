@@ -7,7 +7,7 @@ public class Student extends Customer {
 
     public Student(int number) {
         super(number);
-        this.name = "Customer №" + number + " is Student";
+        this.name = "Customer (Student) №" + number;
 
     }
 

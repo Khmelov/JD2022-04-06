@@ -6,7 +6,7 @@ public class Pensioner extends Customer{
 
     public Pensioner(int number) {
         super(number);
-        this.name = "Customer №" + number + " is Pensioner";
+        this.name = "Customer (Pensioner) №" + number;
     }
 
     @Override
