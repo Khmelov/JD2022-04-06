@@ -1,9 +1,6 @@
 package by.it._examples_.jd01_10.sample_proxylog.logger;
 
-import by.it._examples_.jd01_10.sample_proxylog.Sender;
-
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
@@ -12,9 +9,10 @@ import java.lang.reflect.Proxy;
  */
 public class ProxyLogger {
 
-    //метод который создает прокси-объект
-    public static Sender getLoggedSender(Object target) {
-        return (Sender) Proxy.newProxyInstance(
+    //метод, который создает прокси-объект
+    @SuppressWarnings("unchecked")
+    public static <T> T getLoggedSender(T target) {
+        return (T) Proxy.newProxyInstance(
                 target.getClass().getClassLoader(),
                 target.getClass().getInterfaces(),
                 getInvocationHandler(target)
@@ -28,9 +26,10 @@ public class ProxyLogger {
                     proxyMethod.getName(), (Class<?>[]) proxyMethod.getGenericParameterTypes());
             if (method.isAnnotationPresent(Log.class)) {
                 log(method);
-                return method.invoke(target, args);
-            } else
-                throw new InvocationTargetException(null, String.format("method %s should be annotated ", method));
+            }
+            //else
+            //throw new InvocationTargetException(null, String.format("method %s should be annotated ", method));
+            return method.invoke(target, args);
         };
     }
 

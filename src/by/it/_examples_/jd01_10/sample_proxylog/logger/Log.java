@@ -12,7 +12,10 @@ public @interface Log {
     Level level() default Level.INFO;
 
     enum Level {
-        ERROR(31), DEBUG(32), INFO(33), MESSAGES(34);
+        ERROR(31),
+        DEBUG(32),
+        INFO(33),
+        MESSAGES(34);
 
         public final int color;
 
