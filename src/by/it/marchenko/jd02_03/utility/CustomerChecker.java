@@ -37,9 +37,13 @@ public class CustomerChecker extends Thread {
         Delayer delayer = new Delayer();
         int index = 0;
         LinkedList<Integer> currentList = new LinkedList<>();
-        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") LinkedList<Integer> queueList = new LinkedList<>();
-        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") LinkedList<Integer> cashierList = new LinkedList<>();
-        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") LinkedList<Integer> shoppingRoomList = new LinkedList<>();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+        LinkedList<Integer> queueList = new LinkedList<>();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+        LinkedList<Integer> cashierList = new LinkedList<>();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+        LinkedList<Integer> shoppingRoomList = new LinkedList<>();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         LinkedList<Integer> shoppingCartList = new LinkedList<>();
         while (storeWorker.isAlive()) {
             delayer.performDelay(REAL_ONE_SECOND);
@@ -65,17 +69,17 @@ public class CustomerChecker extends Thread {
 
         System.out.println("Current customer count per second");
         printResult(currentList);
-        /*
+
         System.out.println("Queue size per second");
         printResult(queueList);
         System.out.println("Current cashier count per second");
         printResult(cashierList);
-        System.out.println("Shopping room's customers count per second");
-        printResult(shoppingRoomList);
+        //System.out.println("Shopping room's customers count per second");
+        //printResult(shoppingRoomList);
 
-         */
-        System.out.println("Shopping cart count per second");
-        printResult(shoppingCartList);
+
+        //System.out.println("Shopping cart count per second");
+        //printResult(shoppingCartList);
 
 
         String filePath = FilePathFinder.getFilePath("CustomerCheckerResult.txt");

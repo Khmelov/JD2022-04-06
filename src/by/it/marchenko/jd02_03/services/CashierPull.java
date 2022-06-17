@@ -5,31 +5,30 @@ import by.it.marchenko.jd02_03.models.Cashier;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static by.it.marchenko.jd02_03.constants.CashierConstant.*;
 
 
 public class CashierPull implements CashierPullAction {
 
-    private final Deque<Cashier> cashierPull;
-
-    private volatile int cashierOnWorkCount;
+    private final ConcurrentLinkedDeque<Cashier> cashierPull;
+    private final AtomicInteger atomicCashierOnWorkCount;
 
     public CashierPull() {
-        this.cashierPull = new ArrayDeque<>();
-        cashierOnWorkCount = 0;
+        this.cashierPull = new ConcurrentLinkedDeque<>();
+        this.atomicCashierOnWorkCount = new AtomicInteger(0);
     }
 
     @Override
-    public int getCashierOnWorkCount() {
-        return cashierOnWorkCount;
+    public AtomicInteger getCashierOnWorkCount() {
+        return atomicCashierOnWorkCount;
     }
 
     @Override
     public void setCashierOnWorkCount(int cashierOnWorkCount) {
-        synchronized (cashierPull) {
-            this.cashierOnWorkCount = cashierOnWorkCount;
-        }
+        atomicCashierOnWorkCount.getAndSet(cashierOnWorkCount);
     }
 
     @Override
@@ -41,9 +40,7 @@ public class CashierPull implements CashierPullAction {
 
     @Override
     public boolean add(Cashier cashier) {
-        synchronized (cashierPull) {
             return cashierPull.offerLast(cashier);
-        }
     }
 
     @Override
