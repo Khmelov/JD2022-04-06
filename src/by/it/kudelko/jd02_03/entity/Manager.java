@@ -1,29 +1,33 @@
 package by.it.kudelko.jd02_03.entity;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Manager {
 
     private final int plan;
-    private volatile int countIn;
-    private volatile int countOut;
+    private final AtomicInteger countIn = new AtomicInteger(0);
+    private final AtomicInteger countOut = new AtomicInteger(0);
 
     public Manager(int plan) {
         this.plan = plan;
     }
 
     public boolean shopOpened() {
-        return countIn != plan;
+        return countIn.get() != plan;
     }
 
     public boolean shopClosed() {
-        return countOut == plan;
+        return countOut.get() == plan;
     }
 
-    public synchronized void customerEnter(){
-        countIn++;
+    public void customerEnter(){
+        countIn.getAndIncrement();
     }
 
-    public synchronized void customerOut(){
-        countOut++;
+    public void customerOut(){
+        countOut.getAndIncrement();
     }
 
 }
