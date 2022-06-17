@@ -1,15 +1,13 @@
-package by.it.marchenko.jd02_02.services;
+package by.it.marchenko.jd02_03.services;
 
-import by.it.marchenko.jd02_02.Printer;
-import by.it.marchenko.jd02_02.models.*;
-import by.it.marchenko.jd02_02.utility.Delayer;
-import by.it.marchenko.jd02_02.utility.RandomGenerator;
+import by.it.marchenko.jd02_03.Printer;
+import by.it.marchenko.jd02_03.models.*;
+import by.it.marchenko.jd02_03.utility.Delayer;
+import by.it.marchenko.jd02_03.utility.RandomGenerator;
 
 import java.util.Objects;
 
-import static by.it.marchenko.jd02_02.utility.CustomerChecker.ANSI_RESET;
-import static by.it.marchenko.jd02_02.utility.CustomerChecker.ANSI_YELLOW;
-import static by.it.marchenko.jd02_02.utility.CustomerChecker.ANSI_RED;
+import static by.it.marchenko.jd02_03.utility.CustomerChecker.*;
 
 public class CashierWorker extends Thread {
     public static final int MIN_CASHIER_OPERATION_TIME = 2000;
