@@ -44,7 +44,7 @@ public class CustomerChecker extends Thread {
         while (storeWorker.isAlive()) {
             delayer.performDelay(REAL_ONE_SECOND);
             int totalCustomerCount = managerWorker.getTotalCustomerCount();
-            int currentCustomerCount = storeWorker.getCurrentCustomerCount();
+            int currentCustomerCount = storeWorker.getCurrentCustomerCount().intValue();
             int customerInQueue = store.getStoreQueue().getSize();
             int currentCashierCount = storeWorker.getCurrentCashierCount();
             int shoppingRoomCustomerCount = storeWorker.getShoppingRoomCustomerCount().intValue();

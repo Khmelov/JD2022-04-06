@@ -4,8 +4,10 @@ import by.it.marchenko.jd02_03.models.Store;
 import by.it.marchenko.jd02_03.models.StoreQueue;
 import by.it.marchenko.jd02_03.services.CashierPull;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public interface StoreAction {
-    int getCurrentCustomerCount();
+    AtomicInteger getCurrentCustomerCount();
 
     int getCurrentCashierCount();
 

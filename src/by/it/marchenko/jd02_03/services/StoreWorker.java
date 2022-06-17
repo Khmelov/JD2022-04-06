@@ -42,7 +42,8 @@ public class StoreWorker extends Thread implements StoreAction {
     private final Semaphore shoppingCartLimiter;
     private final AtomicInteger shoppingRoomCustomerCount;
     private final AtomicInteger shoppingCartCount;
-    private final AtomicInteger atomicCurrentCustomerCount;
+    private final AtomicInteger currentCustomerCount;
+    private final AtomicInteger currentCashierCount;
 
     private Manager manager;
     private ManagerWorker managerWorker;
@@ -50,10 +51,6 @@ public class StoreWorker extends Thread implements StoreAction {
     private CashierPull cashierPull;
     private StockAuditor auditor;
     private ExecutorService cashierExecutorService;
-
-    //private volatile int currentCustomerCount;
-    private volatile int currentCashierCount;
-
 
     double initialBalance;
     double finalBalance;
@@ -67,15 +64,16 @@ public class StoreWorker extends Thread implements StoreAction {
         this.out = out;
         this.store = store;
         this.goodRepo = goodRepo;
+
         this.storeThreadSet = new HashSet<>();
         this.cashierWorkerSet = new HashSet<>();
         this.shoppingRoomCustomerLimiter = new Semaphore(SHOPPING_ROOM_CUSTOMER_LIMIT);
         this.shoppingCartLimiter = new Semaphore(SHOPPING_CART_LIMIT);
-        //currentCustomerCount = 0;
-        atomicCurrentCustomerCount = new AtomicInteger(0);
-        currentCashierCount = 0;
-        shoppingRoomCustomerCount = new AtomicInteger(SHOPPING_ROOM_INITIAL_CUSTOMER_COUNT);
-        shoppingCartCount = new AtomicInteger(SHOPPING_CART_INITIAL_VALUE);
+
+        this.currentCustomerCount = new AtomicInteger(0);
+        this.currentCashierCount = new AtomicInteger(0);
+        this.shoppingRoomCustomerCount = new AtomicInteger(SHOPPING_ROOM_INITIAL_CUSTOMER_COUNT);
+        this.shoppingCartCount = new AtomicInteger(SHOPPING_CART_INITIAL_VALUE);
     }
 
     public Semaphore getShoppingRoomCustomerLimiter() {
@@ -157,15 +155,15 @@ public class StoreWorker extends Thread implements StoreAction {
         int calcTime = (timePeriod < ONE_MINUTE / 2) ? timePeriod : ONE_MINUTE - timePeriod;
         double expectedMinCustomerCount = (MIN_COUNTER_TEMP * calcTime + STARTED_CUSTOMER_AMOUNT);
         double expectedMaxCustomerCount = (MAX_COUNTER_TEMP * calcTime + STARTED_CUSTOMER_AMOUNT);
-        int currentCustomerCount = atomicCurrentCustomerCount.intValue();
-        if (currentCustomerCount > expectedMaxCustomerCount) {
+        int checkCount = currentCustomerCount.intValue();
+        if (checkCount > expectedMaxCustomerCount) {
             return 0;
-        } else if (currentCustomerCount < expectedMinCustomerCount) {
-            return (int) (expectedMaxCustomerCount - currentCustomerCount);
+        } else if (checkCount < expectedMinCustomerCount) {
+            return (int) (expectedMaxCustomerCount - checkCount);
         } else {
             double expectedAvgCustomerCount =
                     (expectedMinCustomerCount + expectedMaxCustomerCount) / 2d;
-            return (int) (round(expectedAvgCustomerCount - currentCustomerCount));
+            return (int) (round(expectedAvgCustomerCount - checkCount));
         }
     }
 
@@ -212,14 +210,14 @@ public class StoreWorker extends Thread implements StoreAction {
     }
 
     @Override
-    public int getCurrentCustomerCount() {
-        //return currentCustomerCount;
-        return atomicCurrentCustomerCount.intValue();
+    public AtomicInteger getCurrentCustomerCount() {
+        return currentCustomerCount;
     }
 
     @Override
     public int getCurrentCashierCount() {
-        return currentCashierCount;
+        //return currentCashierCount;
+        return currentCashierCount.intValue();
     }
 
     @Override
@@ -234,22 +232,20 @@ public class StoreWorker extends Thread implements StoreAction {
 
     @Override
     public void changeCustomerCurrentCount(int increment) {
-        atomicCurrentCustomerCount.getAndAdd(increment);
-        //synchronized (store.getMonitor()) {
-        //    currentCustomerCount += increment;
-        //}
+        currentCustomerCount.getAndAdd(increment);
     }
 
     @Override
     public void generateCashier(StoreQueue storeQueue) {
         synchronized (store.getMonitor()) {
             int expectedCashierCount = storeQueue.calcExpectedCashierCount(!SIMPLY_CASHIER_MODE);
-            int deltaCashierCount = expectedCashierCount - currentCashierCount;
+            int checkedCashierCount = currentCashierCount.intValue();
+            int deltaCashierCount = expectedCashierCount - checkedCashierCount;
             for (int i = 0, n = abs(deltaCashierCount); i < n; i++) {
                 Cashier cashier;
                 if (deltaCashierCount > 0) {
                     int totalCashierCount = cashierPull.getSize();
-                    if (totalCashierCount <= currentCashierCount) {
+                    if (totalCashierCount <= checkedCashierCount) {
                         cashier = new Cashier();
                         cashierPull.add(cashier);
                     } else {
@@ -257,11 +253,11 @@ public class StoreWorker extends Thread implements StoreAction {
                     }
                     CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
                     cashierWorkerSet.add(cashierWorker);
-                    currentCashierCount++;
+                    this.currentCashierCount.getAndIncrement();
                     cashierWorker.start();
                     //cashierExecutorService.execute(cashierWorker);
                 } else if (deltaCashierCount < 0) {
-                    currentCashierCount--;
+                    this.currentCashierCount.getAndDecrement();
                     cashierPull.lullOnWorkCashier();
                 }
             }
