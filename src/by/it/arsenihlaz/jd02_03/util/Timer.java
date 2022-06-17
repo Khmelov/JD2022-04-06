@@ -1,4 +1,4 @@
-package by.it.arsenihlaz.jd02_02.util;
+package by.it.arsenihlaz.jd02_03.util;
 
 public class Timer {
 

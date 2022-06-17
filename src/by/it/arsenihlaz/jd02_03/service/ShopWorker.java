@@ -1,11 +1,12 @@
-package by.it.arsenihlaz.jd02_02.service;
+package by.it.arsenihlaz.jd02_03.service;
 
-import by.it.arsenihlaz.jd02_02.entity.*;
-import by.it.arsenihlaz.jd02_02.util.RandomGenerator;
-import by.it.arsenihlaz.jd02_02.util.Timer;
+import by.it.arsenihlaz.jd02_03.entity.*;
+import by.it.arsenihlaz.jd02_03.util.RandomGenerator;
+import by.it.arsenihlaz.jd02_03.util.Timer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ShopWorker extends Thread {
     private final Shop shop;
@@ -18,24 +19,21 @@ public class ShopWorker extends Thread {
     @Override
     public void run() {
         System.out.println(shop + " opened");
-
-        List<Thread> threads = new ArrayList<>();
         Manager manager = shop.getManager();
+
+        ExecutorService executorCashiers = Executors.newFixedThreadPool(5);
         for (int numberCashier = 0; numberCashier < 2; numberCashier++) {
             Cashier cashier = new Cashier(numberCashier);
             CashierWorker cashierWorker = new CashierWorker(cashier, shop);
-            Thread thread = new Thread(cashierWorker);
-            threads.add(thread);
-            thread.start();
+            executorCashiers.submit(cashierWorker);
         }
+        executorCashiers.shutdown();
 
         int customerPerSecond;
         int time = 0;
         while (manager.shopOpened()) {
-
             int numberOfBuyers = CustomerWorker.countBuyers();
             int second = time % 60;
-
             if (second < 30 && numberOfBuyers <= (10 + second)) {
                 customerPerSecond = RandomGenerator.get((10 + second) / 2);
             } else if (second >= 30 && numberOfBuyers <= (40 + (30 - second))) {
@@ -46,22 +44,25 @@ public class ShopWorker extends Thread {
                 Customer customer = customerGenerator();
                 CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                 customerWorker.start();
-                threads.add(customerWorker);
             }
             time++;
             Timer.sleep(1000);
-            System.out.println("количество покупателей " + numberOfBuyers);
-            System.out.println(second);
+//            System.out.println("количество покупателей " + numberOfBuyers);
+//            System.out.println(second);
         }
-
-        for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        waiting(executorCashiers);
         System.out.println(shop + " closed");
+    }
+
+    private void waiting(ExecutorService executor) {
+        try {
+            do {
+                Thread.onSpinWait();
+            }
+            while (!executor.awaitTermination(1, TimeUnit.SECONDS));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private Customer customerGenerator() {
