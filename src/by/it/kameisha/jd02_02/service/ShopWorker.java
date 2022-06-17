@@ -36,8 +36,8 @@ public class ShopWorker extends Thread {
                     customerWorker.start();
                     threads.add(customerWorker);
                 }
+                Timer.sleep(1000);
             }
-            Timer.sleep(1000);
         }
         for (Thread thread : threads) {
             try {
