@@ -1,10 +1,14 @@
 package by.it.smirnov.jd02_03.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Store {
 
     private final String name;
     private final StoreQueue storeQueue;
     public int cashiersAtWork;
+    public List<Cashier> cashiers = new ArrayList<>();
 
     public Manager getManager() {
         return manager;
@@ -25,5 +29,13 @@ public class Store {
 
     public StoreQueue getStoreQueue() {
         return storeQueue;
+    }
+
+    public boolean cashiersNotEnough(){
+        return (this.getStoreQueue().queue.size() * 1.0 / this.cashiersAtWork) >= 5 && this.cashiersAtWork<5;
+    }
+
+    public boolean cashiersEnough(){
+        return (this.getStoreQueue().queue.size() * 1.0 / this.cashiersAtWork) < 5;
     }
 }

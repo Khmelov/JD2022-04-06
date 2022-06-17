@@ -12,6 +12,6 @@ public class Cashier {
 
     @Override
     public String toString() {
-        return "\t" + name;
+        return name;
     }
 }

@@ -9,15 +9,14 @@ import by.it.smirnov.jd02_03.entities.customer_types.Student;
 import by.it.smirnov.jd02_03.utils.Randomizer;
 import by.it.smirnov.jd02_03.utils.Sleeper;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static by.it.smirnov.jd02_03.repo.Wordings.CLOSE;
 import static by.it.smirnov.jd02_03.repo.Wordings.OPEN;
-import static java.lang.System.*;
+import static by.it.smirnov.jd02_03.utils.Report.printReport;
+import static java.lang.System.out;
 
 public class StoreWorker extends Thread {
     private final Store store;
@@ -42,6 +41,7 @@ public class StoreWorker extends Thread {
         threadPool = Executors.newFixedThreadPool(CASH_THREADS_NUMB);
 
         for (int time = 0; manager.storeOpened(); time++) {
+            if(time%30 == 0 && time != 0) printReport(store);
             openCashiers();
             int inFlowBase = Randomizer.get(5, 15);
             for (int i = 0; manager.storeOpened() && i < inFlowPerSec(inFlowBase, time) &&
@@ -56,6 +56,7 @@ public class StoreWorker extends Thread {
         threadPool.shutdown();
         waitTermination();
         out.printf(CLOSE, store);
+        printReport(store);
     }
 
     private void waitTermination() {
@@ -69,12 +70,13 @@ public class StoreWorker extends Thread {
     }
 
     private void openCashiers() {
-        while ((store.getStoreQueue().queue.size() * 1.0 / store.cashiersAtWork) > 5) {
+        while (store.cashiersNotEnough() && store.cashiers.size()<5) {
+            store.cashiersAtWork++;
             cashierNumber++;
             Cashier cashier = new Cashier(cashierNumber);
             CashierWorker cashierWorker = new CashierWorker(cashier, store);
+            store.cashiers.add(cashier);
             threadPool.submit(cashierWorker);
-            store.cashiersAtWork++;
         }
     }
 

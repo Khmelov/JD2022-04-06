@@ -20,7 +20,9 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     private final Customer customer;
     private final Store store;
     private int goodsTaken;
-    private static final Semaphore semaphore = new Semaphore(20);
+    private static final Semaphore CHOOSE_PERMITS = new Semaphore(20);
+    private static final Semaphore CARTS_AVAILIABLE = new Semaphore(50);
+    private int chosenGoodsNumber;
 
     public CustomerWorker(Customer customer, Store store) {
         this.customer = customer;
@@ -35,22 +37,25 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void run() {
+        enteredStore();
         try {
-            semaphore.acquire();
-            enteredStore();
+            CARTS_AVAILIABLE.acquire();
             takeCart();
-            int chosenGoodsNumber = customer.quantityNeed();
+            CHOOSE_PERMITS.acquire();
+            chosenGoodsNumber = customer.quantityNeed();
             for (int count = 0; count < chosenGoodsNumber; count++) {
                 Good good = chooseGood();
                 goodsTaken = putToCart(good);
             }
-            if (chosenGoodsNumber > 0) goToQueue();
-            goOut();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
-            semaphore.release();
+            CHOOSE_PERMITS.release();
+            CARTS_AVAILIABLE.release();
         }
+        if (chosenGoodsNumber > 0) goToQueue();
+        goOut();
+
         store.getManager().customerOut();
     }
 

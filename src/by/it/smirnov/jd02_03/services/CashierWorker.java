@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 import static by.it.smirnov.jd02_03.repo.Wordings.*;
+import static by.it.smirnov.jd02_03.utils.Report.printReport;
 import static java.lang.System.*;
 
 public class CashierWorker implements Runnable {
@@ -31,7 +32,7 @@ public class CashierWorker implements Runnable {
         StoreQueue storeQueue = store.getStoreQueue();
         while (true) {
             Customer customer = storeQueue.extract();
-            if (Objects.nonNull(customer)) {
+            if (Objects.nonNull(customer) || manager.storeOpened()) {
                 out.printf(CASH_SERVE, cashier, customer);
                 int timeout = Randomizer.get(2000, 5000);
                 Sleeper.sleep(timeout);
@@ -42,9 +43,20 @@ public class CashierWorker implements Runnable {
                     customer.notify();
                 }
             } else break;
+            if (store.cashiersEnough()) {
+                closeCashier();
+                while (store.cashiersEnough()) {
+                    Sleeper.sleep(1000);
+                    if (manager.storeClosed()) break;
+                }
+                if (store.cashiersNotEnough()) {
+                    store.cashiersAtWork++;
+                    out.printf(OPEN, cashier);
+                }
+            }
+            if (manager.storeClosed() && store.cashiersEnough()) break;
         }
-        store.cashiersAtWork--;
-        out.printf(CLOSE_REVENUE, cashier, new DecimalFormat(DECIMAL).format(cashier.revenue));
+        closeCashier();
     }
 
     private void proceedPayments(Customer customer) {
@@ -62,5 +74,10 @@ public class CashierWorker implements Runnable {
                 .add(CHEQUE_DIV);
         out.println(cheque);
         cashier.revenue += total;
+    }
+
+    private void closeCashier(){
+        store.cashiersAtWork--;
+        out.printf(CLOSE_REVENUE, cashier, new DecimalFormat(DECIMAL).format(cashier.revenue));
     }
 }
