@@ -10,6 +10,11 @@ public class Pensioner extends Customer{
     }
 
     @Override
+    public int speedOfOperation(int millis) {
+        return millis/10*15;
+    }
+
+    @Override
     public String toString() {
         return name;
     }

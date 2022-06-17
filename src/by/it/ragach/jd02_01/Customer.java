@@ -8,4 +8,15 @@ public class Customer {
     @Override
     public String toString() { return name;
     }
+
+    public int speedOfOperation (int millis){
+        return millis;
+    }
+
+    public int quantityOfGoods(){
+        return RandomGenerator.get(2,5);
+    }
+
+
+
 }
