@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
+    public static final int MIN_COUNT_GOODS = 2;
+    public static final int MAX_COUNT_GOODS = 5;
+    public static final int TIMEOUT_FACTOR = 1;
     private static long currentId = System.currentTimeMillis();
     private final String name;
     private boolean waiting;
@@ -34,15 +37,15 @@ public class Customer {
     }
 
     public int getMinCountGoods() {
-        return 2;
+        return MIN_COUNT_GOODS;
     }
 
     public int getMaxCountGoods() {
-        return 5;
+        return MAX_COUNT_GOODS;
     }
 
     public double getTimeoutFactor() {
-        return 1;
+        return TIMEOUT_FACTOR;
     }
 
     public Object getMonitor() {

@@ -10,6 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ShopWorker extends Thread {
     public static final int N_CASHIERS_THREADS = 5;
+    public static final int TIMEOUT_SLEEP = 1000;
+    public static final int MIN_NUMBER_CASHIER = 1;
+    public static final int MAX_NUMBER_CASHIER = 5;
     private final Shop shop;
 
     public ShopWorker(Shop shop) {
@@ -22,7 +25,7 @@ public class ShopWorker extends Thread {
         int number = 0;
         Manager manager = shop.getManager();
         ExecutorService threadPoolCashiers = Executors.newFixedThreadPool(N_CASHIERS_THREADS);
-        for (int numberCashier = 1; numberCashier <= 2; numberCashier++) {
+        for (int numberCashier = MIN_NUMBER_CASHIER; numberCashier <= MAX_NUMBER_CASHIER; numberCashier++) {
             Cashier cashier = new Cashier(numberCashier);
             CashierWorker cashierWorker = new CashierWorker(cashier, shop);
             threadPoolCashiers.submit(cashierWorker);
@@ -36,7 +39,7 @@ public class ShopWorker extends Thread {
                     CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                     customerWorker.start();
                 }
-                Timer.sleep(1000);
+                Timer.sleep(TIMEOUT_SLEEP);
             }
         }
         waitTermination(threadPoolCashiers);

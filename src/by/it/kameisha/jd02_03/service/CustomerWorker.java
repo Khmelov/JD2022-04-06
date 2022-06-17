@@ -9,7 +9,14 @@ import by.it.kameisha.jd02_03.interfaces.ShoppingCardAction;
 import java.util.concurrent.Semaphore;
 
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
-    private final Semaphore semaphore = new Semaphore(20);
+    public static final int MAX_CUSTOMERS_CHOOSING_GOODS = 20;
+    public static final int MAX_CARTS = 50;
+    public static final int MIN_TIMEOUT_CHOOSE_GOOD = 500;
+    public static final int MAX_TIMEOUT_CHOOSE_GOOD = 2000;
+    public static final int MIN_TIMEOUT_CART = 100;
+    public static final int MAX_TIMEOUT_CART = 300;
+    private final Semaphore semaphoreCustomersChoosingGoods = new Semaphore(MAX_CUSTOMERS_CHOOSING_GOODS);
+    private final Semaphore semaphoreCarts = new Semaphore(MAX_CARTS);
     private final Customer customer;
     private final Shop shop;
 
@@ -22,23 +29,23 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void run() {
         enteredStore();
-        try {
-            semaphore.acquire();
-            takeCart();
-            putRandomGoodsToCart();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        semaphore.release();
+        takeCart();
+        putRandomGoodsToCart();
         goToQueue();
         goOut();
     }
 
     private void putRandomGoodsToCart() {
-        int count = RandomGenerator.get(customer.getMinCountGoods(), customer.getMaxCountGoods());
-        for (int i = 0; i < count; i++) {
-            putToCart(chooseGood());
+        try {
+            semaphoreCustomersChoosingGoods.acquire();
+            int count = RandomGenerator.get(customer.getMinCountGoods(), customer.getMaxCountGoods());
+            for (int i = 0; i < count; i++) {
+                putToCart(chooseGood());
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+        semaphoreCustomersChoosingGoods.release();
     }
 
     @Override
@@ -49,7 +56,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public Good chooseGood() {
         System.out.println(customer + " started to choose goods");
-        int timeout = (int) (customer.getTimeoutFactor() * RandomGenerator.get(500, 2000));
+        int timeout = (int) (customer.getTimeoutFactor()
+                * RandomGenerator.get(MIN_TIMEOUT_CHOOSE_GOOD, MAX_TIMEOUT_CHOOSE_GOOD));
         Timer.sleep(timeout);
         int indexRandomGood = RandomGenerator.get(shop.getRepository().getGoodsList().size() - 1);
         Good good = new Good(shop.getRepository().getGoodsList().get(indexRandomGood));
@@ -84,15 +92,23 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void takeCart() {
-        System.out.println(customer + " take a cart");
-        int timeout = (int) (customer.getTimeoutFactor() * RandomGenerator.get(100, 300));
-        Timer.sleep(timeout);
+        try {
+            semaphoreCarts.acquire();
+            System.out.println(customer + " take a cart");
+            int timeout = (int) (customer.getTimeoutFactor()
+                    * RandomGenerator.get(MIN_TIMEOUT_CART, MAX_TIMEOUT_CART));
+            Timer.sleep(timeout);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        semaphoreCarts.release();
     }
 
     @Override
     public int putToCart(Good good) {
         customer.getShoppingCart().add(good);
-        int timeout = (int) (customer.getTimeoutFactor() * RandomGenerator.get(100, 300));
+        int timeout = (int) (customer.getTimeoutFactor()
+                * RandomGenerator.get(MIN_TIMEOUT_CART, MAX_TIMEOUT_CART));
         Timer.sleep(timeout);
         System.out.println(customer + " put " + good + " to cart. In cart " + customer.getShoppingCart().size());
         return customer.getShoppingCart().size();

@@ -1,6 +1,8 @@
 package by.it.kameisha.jd02_03.entity;
 
 public class Student extends Customer {
+    public static final int MIN_COUNT_GOODS = 0;
+    public static final int MAX_COUNT_GOODS = 2;
     private final String name;
 
     public Student(long number) {
@@ -10,12 +12,12 @@ public class Student extends Customer {
 
     @Override
     public int getMinCountGoods() {
-        return 0;
+        return MIN_COUNT_GOODS;
     }
 
     @Override
     public int getMaxCountGoods() {
-        return 2;
+        return MAX_COUNT_GOODS;
     }
 
     public String toString() {

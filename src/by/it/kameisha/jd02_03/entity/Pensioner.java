@@ -1,6 +1,7 @@
 package by.it.kameisha.jd02_03.entity;
 
 public class Pensioner extends Customer {
+    public static final double TIMEOUT_FACTOR_PENSIONER = 1.5;
     private final String name;
 
     public Pensioner(long number) {
@@ -10,7 +11,7 @@ public class Pensioner extends Customer {
 
     @Override
     public double getTimeoutFactor() {
-        return 1.5;
+        return TIMEOUT_FACTOR_PENSIONER;
     }
 
     public String toString() {

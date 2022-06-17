@@ -10,6 +10,9 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class CashierWorker implements Runnable {
+    public static final int MIN_TIMEOUT_SERVE_CUSTOMER = 2000;
+    public static final int MAX_TIMEOUT_SERVE_CUSTOMER = 5000;
+    public static final int TIMEOUT_WAIT = 100;
     private final Cashier cashier;
     private final Shop shop;
 
@@ -32,9 +35,9 @@ public class CashierWorker implements Runnable {
                     customer.notify();
                 }
             } else {
-                synchronized (shop.getQueue()){
+                synchronized (shop.getQueue()) {
                     try {
-                        queue.wait(100);
+                        queue.wait(TIMEOUT_WAIT);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -46,7 +49,7 @@ public class CashierWorker implements Runnable {
 
     private void serveCustomer(Customer customer) {
         System.out.println(cashier + " started service " + customer);
-        int timeout = RandomGenerator.get(2000, 5000);
+        int timeout = RandomGenerator.get(MIN_TIMEOUT_SERVE_CUSTOMER, MAX_TIMEOUT_SERVE_CUSTOMER);
         Timer.sleep(timeout);
         int revenue = printCheck(customer);
         cashier.addRevenue(revenue);
