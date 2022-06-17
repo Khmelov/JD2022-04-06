@@ -179,8 +179,7 @@ public class StoreWorker extends Thread implements StoreAction {
     }
 
     private void joinCustomerAndCashierThreads() {
-        storeThreadSet.addAll(cashierWorkerSet);
-        cashierExecutorService.shutdown();
+        //storeThreadSet.addAll(cashierWorkerSet);
         for (Thread storeThread : storeThreadSet) {
             try {
                 storeThread.join();
@@ -188,14 +187,16 @@ public class StoreWorker extends Thread implements StoreAction {
                 throw new StoreException(INTERRUPT_CASHIERS_AND_CUSTOMERS_JOINING, e);
             }
         }
+        cashierExecutorService.shutdown();
         boolean termination = false;
         try {
-            termination = cashierExecutorService.awaitTermination(1, TimeUnit.MINUTES);
+            termination = cashierExecutorService.awaitTermination(10, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             throw new StoreException(INTERRUPT_CASHIERS_AND_CUSTOMERS_JOINING, e);
         } finally {
             out.println(CASHIERS_THREADS_CORRECTLY_FINISHED + termination);
         }
+
     }
 
     private void closeStore() {
@@ -251,10 +252,10 @@ public class StoreWorker extends Thread implements StoreAction {
                         cashier = cashierPull.notifyOnSleepCashier();
                     }
                     CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
-                    cashierWorkerSet.add(cashierWorker);
+                    //cashierWorkerSet.add(cashierWorker);
                     currentCashierCount.getAndIncrement();
-                    cashierWorker.start();
-                    //cashierExecutorService.execute(cashierWorker);
+                    //cashierWorker.start();
+                    cashierExecutorService.execute(cashierWorker);
                 } else if (deltaCashierCount < 0) {
                     currentCashierCount.getAndDecrement();
                     cashierPull.lullOnWorkCashier();
