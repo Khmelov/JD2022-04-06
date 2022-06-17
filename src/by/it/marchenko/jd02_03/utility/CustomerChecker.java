@@ -39,12 +39,15 @@ public class CustomerChecker extends Thread {
         LinkedList<Integer> currentList = new LinkedList<>();
         LinkedList<Integer> queueList = new LinkedList<>();
         LinkedList<Integer> cashierList = new LinkedList<>();
+        LinkedList<Integer> shoppingRoomList = new LinkedList<>();
         while (storeWorker.isAlive()) {
             delayer.performDelay(REAL_ONE_SECOND);
             int totalCustomerCount = managerWorker.getTotalCustomerCount();
             int currentCustomerCount = storeWorker.getCurrentCustomerCount();
             int customerInQueue = store.getStoreQueue().getSize();
             int currentCashierCount = storeWorker.getCurrentCashierCount();
+            int shoppingRoomCustomerCount = storeWorker.getShoppingRoomCustomerCount().intValue();
+
             //noinspection unused
             String checkResult = String.format(
                     "Time: %3ds, Total customer count: %3d, Current customer count: %3d",
@@ -52,14 +55,19 @@ public class CustomerChecker extends Thread {
             currentList.addLast(currentCustomerCount);
             queueList.addLast(customerInQueue);
             cashierList.addLast(currentCashierCount);
+            shoppingRoomList.addLast(shoppingRoomCustomerCount);
+
             //System.out.println(checkResult);
         }
-        //System.out.println("Current customer count per second");
-        //printResult(currentList);
+        System.out.println("Current customer count per second");
+        printResult(currentList);
         System.out.println("Queue size per second");
         printResult(queueList);
         System.out.println("Current cashier count per second");
         printResult(cashierList);
+        System.out.println("Shopping room's customers count per second");
+        printResult(shoppingRoomList);
+
 
         String filePath = FilePathFinder.getFilePath("CustomerCheckerResult.txt");
         try (PrintWriter out = new PrintWriter(filePath)) {

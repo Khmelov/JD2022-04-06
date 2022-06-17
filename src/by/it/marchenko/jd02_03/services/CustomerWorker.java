@@ -12,6 +12,7 @@ import by.it.marchenko.jd02_03.utility.Delayer;
 import by.it.marchenko.jd02_03.utility.RandomGenerator;
 
 import java.util.Objects;
+import java.util.concurrent.Semaphore;
 
 import static by.it.marchenko.jd02_03.constants.CustomerConstant.*;
 import static by.it.marchenko.jd02_03.constants.StoreExceptionConstant.WAITING_IN_QUEUE_WAS_INTERRUPTED;
@@ -69,7 +70,9 @@ public class CustomerWorker extends Thread
 
         enteredStore();
         takeCart();
+
         fillCart();
+
         goToCashier();
         goOut();
     }
@@ -100,10 +103,17 @@ public class CustomerWorker extends Thread
     }
 
     private void fillCart() {
+        Semaphore shoppingRoomCustomerLimiter = storeWorker.getShoppingRoomCustomerLimiter();
+        while (!shoppingRoomCustomerLimiter.tryAcquire()) {
+            Thread.onSpinWait();
+        }
+        storeWorker.changeShoppingRoomCustomerCount(1);
         while (totalCartSize > currentCartSize) {
             Good currentGood = chooseGood();
             currentCartSize = putToCart(currentGood);
         }
+        shoppingRoomCustomerLimiter.release();
+        storeWorker.changeShoppingRoomCustomerCount(-1);
         out.println(customer + FINISHED_TO_CHOOSE_GOODS);
     }
 

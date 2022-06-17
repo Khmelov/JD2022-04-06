@@ -14,6 +14,11 @@ import by.it.marchenko.jd02_03.utility.StockAuditor;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static by.it.marchenko.jd02_03.constants.CustomerConstant.*;
 import static by.it.marchenko.jd02_03.constants.StoreConstant.*;
@@ -23,20 +28,26 @@ import static java.lang.Math.abs;
 import static java.lang.Math.round;
 
 public class StoreWorker extends Thread implements StoreAction {
+    public static final int SHOPPING_ROOM_CUSTOMER_LIMIT = 20;
     private final Printer out;
     private final Store store;
     private final StockRepo stockRepo;
     private final GoodRepo goodRepo;
     private final PriceListRepo priceRepo;
+    private final Semaphore shoppingRoomCustomerLimiter;
+    private final AtomicInteger shoppingRoomCustomerCount;
 
     private Manager manager;
     private ManagerWorker managerWorker;
     private Delayer delayer;
     private CashierPull cashierPull;
     private StockAuditor auditor;
+    private ExecutorService cashierExecutorService;
+
 
     private volatile int currentCustomerCount;
     private volatile int currentCashierCount;
+
 
     double initialBalance;
     double finalBalance;
@@ -52,8 +63,14 @@ public class StoreWorker extends Thread implements StoreAction {
         this.goodRepo = goodRepo;
         this.storeThreadSet = new HashSet<>();
         this.cashierWorkerSet = new HashSet<>();
+        this.shoppingRoomCustomerLimiter = new Semaphore(SHOPPING_ROOM_CUSTOMER_LIMIT);
         currentCustomerCount = 0;
         currentCashierCount = 0;
+        shoppingRoomCustomerCount = new AtomicInteger(0);
+    }
+
+    public Semaphore getShoppingRoomCustomerLimiter() {
+        return shoppingRoomCustomerLimiter;
     }
 
     @Override
@@ -71,7 +88,7 @@ public class StoreWorker extends Thread implements StoreAction {
         delayer = new Delayer();
         cashierPull = new CashierPull();
         StockWorker stockWorker = new StockWorker(stockRepo, goodRepo, priceRepo);
-
+        cashierExecutorService = Executors.newCachedThreadPool();
         out.print(STOCK_INIT_IN_PROGRESS);
         stockWorker.start();
         waitStockInit(stockWorker);
@@ -98,12 +115,21 @@ public class StoreWorker extends Thread implements StoreAction {
             for (int customerCount = 0;
                  managerWorker.storeOpened() && customerCount < customerCountPerSecond;
                  customerCount++) {
+                //try {
+                //shoppingRoomCustomerLimiter.acquire();
                 Customer customer = generateCustomer();
                 CustomerWorker customerWorker = new CustomerWorker(customer, store,
                         goodRepo, stockRepo, priceRepo, out, this);
                 storeThreadSet.add(customerWorker);
                 managerWorker.increaseTotalCustomerCount();
                 customerWorker.start();
+                //} catch (InterruptedException e) {
+                //    e.printStackTrace();
+                //} finally {
+                //shoppingRoomCustomerLimiter.release();
+                //}
+
+
             }
             delayer.performDelay(REAL_ONE_SECOND);
         }
@@ -151,12 +177,21 @@ public class StoreWorker extends Thread implements StoreAction {
 
     private void joinCustomerAndCashierThreads() {
         storeThreadSet.addAll(cashierWorkerSet);
+        cashierExecutorService.shutdown();
         for (Thread storeThread : storeThreadSet) {
             try {
                 storeThread.join();
             } catch (InterruptedException e) {
                 throw new StoreException(INTERRUPT_CASHIERS_AND_CUSTOMERS_JOINING, e);
             }
+        }
+        boolean termination = false;
+        try {
+            termination = cashierExecutorService.awaitTermination(1, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            throw new StoreException(INTERRUPT_CASHIERS_AND_CUSTOMERS_JOINING, e);
+        } finally {
+            out.println("Cashiers threads correctly finished: " + termination);
         }
     }
 
@@ -217,11 +252,20 @@ public class StoreWorker extends Thread implements StoreAction {
                     cashierWorkerSet.add(cashierWorker);
                     currentCashierCount++;
                     cashierWorker.start();
+                    //cashierExecutorService.execute(cashierWorker);
                 } else if (deltaCashierCount < 0) {
                     currentCashierCount--;
                     cashierPull.lullOnWorkCashier();
                 }
             }
         }
+    }
+
+    public AtomicInteger getShoppingRoomCustomerCount() {
+        return shoppingRoomCustomerCount;
+    }
+
+    public void changeShoppingRoomCustomerCount(int delta) {
+        shoppingRoomCustomerCount.getAndAdd(delta);
     }
 }
