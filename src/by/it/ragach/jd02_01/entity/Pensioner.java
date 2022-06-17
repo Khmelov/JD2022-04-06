@@ -1,6 +1,8 @@
-package by.it.ragach.jd02_01;
+package by.it.ragach.jd02_01.entity;
 
-public class Pensioner extends Customer{
+import by.it.ragach.jd02_01.entity.Customer;
+
+public class Pensioner extends Customer {
 
     public final String name;
 

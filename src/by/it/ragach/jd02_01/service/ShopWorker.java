@@ -1,4 +1,11 @@
-package by.it.ragach.jd02_01;
+package by.it.ragach.jd02_01.service;
+
+import by.it.ragach.jd02_01.util.RandomGenerator;
+import by.it.ragach.jd02_01.util.Timer;
+import by.it.ragach.jd02_01.entity.Customer;
+import by.it.ragach.jd02_01.entity.Pensioner;
+import by.it.ragach.jd02_01.entity.Shop;
+import by.it.ragach.jd02_01.entity.Student;
 
 import java.util.ArrayList;
 import java.util.List;

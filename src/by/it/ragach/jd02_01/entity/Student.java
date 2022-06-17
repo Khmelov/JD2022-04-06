@@ -1,4 +1,6 @@
-package by.it.ragach.jd02_01;
+package by.it.ragach.jd02_01.entity;
+
+import by.it.ragach.jd02_01.util.RandomGenerator;
 
 public class Student extends Customer {
 

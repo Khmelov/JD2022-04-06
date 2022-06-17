@@ -1,4 +1,14 @@
-package by.it.ragach.jd02_01;
+package by.it.ragach.jd02_01.service;
+
+import by.it.ragach.jd02_01.entity.PriceListRepo;
+import by.it.ragach.jd02_01.util.RandomGenerator;
+import by.it.ragach.jd02_01.entity.ShoppingCart;
+import by.it.ragach.jd02_01.util.Timer;
+import by.it.ragach.jd02_01.entity.Customer;
+import by.it.ragach.jd02_01.entity.Good;
+import by.it.ragach.jd02_01.entity.Shop;
+import by.it.ragach.jd02_01.interfaces.CustomerAction;
+import by.it.ragach.jd02_01.interfaces.ShoppingCardAction;
 
 public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
 

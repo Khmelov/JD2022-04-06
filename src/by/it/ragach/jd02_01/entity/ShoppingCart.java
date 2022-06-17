@@ -1,4 +1,4 @@
-package by.it.ragach.jd02_01;
+package by.it.ragach.jd02_01.entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

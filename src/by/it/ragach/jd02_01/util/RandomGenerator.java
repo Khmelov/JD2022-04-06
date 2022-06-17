@@ -1,4 +1,4 @@
-package by.it.ragach.jd02_01;
+package by.it.ragach.jd02_01.util;
 
 import java.util.concurrent.ThreadLocalRandom;
 

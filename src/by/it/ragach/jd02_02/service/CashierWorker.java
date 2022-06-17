@@ -5,6 +5,7 @@ import by.it.ragach.jd02_02.entity.*;
 import by.it.ragach.jd02_02.util.RandomGenerator;
 import by.it.ragach.jd02_02.util.Timer;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class CashierWorker implements Runnable {
@@ -26,11 +27,8 @@ public class CashierWorker implements Runnable {
         while (!manager.shopClosed()) {
             Customer customer = queue.extract();
             if (Objects.nonNull(customer)) {
-                System.out.println(cashier + " started service " + customer);
-                int timeout = RandomGenerator.get(2000, 5000);
-                Timer.sleep(timeout);
-                System.out.println(cashier + " finished service " + customer);
                 synchronized (customer.getMonitor()) {
+                    serveCustomer(customer);
                     customer.setWaiting(false);
                     customer.notify();
                 }
@@ -41,9 +39,16 @@ public class CashierWorker implements Runnable {
                     throw new RuntimeException(e);
                 }
             }
-
         }
-
-        System.out.println(cashier + " closed");
+        System.out.println(cashier + " closed. Total revenue: " + cashier.getRevenue());
     }
+
+    private void serveCustomer(Customer customer) {
+        System.out.println(cashier + " started service " + customer);
+        int timeout = RandomGenerator.get(2000, 5000);
+        Timer.sleep(timeout);
+        System.out.println(cashier + " finished service " + customer);
+    }
+
+
 }
