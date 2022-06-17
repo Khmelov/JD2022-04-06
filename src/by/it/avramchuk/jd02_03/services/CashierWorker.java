@@ -42,14 +42,6 @@ public class CashierWorker extends Thread implements CashierAction {
     }
 
     @Override
-    public void closeCash() {
-        synchronized (System.out) {
-            System.out.println("\n" + cashier + " closed " + cashBox.name());
-            System.out.printf("%s%5.2f\n\n", "Total cash....", cashBox.getTotalCash());
-        }
-    }
-
-    @Override
     public void serveCustomer() {
         ShopQueue queue = shop.getQueue();
         Customer customer = queue.extract();
@@ -84,5 +76,48 @@ public class CashierWorker extends Thread implements CashierAction {
             System.out.printf("%s%.2f\n\n","Total sum: ", totalSum);
         }
         return totalSum;
+    }
+
+    @Override
+    public void closeCash() {
+        synchronized (System.out) {
+            System.out.println("\n" + cashier + " closed " + cashBox.name());
+            CashBox[] cashBoxes = CashBox.values();
+            double totalAllBoxes=0;
+            for (CashBox box : cashBoxes) {
+                totalAllBoxes+= box.getTotalCash();
+            }
+            System.out.print("\u250c");
+            for (int i = 0; i < 6; i++) {
+                System.out.print("\u2500".repeat(8)+"\u252c");
+            }
+            System.out.println("\u2500".repeat(8)+"\u2510");
+
+            System.out.print("\u2502");
+            for (CashBox box : cashBoxes) {
+                System.out.printf("%8s\u2502", box.name());
+            }
+            System.out.printf("%8s\u2502","Size Q");
+            System.out.printf("%8s\u2502\n","Total");
+
+            System.out.print("\u251c");
+            for (int i = 0; i < 6; i++) {
+                System.out.print("\u2500".repeat(8)+"\u253c");
+            }
+            System.out.println("\u2500".repeat(8)+"\u2524");
+
+            System.out.print("\u2502");
+            for (CashBox box : cashBoxes) {
+                System.out.printf("%8.2f\u2502", box.getTotalCash());
+            }
+            System.out.printf("%8d\u2502",shop.getQueue().getSize());
+            System.out.printf("%8.2f\u2502\n",totalAllBoxes);
+
+            System.out.print("\u2514");
+            for (int i = 0; i < 6; i++) {
+                System.out.print("\u2500".repeat(8)+"\u2534");
+            }
+            System.out.println("\u2500".repeat(8)+"\u2518");
+        }
     }
 }

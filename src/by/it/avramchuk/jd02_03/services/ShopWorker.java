@@ -6,6 +6,8 @@ import by.it.avramchuk.jd02_03.util.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ShopWorker extends Thread{
     private final Shop shop;
@@ -26,10 +28,11 @@ public class ShopWorker extends Thread{
         int sec=0;
         System.out.println(shop+" opened");
 
+        ExecutorService threadPool = Executors.newFixedThreadPool(5);
+
         while (manager.shopOpened()) {
             int currentCount = getCurrentCount();
             System.out.println("\n at " + sec%60 + " second " + currentCount + " customers in the store\n");
-
             int countCustomerPerSecond = needToAdd(currentCount, sec);
             for (int i = 0;manager.shopOpened()&& i < countCustomerPerSecond; i++) {
                 Customer customer = defineCustomer();
@@ -37,17 +40,17 @@ public class ShopWorker extends Thread{
                 customerWorker.start();
                 customerWorkerList.add(customerWorker);
             }
+            int cashierNeeded = cashierNeeded();
+            manager.regulateCountCashier(cashierNeeded, shop, threadPool);
             Timer.sleep(1000);
             sec++;
         }
-        for (CustomerWorker customerWorker : customerWorkerList) {
-            try {
-                customerWorker.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
+       while (getCurrentCount()>0){
+           int cashierNeeded = cashierNeeded();
+           manager.regulateCountCashier(cashierNeeded, shop, threadPool);
+       }
+       manager.closeAllCashier();
+       threadPool.shutdown();
         System.out.println(shop+" closed");
         System.out.println("\n total visitors: "+ visitors);
     }
@@ -90,4 +93,5 @@ public class ShopWorker extends Thread{
         if (neededCount%5!=0){neededCount++;}
         return Math.min(neededCount, 5);
     }
+
 }

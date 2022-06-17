@@ -1,21 +1,27 @@
 package by.it.avramchuk.jd02_03.entity;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class ShopQueue {
-    private final Queue<Customer> queue;
+    public static final int MAX_LENGTH = 30;
+    private final BlockingQueue<Customer> queue;
 
     public ShopQueue() {
-        this.queue = new ArrayDeque<>();
+        this.queue = new ArrayBlockingQueue<>(MAX_LENGTH);
     }
-    public synchronized void add(Customer customer){
-        this.queue.add(customer);
+    public void add(Customer customer){
+        try {
+            this.queue.put(customer);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
-    public synchronized Customer extract(){
+    public  Customer extract(){
         return queue.poll();
     }
-    public synchronized int getSize(){
+    public  int getSize(){
        return queue.size();
     }
 }
