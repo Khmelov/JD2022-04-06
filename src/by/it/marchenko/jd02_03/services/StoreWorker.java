@@ -252,11 +252,11 @@ public class StoreWorker extends Thread implements StoreAction {
                     }
                     CashierWorker cashierWorker = new CashierWorker(cashier, store, delayer, out);
                     cashierWorkerSet.add(cashierWorker);
-                    this.currentCashierCount.getAndIncrement();
+                    currentCashierCount.getAndIncrement();
                     cashierWorker.start();
                     //cashierExecutorService.execute(cashierWorker);
                 } else if (deltaCashierCount < 0) {
-                    this.currentCashierCount.getAndDecrement();
+                    currentCashierCount.getAndDecrement();
                     cashierPull.lullOnWorkCashier();
                 }
             }
