@@ -46,7 +46,7 @@ public class CustomerChecker extends Thread {
             int totalCustomerCount = managerWorker.getTotalCustomerCount();
             int currentCustomerCount = storeWorker.getCurrentCustomerCount().intValue();
             int customerInQueue = store.getStoreQueue().getSize();
-            int currentCashierCount = storeWorker.getCurrentCashierCount();
+            int currentCashierCount = storeWorker.getCurrentCashierCount().intValue();
             int shoppingRoomCustomerCount = storeWorker.getShoppingRoomCustomerCount().intValue();
             int shoppingCartCount = storeWorker.getShoppingCartCount().intValue();
 

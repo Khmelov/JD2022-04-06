@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public interface StoreAction {
     AtomicInteger getCurrentCustomerCount();
 
-    int getCurrentCashierCount();
+    AtomicInteger getCurrentCashierCount();
 
     CashierPull getCashierPull();
 

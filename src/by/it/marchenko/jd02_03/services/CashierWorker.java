@@ -46,7 +46,6 @@ public class CashierWorker extends Thread {
                 }
             } else {
                 Thread.onSpinWait();
-
             }
         }
         out.printf("%s%s finished work. Serviced customer: %d. Not serviced by all cashiers: %d%n" +

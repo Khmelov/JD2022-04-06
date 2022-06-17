@@ -215,9 +215,8 @@ public class StoreWorker extends Thread implements StoreAction {
     }
 
     @Override
-    public int getCurrentCashierCount() {
-        //return currentCashierCount;
-        return currentCashierCount.intValue();
+    public AtomicInteger getCurrentCashierCount() {
+        return currentCashierCount;
     }
 
     @Override

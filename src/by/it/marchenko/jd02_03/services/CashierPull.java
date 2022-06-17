@@ -91,8 +91,6 @@ public class CashierPull implements CashierPullAction {
         sb.append(String.format(TOTAL_CASHIERS_RESULT_FORMAT,
                 sumReceipts, customerCount));
         return sb.toString();
-
-
     }
 }
 
