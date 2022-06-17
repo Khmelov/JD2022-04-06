@@ -37,9 +37,10 @@ public class CustomerChecker extends Thread {
         Delayer delayer = new Delayer();
         int index = 0;
         LinkedList<Integer> currentList = new LinkedList<>();
-        LinkedList<Integer> queueList = new LinkedList<>();
-        LinkedList<Integer> cashierList = new LinkedList<>();
-        LinkedList<Integer> shoppingRoomList = new LinkedList<>();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") LinkedList<Integer> queueList = new LinkedList<>();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") LinkedList<Integer> cashierList = new LinkedList<>();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") LinkedList<Integer> shoppingRoomList = new LinkedList<>();
+        LinkedList<Integer> shoppingCartList = new LinkedList<>();
         while (storeWorker.isAlive()) {
             delayer.performDelay(REAL_ONE_SECOND);
             int totalCustomerCount = managerWorker.getTotalCustomerCount();
@@ -47,6 +48,7 @@ public class CustomerChecker extends Thread {
             int customerInQueue = store.getStoreQueue().getSize();
             int currentCashierCount = storeWorker.getCurrentCashierCount();
             int shoppingRoomCustomerCount = storeWorker.getShoppingRoomCustomerCount().intValue();
+            int shoppingCartCount = storeWorker.getShoppingCartCount().intValue();
 
             //noinspection unused
             String checkResult = String.format(
@@ -56,9 +58,11 @@ public class CustomerChecker extends Thread {
             queueList.addLast(customerInQueue);
             cashierList.addLast(currentCashierCount);
             shoppingRoomList.addLast(shoppingRoomCustomerCount);
+            shoppingCartList.addLast(shoppingCartCount);
 
             //System.out.println(checkResult);
         }
+        /*
         System.out.println("Current customer count per second");
         printResult(currentList);
         System.out.println("Queue size per second");
@@ -67,6 +71,10 @@ public class CustomerChecker extends Thread {
         printResult(cashierList);
         System.out.println("Shopping room's customers count per second");
         printResult(shoppingRoomList);
+
+         */
+        System.out.println("Shopping cart count per second");
+        printResult(shoppingCartList);
 
 
         String filePath = FilePathFinder.getFilePath("CustomerCheckerResult.txt");
@@ -103,6 +111,7 @@ public class CustomerChecker extends Thread {
         StringBuilder outString = new StringBuilder();
         for (int i = height; i > 0; i--) {
             for (int j = 0; j < width; j++) {
+                @SuppressWarnings("unused")
                 String setColor = (j == WORK_TIME) ? ANSI_YELLOW : "";
                 int checkVal = arrayList.get(j) / (SCALE * i);
                 String appendString = 0 < checkVal ? "█" : " ";

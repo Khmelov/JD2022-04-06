@@ -30,6 +30,8 @@ public class CustomerWorker extends Thread
     public static final boolean ENABLE_WAITING = true;
     //public static final boolean SIMPLY_CASHIER_MODE = true;
     public static final String LIVED_THE_QUEUE = "lived the queue";
+    public static final boolean RELEASE_SHOPPING_CART = false;
+    public static final boolean LOCK_SHOPPING_CART = true;
 
     private final Printer out;
     private final Customer customer;
@@ -44,6 +46,7 @@ public class CustomerWorker extends Thread
     private int currentCartSize;
     private int totalCartSize;
     private ShoppingCart shoppingCart;
+    private Semaphore shoppingCartLimiter;
 
     private Delayer delayer;
     ManagerWorker managerWorker;
@@ -62,37 +65,38 @@ public class CustomerWorker extends Thread
 
         managerWorker = store.getManagerWorker();
         cashierPull = storeWorker.getCashierPull();
+
     }
 
     @Override
     public void run() {
         init();
 
+
         enteredStore();
         takeCart();
-
         fillCart();
-
         goToCashier();
         goOut();
+
     }
 
     private void init() {
         double speedDownCoefficient = customer.getSpeedDownCoefficient();
         delayer = new Delayer(speedDownCoefficient);
-
-
+        shoppingCartLimiter = storeWorker.getShoppingCartLimiter();
     }
 
     @Override
     public void enteredStore() {
         out.println(customer + ENTERED_TO + store);
         storeWorker.changeCustomerCurrentCount(1);
-        //storeWorker.increaseTotalCustomerCount();
     }
 
     @Override
     public void takeCart() {
+        changeShoppingCartWaitingMode(LOCK_SHOPPING_CART);
+        storeWorker.changeShoppingCartCount(-1);
         int minCartCapacity = customer.getMinCartCapacity();
         int maxCartCapacity = customer.getMaxCartCapacity();
         totalCartSize = RandomGenerator.getRandom(minCartCapacity, maxCartCapacity);
@@ -185,7 +189,19 @@ public class CustomerWorker extends Thread
 
     @Override
     public void goOut() {
+        storeWorker.changeShoppingCartCount(1);
+        changeShoppingCartWaitingMode(RELEASE_SHOPPING_CART);
         out.println(customer + LEAVED + store);
         storeWorker.changeCustomerCurrentCount(-1);
+    }
+
+    private void changeShoppingCartWaitingMode(boolean waitingMode) {
+        if (waitingMode) {
+            while (!shoppingCartLimiter.tryAcquire()) {
+                Thread.onSpinWait();
+            }
+        } else {
+            shoppingCartLimiter.release();
+        }
     }
 }

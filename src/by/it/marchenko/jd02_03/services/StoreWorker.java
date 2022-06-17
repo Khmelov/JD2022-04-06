@@ -29,13 +29,19 @@ import static java.lang.Math.round;
 
 public class StoreWorker extends Thread implements StoreAction {
     public static final int SHOPPING_ROOM_CUSTOMER_LIMIT = 20;
+    public static final int SHOPPING_ROOM_INITIAL_CUSTOMER_COUNT = 0;
+    public static final int SHOPPING_CART_LIMIT = 50;
+    public static final int SHOPPING_CART_INITIAL_VALUE = SHOPPING_CART_LIMIT;
+    public static final String CASHIERS_THREADS_CORRECTLY_FINISHED = "Cashiers threads correctly finished: ";
     private final Printer out;
     private final Store store;
     private final StockRepo stockRepo;
     private final GoodRepo goodRepo;
     private final PriceListRepo priceRepo;
     private final Semaphore shoppingRoomCustomerLimiter;
+    private final Semaphore shoppingCartLimiter;
     private final AtomicInteger shoppingRoomCustomerCount;
+    private final AtomicInteger shoppingCartCount;
 
     private Manager manager;
     private ManagerWorker managerWorker;
@@ -43,7 +49,6 @@ public class StoreWorker extends Thread implements StoreAction {
     private CashierPull cashierPull;
     private StockAuditor auditor;
     private ExecutorService cashierExecutorService;
-
 
     private volatile int currentCustomerCount;
     private volatile int currentCashierCount;
@@ -64,13 +69,19 @@ public class StoreWorker extends Thread implements StoreAction {
         this.storeThreadSet = new HashSet<>();
         this.cashierWorkerSet = new HashSet<>();
         this.shoppingRoomCustomerLimiter = new Semaphore(SHOPPING_ROOM_CUSTOMER_LIMIT);
+        this.shoppingCartLimiter = new Semaphore(SHOPPING_CART_LIMIT);
         currentCustomerCount = 0;
         currentCashierCount = 0;
-        shoppingRoomCustomerCount = new AtomicInteger(0);
+        shoppingRoomCustomerCount = new AtomicInteger(SHOPPING_ROOM_INITIAL_CUSTOMER_COUNT);
+        shoppingCartCount = new AtomicInteger(SHOPPING_CART_INITIAL_VALUE);
     }
 
     public Semaphore getShoppingRoomCustomerLimiter() {
         return shoppingRoomCustomerLimiter;
+    }
+
+    public Semaphore getShoppingCartLimiter() {
+        return shoppingCartLimiter;
     }
 
     @Override
@@ -115,21 +126,12 @@ public class StoreWorker extends Thread implements StoreAction {
             for (int customerCount = 0;
                  managerWorker.storeOpened() && customerCount < customerCountPerSecond;
                  customerCount++) {
-                //try {
-                //shoppingRoomCustomerLimiter.acquire();
                 Customer customer = generateCustomer();
                 CustomerWorker customerWorker = new CustomerWorker(customer, store,
                         goodRepo, stockRepo, priceRepo, out, this);
                 storeThreadSet.add(customerWorker);
                 managerWorker.increaseTotalCustomerCount();
                 customerWorker.start();
-                //} catch (InterruptedException e) {
-                //    e.printStackTrace();
-                //} finally {
-                //shoppingRoomCustomerLimiter.release();
-                //}
-
-
             }
             delayer.performDelay(REAL_ONE_SECOND);
         }
@@ -191,7 +193,7 @@ public class StoreWorker extends Thread implements StoreAction {
         } catch (InterruptedException e) {
             throw new StoreException(INTERRUPT_CASHIERS_AND_CUSTOMERS_JOINING, e);
         } finally {
-            out.println("Cashiers threads correctly finished: " + termination);
+            out.println(CASHIERS_THREADS_CORRECTLY_FINISHED + termination);
         }
     }
 
@@ -267,5 +269,13 @@ public class StoreWorker extends Thread implements StoreAction {
 
     public void changeShoppingRoomCustomerCount(int delta) {
         shoppingRoomCustomerCount.getAndAdd(delta);
+    }
+
+    public AtomicInteger getShoppingCartCount() {
+        return shoppingCartCount;
+    }
+
+    public void changeShoppingCartCount(int delta) {
+        shoppingCartCount.getAndAdd(delta);
     }
 }
