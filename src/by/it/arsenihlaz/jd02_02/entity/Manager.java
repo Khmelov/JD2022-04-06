@@ -17,11 +17,27 @@ public class Manager {
         return countOut == plan;
     }
 
-    public synchronized void customerEnter(){
+    public synchronized void customerEnter() {
         countIn++;
     }
 
-    public synchronized void customerOut(){
+    public synchronized void customerOut() {
         countOut++;
     }
+
+
+    public int cashierNeeded(int queueSize) {
+
+        if (queueSize > 0 && queueSize <= 5) {
+           return 1;
+        } else if (queueSize > 5 && queueSize <= 10) {
+            return 2;
+        } else if (queueSize > 10 && queueSize <= 15) {
+            return 3;
+        } else if (queueSize > 15 && queueSize <= 20) {
+            return 4;
+        } else
+            return 5;
+    }
 }
+
