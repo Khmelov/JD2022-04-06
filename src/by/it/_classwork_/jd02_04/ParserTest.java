@@ -9,6 +9,7 @@ import by.it._classwork_.calc.service.VarCreator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
