@@ -7,6 +7,7 @@ import by.it.kadulin.jd02_03.util.Timer;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CashierWorker extends Thread {
 
@@ -19,6 +20,7 @@ public class CashierWorker extends Thread {
     private final Cashier cashier;
     private final Shop shop;
     private Receipt receipt;
+    private double summary = 0.;
 
     public CashierWorker(Cashier cashier, Shop shop) {
         this.cashier = cashier;
@@ -31,51 +33,25 @@ public class CashierWorker extends Thread {
         System.out.println(cashier + " opened");
         Manager manager = shop.getManager();
         Queue queue = shop.getQueue();
-//        switch (cashier.getCashierNumber()) {
-//            case 1: {
-//                while (queue.getQueueSize() > 0) {
-//                    Buyer buyer = queue.extract();
-//                    receipt = new Receipt(cashier);
-//                    cashierProcess(buyer);
-//                }
-//                break;
-//            }
-//            case 2: {
-//                while (queue.getQueueSize() > 5) {
-//                    Buyer buyer = queue.extract();
-//                    receipt = new Receipt(cashier);
-//                    cashierProcess(buyer);
-//                }
-//                break;
-//            }
-//            case 3: {
-//                while (queue.getQueueSize() > 10) {
-//                    Buyer buyer = queue.extract();
-//                    receipt = new Receipt(cashier);
-//                    cashierProcess(buyer);
-//                }
-//                break;
-//            }
-//            case 4: {
-//                while (queue.getQueueSize() > 15) {
-//                    Buyer buyer = queue.extract();
-//                    receipt = new Receipt(cashier);
-//                    cashierProcess(buyer);
-//                }
-//                break;
-//            }
-//            case 5: {
-//                while (queue.getQueueSize() > 20) {
-//                    Buyer buyer = queue.extract();
-//                    receipt = new Receipt(cashier);
-//                    cashierProcess(buyer);
-//                }
-//            }
-//            break;
-//        }
+
         while (queue.getQueueSize() != 0 || manager.isShopOpened()) {
             if (queue.cashierInWork() * Cashier.buyersPerCashier >= queue.getQueueSize() + Cashier.buyersPerCashier) {
-                System.out.println(cashier + " is closed");
+                if (summary != 0) {
+                    StringBuilder cashierClosed = new StringBuilder();
+                    cashierClosed.append("****************************************\n");
+                    cashierClosed.append(cashier).append(" is closed\n");
+                    cashierClosed.append("total revenues ").append(summary).append("\n");
+                    cashierClosed.append("****************************************\n");
+                    System.out.println(cashierClosed);
+                    summary = 0;
+                }
+                else if (summary == 0) {
+                    StringBuilder cashierClosed = new StringBuilder();
+                    cashierClosed.append("****************************************\n");
+                    cashierClosed.append(cashier).append(" is closed\n");
+                    cashierClosed.append("****************************************\n");
+                    System.out.println(cashierClosed);
+                }
                 queue.cashierCloses();
                 synchronized (monitorCashier) {
                     try {
@@ -92,14 +68,10 @@ public class CashierWorker extends Thread {
                 Buyer buyer = queue.extract();
                 receipt = new Receipt(cashier);
                 cashierProcess(buyer);
-//                if (queue.getQueueSize() == 0 && !manager.isShopOpened()) {
-//                    System.out.println(cashier + " is closed");
-//                    break;
-//                }
+
             }
 
         }
-//        System.out.println(cashier + " closed");
     }
 
     private void cashierProcess(Buyer buyer) {
@@ -112,6 +84,7 @@ public class CashierWorker extends Thread {
             for (Good good : listGoods) {
                 receipt.addGoods(good);
             }
+            summary = summary + receipt.getTotalPrice();
             receipt.createTable();
             System.out.println(cashier + " finished service " + buyer);
             synchronized (buyer) {
