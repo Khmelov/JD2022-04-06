@@ -1,6 +1,6 @@
 package by.it.marchenko.jd02_03.constants;
 
-public class UtilityConstant {
-    public static final int TEST_SPEED_UP_COEFFICIENT = 2 * 25;
-    public static final int NORMAL_MODE = 1;
+public interface UtilityConstant {
+    int TEST_SPEED_UP_COEFFICIENT = 2 * 25;
+    int NORMAL_MODE = 1;
 }
