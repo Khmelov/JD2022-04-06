@@ -1,4 +1,4 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.exception;
 
 public class CalcException extends Exception {
 

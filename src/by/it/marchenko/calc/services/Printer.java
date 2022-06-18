@@ -1,7 +1,9 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.services;
 
 
-import static by.it.marchenko.calc.MessageConst.*;
+import by.it.marchenko.calc.entity.Var;
+
+import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class Printer {
 

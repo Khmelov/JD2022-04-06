@@ -1,9 +1,12 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.repository;
+
+import by.it.marchenko.calc.entity.Var;
+import by.it.marchenko.calc.interfaces.Repository;
 
 import java.util.HashMap;
 import java.util.Scanner;
 
-import static by.it.marchenko.calc.MessageConst.*;
+import static by.it.marchenko.calc.constant.MessageConst.*;
 
 
 public class VarRepositoryMap implements Repository {

@@ -1,5 +1,11 @@
 package by.it.marchenko.calc;
 
+import by.it.marchenko.calc.entity.Var;
+import by.it.marchenko.calc.exception.CalcException;
+import by.it.marchenko.calc.interfaces.Repository;
+import by.it.marchenko.calc.repository.VarRepositoryMap;
+import by.it.marchenko.calc.services.*;
+
 import java.util.Scanner;
 
 public class ConsoleRunner {

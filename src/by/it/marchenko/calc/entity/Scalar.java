@@ -1,4 +1,4 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.entity;
 
 public class Scalar extends Var {
     private final double value;

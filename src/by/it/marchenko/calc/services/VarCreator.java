@@ -1,10 +1,17 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.services;
 
 //import java.util.Objects;
 
+import by.it.marchenko.calc.entity.Matrix;
+import by.it.marchenko.calc.entity.Scalar;
+import by.it.marchenko.calc.entity.Var;
+import by.it.marchenko.calc.entity.Vector;
+import by.it.marchenko.calc.exception.CalcException;
+import by.it.marchenko.calc.interfaces.Repository;
+
 import java.util.Objects;
 
-import static by.it.marchenko.calc.MessageConst.*;
+import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class VarCreator {
     private final Repository repository;

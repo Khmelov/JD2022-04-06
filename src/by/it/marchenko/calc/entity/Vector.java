@@ -1,4 +1,4 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.entity;
 
 import java.util.Arrays;
 

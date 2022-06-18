@@ -1,8 +1,10 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.entity;
 
-import static by.it.marchenko.calc.MessageConst.*;
+import by.it.marchenko.calc.interfaces.Operation;
 
-abstract class Var implements Operation {
+import static by.it.marchenko.calc.constant.MessageConst.*;
+
+public abstract class Var implements Operation {
 
     final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
 

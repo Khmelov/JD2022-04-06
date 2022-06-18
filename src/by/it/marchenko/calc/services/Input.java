@@ -1,11 +1,8 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.services;
 
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static by.it.marchenko.calc.MessageConst.*;
+import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class Input {
     private final Scanner console;

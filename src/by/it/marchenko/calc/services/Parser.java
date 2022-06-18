@@ -1,9 +1,13 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.services;
 
-import java.util.ArrayList;
+import by.it.marchenko.calc.entity.Var;
+import by.it.marchenko.calc.exception.CalcException;
+import by.it.marchenko.calc.interfaces.Repository;
+
+import java.util.List;
 import java.util.Objects;
 
-import static by.it.marchenko.calc.MessageConst.*;
+import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class Parser {
 
@@ -12,53 +16,62 @@ public class Parser {
     private final Operands operands;
     private final Assignment assignment;
 
+    private final PriorityFounder priorityFounder;
+
 
     public Parser(Repository repository, /*VarCreator varCreator,*/ Operands operands, Assignment assignment) {
         this.repository = repository;
         //this.varCreator = varCreator;
         this.operands = operands;
         this.assignment = assignment;
+        this.priorityFounder = new PriorityFounder();
     }
 
     //List<Var> operandList;
 
     public Var calc(String inputString) throws CalcException {
-
+        Var result = null;
         if (inputString != null) {
-            ArrayList<String> stringsOperands = operands.createOperands(inputString);
-            ArrayList<String> operators = operands.createOperators(inputString);
+            List<String> stringsOperands = operands.createOperands(inputString);
+            List<String> operators = operands.createOperators(inputString);
             if (assignment.isAssignmentAllowed(inputString, stringsOperands)) {
                 return performAssignment(stringsOperands, operators);
             }
-            ArrayList<Var> operandList = operands.createVar(stringsOperands);
-
-            Var tempResult = operandList.get(0);
-            Var tempResult2 = operandList.get(0);
-            for (int i = 0; i < operators.size(); i++) {
-                tempResult2 = tempResult2.foundVarType(operandList.get(i + 1),operators.get(i));
-                System.out.println("NewResult: "+ tempResult2);
-                try {
-                    tempResult = switch (operators.get(i)) {
-                        // TODO NullPointerException during invocation
-                        //case ADD_OPERATOR -> tempResult.add(operandList.get(i + 1));
-                        case SUB_OPERATOR -> tempResult.sub(operandList.get(i + 1));
-                        case MUL_OPERATOR -> tempResult.mul(operandList.get(i + 1));
-                        case DIV_OPERATOR -> tempResult.div(operandList.get(i + 1));
-                        //case ASSIGN_OPERATOR -> AssignMethod();
-                        default -> null;
-                    };
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-
-
+            List<Var> operandList = operands.createVar(stringsOperands);
+            while (!operators.isEmpty()) {
+                int priorityIndex = priorityFounder.getPriority(operators);
+                String operator = operators.remove(priorityIndex);
+                Var leftPart = operandList.remove(priorityIndex);
+                Var rightPart = operandList.remove(priorityIndex);
+                result = simplyCalc(leftPart, operator, rightPart);
+                //System.out.println(leftPart + operator + rightPart + "=" + result);
+                operandList.add(priorityIndex, result);
             }
-            return Objects.isNull(tempResult) ? tempResult2: tempResult;
         }
-        return null;
+        return result;
     }
 
-    private String toStdPresentation(ArrayList<String> operands, ArrayList<String> operators) {
+    private Var simplyCalc(Var leftPart, String operator, Var rightPart) {
+        Var tempResult = leftPart;
+        // now tempResult2 use only for add calculation.
+        Var tempResult2 = leftPart.foundVarType(rightPart, operator);
+        try {
+            tempResult = switch (operator) {
+                // TODO NullPointerException during invocation
+                //case ADD_OPERATOR -> tempResult.add(rightPart);
+                case SUB_OPERATOR -> tempResult.sub(rightPart);
+                case MUL_OPERATOR -> tempResult.mul(rightPart);
+                case DIV_OPERATOR -> tempResult.div(rightPart);
+                //case ASSIGN_OPERATOR -> AssignMethod();
+                default -> null;
+            };
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return Objects.isNull(tempResult) ? tempResult2 : tempResult;
+    }
+
+    private String toStdPresentation(List<String> operands, List<String> operators) {
         StringBuilder tempExpression = new StringBuilder(operands.get(0));
         for (int i = 0; i < operators.size(); i++) {
             tempExpression
@@ -68,7 +81,7 @@ public class Parser {
         return tempExpression.toString();
     }
 
-    private Var performAssignment(ArrayList<String> operands, ArrayList<String> operators) throws CalcException {
+    private Var performAssignment(List<String> operands, List<String> operators) throws CalcException {
         //TODO transferToLeft(myOperands,operators);
         // Input:   A-1=2*3
         // Result:  A=2*3+1
@@ -76,7 +89,10 @@ public class Parser {
         String[] temp = stdExpression.split(ASSIGN_OPERATOR);
         String name = temp[0];
         Var value = calc(temp[1]);
-        repository.saveVariable(name,value);
+        boolean varCorrectlySaved = repository.saveVariable(name, value);
+        if (!varCorrectlySaved) {
+            throw new CalcException("Variable was nod saved");
+        }
         return repository.getVariable(name);
     }
 }

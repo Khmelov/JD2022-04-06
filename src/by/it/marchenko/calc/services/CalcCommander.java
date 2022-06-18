@@ -1,8 +1,13 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.services;
+
+import by.it.marchenko.calc.entity.Var;
+import by.it.marchenko.calc.exception.CalcException;
+import by.it.marchenko.calc.interfaces.CalcAppCommand;
+import by.it.marchenko.calc.interfaces.Repository;
 
 import java.util.*;
 
-import static by.it.marchenko.calc.MessageConst.*;
+import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class CalcCommander implements CalcAppCommand {
     private static HashMap<String, Var> variables;
@@ -16,7 +21,7 @@ public class CalcCommander implements CalcAppCommand {
     }
 
     @Override
-    public String performCommand(String command) throws CalcException{
+    public String performCommand(String command) throws CalcException {
         //command = command.toLowerCase();  // remove as trim() removing from std presentation
         if (command != null) {
             command = command.trim().toLowerCase();
@@ -26,7 +31,7 @@ public class CalcCommander implements CalcAppCommand {
 
         if (commands.contains(command)) {
             //variables =
-                    //repository.getAllVariables();
+            //repository.getAllVariables();
             return switch (command) {
                 case COMMAND_PRINT_VARIABLE -> printVariable();
                 case COMMAND_SORT_VARIABLE -> sortVariable();

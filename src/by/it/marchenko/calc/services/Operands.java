@@ -1,11 +1,20 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.services;
+
+import by.it.marchenko.calc.entity.Matrix;
+import by.it.marchenko.calc.entity.Scalar;
+import by.it.marchenko.calc.entity.Var;
+import by.it.marchenko.calc.entity.Vector;
+import by.it.marchenko.calc.exception.CalcException;
+import by.it.marchenko.calc.interfaces.OperandProcessing;
+import by.it.marchenko.calc.interfaces.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static by.it.marchenko.calc.MessageConst.*;
+import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class Operands implements OperandProcessing {
 
@@ -17,9 +26,9 @@ public class Operands implements OperandProcessing {
 
     //Find operands in expression, remove spaces from operands if it is possible
     @Override
-    public ArrayList<String> createOperands(String expression) throws CalcException {
+    public List<String> createOperands(String expression) throws CalcException {
         String[] availableOperands;
-        ArrayList<String> operandList = new ArrayList<>();
+        List<String> operandList = new ArrayList<>();
         if (!expression.equals(EMPTY_STRING)) {
             availableOperands = expression.split(OPERATOR_REGEX);
             for (int i = 0; i < availableOperands.length; i++) {
@@ -54,7 +63,7 @@ public class Operands implements OperandProcessing {
     }
 
     @Override
-    public ArrayList<String> createOperators(String expression) {
+    public List<String> createOperators(String expression) {
         Pattern operatorPattern = Pattern.compile(OPERATOR_REGEX);
         Matcher operatorMatcher = operatorPattern.matcher(expression);
         ArrayList<String> operators = new ArrayList<>();
@@ -65,9 +74,9 @@ public class Operands implements OperandProcessing {
     }
 
     @Override
-    public ArrayList<Var> createVar(ArrayList<String> operands) throws CalcException {
+    public List<Var> createVar(List<String> operands) throws CalcException {
 
-        ArrayList<Var> operandList = new ArrayList<>(operands.size());
+        List<Var> operandList = new ArrayList<>(operands.size());
         for (String operand : operands) {
             operandList.add(createVar(operand));
         }
