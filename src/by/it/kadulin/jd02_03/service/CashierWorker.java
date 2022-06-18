@@ -66,8 +66,17 @@ public class CashierWorker extends Thread {
             }
             else {
                 Buyer buyer = queue.extract();
-                receipt = new Receipt(cashier);
+                receipt = new Receipt(cashier, queue, shop.getManager());
                 cashierProcess(buyer);
+                if (queue.getQueueSize() == 0 && !manager.isShopOpened()) {
+                    StringBuilder cashierClosed = new StringBuilder();
+                    cashierClosed.append("****************************************\n");
+                    cashierClosed.append(cashier).append(" is closed\n");
+                    cashierClosed.append("total revenues ").append(summary).append("\n");
+                    cashierClosed.append("****************************************\n");
+                    System.out.println(cashierClosed);
+                    summary = 0;
+                }
 
             }
 

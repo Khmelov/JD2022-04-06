@@ -8,9 +8,12 @@ import by.it.kadulin.jd02_03.util.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ShopWorker extends Thread {
-    public static final int TIME_WORK = 120;
+//    public static final int TIME_WORK = 120;
     private final Shop shop;
     private static PriceListRepo priceListRepo = new PriceListRepo();
 
@@ -26,13 +29,14 @@ public class ShopWorker extends Thread {
         System.out.println(shop + " opened");
         List<Thread> threadsList = new ArrayList<>();
         Manager manager = shop.getManager();
-
+        ExecutorService threadPool = Executors.newFixedThreadPool(5);
         for (int i = 1; i < 6; i++) {
             Cashier cashier = new Cashier(i);
             CashierWorker cashierWorker = new CashierWorker(cashier, shop);
-            cashierWorker.start();
-            threadsList.add(cashierWorker);
+//            cashierWorker.start();
+            threadPool.submit(cashierWorker);
         }
+        threadPool.shutdown();
 
         while (manager.isShopOpened()) {
             long second = manager.getCurrentTimeOfWork() % 60;
@@ -47,9 +51,7 @@ public class ShopWorker extends Thread {
             }
             threadsList.removeIf(customerWorker -> customerWorker.getState() == State.TERMINATED);
             Timer.sleep(1000);
-
         }
-
 
         for (Thread customerWorker : threadsList) {
             try {
@@ -58,13 +60,15 @@ public class ShopWorker extends Thread {
                 e.printStackTrace();
             }
         }
-//        try {
-//            cashierThread.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-        manager.setShopOpened(false);
 
+        try {
+            do {
+                Thread.onSpinWait();
+            } while (!threadPool.awaitTermination(1, TimeUnit.SECONDS));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        manager.setShopOpened(false);
         System.out.println(shop + " closed");
     }
 
@@ -79,11 +83,12 @@ public class ShopWorker extends Thread {
             buyer = new Customer(manager.getCountIn(), "Customer");
         }
 
-
         BuyerWorker buyerWorker = new BuyerWorker(buyer, shop);
         manager.buyerEnter();
         buyerWorker.start();
         customerWorkerList.add(buyerWorker);
-
+        if (manager.getPlan() == manager.getCountIn()) {
+            manager.setShopOpened(false);
+        }
     }
 }

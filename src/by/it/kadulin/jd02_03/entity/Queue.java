@@ -2,21 +2,27 @@ package by.it.kadulin.jd02_03.entity;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class Queue {
 
     private int cashierClosed = 0;
 
-    private final Deque<Buyer> deque;
+    private final BlockingDeque<Buyer> deque;
 
     public Queue() {
-        deque = new ArrayDeque<>();
+        deque = new LinkedBlockingDeque<>(30);
     }
 
     public void add(Buyer buyer) {
-        synchronized (deque) {
-            deque.add(buyer);
+
+        try {
+            deque.put(buyer);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+
 
     }
 
@@ -24,7 +30,7 @@ public class Queue {
         return deque.size();
     }
 
-    public synchronized Buyer extract() {
+    public Buyer extract() {
         return deque.poll();
     }
 

@@ -10,16 +10,16 @@ import by.it.kadulin.jd02_03.util.Timer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 public class BuyerWorker extends Thread implements CustomerAction, ShoppingCardAction {
     private final Buyer buyer;
     private final Shop shop;
     private Map<String, Double> listSelectedGoods = new HashMap<>();
 
-
-
     private int countGoodsInCart = 0;
     private final List<String> namesOfPriceList = PriceListRepo.getNamesOfPriceList();
+    private final Semaphore inShop = new Semaphore(20);
 
     public BuyerWorker(Buyer buyer, Shop shop) {
         this.buyer = buyer;
@@ -30,9 +30,15 @@ public class BuyerWorker extends Thread implements CustomerAction, ShoppingCardA
     @Override
     public void run() {
         enteredStore();
+        try {
+            inShop.acquire();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         while (buyer.getShoppingCart().getAmountGoods() != buyer.getCountWTB()) {
             chooseGood();
         }
+        inShop.release();
         if (buyer.getShoppingCart().getAmountGoods() != 0) {
             goToQueue();
         }
@@ -97,11 +103,13 @@ public class BuyerWorker extends Thread implements CustomerAction, ShoppingCardA
             }
             System.out.println(buyer + " leaves the Queue");
         }
+        shop.getManager().giveOneCart();
 
     }
 
     @Override
     public void takeCart() {
+        shop.getManager().takeOneCart();
         ShoppingCart shoppingCart = new ShoppingCart();
         int timeout = (int) (buyer.getMltSpeedOperation() * RandomGenerator.get(100, 300));
         Timer.sleep(timeout);
