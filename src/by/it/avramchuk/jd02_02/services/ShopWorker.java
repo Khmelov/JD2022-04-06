@@ -22,24 +22,24 @@ public class ShopWorker extends Thread{
 
     @Override
     public void run() {
-        Manager manager = new Manager(shop);
+        Manager manager = shop.getManager();
+        int sec = 0;
         System.out.println(shop+" opened");
-        for (int min = 0; min < 2; min++) {
-            for (int sec = 0; sec < 60; sec++) {
+        while (manager.shopOpened()){
                 int currentCount = getCurrentCount();
-                System.out.println("\n at " + sec + " second " + currentCount + " customers in the store\n" );
+                System.out.println("\n at " + sec%60 + " second " + currentCount + " customers in the store\n" );
 
                 int countCustomerPerSecond = needToAdd(currentCount, sec);
-                for (int i = 0; i < countCustomerPerSecond; i++) {
+                for (int i = 0; manager.shopOpened()&& i < countCustomerPerSecond; i++) {
                     Customer customer = defineCustomer();
                     CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                     customerWorker.start();
                     customerWorkerList.add(customerWorker);
                 }
                 int cashierNeeded = cashierNeeded();
-                manager.regulateCountCashier(cashierNeeded);
+                manager.regulateCountCashier(cashierNeeded, shop);
                 Timer.sleep(1000);
-            }
+                sec++;
         }
         for (CustomerWorker customerWorker : customerWorkerList) {
             try {
@@ -50,7 +50,7 @@ public class ShopWorker extends Thread{
         }
         while(getCurrentCount()>0){
             int cashierNeeded = cashierNeeded();
-            manager.regulateCountCashier(cashierNeeded);
+            manager.regulateCountCashier(cashierNeeded, shop);
         }
         manager.closeAllCashier();
         System.out.println(shop+" closed");
@@ -82,8 +82,8 @@ public class ShopWorker extends Thread{
 
     public int needToAdd (int currentCount, int sec){
         int countCustomerPerSecond=0;
-        if(sec<30) {
-            countCustomerPerSecond = (sec+15)-currentCount;
+        if(sec%60<30) {
+            countCustomerPerSecond = (sec+10)-currentCount;
         }else if(currentCount<=(40+(30-sec))){
             countCustomerPerSecond = (40+(30-sec))-currentCount;
         }
