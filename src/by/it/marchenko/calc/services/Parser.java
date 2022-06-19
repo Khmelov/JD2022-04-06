@@ -3,9 +3,12 @@ package by.it.marchenko.calc.services;
 import by.it.marchenko.calc.entity.Var;
 import by.it.marchenko.calc.exception.CalcException;
 import by.it.marchenko.calc.interfaces.Repository;
+import by.it.marchenko.calc.utility.CurveChecker;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static by.it.marchenko.calc.constant.MessageConst.*;
 
@@ -17,6 +20,7 @@ public class Parser {
     private final Assignment assignment;
 
     private final PriorityFounder priorityFounder;
+    private final CurveChecker curveChecker = new CurveChecker();
 
 
     public Parser(Repository repository, /*VarCreator varCreator,*/ Operands operands, Assignment assignment) {
@@ -30,12 +34,35 @@ public class Parser {
     //List<Var> operandList;
 
     public Var calc(String inputString) throws CalcException {
+        if (!curveChecker.checkCurves(inputString)) {
+            throw new CalcException("Incorrect curve placement");
+        }
+        System.out.println("Correct curves");
+        Pattern curveExpressionPattern = Pattern.compile(CURVE_EXPRESSION_REGEX);
+        Matcher curveExpressionMatcher = curveExpressionPattern.matcher(inputString);
+        while (curveExpressionMatcher.find()) {
+            String curveExpression = curveExpressionMatcher.group();
+            String substring = curveExpression.substring(1, curveExpression.length() - 1);
+            String calcResult = calc(substring).toString();
+            inputString = inputString.replace(curveExpression, calcResult);
+            System.out.println(inputString);
+            curveExpressionMatcher = curveExpressionPattern.matcher(inputString);
+
+        }
+        return calcInCurves(inputString);
+    }
+
+    private Var calcInCurves(String inputString) throws CalcException {
+        // TODO calc if only one var typed
         Var result = null;
         if (inputString != null) {
             List<String> stringsOperands = operands.createOperands(inputString);
             List<String> operators = operands.createOperators(inputString);
             if (assignment.isAssignmentAllowed(inputString, stringsOperands)) {
                 return performAssignment(stringsOperands, operators);
+            }
+            if (operators.isEmpty()) {
+                return operands.createVar(inputString);
             }
             List<Var> operandList = operands.createVar(stringsOperands);
             while (!operators.isEmpty()) {

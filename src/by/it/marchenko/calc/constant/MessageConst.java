@@ -72,10 +72,13 @@ public class MessageConst {
     public static final String MATRIX_PATTERN =
             "\\{\s*" + VECTOR_PATTERN + "\s*(,\s*" + VECTOR_PATTERN + "\s*)*}";
 
+    public static final String OPEN_CURVE_BRACKET = "\\(";
+    public static final String CLOSE_CURVE_BRACKET = "\\)";
+    //public static final String CURVE_EXPRESSION_REGEX = "(\\()([^\\(]+?)(\\))";
+    public static final String CURVE_EXPRESSION_REGEX =
+            OPEN_CURVE_BRACKET + "([^" + OPEN_CURVE_BRACKET + "]+?)" + CLOSE_CURVE_BRACKET;
 
     public static final String EMPTY_STRING = "";
-
-    public static final int MAXIMUM_ALLOWED_OPERANDS = 10;
 
     public static final String ADD_OPERATOR = "+";
     public static final String SUB_OPERATOR = "-";
