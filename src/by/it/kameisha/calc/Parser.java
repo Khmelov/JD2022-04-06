@@ -26,7 +26,13 @@ public class Parser {
 
     public Var calc(String expression) throws CalcException {
         expression = expression.trim().replaceAll(Patterns.SPACES, "");
+        while (expression.contains("(") && expression.contains(")")) {
+            expression = calcInBracket(expression);
+        }
+        return calcVar(expression);
+    }
 
+    private Var calcVar(String expression) throws CalcException {
         List<String> operands = new ArrayList<>(Arrays.asList(expression.split(Patterns.OPERATIONS)));
         List<String> operations = new ArrayList<>();
 
@@ -41,9 +47,21 @@ public class Parser {
             String operation = operations.remove(index);
             String right = operands.remove(index);
             Var result = calcOneOperation(left, operation, right);
-            operands.add(index, result.toString());
+            operands.add(index, result.toString().replace(" ", ""));
         }
         return varCreator.createVar(operands.get(0));
+    }
+
+    private String calcInBracket(String expression) throws CalcException {
+        Pattern pattern = Pattern.compile(Patterns.OPERAND_IN_BRACKETS);
+        Matcher matcher = pattern.matcher(expression);
+        if (matcher.find()) {
+            String result = matcher.group();
+            Var var = calcVar(result.replace("(", "").replace(")", ""));
+            expression = expression.replace(result, var.toString());
+            return expression;
+        }
+        return expression;
     }
 
     private Var calcOneOperation(String leftOperand, String operation, String rightOperand) throws CalcException {

@@ -21,7 +21,7 @@ public class ConsoleRunner {
                 break;
             } else {
                 try {
-                   Var result = parser.calc(expression);
+                    Var result = parser.calc(expression);
                     printer.print(result);
                 } catch (CalcException e) {
                     printer.print(e);
@@ -31,4 +31,3 @@ public class ConsoleRunner {
         System.out.println(MESSAGE_STOP_APP);
     }
 }
-//A=({{1,2},{8,3}}*{{1,2},{8,3}})+(1+{2,3})+1*{2,3,2}

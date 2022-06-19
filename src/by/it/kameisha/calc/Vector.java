@@ -16,8 +16,7 @@ public class Vector extends Var {
     }
 
     public Vector(String strVector) {
-        strVector = strVector.replace("{", "");
-        strVector = strVector.replace("}", "");
+        strVector = strVector.replace("{", "").replace("}", "");
         String[] strings = strVector.split(",");
         double[] value = new double[strings.length];
         for (int i = 0; i < strings.length; i++) {
