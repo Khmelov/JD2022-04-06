@@ -42,11 +42,17 @@ public class ShopWorker extends Thread {
             long second = manager.getCurrentTimeOfWork() % 60;
             if (second <= 29) {
                 while (threadsList.size() <= (second + 10)) {
-                    addCustomers(threadsList, manager);
+                    addBuyer(threadsList, manager);
+                    if (!manager.isShopOpened()) {
+                        break;
+                    }
                 }
             } else if (second > 30) {
                 while (threadsList.size() <= (40 + (30 - second))) {
-                    addCustomers(threadsList, manager);
+                    addBuyer(threadsList, manager);
+                    if (!manager.isShopOpened()) {
+                        break;
+                    }
                 }
             }
             threadsList.removeIf(customerWorker -> customerWorker.getState() == State.TERMINATED);
@@ -72,7 +78,18 @@ public class ShopWorker extends Thread {
         System.out.println(shop + " closed");
     }
 
-    private void addCustomers(List<Thread> customerWorkerList, Manager manager) {
+    private void addBuyer(List<Thread> customerWorkerList, Manager manager) {
+        Buyer buyer = createBuyer(manager);;
+        BuyerWorker buyerWorker = new BuyerWorker(buyer, shop);
+        manager.buyerEnter();
+        buyerWorker.start();
+        customerWorkerList.add(buyerWorker);
+        if (manager.getPlan() == manager.getCountIn()) {
+            manager.setShopOpened(false);
+        }
+    }
+
+    private Buyer createBuyer(Manager manager) {
         Buyer buyer = null;
         int i = RandomGenerator.get(99);
         if (i <= 24) {
@@ -82,13 +99,6 @@ public class ShopWorker extends Thread {
         } else if (i >= 75) {
             buyer = new Customer(manager.getCountIn(), "Customer");
         }
-
-        BuyerWorker buyerWorker = new BuyerWorker(buyer, shop);
-        manager.buyerEnter();
-        buyerWorker.start();
-        customerWorkerList.add(buyerWorker);
-        if (manager.getPlan() == manager.getCountIn()) {
-            manager.setShopOpened(false);
-        }
+        return buyer;
     }
 }

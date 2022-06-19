@@ -42,6 +42,9 @@ public class BuyerWorker extends Thread implements CustomerAction, ShoppingCardA
         if (buyer.getShoppingCart().getAmountGoods() != 0) {
             goToQueue();
         }
+//        else {
+//            System.out.println("Buyer without goods");
+//        }
         goOut();
 
     }
