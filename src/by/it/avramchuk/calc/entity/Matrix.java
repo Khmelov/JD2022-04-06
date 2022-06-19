@@ -1,4 +1,6 @@
-package by.it.avramchuk.calc;
+package by.it.avramchuk.calc.entity;
+
+import by.it.avramchuk.calc.exception.CalcException;
 
 import java.util.Arrays;
 

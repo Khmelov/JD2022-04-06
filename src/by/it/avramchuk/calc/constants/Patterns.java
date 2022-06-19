@@ -1,4 +1,4 @@
-package by.it.avramchuk.calc;
+package by.it.avramchuk.calc.constants;
 
 public class Patterns {
 

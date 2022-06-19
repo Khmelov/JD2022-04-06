@@ -1,4 +1,9 @@
-package by.it.avramchuk.calc;
+package by.it.avramchuk.calc.service;
+import by.it._classwork_.calc.exception.CalcException;
+
+import by.it.avramchuk.calc.constants.Patterns;
+import by.it.avramchuk.calc.entity.Var;
+import by.it.avramchuk.calc.interfaces.Repository;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,7 +18,7 @@ public class Parser {
         this.varCreator = varCreator;
     }
 
-    public Var calc(String expression) throws CalcException {
+    public Var calc(String expression) throws by.it.avramchuk.calc.exception.CalcException, CalcException {
         expression= expression.trim().replaceAll(Patterns.SPACES, "");
         String[] parts= expression.split(Patterns.OPERATIONS, 2);
 

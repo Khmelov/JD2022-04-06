@@ -1,6 +1,9 @@
-package by.it.avramchuk.calc;
+package by.it.avramchuk.calc.interfaces;
 
-interface Operation {
+import by.it.avramchuk.calc.exception.CalcException;
+import by.it.avramchuk.calc.entity.Var;
+
+public interface Operation {
     Var add(Var other) throws CalcException;
 
     Var sub(Var other) throws CalcException;

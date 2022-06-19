@@ -1,4 +1,12 @@
-package by.it.avramchuk.calc;
+package by.it.avramchuk.calc.service;
+import by.it._classwork_.calc.exception.CalcException;
+
+import by.it.avramchuk.calc.constants.Patterns;
+import by.it.avramchuk.calc.entity.Matrix;
+import by.it.avramchuk.calc.entity.Scalar;
+import by.it.avramchuk.calc.entity.Var;
+import by.it.avramchuk.calc.entity.Vector;
+import by.it.avramchuk.calc.interfaces.Repository;
 
 import java.util.Objects;
 

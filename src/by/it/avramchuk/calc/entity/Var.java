@@ -1,10 +1,9 @@
-package by.it.avramchuk.calc;
+package by.it.avramchuk.calc.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import by.it.avramchuk.calc.exception.CalcException;
+import by.it.avramchuk.calc.interfaces.Operation;
 
-abstract class Var implements Operation {
+public abstract class Var implements Operation {
 
 
 
@@ -17,7 +16,7 @@ abstract class Var implements Operation {
     }
 
     @Override
-    public Var add(Var other) throws CalcException{
+    public Var add(Var other) throws CalcException {
         throw new CalcException("Incorrect operation %s + %s%n", this, other);
     }
 
