@@ -1,5 +1,6 @@
 package by.it.marchenko.calc.services;
 
+import by.it.marchenko.calc.entity.Scalar;
 import by.it.marchenko.calc.entity.Var;
 import by.it.marchenko.calc.exception.CalcException;
 import by.it.marchenko.calc.interfaces.Repository;
@@ -37,7 +38,6 @@ public class Parser {
         if (!curveChecker.checkCurves(inputString)) {
             throw new CalcException("Incorrect curve placement");
         }
-        System.out.println("Correct curves");
         Pattern curveExpressionPattern = Pattern.compile(CURVE_EXPRESSION_REGEX);
         Matcher curveExpressionMatcher = curveExpressionPattern.matcher(inputString);
         while (curveExpressionMatcher.find()) {
@@ -53,7 +53,6 @@ public class Parser {
     }
 
     private Var calcInCurves(String inputString) throws CalcException {
-        // TODO calc if only one var typed
         Var result = null;
         if (inputString != null) {
             List<String> stringsOperands = operands.createOperands(inputString);
@@ -61,21 +60,40 @@ public class Parser {
             if (assignment.isAssignmentAllowed(inputString, stringsOperands)) {
                 return performAssignment(stringsOperands, operators);
             }
-            if (operators.isEmpty()) {
-                return operands.createVar(inputString);
-            }
+            setOperandsSign(stringsOperands);
             List<Var> operandList = operands.createVar(stringsOperands);
-            while (!operators.isEmpty()) {
-                int priorityIndex = priorityFounder.getPriority(operators);
-                String operator = operators.remove(priorityIndex);
-                Var leftPart = operandList.remove(priorityIndex);
-                Var rightPart = operandList.remove(priorityIndex);
-                result = simplyCalc(leftPart, operator, rightPart);
-                //System.out.println(leftPart + operator + rightPart + "=" + result);
-                operandList.add(priorityIndex, result);
+            if (operators.isEmpty()) {
+                return operandList.get(0);
             }
+            result = performEvaluation(operators, operandList);
         }
         return result;
+    }
+
+    private Var performEvaluation(List<String> operators, List<Var> operandList) {
+        Var result = null;
+        while (!operators.isEmpty()) {
+            int priorityIndex = priorityFounder.getPriority(operators);
+            String operator = operators.remove(priorityIndex);
+            Var leftPart = operandList.remove(priorityIndex);
+            Var rightPart = operandList.remove(priorityIndex);
+            result = simplyCalc(leftPart, operator, rightPart);
+            operandList.add(priorityIndex, result);
+        }
+        return result;
+    }
+
+    private void setOperandsSign(List<String> stringsOperands) throws CalcException {
+        final Scalar MINUS_ONE = new Scalar(-1d);
+        for (int i = 0; i < stringsOperands.size(); i++) {
+            String tempStringOperand = stringsOperands.get(i);
+            if (tempStringOperand.startsWith(SUB_OPERATOR)) {
+                tempStringOperand = tempStringOperand.replaceFirst(SUB_OPERATOR, EMPTY_STRING);
+                Var tempOperand = operands.createVar(tempStringOperand);
+                Var tempResult = simplyCalc(MINUS_ONE, MUL_OPERATOR, tempOperand);
+                stringsOperands.set(i, tempResult.toString());
+            }
+        }
     }
 
     private Var simplyCalc(Var leftPart, String operator, Var rightPart) {

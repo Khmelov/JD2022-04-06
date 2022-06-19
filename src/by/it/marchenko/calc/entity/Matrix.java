@@ -101,7 +101,7 @@ public class Matrix extends Var {
     }
 
     public Var add(Scalar other) {
-        System.out.println("Matrix Matrix+Scalar");
+        //System.out.println("Matrix Matrix+Scalar");
         double[][] tempMatrix = this.getMatrixValue();
         for (int i = 0; i < tempMatrix.length; i++) {
             for (int j = 0; j < tempMatrix[i].length; j++) {
@@ -112,12 +112,12 @@ public class Matrix extends Var {
     }
 
     public Var add(Vector other) {
-        System.out.println("Matrix Matrix+Vector");
+        //System.out.println("Matrix Matrix+Vector");
         return super.add((Var) other);
     }
 
     public Var add(Matrix other) {
-        System.out.println("Matrix Matrix+Matrix");
+        //System.out.println("Matrix Matrix+Matrix");
         double[][] tempMatrix = this.getMatrixValue();
         for (int i = 0; i < tempMatrix.length; i++) {
             for (int j = 0; j < tempMatrix[i].length; j++) {
@@ -161,7 +161,7 @@ public class Matrix extends Var {
 
     @Override
     public Var div(Var other) {
-        System.out.println("Зашли сюда как Matrix/Var");
+        //System.out.println("Зашли сюда как Matrix/Var");
         //return other.div(this);
         return other.div(this);
         /*
@@ -181,7 +181,7 @@ public class Matrix extends Var {
     }
 
     public Var div(Scalar other) {
-        System.out.println("Зашли сюда как Matrix/Scalar");
+        //System.out.println("Зашли сюда как Matrix/Scalar");
         return super.div((Var) other);
         //double[][] tempMatrix = this.getMatrixValue();
         //for (int i = 0; i < tempMatrix.length; i++) {
