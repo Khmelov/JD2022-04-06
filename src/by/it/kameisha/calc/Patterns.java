@@ -1,7 +1,7 @@
 package by.it.kameisha.calc;
 
 public class Patterns {
-    public static final String OPERATIONS = "(?<=[^{,+-/*=])[-+*/]";
+    public static final String OPERATIONS = "(?<=[^{,+-/*=])[-+*/=]";
     public static final String SPACES = "\\s+";
 
     public static final String SCALAR = "-?[0-9]+(\\.[0-9]+)?";
