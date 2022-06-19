@@ -58,7 +58,8 @@ public class Parser {
             List<String> stringsOperands = operands.createOperands(inputString);
             List<String> operators = operands.createOperators(inputString);
             if (assignment.isAssignmentAllowed(inputString, stringsOperands)) {
-                return performAssignment(stringsOperands, operators);
+                result = performAssignment(stringsOperands, operators);
+                return result;
             }
             setOperandsSign(stringsOperands);
             List<Var> operandList = operands.createVar(stringsOperands);

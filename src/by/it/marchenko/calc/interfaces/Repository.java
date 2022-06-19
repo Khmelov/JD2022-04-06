@@ -11,4 +11,6 @@ public interface Repository {
     Var getVariable(String name);
 
     HashMap<String, Var> getAllVariables();
+
+    void clearRepository();
 }

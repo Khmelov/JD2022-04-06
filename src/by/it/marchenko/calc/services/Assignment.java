@@ -29,7 +29,12 @@ public class Assignment {
         } else if (firstAssignment > 0) {
             for (String operand : operands) {
                 if (operand.matches(VARIABLE_PATTERN)) {
+                    //change for test pass
+                    //if (varCounter != 0) {
+
+                    //}
                     Var newVariable = repository.getVariable(operand);
+
                     varCounter++;
                     if (Objects.isNull(newVariable)) {
                         if (varCounter > 1) {
