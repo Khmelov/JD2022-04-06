@@ -32,7 +32,7 @@ public class Parser {
 
         Pattern pattern = Pattern.compile(Patterns.OPERATIONS);
         Matcher matcher = pattern.matcher(expression);
-        if (matcher.find()) {
+        while (matcher.find()) {
             operations.add(matcher.group());
         }
         while (!operations.isEmpty()) {
@@ -44,19 +44,6 @@ public class Parser {
             operands.add(index, result.toString());
         }
         return varCreator.createVar(operands.get(0));
-    }
-
-    private int getPriority(List<String> operations) {
-        int indexOperation = -1;
-        int bestPriority = -1;
-        for (int i = 0; i < operations.size(); i++) {
-            String operation = operations.get(i);
-            if (priorityMap.get(operation) > bestPriority) {
-                indexOperation = i;
-                bestPriority = priorityMap.get(operation);
-            }
-        }
-        return indexOperation;
     }
 
     private Var calcOneOperation(String leftOperand, String operation, String rightOperand) throws CalcException {
@@ -76,5 +63,18 @@ public class Parser {
                 return left.div(right);
         }
         throw new CalcException("not found operation '%s'", operation);
+    }
+
+    private int getPriority(List<String> operations) {
+        int indexOperation = -1;
+        int bestPriority = -1;
+        for (int i = 0; i < operations.size(); i++) {
+            String operation = operations.get(i);
+            if (priorityMap.get(operation) > bestPriority) {
+                indexOperation = i;
+                bestPriority = priorityMap.get(operation);
+            }
+        }
+        return indexOperation;
     }
 }
