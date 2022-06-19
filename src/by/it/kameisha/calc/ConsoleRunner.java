@@ -17,7 +17,7 @@ public class ConsoleRunner {
         System.out.println(MESSAGE_START_APP);
         while (scanner.hasNext()) {
             String expression = scanner.nextLine();
-            if (expression.toLowerCase().equals(COMMAND_END)) {
+            if (expression.equalsIgnoreCase(COMMAND_END)) {
                 break;
             } else {
                 try {
@@ -31,3 +31,4 @@ public class ConsoleRunner {
         System.out.println(MESSAGE_STOP_APP);
     }
 }
+//A=({{1,2},{8,3}}*{{1,2},{8,3}})+(1+{2,3})+1*{2,3,2}

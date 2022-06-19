@@ -12,6 +12,4 @@ public class Printer {
     public void print(CalcException e) {
         System.out.println("ERROR: " + e.getMessage());
     }
-
-    ;
 }
