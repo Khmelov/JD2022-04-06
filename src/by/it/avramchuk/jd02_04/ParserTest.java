@@ -18,7 +18,7 @@ public class ParserTest {
     private Parser parser;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         Repository repository = new VarMapRepository();
         VarCreator varCreator = new VarCreator(repository);
         parser = new Parser(repository, varCreator);
@@ -48,6 +48,6 @@ public class ParserTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown(){
     }
 }
