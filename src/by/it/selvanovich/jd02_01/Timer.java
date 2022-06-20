@@ -1,7 +1,6 @@
-package by.it.arsenihlaz.jd02_02.util;
+package by.it.selvanovich.jd02_01;
 
 public class Timer {
-
     private Timer() {
     }
 
