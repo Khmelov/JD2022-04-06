@@ -23,7 +23,6 @@ public class TestTaskA {
 
     @Before
     public void setUp() {
-        Scanner console = new Scanner(System.in);
         repository = new VarRepositoryMap();
         Operands operands = new Operands(repository);
         Assignment assignment = new Assignment(repository);

@@ -45,7 +45,7 @@ public class Parser {
             String substring = curveExpression.substring(1, curveExpression.length() - 1);
             String calcResult = calc(substring).toString();
             inputString = inputString.replace(curveExpression, calcResult);
-            System.out.println(inputString);
+            //System.out.println(inputString);
             curveExpressionMatcher = curveExpressionPattern.matcher(inputString);
 
         }
