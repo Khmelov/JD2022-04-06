@@ -21,7 +21,8 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     public CustomerWorker(Customer customer, Shop shop) {
         this.customer = customer;
         this.shop = shop;
-        synchronized (incomingMonitor){
+
+        synchronized (incomingMonitor) {
             inComingCounter++;
         }
         shop.getManager().customerEnter();
@@ -31,29 +32,18 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     public void run() {
         enteredStore();
         takeCart();
-        System.out.println(customer + " started to choose goods");
+        System.out.println(customer + " start to choose goods");
         int amountOfGoods = customer.numberOfGoods();
-        if (amountOfGoods==0){
-            System.out.println(customer + "decided not to buy anything");
-        }
         for (int i = 0; i < amountOfGoods; i++) {
             Good good = chooseGood();
             putToCart(good);
 
         }
-        System.out.println(customer + " start to choose goods");
-        int howManyGoods = customer.numberOfGoods();
-        if (howManyGoods==0){
-            System.out.println(customer + "decided go out without goods");
-        }
-        for (int i = 0; i < howManyGoods; i++) {
-            Good good = chooseGood();
-            putToCart(good);
 
-        }
         customer.setShoppingCart(shoppingCart);
         System.out.println(customer + " stopped to choose goods");
-        goToQueue();
+        System.out.println(customer + " in the shopping cart " + shoppingCart.size() + " goods");
+        if (amountOfGoods > 0) goToQueue();
         goOut();
         shop.getManager().customerOut();
     }
@@ -67,9 +57,10 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void takeCart() {
         this.shoppingCart = new ShoppingCart(customer);
+        System.out.println(customer + " take shopping cart");
         int timeout = RandomGenerator.get(100, 300);
-        Timer.sleep(timeout);
-        System.out.println(customer + " takes shopping cart");
+        Timer.sleep((int) (timeout * customer.speedOfOperation()));
+
 
     }
 
@@ -80,7 +71,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         Good good = new Good(nameGoods, price);
         System.out.println(customer + " choose " + good);
         int timeout = RandomGenerator.get(500, 2000);
-        Timer.sleep((int) (timeout*customer.speedOfOperation()));
+        Timer.sleep((int) (timeout * customer.speedOfOperation()));
         return good;
     }
 
@@ -98,15 +89,15 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
                     throw new RuntimeException(e);
                 }
             }
-            System.out.println(customer + " leaves the Queue");
+            System.out.println(customer + " left the Queue");
         }
 
     }
 
     @Override
     public void goOut() {
-        System.out.println(customer + " leaves the" + shop);
-        synchronized (exitMonitor){
+        System.out.println(customer + " left the " + shop);
+        synchronized (exitMonitor) {
             exitCounter++;
         }
 
@@ -115,17 +106,17 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public int putToCart(Good good) {
         shoppingCart.addGoods(good.getName(), good.getPrice());
-        System.out.println(customer+ " put the"+ good.getName()+ "in the cart");
+        System.out.println(customer + " put the " + good.getName() + " in the cart");
         int timeout = RandomGenerator.get(100, 300);
-        Timer.sleep((int) (timeout*customer.speedOfOperation()));
+        Timer.sleep((int) (timeout * customer.speedOfOperation()));
         return shoppingCart.size();
 
     }
 
 
-    protected static int countBuyers (){
-        synchronized (exitMonitor){
-            return inComingCounter-exitCounter;
+    protected static int countBuyers() {
+        synchronized (exitMonitor) {
+            return inComingCounter - exitCounter;
         }
     }
 }

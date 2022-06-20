@@ -7,7 +7,7 @@ public class Student extends Customer {
    public final String name;
 
 
-    public Student(int number) {
+    public Student(long number) {
         super(number);
         this.name = "Customer (Student) №" + number;
 

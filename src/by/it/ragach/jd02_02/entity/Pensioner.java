@@ -6,7 +6,7 @@ public class Pensioner extends Customer{
 
     public final String name;
 
-    public Pensioner(int number) {
+    public Pensioner(long number) {
         super(number);
         this.name = "Customer (Pensioner) №" + number;
     }

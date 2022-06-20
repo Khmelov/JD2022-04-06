@@ -13,7 +13,7 @@ public class CashierWorker implements Runnable {
 
     private final Cashier cashier;
     private final Shop shop;
-    private ShoppingCart shoppingCart;
+
 
     public CashierWorker(Cashier cashier, Shop shop) {
         this.cashier = cashier;
@@ -55,16 +55,18 @@ public class CashierWorker implements Runnable {
         double sumGoodPrice = 0.0;
         int position = 0;
         synchronized (System.out) {
-            System.out.println(cashier + " began to print check for " + customer + ":");
-            System.out.println("-".repeat(25));
+            System.out.println(cashier + " start to print check for " + customer + ":");
+
+            System.out.println("-".repeat(26));
             for (String nameGood : nameGoods) {
                 Double priceGood = cart.get(nameGood);
-                System.out.printf("%2d) %-15s  %.2f\n", ++position, nameGood, priceGood);
+                System.out.printf("%2d. %-15s  %.2f\n", ++position, nameGood, priceGood);
                 sumGoodPrice += priceGood;
             }
-            System.out.println("-".repeat(25));
-            System.out.printf("total check amount: %.2f\n", sumGoodPrice);
-            System.out.println("-".repeat(25));
+            System.out.println("-".repeat(26));
+            System.out.printf(" Total:              %.2f\n", sumGoodPrice);
+            System.out.println("-".repeat(26));
+
         }
         return sumGoodPrice;
     }

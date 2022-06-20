@@ -37,7 +37,6 @@ public class ShopWorker extends Thread {
         int customerPerSecond;
         int time = 0;
 
-
         while (manager.shopOpened()) {
 
 
@@ -53,7 +52,7 @@ public class ShopWorker extends Thread {
 
 
             for (int i = 0; manager.shopOpened() && i < customerPerSecond; i++) {
-                Customer customer = customerCreator();;
+                Customer customer = customerCreator();
                 CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                 customerWorker.start();
                 threads.add(customerWorker);

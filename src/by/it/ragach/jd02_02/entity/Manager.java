@@ -19,11 +19,14 @@ public class Manager {
         return countOut == plan;
     }
 
-    public synchronized void customerEnter(){
+    public synchronized void customerEnter() {
         countIn++;
     }
 
-    public synchronized void customerOut(){
+    public synchronized void customerOut() {
         countOut++;
     }
+
+
+
 }
