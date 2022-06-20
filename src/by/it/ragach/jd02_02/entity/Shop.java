@@ -11,6 +11,7 @@ public class Shop {
         this.name = name;
         this.queue = queue;
         this.manager = manager;
+
     }
 
     public String getName() {

@@ -1,17 +1,16 @@
 package by.it.ragach.jd02_02.service;
 
-import by.it.ragach.jd02_02.entity.Cashier;
-import by.it.ragach.jd02_02.entity.Manager;
+import by.it.ragach.jd02_02.entity.*;
 import by.it.ragach.jd02_02.util.RandomGenerator;
 import by.it.ragach.jd02_02.util.Timer;
-import by.it.ragach.jd02_02.entity.Customer;
-import by.it.ragach.jd02_02.entity.Shop;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShopWorker extends Thread {
     private final Shop shop;
+
+    int number = 0;
 
     public ShopWorker(Shop shop) {
         this.shop = shop;
@@ -20,7 +19,7 @@ public class ShopWorker extends Thread {
     @Override
     public void run() {
         System.out.println(shop + " opened");
-        int number = 0;
+
         List<Thread> threads = new ArrayList<>();
         Manager manager = shop.getManager();
 
@@ -35,15 +34,34 @@ public class ShopWorker extends Thread {
         }
 
 
+        int customerPerSecond;
+        int time = 0;
+
+
         while (manager.shopOpened()) {
-            int countCustomerPerSecond = RandomGenerator.get(2);
-            for (int i = 0; manager.shopOpened() && i < countCustomerPerSecond; i++) {
-                Customer customer = new Customer(++number);
+
+
+            int numberOfBuyers = CustomerWorker.countBuyers();
+            int second = time % 60;
+
+            if (second < 30 && numberOfBuyers <= (10 + second)) {
+                customerPerSecond = RandomGenerator.get(10 + second / 2);
+
+            } else if (second >= 30 && numberOfBuyers <= (40 + (30 - second))) {
+                customerPerSecond = RandomGenerator.get(40 + (30 - second) - numberOfBuyers);
+            } else customerPerSecond = 0;
+
+
+            for (int i = 0; manager.shopOpened() && i < customerPerSecond; i++) {
+                Customer customer = customerCreator();;
                 CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                 customerWorker.start();
                 threads.add(customerWorker);
             }
+            time++;
             Timer.sleep(1000);
+            System.out.println("Quantity of buyers " + numberOfBuyers);
+            System.out.println(second);
         }
         for (Thread thread : threads) {
             try {
@@ -54,6 +72,22 @@ public class ShopWorker extends Thread {
 
         }
         System.out.println(shop + " closed");
+    }
+
+    private Customer customerCreator() {
+
+        int customerType = RandomGenerator.get(0,99);
+        Customer customer;
+        if (customerType<25){
+            customer = new Pensioner(++number);
+        }else if (customerType>=75){
+            customer = new Customer(number++);
+        }else{
+            customer=new Student(number++);
+
+        }
+
+        return customer;
     }
 
 }

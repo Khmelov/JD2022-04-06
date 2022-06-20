@@ -12,10 +12,18 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     private final Shop shop;
     private ShoppingCart shoppingCart;
 
+    private final static Integer incomingMonitor = 0;
+    private final static Integer exitMonitor = 0;
+    public static int inComingCounter = 0;
+    public static int exitCounter = 0;
+
 
     public CustomerWorker(Customer customer, Shop shop) {
         this.customer = customer;
         this.shop = shop;
+        synchronized (incomingMonitor){
+            inComingCounter++;
+        }
         shop.getManager().customerEnter();
     }
 
@@ -23,12 +31,27 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     public void run() {
         enteredStore();
         takeCart();
-        int amountOfGoods = RandomGenerator.get(2, 5);
+        System.out.println(customer + " started to choose goods");
+        int amountOfGoods = customer.numberOfGoods();
+        if (amountOfGoods==0){
+            System.out.println(customer + "decided not to buy anything");
+        }
         for (int i = 0; i < amountOfGoods; i++) {
             Good good = chooseGood();
             putToCart(good);
 
         }
+        System.out.println(customer + " start to choose goods");
+        int howManyGoods = customer.numberOfGoods();
+        if (howManyGoods==0){
+            System.out.println(customer + "decided go out without goods");
+        }
+        for (int i = 0; i < howManyGoods; i++) {
+            Good good = chooseGood();
+            putToCart(good);
+
+        }
+        customer.setShoppingCart(shoppingCart);
         System.out.println(customer + " stopped to choose goods");
         goToQueue();
         goOut();
@@ -37,13 +60,13 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public void enteredStore() {
-        System.out.println(customer + " enter to the" + shop);
+        System.out.println(customer + " enter to the " + shop);
 
     }
 
     @Override
     public void takeCart() {
-        this.shoppingCart = new ShoppingCart();
+        this.shoppingCart = new ShoppingCart(customer);
         int timeout = RandomGenerator.get(100, 300);
         Timer.sleep(timeout);
         System.out.println(customer + " takes shopping cart");
@@ -52,15 +75,12 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
 
     @Override
     public Good chooseGood() {
-
-        System.out.println(customer + " started to choose goods");
-        int timeout = RandomGenerator.get(500, 2000);
-        Timer.sleep(timeout);
         String nameGoods = PriceListRepo.getGoodName();
         double price = PriceListRepo.getPrice(nameGoods);
         Good good = new Good(nameGoods, price);
         System.out.println(customer + " choose " + good);
-        System.out.println(customer + " finished to choose goods");
+        int timeout = RandomGenerator.get(500, 2000);
+        Timer.sleep((int) (timeout*customer.speedOfOperation()));
         return good;
     }
 
@@ -86,15 +106,26 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
     @Override
     public void goOut() {
         System.out.println(customer + " leaves the" + shop);
+        synchronized (exitMonitor){
+            exitCounter++;
+        }
 
     }
 
     @Override
     public int putToCart(Good good) {
         shoppingCart.addGoods(good.getName(), good.getPrice());
+        System.out.println(customer+ " put the"+ good.getName()+ "in the cart");
         int timeout = RandomGenerator.get(100, 300);
-        Timer.sleep(timeout);
+        Timer.sleep((int) (timeout*customer.speedOfOperation()));
         return shoppingCart.size();
 
+    }
+
+
+    protected static int countBuyers (){
+        synchronized (exitMonitor){
+            return inComingCounter-exitCounter;
+        }
     }
 }

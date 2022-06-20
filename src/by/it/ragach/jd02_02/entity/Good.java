@@ -1,23 +1,24 @@
 package by.it.ragach.jd02_02.entity;
 
+
 public class Good extends PriceListRepo {
 
-    final private String name;
-    final private double price;
+    private final String name;
+    private final double price;
 
     public Good(String name, double price) {
-
         this.name = name;
         this.price = PriceListRepo.getPrice(name);
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public double getPrice(){
-       return price;
+    public double getPrice() {
+        return price;
     }
+
 
     @Override
     public String toString() {

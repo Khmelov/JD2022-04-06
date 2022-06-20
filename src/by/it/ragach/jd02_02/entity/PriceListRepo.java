@@ -5,9 +5,10 @@ import by.it.ragach.jd02_02.util.RandomGenerator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PriceListRepo {
-    private static final HashMap<String, Double> goods = new HashMap<>();
+    private static final Map<String, Double> goods = new HashMap<>();
 
     static {
         goods.put("cheese", 3.5);
@@ -23,11 +24,10 @@ public class PriceListRepo {
 
 
     }
-
-
     public static String getGoodName(){
         List<String>goodsList = new ArrayList<>(goods.keySet());
         int randomGoodNumber = RandomGenerator.get(0,goodsList.size()-1);
+        String randomGoods = goodsList.get(randomGoodNumber);
         return goodsList.get(randomGoodNumber);
     }
 
