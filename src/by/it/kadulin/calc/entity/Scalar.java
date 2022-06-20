@@ -1,7 +1,7 @@
-package by.it.kadulin.calc;
+package by.it.kadulin.calc.entity;
 
 
-class Scalar extends Var {
+public class Scalar extends Var {
 
     public double getValue() {
         return value;

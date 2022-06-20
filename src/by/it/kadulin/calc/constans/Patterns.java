@@ -1,4 +1,4 @@
-package by.it.kadulin.calc;
+package by.it.kadulin.calc.constans;
 
 public class Patterns {
 

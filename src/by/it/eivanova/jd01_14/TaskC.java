@@ -14,13 +14,13 @@ public class TaskC {
     public static final String RESULT_TASK_C_TXT = "resultTaskC.txt";
 
     public static void main(String[] args) {
-        //String pathBinaryFile = Util.getPath(TaskC.class, RESULT_TASK_C_TXT);
+        //String pathBinaryFile = PathFinder.getPath(TaskC.class, RESULT_TASK_C_TXT);
        // ArrayList<Integer> integers = readIntegers(pathBinaryFile);
        // writeIntegers(pathBinaryFile);
        // printToConsole(integers);
 
 
-        //String pathTxtFile = Util.getPath(TaskC.class, RESULT_TASK_C_TXT);
+        //String pathTxtFile = PathFinder.getPath(TaskC.class, RESULT_TASK_C_TXT);
         //writeIntegers(pathTxtFile);
         //ArrayList<Integer> integers = readIntegers(pathTxtFile);
         //printToTxtFile(integers, pathTxtFile);

@@ -1,10 +1,10 @@
-package by.it.kadulin.calc;
+package by.it.kadulin.calc.entity;
 
 import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Matrix extends Var {
+public class Matrix extends Var {
 
 
 
