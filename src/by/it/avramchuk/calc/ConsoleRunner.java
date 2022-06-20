@@ -39,6 +39,5 @@ public class ConsoleRunner {
 
         }
         System.out.println(MESSEGE_STOP);
-
     }
 }
