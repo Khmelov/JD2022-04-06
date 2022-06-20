@@ -2,7 +2,7 @@ package by.it.avramchuk.calc.constants;
 
 public class Patterns {
 
-    public static final String OPERATIONS = "[-+*/=]";
+    public static final String OPERATIONS = "(?<=[^{,+=*-/])[-+*/=]";
     public static final String SPACES = "\s+";
     public static final String SCALAR= "-?[0-9]+(\\.[0-9]+)?";
     public static final String VECTOR = "\\{"+SCALAR+"(,"+SCALAR+")*\\}";

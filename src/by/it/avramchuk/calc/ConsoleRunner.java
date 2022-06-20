@@ -4,7 +4,6 @@ import by.it.avramchuk.calc.entity.Var;
 import by.it.avramchuk.calc.exception.CalcException;
 import by.it.avramchuk.calc.interfaces.Repository;
 import by.it.avramchuk.calc.repository.PersistentRepository;
-import by.it.avramchuk.calc.repository.VarMapRepository;
 import by.it.avramchuk.calc.service.Parser;
 import by.it.avramchuk.calc.service.Printer;
 import by.it.avramchuk.calc.service.VarCreator;
@@ -33,8 +32,8 @@ public class ConsoleRunner {
                 try {
                     Var result = parser.calc(expression);
                     printer.print(result);
-                } catch (CalcException | by.it._classwork_.calc.exception.CalcException e) {
-                    printer.print((CalcException) e);
+                } catch (CalcException e) {
+                    printer.print(e);
                 }
             }
 

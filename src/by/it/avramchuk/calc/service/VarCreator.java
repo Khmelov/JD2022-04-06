@@ -1,5 +1,5 @@
 package by.it.avramchuk.calc.service;
-import by.it._classwork_.calc.exception.CalcException;
+import by.it.avramchuk.calc.exception.CalcException;
 
 import by.it.avramchuk.calc.constants.Patterns;
 import by.it.avramchuk.calc.entity.Matrix;

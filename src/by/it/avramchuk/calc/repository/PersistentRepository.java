@@ -35,7 +35,7 @@ public class PersistentRepository implements Repository {
                    Var var = creator.createVar(parts[1]);
                    vars.put(name, var);
                }
-           } catch (IOException | by.it._classwork_.calc.exception.CalcException e) {
+           } catch (IOException | CalcException e) {
                throw new RuntimeException("not found file", e);
            }
         }
