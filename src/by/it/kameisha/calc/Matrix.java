@@ -11,6 +11,10 @@ public class Matrix extends Var {
         this.value = array;
     }
 
+    public double[][] getValue() {
+        return value;
+    }
+
     public Matrix(Matrix matrix) {
         double[][] newMatrix = new double[matrix.value.length][];
         for (int i = 0; i < matrix.value.length; i++) {
