@@ -183,7 +183,7 @@ public class Matrix extends Var {
 
     @Override
     public Var div(Var other) throws CalcException {
-        if (other instanceof Scalar scalar) {
+        if (other instanceof Scalar scalar && scalar.getValue()!=0) {
             if (!checkMatrix(new Matrix(value))) {
                 throw new CalcException("Incorrect matrix size");
             }
