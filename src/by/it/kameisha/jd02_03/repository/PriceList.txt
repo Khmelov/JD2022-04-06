@@ -1,0 +1,3 @@
+milk = 100
+bread = 75
+sugar = 125
