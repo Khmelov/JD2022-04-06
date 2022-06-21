@@ -153,7 +153,7 @@ public class Matrix extends Var {
             }
             return new Matrix(newMatrix);
         } else if (other instanceof Vector vector) {
-            if (!checkMatrix(new Matrix(value)) || vector.getValue().length != value.length) {
+            if (!checkMatrix(new Matrix(value)) || vector.getValue().length != value[0].length) {
                 throw new CalcException("Incorrect vector or matrix size");
             }
             double[] newVector = new double[vector.getValue().length];
