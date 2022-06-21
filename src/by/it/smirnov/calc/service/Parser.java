@@ -11,14 +11,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static by.it.smirnov.calc.constants.Patterns.IN_BRACES;
-import static by.it.smirnov.calc.constants.Patterns.OPERATION;
+import static by.it.smirnov.calc.constants.Patterns.*;
+import static by.it.smirnov.calc.constants.Wordings.*;
 
 public class Parser {
 
     private final Repository repository;
     private final VarCreator varCreator;
-    private final static Map<String, Integer> priorityMap = Map.of(
+    private static final Map<String, Integer> priorityMap = Map.of(
             "=", 0,
             "+", 1,
             "-", 1,
@@ -31,12 +31,10 @@ public class Parser {
         this.varCreator = varCreator;
     }
 
-
     public Var calc(String input) throws CalcException {
-        input = input.trim().replaceAll("\\s+", "");
+        input = input.trim().replaceAll(SPACES, "");
         input = inBraceCalc(input);
-        Var result = makeCalculation(input);
-        return result;
+        return makeCalculation(input);
     }
 
     private String inBraceCalc(String input) throws CalcException {
@@ -54,8 +52,7 @@ public class Parser {
     }
 
     String deBrace(String braced) {
-        braced = braced.replaceAll("\\)", "");
-        braced = braced.replaceAll("\\(", "");
+        braced = braced.replaceAll(BRACES, "");
         return braced;
     }
 
@@ -78,23 +75,19 @@ public class Parser {
         return varCreator.createVar(operands.get(0));
     }
 
-    private Var calcOneOperation(String leftOper, String operation, String rightOper) throws CalcException {
-        Var right = varCreator.createVar(rightOper);
-        if (operation.equals("=")) {
-            return repository.saveVar(leftOper, right);
+    private Var calcOneOperation(String leftOperand, String operation, String rightOperand) throws CalcException {
+        Var right = varCreator.createVar(rightOperand);
+        if (operation.equals(EQ)) {
+            return repository.saveVar(leftOperand, right);
         }
-        Var left = varCreator.createVar(leftOper);
-        switch (operation) {
-            case "+":
-                return left.add(right);
-            case "-":
-                return left.sub(right);
-            case "*":
-                return left.mul(right);
-            case "/":
-                return left.div(right);
-        }
-        throw new CalcException("not found operation '%s'", operation);
+        Var left = varCreator.createVar(leftOperand);
+        return switch (operation) {
+            case ADD -> left.add(right);
+            case SUB -> left.sub(right);
+            case MUL -> left.mul(right);
+            case DIV -> left.div(right);
+            default -> throw new CalcException(NOT_FOUND, operation);
+        };
     }
 
     private int getPriority(List<String> operations) {

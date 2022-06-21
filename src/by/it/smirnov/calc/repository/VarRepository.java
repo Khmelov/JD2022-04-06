@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class VarRepository implements Repository {
 
-    private Map<String, Var> vars = new HashMap<>();
+    private final Map<String, Var> vars = new HashMap<>();
 @Override
-    public Var saveVar(String name, Var var){
-        vars.put(name, var);
-        return var;
+    public Var saveVar(String name, Var variable){
+        vars.put(name, variable);
+        return variable;
     }
 
     @Override

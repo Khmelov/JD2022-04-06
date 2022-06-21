@@ -11,12 +11,14 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static by.it.smirnov.calc.constants.Wordings.*;
+
 public class PersistentRepository implements Repository {
-    private Map<String, Var> vars = new HashMap<>();
+    private final Map<String, Var> vars = new HashMap<>();
     private final File path;
 
     public PersistentRepository() {
-        String fileName = PathGetter.getPath(ConsoleRunner.class, "Vars.txt");
+        String fileName = PathGetter.getPath(ConsoleRunner.class, FILE_REPO);
         path = new File(fileName);
         initFromFile();
     }
@@ -27,22 +29,22 @@ public class PersistentRepository implements Repository {
             try (BufferedReader reader = new BufferedReader (new FileReader(path))){
                 while (reader.ready()){
                     String line = reader.readLine();
-                    String [] parts = line.split("=", 2);
+                    String [] parts = line.split(EQ, 2);
                     String name = parts[0];
-                    Var var = varCreator.createVar(parts[1]);
-                    vars.put(name, var);
+                    Var variable = varCreator.createVar(parts[1]);
+                    vars.put(name, variable);
                 }
             } catch (IOException | CalcException e) {
-                throw new RuntimeException("File not found", e);
+                throw new RuntimeException(NO_FILE, e);
             }
         }
     }
 
     @Override
-    public Var saveVar(String name, Var var) throws CalcException {
-        vars.put(name, var);
+    public Var saveVar(String name, Var variable) throws CalcException {
+        vars.put(name, variable);
         writeToFile();
-        return var;
+        return variable;
     }
 
     private void writeToFile() throws CalcException {

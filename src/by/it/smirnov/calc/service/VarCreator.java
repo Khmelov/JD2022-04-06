@@ -10,6 +10,8 @@ import by.it.smirnov.calc.interfaces.Repository;
 
 import java.util.Objects;
 
+import static by.it.smirnov.calc.constants.Wordings.BAD_STRING;
+
 public class VarCreator {
 
     private final Repository repository;
@@ -27,7 +29,7 @@ public class VarCreator {
         else if (operand.matches(Patterns.MATRIX)) result = new Matrix(operand);
         else result = repository.get(operand);
         if (Objects.isNull(result)) {
-            throw new CalcException("Incorrect string %s", operand);
+            throw new CalcException(BAD_STRING, operand);
         }
         return result;
     }

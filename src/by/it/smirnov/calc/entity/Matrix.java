@@ -3,6 +3,7 @@ package by.it.smirnov.calc.entity;
 import by.it.smirnov.calc.exception.CalcException;
 
 import java.util.Arrays;
+import java.util.StringJoiner;
 
 public class Matrix extends Var {
 
@@ -37,19 +38,19 @@ public class Matrix extends Var {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("{");
-        String newdelim = "";
+        StringJoiner joiner = new StringJoiner(",", "{", "}");
         for (int i = 0; i < values.length; i++) {
-            sb.append(newdelim).append("{");
-            String delimiter = "";
+            StringJoiner sj = new StringJoiner(",", "{", "}");
             for (int j = 0; j < values[i].length; j++) {
-                sb.append(delimiter).append(values[i][j]);
-                delimiter = ",";
+                double value = values[i][j];
+                if (Math.round(value) == value) {
+                    sj.add(String.valueOf((int) value));
+                } else {
+                    sj.add(String.valueOf(value));
                 }
-            newdelim = "},";
-        }
-        sb.append("}}");
-        return sb.toString();
+
+            }joiner.add(sj.toString());
+        }return joiner.toString();
     }
 
     @Override

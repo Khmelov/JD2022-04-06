@@ -6,6 +6,8 @@ import by.it.smirnov.calc.exception.CalcException;
 import java.io.PrintStream;
 import java.util.Objects;
 
+import static by.it.smirnov.calc.constants.Wordings.ERR;
+
 public class Printer {
 
     private final PrintStream out;
@@ -19,6 +21,6 @@ public class Printer {
     }
 
     public void print(CalcException e) {
-        out.println("ERROR " + e.getMessage());
+        out.printf(ERR, e.getMessage());
     }
 }
