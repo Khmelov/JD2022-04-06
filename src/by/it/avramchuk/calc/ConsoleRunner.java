@@ -4,6 +4,7 @@ import by.it.avramchuk.calc.entity.Var;
 import by.it.avramchuk.calc.exception.CalcException;
 import by.it.avramchuk.calc.interfaces.Repository;
 import by.it.avramchuk.calc.repository.PersistentRepository;
+import by.it.avramchuk.calc.repository.VarMapRepository;
 import by.it.avramchuk.calc.service.Parser;
 import by.it.avramchuk.calc.service.Printer;
 import by.it.avramchuk.calc.service.VarCreator;
@@ -18,7 +19,7 @@ public class ConsoleRunner {
 
     public static void main(String[] args) {
         Printer printer = new Printer(System.out);
-        Repository repository = new PersistentRepository();
+        Repository repository = new VarMapRepository();
         VarCreator varCreator = new VarCreator(repository);
 
         Parser parser = new Parser(repository, varCreator);

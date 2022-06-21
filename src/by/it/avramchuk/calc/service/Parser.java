@@ -31,6 +31,8 @@ public class Parser {
 
     public Var calc(String expression) throws CalcException {
         expression= expression.trim().replaceAll(Patterns.SPACES, "");
+        while (expression.contains("("))
+        expression= getSimpleExpression(expression);
 
         List<String> operands = new ArrayList<> ( Arrays.asList(expression.split(Patterns.OPERATIONS)));
         ArrayList<String> operations = new ArrayList<>();
@@ -66,7 +68,6 @@ public class Parser {
                 case "*": return left.mul(right);
                 case "/": return left.div(right);
             }
-
         throw new CalcException("not found operation '%s'", operation);
     }
 
@@ -82,5 +83,17 @@ public class Parser {
 
         }
         return indexOperation;
+    }
+
+    public String getSimpleExpression(String expression) throws CalcException {
+        Pattern pattern = Pattern.compile(Patterns.SIMPLE_EXP);
+        Matcher matcher = pattern.matcher(expression);
+        if(matcher.find()) {
+            String target = matcher.group();
+            String simpleExp= target.replace("(","")
+                    .replace(")","");
+            expression = expression.replace(target, calc(simpleExp).toString());
+        }
+        return expression;
     }
 }
