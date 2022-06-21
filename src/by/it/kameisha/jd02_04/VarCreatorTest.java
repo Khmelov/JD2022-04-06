@@ -23,6 +23,7 @@ public class VarCreatorTest {
         String expected = "100.65";
         System.out.println("expected " + expected);
         assertEquals(expected,var.toString());
+        System.out.println();
     }
 
     @Test
@@ -32,6 +33,7 @@ public class VarCreatorTest {
         String expected = "{100.65, 5.14, 4.0}";
         System.out.println("expected " + expected);
         assertEquals(expected,var.toString());
+        System.out.println();
     }
 
     @Test
@@ -41,6 +43,7 @@ public class VarCreatorTest {
         String expected = "{{100.65, 5.14, 4.0}, {59.4, 4.0, 12.0}, {5.14, 5.0, 7.0}}";
         System.out.println("expected " + expected);
         assertEquals(expected,var.toString());
+        System.out.println();
     }
 
     @After
