@@ -21,7 +21,7 @@ public class CalcTest {
     private static final double DELTA = 1e-4;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Repository repo = new PersistentRepository();
         parser = new Parser(repo, new VarCreator(repo));
     }
@@ -132,7 +132,7 @@ public class CalcTest {
     }
 
     @Test(timeout = 100)
-    public void operandInputToString() throws CalcException {
+    public void operandInputToString() {
         String inputScalar1 = "58";
         String inputScalar2 = "58.0";
         String inputVector = "{1, 2.0, 3.6}";
@@ -150,6 +150,6 @@ public class CalcTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
     }
 }
