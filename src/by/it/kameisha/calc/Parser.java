@@ -47,7 +47,7 @@ public class Parser {
             String operation = operations.remove(index);
             String right = operands.remove(index);
             Var result = calcOneOperation(left, operation, right);
-            operands.add(index, result.toString().replace(" ", ""));
+            operands.add(index, result.toString());
         }
         return varCreator.createVar(operands.get(0));
     }
@@ -57,7 +57,7 @@ public class Parser {
         Matcher matcher = pattern.matcher(expression);
         if (matcher.find()) {
             String result = matcher.group();
-            Var var = calcVar(result.replace("(", "").replace(")", ""));
+            Var var = calcVar(result.replace("(","").replace(")",""));
             expression = expression.replace(result, var.toString());
             return expression;
         }

@@ -4,6 +4,7 @@ import by.it.kameisha.calc.Parser;
 import by.it.kameisha.calc.Repository;
 import by.it.kameisha.calc.VarCreator;
 import by.it.kameisha.calc.VarMapRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,5 +34,8 @@ public class MatrixTest {
 
     @Test
     public void div() {
+    }
+    @After
+    public void tearDown() throws Exception {
     }
 }
