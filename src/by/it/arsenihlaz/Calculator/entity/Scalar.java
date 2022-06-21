@@ -1,6 +1,8 @@
-package by.it.arsenihlaz.Calculator;
+package by.it.arsenihlaz.Calculator.entity;
 
-class Scalar extends Var {
+import by.it.arsenihlaz.Calculator.exception.CalcException;
+
+public class Scalar extends Var {
     private double value;
 
     @Override

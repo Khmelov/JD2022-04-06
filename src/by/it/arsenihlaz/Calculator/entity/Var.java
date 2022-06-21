@@ -1,12 +1,9 @@
-package by.it.arsenihlaz.Calculator;
+package by.it.arsenihlaz.Calculator.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import by.it.arsenihlaz.Calculator.exception.CalcException;
+import by.it.arsenihlaz.Calculator.interfaces.Operation;
 
-abstract class Var implements Operation {
-    private Object var;
-
+public abstract class Var implements Operation {
 
     @Override
     public Var add(Var other) throws CalcException {

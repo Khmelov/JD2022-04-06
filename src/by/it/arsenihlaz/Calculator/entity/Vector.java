@@ -1,4 +1,6 @@
-package by.it.arsenihlaz.Calculator;
+package by.it.arsenihlaz.Calculator.entity;
+
+import by.it.arsenihlaz.Calculator.exception.CalcException;
 
 import java.util.Arrays;
 
