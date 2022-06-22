@@ -29,7 +29,7 @@ public class ConsoleRunner {
                 break;
             }
             else {
-                Var result = parser.calc(expression);
+                Var result = parser.startCalc(expression);
                 printer.print(result);
             }
         }

@@ -72,7 +72,7 @@ public class Scalar extends Var {
             return new Scalar(this.value * otherScalar.value);
         }
         else {
-            return other.add(this);
+            return other.mul(this);
         }
     }
 
