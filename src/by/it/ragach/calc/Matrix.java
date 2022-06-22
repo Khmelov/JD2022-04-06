@@ -4,15 +4,15 @@ class Matrix extends Var {
     private final double[][] value;
 
 
-    Matrix(double[][] value) {
+    public Matrix(double[][] value) {
         this.value = value;
     }
 
-    Matrix(Matrix matrix) {
+    public Matrix(Matrix matrix) {
         this.value = matrix.value;
     }
 
-    Matrix(String strMatrix) {
+    public Matrix(String strMatrix) {
 
         String[] strRow = strMatrix.split("},");
         value = new double[strRow.length][];

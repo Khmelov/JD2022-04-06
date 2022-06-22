@@ -28,7 +28,6 @@ public class Parser {
     }
 
     public Var calc(String expression) throws CalcException {
-        //2+2 {2,2}  {{2,3},{4,5))/2
 
         expression.trim().replaceAll(Patterns.SPACES, "");
         //А=2+3*4
@@ -44,12 +43,12 @@ public class Parser {
 
         while (!operations.isEmpty()) {
             String left = operands.remove(index);
-            String right = operands.remove(index);
             String operation = operations.remove(index);
+            String right = operands.remove(index);
+
             Var result = calcOneOperation(left, operation, right);
             operands.add(index, result.toString());
         }
-
 
         return varCreator.createVar(operands.get(0));
     }
