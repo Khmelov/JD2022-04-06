@@ -2,6 +2,7 @@ package by.it.smirnov.jd01_15;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -43,7 +44,7 @@ public class TaskC {
         File[] allFiles = file.listFiles();
         out.printf(DIR_LINES, FORMATTER.format(file.lastModified()), dirOrFile, "", DOT_1);
         out.printf(DIR_LINES, FORMATTER.format(file.getParentFile().lastModified()), dirOrFile, "", DOT_2);
-        for (int i = 0; i < allFiles.length; i++) {
+        for (int i = 0; i < Objects.requireNonNull(allFiles).length; i++) {
             long space = allFiles[i].length();
             name = allFiles[i].getName();
             date = new Date(allFiles[i].lastModified());
