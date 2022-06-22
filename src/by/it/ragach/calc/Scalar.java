@@ -13,7 +13,7 @@ public class Scalar extends Var {
     }
 
     public Scalar(String stringValue) {
-        value = Double.parseDouble(stringValue);
+        this.value= Double.parseDouble(stringValue);
 
     }
 

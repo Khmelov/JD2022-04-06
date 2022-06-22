@@ -29,7 +29,7 @@ public class Parser {
 
     public Var calc(String expression) throws CalcException {
 
-        expression.trim().replaceAll(Patterns.SPACES, "");
+        expression = expression.trim().replaceAll(Patterns.SPACES, "");
         //А=2+3*4
         List<String> operands = new ArrayList(Arrays.asList(expression.split(Patterns.OPERATION)));
         List<String> operations = new ArrayList<>();
