@@ -50,7 +50,10 @@ public class Parser {
         else {
             expression = calcPart(expression).toString();
         }
-        expression = calcPart(expression).toString();
+        if (expression.contains(Patterns.OPERATIONS)) {
+            expression = calcPart(expression).toString();
+        }
+
         return varCreator.createVar(expression);
     }
 
