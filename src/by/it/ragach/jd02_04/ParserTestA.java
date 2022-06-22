@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ParserTest {
+public class ParserTestA {
 
     private Parser parser;
 
@@ -39,7 +39,6 @@ public class ParserTest {
         expected = 25.55;
         delta = 1e-4;
         assertEquals(expected,actual,delta);
-
 
 
         expression = "B1=B+0.11*-5";
