@@ -71,35 +71,6 @@ public class ParserTestB {
 
     }
 
-//    @Test
-//    public void calcScalarOperationB() throws CalcException {
-//        parser.calc("A=2+5.3");
-//        Var actualVar = parser.calc("B=A*3.5");
-//        double actual = Double.parseDouble(actualVar.toString());
-//        double expected = 25.55;
-//        assertEquals(expected, actual, DELTA);
-//
-//    }
-//
-//    @Test
-//    public void calcScalarOperationB1() throws CalcException {
-//        parser.calc("A=2+5.3");
-//        parser.calc("B=A*3.5");
-//        Var actualVar = parser.calc("B1=B+0.11*-5");
-//        double actual = Double.parseDouble(actualVar.toString());
-//        double expected = 25;
-//        assertEquals(expected, actual, DELTA);
-//    }
-//
-//    @Test
-//    public void calcScalarOperationB2() throws CalcException {
-//        parser.calc("A=2+5.3");
-//        Var actualVar = parser.calc("B2=A/2-1");
-//        double actual = Double.parseDouble(actualVar.toString());
-//        double expected = 2.65;
-//        assertEquals(expected, actual, DELTA);
-//    }
-
     @After
     public void tearDown() {
     }
