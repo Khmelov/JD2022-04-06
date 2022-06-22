@@ -62,7 +62,7 @@ public class ParserTestС {
         assertEquals(expected1, actual1);
 
         Var actualVar2 = parser.startCalc("{{4.0, 4.0}, {4.0, 4.0}}*{{4.0, 4.0}, {4.0, 4.0}}");
-        String actual2 = actualVar1.toString();
+        String actual2 = actualVar2.toString();
         String expected2 = "{{32.0, 32.0}, {32.0, 32.0}}";
         assertEquals(expected2, actual2);
     }
