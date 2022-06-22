@@ -1,34 +1,27 @@
 package by.it.smirnov.jd01_15;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Scanner;
 
 import static java.lang.System.in;
 import static java.lang.System.out;
+import static by.it.smirnov.jd01_15.Constants.*;
 
 public class TaskC {
-
-    private static final String ERR = "не является внутренней или внешней\n" +
-            "командой, исполняемой программой или пакетным файлом.";
-    private static final String NO_DIR = "Системе не удается найти указанный путь.";
-    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH);
-    private static final String DIR_LINES = "%-20s%5s%9s %-25s%n";
 
     public static void main(String[] args) {
         File dir = new File(TaskA.getDir(TaskC.class));
         Scanner scanner = new Scanner(in);
         String command = "";
-        while (!command.equals("end")) {
+        while (!command.equals(END)) {
             out.print(dir + ">");
             command = scanner.nextLine();
-            if (command.equals("cd ..")) dir = dir.getParentFile();
-            else if (command.startsWith("cd ")) dir = reSetDir(command, dir);
-            else if (command.equals("dir")) printDirInfo(dir);
-            else if (command.equals("end")) break;
-            else out.printf("\"%s\" %s%n", command, ERR);
+            if (command.equals(PARENT)) dir = dir.getParentFile();
+            else if (command.startsWith(THIS_DIR)) dir = reSetDir(command, dir);
+            else if (command.equals(DIR)) printDirInfo(dir);
+            else if (command.equals(END)) break;
+            else out.printf(ERR, command);
         }
     }
 
@@ -43,13 +36,13 @@ public class TaskC {
     }
 
     private static void printDirInfo(File file) {
-        out.printf(" Содержимое папки %s%n%n", file);
+        out.printf(DIR_TITLE, file);
         String name;
         Date date;
-        String dirOrFile = "<DIR>";
+        String dirOrFile = DIR_FLAG;
         File[] allFiles = file.listFiles();
-        out.printf(DIR_LINES, FORMATTER.format(file.lastModified()), dirOrFile, "", ".");
-        out.printf(DIR_LINES, FORMATTER.format(file.getParentFile().lastModified()), dirOrFile, "", "..");
+        out.printf(DIR_LINES, FORMATTER.format(file.lastModified()), dirOrFile, "", DOT_1);
+        out.printf(DIR_LINES, FORMATTER.format(file.getParentFile().lastModified()), dirOrFile, "", DOT_2);
         for (int i = 0; i < allFiles.length; i++) {
             long space = allFiles[i].length();
             name = allFiles[i].getName();
