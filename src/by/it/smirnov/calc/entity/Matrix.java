@@ -5,6 +5,8 @@ import by.it.smirnov.calc.exception.CalcException;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
+import static by.it.smirnov.calc.constants.Patterns.*;
+
 public class Matrix extends Var {
 
     private final double[][] values;
@@ -21,8 +23,8 @@ public class Matrix extends Var {
     }
 
     public Matrix(String strMatrix) {
-        strMatrix = strMatrix.replaceAll("\\s", "").replaceAll("\\{\\{", "").replaceAll("}}", "");
-        String[] array = strMatrix.split("},\\{");
+        strMatrix = strMatrix.replaceAll(SPACES, "").replaceAll(DOUBLE_CURLY, "");
+        String[] array = strMatrix.split(MATRIX_INTER);
         String[][] multiArray = new String[array.length][];
         double[][] toDouble = new double[array.length][];
         for (int i = 0; i < multiArray.length; i++) {
@@ -39,38 +41,39 @@ public class Matrix extends Var {
     @Override
     public String toString() {
         StringJoiner joiner = new StringJoiner(",", "{", "}");
-        for (int i = 0; i < values.length; i++) {
+        for (double[] doubles : values) {
             StringJoiner sj = new StringJoiner(",", "{", "}");
-            for (int j = 0; j < values[i].length; j++) {
-                double value = values[i][j];
+            for (double value : doubles) {
                 if (Math.round(value) == value) {
                     sj.add(String.valueOf((int) value));
                 } else {
                     sj.add(String.valueOf(value));
                 }
 
-            }joiner.add(sj.toString());
-        }return joiner.toString();
+            }
+            joiner.add(sj.toString());
+        }
+        return joiner.toString();
     }
 
     @Override
     public Var add(Var other) throws CalcException {
-        if (other instanceof Scalar) {
+        if (other instanceof Scalar scalar) {
             double[][] add = new double[this.values.length][];
             for (int i = 0; i < add.length; i++) {
                 add[i] = Arrays.copyOf(values[i], values[i].length);
                 for (int j = 0; j < add[i].length; j++) {
-                    add[i][j] = add[i][j] + ((Scalar) other).getValue();
+                    add[i][j] = add[i][j] + scalar.getValue();
                 }
             }
             return new Matrix(add);
         }
-        else if (other instanceof Matrix) {
+        else if (other instanceof Matrix matrix) {
             double[][] add = new double[this.values.length][];
             for (int i = 0; i < add.length; i++) {
                 add[i] = Arrays.copyOf(values[i], values[i].length);
                 for (int j = 0; j < add[i].length; j++) {
-                    add[i][j] = add[i][j] + ((Matrix) other).values[i][j];
+                    add[i][j] = add[i][j] + matrix.values[i][j];
                 }
             }
             return new Matrix(add);
@@ -81,22 +84,22 @@ public class Matrix extends Var {
     @Override
     public Var sub(Var other) throws CalcException {
 
-        if (other instanceof Scalar) {
+        if (other instanceof Scalar scalar) {
             double[][] sub = new double[this.values.length][];
             for (int i = 0; i < sub.length; i++) {
                 sub[i] = Arrays.copyOf(values[i], values[i].length);
                 for (int j = 0; j < sub[i].length; j++) {
-                    sub[i][j] = sub[i][j] - ((Scalar) other).getValue();
+                    sub[i][j] = sub[i][j] - scalar.getValue();
                 }
             }
             return new Matrix(sub);
         }
-        else if (other instanceof Matrix) {
+        else if (other instanceof Matrix matrix) {
             double[][] sub = new double[this.values.length][];
             for (int i = 0; i < sub.length; i++) {
                 sub[i] = Arrays.copyOf(values[i], values[i].length);
                 for (int j = 0; j < sub[i].length; j++) {
-                    sub[i][j] = sub[i][j] - ((Matrix) other).values[i][j];
+                    sub[i][j] = sub[i][j] - matrix.values[i][j];
                 }
             }
             return new Matrix(sub);
@@ -106,33 +109,33 @@ public class Matrix extends Var {
 
     @Override
     public Var mul(Var other) throws CalcException {
-        if (other instanceof Scalar) {
+        if (other instanceof Scalar scalar) {
             double[][] mul = new double[this.values.length][];
             for (int i = 0; i < mul.length; i++) {
                 mul[i] = Arrays.copyOf(values[i], values[i].length);
                 for (int j = 0; j < mul[i].length; j++) {
-                    mul[i][j] = mul[i][j] * ((Scalar) other).getValue();
+                    mul[i][j] = mul[i][j] * scalar.getValue();
                 }
             }
             return new Matrix(mul);
         }
-        else if (other instanceof Vector) {
-            int vectorLength = ((Vector) other).getValues().length;
+        else if (other instanceof Vector vector) {
+            int vectorLength = vector.getValues().length;
             double[] result = new double[vectorLength];
             for (int i = 0; i < this.values.length; i++) {
                 for (int j = 0; j < vectorLength; j++) {
                     if(j> this.values.length) break;
-                    result[i] = result[i] + this.values[i][j] * ((Vector) other).getValues()[j];
+                    result[i] = result[i] + this.values[i][j] * vector.getValues()[j];
                 }
             }
             return new Vector(result);
         }
-        else if (other instanceof Matrix) {
-            double[][] result = new double[this.values.length][((Matrix) other).values[0].length];
+        else if (other instanceof Matrix matrix) {
+            double[][] result = new double[this.values.length][matrix.values[0].length];
             for (int i = 0; i < this.values.length; i++) {
-                for (int j = 0; j < ((Matrix) other).values[0].length; j++) {
-                    for (int k = 0; k < ((Matrix) other).values.length; k++) {
-                        result[i][j] = result[i][j] + this.values[i][k] * ((Matrix) other).values[k][j];
+                for (int j = 0; j < matrix.values[0].length; j++) {
+                    for (int k = 0; k < matrix.values.length; k++) {
+                        result[i][j] = result[i][j] + this.values[i][k] * matrix.values[k][j];
                     }
                 }
             }

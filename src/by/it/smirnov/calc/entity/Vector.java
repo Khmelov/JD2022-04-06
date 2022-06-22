@@ -5,6 +5,11 @@ import by.it.smirnov.calc.exception.CalcException;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
+import static by.it.smirnov.calc.constants.Patterns.CURLY;
+import static by.it.smirnov.calc.constants.Patterns.SPACES;
+import static by.it.smirnov.calc.constants.Wordings.BAD_SIZE;
+import static by.it.smirnov.calc.constants.Wordings.DIV_ZERO;
+
 public class Vector extends Var {
 
     private final double[] values;
@@ -22,7 +27,7 @@ public class Vector extends Var {
     }
 
     public Vector(String strVector) {
-        strVector = strVector.replaceAll("\\{", "").replaceAll("}", "").replaceAll("\\s", "");
+        strVector = strVector.replaceAll(CURLY, "").replaceAll(SPACES, "");
                 String[] fromString = strVector.split(",");
         double[] toDouble = new double[fromString.length];
         for (int i = 0; i < toDouble.length; i++) {
@@ -48,16 +53,16 @@ public class Vector extends Var {
 
     @Override
     public Var add(Var other) throws CalcException {
-        if (other instanceof Scalar) {
+        if (other instanceof Scalar scalar) {
             double[] add = Arrays.copyOf(values, values.length);
             for (int i = 0; i < this.values.length; i++) {
-                add[i] = add[i] + ((Scalar) other).getValue();
+                add[i] = add[i] + scalar.getValue();
             }
             return new Vector(add);
         }
         else if (other instanceof Vector vector) {
             if (this.values.length != vector.values.length) {
-                throw new CalcException("Incorrect size for %s + %s", this, vector);
+                throw new CalcException(BAD_SIZE, this, vector);
             }
             double[] add = Arrays.copyOf(values, values.length);
             for (int i = 0; i < add.length; i++) {
@@ -74,10 +79,10 @@ public class Vector extends Var {
         if (other instanceof Scalar) {
             return this.add(new Scalar(-1).mul(other));
         }
-        else if (other instanceof Vector) {
+        else if (other instanceof Vector vector) {
             double[] sub = Arrays.copyOf(values, values.length);
             for (int i = 0; i < sub.length; i++) {
-                sub[i] = sub[i] - ((Vector) other).values[i];
+                sub[i] = sub[i] - vector.values[i];
             }
             return new Vector(sub);
         }
@@ -86,33 +91,33 @@ public class Vector extends Var {
 
     @Override
     public Var mul(Var other) throws CalcException {
-        if (other instanceof Scalar) {
+        if (other instanceof Scalar scalar) {
             double[] mul = Arrays.copyOf(values, values.length);
             for (int i = 0; i < this.values.length; i++) {
-                mul[i] = mul[i] * ((Scalar) other).getValue();
+                mul[i] = mul[i] * scalar.getValue();
             }
             return new Vector(mul);
         }
-        else if (other instanceof Vector) {
+        else if (other instanceof Vector vector) {
             double[] mul = Arrays.copyOf(values, values.length);
-            double addmul = 0.0;
+            double total = 0.0;
             for (int i = 0; i < this.values.length; i++) {
-                mul[i] = mul[i] * ((Vector) other).values[i];
-                addmul = addmul + mul[i];
+                mul[i] = mul[i] * vector.values[i];
+                total = total + mul[i];
             }
-            return new Scalar(addmul);
+            return new Scalar(total);
         }
         else return other.mul(this);
     }
 
     @Override
     public Var div(Var other) throws CalcException {
-        if (other instanceof Scalar) {
+        if (other instanceof Scalar scalar) {
             if(((Scalar) other).getValue() == 0)
-                throw new CalcException("Деление на ноль невозможно!");
+                throw new CalcException(DIV_ZERO);
             double[] div = Arrays.copyOf(values, values.length);
             for (int i = 0; i < this.values.length; i++) {
-                div[i] = div[i] / ((Scalar) other).getValue();
+                div[i] = div[i] / scalar.getValue();
             }
             return new Vector(div);
         }

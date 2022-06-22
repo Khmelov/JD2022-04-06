@@ -10,8 +10,12 @@ public class Wordings {
     public static final String USER_DIR = "user.dir";
     public static final String FILE_REPO = "Vars.txt";
     public static final String BAD_STRING = "Incorrect string %s";
+    public static final String BAD_SIZE = "Incorrect size for %s + %s";
+    public static final String BAD_OPER = "Incorrect operation %s %s %s%n";
+    public static final String DIV_ZERO = "Division by zero impossible!";
     public static final String ERR = "ERROR %s%n";
     public static final String NOT_FOUND = "Not found operation '%s'";
+    public static final String VAR_UNKNOWN = "Unknown variable (abstract stub)";
     public static final String ADD = "+";
     public static final String SUB = "-";
     public static final String MUL = "*";

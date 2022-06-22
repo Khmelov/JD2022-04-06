@@ -2,6 +2,8 @@ package by.it.smirnov.calc.entity;
 
 import by.it.smirnov.calc.exception.CalcException;
 
+import static by.it.smirnov.calc.constants.Wordings.DIV_ZERO;
+
 public class Scalar extends Var {
 
 private final double value;
@@ -29,8 +31,8 @@ private final double value;
 
     @Override
     public Var add(Var other) throws CalcException {
-        if(other instanceof Scalar) {
-            double add = this.value + ((Scalar) other).value;
+        if(other instanceof Scalar scalar) {
+            double add = this.value + scalar.value;
             return new Scalar(add);
         }
         else return other.add(this);
@@ -38,8 +40,8 @@ private final double value;
 
     @Override
     public Var sub(Var other) throws CalcException {
-        if(other instanceof Scalar) {
-            double sub = this.value - ((Scalar) other).value;
+        if(other instanceof Scalar scalar) {
+            double sub = this.value - scalar.value;
             return new Scalar(sub);
         }
         else return new Scalar(-1).mul(other).add(this);
@@ -47,8 +49,8 @@ private final double value;
 
     @Override
     public Var mul(Var other) throws CalcException {
-        if(other instanceof Scalar) {
-            double mul = this.value * ((Scalar) other).value;
+        if(other instanceof Scalar scalar) {
+            double mul = this.value * scalar.value;
             return new Scalar(mul);
         }
         else return other.mul(this);
@@ -56,10 +58,10 @@ private final double value;
 
     @Override
     public Var div(Var other) throws CalcException {
-        if(other instanceof Scalar) {
+        if(other instanceof Scalar scalar) {
             if(((Scalar) other).value == 0)
-                throw new CalcException("division by zero %s / %s", this, (Scalar) other);
-            double div = this.value / ((Scalar) other).value;
+                throw new CalcException(DIV_ZERO);
+            double div = this.value / scalar.value;
             return new Scalar(div);
         }
         else return super.div(other);
