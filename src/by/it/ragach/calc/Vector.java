@@ -1,19 +1,19 @@
 package by.it.ragach.calc;
 
-class Vector extends Var {
+public class Vector extends Var {
 
     private final double[] value;
 
-    Vector(double[] value) {
+    public Vector(double[] value) {
         this.value = value.clone();
     }
 
-    Vector(Vector vector) {
+    public Vector(Vector vector) {
         this.value = vector.value;
     }
 
 
-    Vector(String strVector) {
+    public Vector(String strVector) {
         this.value = changeStringToDoubleArray(strVector);
 
 

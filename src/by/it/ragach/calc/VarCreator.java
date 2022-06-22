@@ -25,7 +25,6 @@ public class VarCreator {
         if (Objects.isNull(result)){
             throw new CalcException("Incorrect string %s", stringVar);
         }
-
         return result;
 
     }

@@ -39,9 +39,10 @@ public class Parser {
         while (matcher.find()) {
             operations.add(matcher.group());
         }
-        int index = getPriority(operations);
+
 
         while (!operations.isEmpty()) {
+            int index = getPriority(operations);
             String left = operands.remove(index);
             String operation = operations.remove(index);
             String right = operands.remove(index);

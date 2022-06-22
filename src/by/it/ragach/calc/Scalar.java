@@ -1,18 +1,18 @@
 package by.it.ragach.calc;
 
-class Scalar extends Var {
+public class Scalar extends Var {
 
     private final double value;
 
-    Scalar(double value) {
+    public Scalar(double value) {
         this.value = value;
     }
 
-    Scalar(Scalar scalar) {
+    public Scalar(Scalar scalar) {
         this.value = scalar.value;
     }
 
-    Scalar(String stringValue) {
+    public Scalar(String stringValue) {
         value = Double.parseDouble(stringValue);
 
     }
@@ -61,7 +61,7 @@ class Scalar extends Var {
     }
 
     public double getValue() {
-        return value;
+        return this.value;
     }
 
     @Override

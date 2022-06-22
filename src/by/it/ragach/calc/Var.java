@@ -4,17 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-abstract class Var implements Operation {
-
-    private static final Map<String,Var> vars = new HashMap<>();
+public abstract class Var implements Operation {
 
 
-
-
-    @Override
-      public String toString() {
-          return "abstract Var{}";
-      }
 
       @Override
       public Var add(Var other) throws CalcException {

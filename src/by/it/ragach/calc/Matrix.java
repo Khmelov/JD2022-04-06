@@ -1,8 +1,11 @@
 package by.it.ragach.calc;
 
-class Matrix extends Var {
-    private final double[][] value;
 
+
+import java.util.Arrays;
+
+public class Matrix extends Var {
+    private final double[][] value;
 
     public Matrix(double[][] value) {
         this.value = value;
@@ -31,7 +34,6 @@ class Matrix extends Var {
         }
 
     }
-
 
     @Override
     public Var add(Var other) throws CalcException {
@@ -104,13 +106,13 @@ class Matrix extends Var {
     public Var mul(Var other) throws CalcException {
         if (other instanceof Scalar otherScalar){
             double [][]result = new double[value.length][];
-                for (int i = 0; i < result.length; i++) {
-                    result[i] = value[i].clone();
-                    for (int j = 0; j < result.length; j++) {
-                        result[i][j] = result[i][j]*otherScalar.getValue();
+            for (int i = 0; i < result.length; i++) {
+                result[i] = value[i].clone();
+                for (int j = 0; j < result.length; j++) {
+                    result[i][j] = result[i][j]*otherScalar.getValue();
 
-                    }
-                }return new Matrix(result);
+                }
+            }return new Matrix(result);
         }else if (other instanceof Vector vector){
             double [] result = new double[value.length];
             for (int i = 0; i < value.length; i++) {
@@ -153,9 +155,10 @@ class Matrix extends Var {
         }else {
 
 
-        return super.div(other);
+            return super.div(other);
         }
     }
+
 
     @Override
     public String toString() {
