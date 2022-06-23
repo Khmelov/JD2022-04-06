@@ -30,6 +30,11 @@ public class Parser {
     public Var calc(String expression) throws CalcException {
 
         expression = expression.trim().replaceAll(Patterns.SPACES, "");
+
+        while (expression.contains("(")){
+            expression=getSimpleExpression(expression);
+
+        }
         //А=2+3*4
         List<String> operands = new ArrayList(Arrays.asList(expression.split(Patterns.OPERATION)));
         List<String> operations = new ArrayList<>();
@@ -89,5 +94,18 @@ public class Parser {
 
         }
         return indexOperation;
+    }
+
+    private String getSimpleExpression(String expression) throws CalcException {
+        Pattern pattern = Pattern.compile(Patterns.SIMPLE_EXP);
+        Matcher matcher = pattern.matcher(expression);
+        if (matcher.find()){
+            String target = matcher.group();
+            String simpleExp = target.replace("(","")
+                    .replace(")","");
+            expression = expression.replace(target,calc(simpleExp).toString());
+        }
+
+        return expression;
     }
 }

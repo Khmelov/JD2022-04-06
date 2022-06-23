@@ -10,13 +10,13 @@ public class VarMapRepository implements  Repository{
 
 
     @Override
-    public Var save(String name, Var value)  {
+    public Var save(String name, Var value) throws CalcException {
         vars.put(name,value);
         return value;
     }
 
     @Override
-    public Var get(String name)  {
+    public Var get(String name)throws CalcException  {
         return vars.get(name);
     }
 }
