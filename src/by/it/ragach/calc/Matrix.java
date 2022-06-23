@@ -144,11 +144,11 @@ public class Matrix extends Var {
 
     @Override
     public Var div(Var other) throws CalcException {
-        if (other instanceof Scalar scalar){
-            double [][]result = new double[value.length][];
-            for (int i = 0; i < result.length; i++) {
-                for (int j = 0; j < result[i].length; j++) {
-                    result [i][j] = result[i][j]*scalar.getValue();
+        if (other instanceof Scalar scalar&&scalar.getValue()!=0){
+            double [][]result = new double[value.length][value[0].length];
+            for (int i = 0; i < value.length; i++) {
+                for (int j = 0; j < value[i].length; j++) {
+                    result [i][j] = result[i][j]+value[i][j]/scalar.getValue();
                 }
             } return new Matrix(result);
 
