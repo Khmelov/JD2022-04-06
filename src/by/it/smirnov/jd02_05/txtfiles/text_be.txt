@@ -1,0 +1,4 @@
+message.welcome=Вітаю цябе, шаноўны спадар!
+message.question=Як у цябе справы?
+user.firstname=Антон
+user.lastname=Смирноў

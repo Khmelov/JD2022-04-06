@@ -1,0 +1,4 @@
+message.welcome=ようこそ、はじめましてを願いします!
+message.question=お元気ですか？
+user.firstname=アントン
+user.lastname=スミルノフ
