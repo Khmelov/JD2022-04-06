@@ -19,6 +19,7 @@ public class VarCreator {
     }
 
     public Var createVar(String stringVar) throws CalcException {
+        stringVar= stringVar.trim().replaceAll(Patterns.SPACES, "");
         Var result;
         if (stringVar.matches(Patterns.SCALAR)) {
             result = new Scalar(stringVar);

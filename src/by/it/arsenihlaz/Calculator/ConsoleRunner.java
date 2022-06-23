@@ -4,6 +4,7 @@ import by.it.arsenihlaz.Calculator.entity.Var;
 import by.it.arsenihlaz.Calculator.exception.CalcException;
 import by.it.arsenihlaz.Calculator.interfaces.Repository;
 import by.it.arsenihlaz.Calculator.repository.PersistentRepository;
+import by.it.arsenihlaz.Calculator.repository.VarMapRepository;
 import by.it.arsenihlaz.Calculator.services.Parser;
 import by.it.arsenihlaz.Calculator.services.Printer;
 import by.it.arsenihlaz.Calculator.services.VarCreator;
@@ -16,7 +17,8 @@ public class ConsoleRunner {
 
     public static void main(String[] args) {
         Printer printer = new Printer(System.out);
-        Repository repository = new PersistentRepository();
+       // Repository repository = new PersistentRepository();
+        Repository repository = new VarMapRepository();
         VarCreator varCreator = new VarCreator(repository);
         Parser parser = new Parser(repository, varCreator);
         Scanner scanner = new Scanner(System.in);

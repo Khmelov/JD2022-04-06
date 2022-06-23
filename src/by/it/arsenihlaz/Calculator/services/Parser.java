@@ -31,6 +31,11 @@ public class Parser {
 
     public Var calc(String expression) throws CalcException {
         expression = expression.trim().replaceAll(Patterns.SPACES, "");
+
+        while (expression.contains("(")) {
+            expression = deleteBrackets(expression);
+        }
+
         List<String> operands = new ArrayList<>(Arrays.asList(expression.split(Patterns.MATH_OPERATIONS)));
         List<String> operations = new ArrayList<>();
 
@@ -39,6 +44,7 @@ public class Parser {
         while (matcher.find()) {
             operations.add(matcher.group());
         }
+
         while (!operations.isEmpty()) {
             int index = getPriority(operations);
             String firstOperand = operands.remove(index);
@@ -49,14 +55,28 @@ public class Parser {
         }
         return varCreator.createVar(operands.get(0));
     }
+ // D=((C-0.15)-20)/(7-5)
+    private String deleteBrackets(String expression) throws CalcException {
+        Pattern pattern = Pattern.compile("\\([^()]+\\)");
+        Matcher matcher = pattern.matcher(expression);
+        if(matcher.find()) {
+            String group = matcher.group();
+            String replaceBrackets = group.replace("(", "")
+                    .replace(")", "");
+            expression = expression.replace(group, calc(replaceBrackets).toString());
+        }
+        return expression;
+    }
+
+
 
     private Var calcOneOperation(String leftOperand, String operation, String rightOperand) throws CalcException {
         Var right = varCreator.createVar(rightOperand);
         if (operation.equals("=")) {
             return repository.save(leftOperand, right);
         }
-        Var left = varCreator.createVar(leftOperand);
 
+        Var left = varCreator.createVar(leftOperand);
         switch (operation) {
             case "+":
                 return left.add(right);

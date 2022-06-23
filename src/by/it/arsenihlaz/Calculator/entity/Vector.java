@@ -106,6 +106,6 @@ public class Vector extends Var {
     }
 
     public double[] getValue() {
-        return value;
+        return value.clone();
     }
 }
