@@ -43,6 +43,15 @@ public class ParserTestVector {
     @Test
 
     public void calcSubVectorScalar() throws Exception {
+        Var actualVar = parser.calc("{18,6}-4");
+        String actual = actualVar.toString();
+        String expected = "{14.0, 2.0}";
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void calcSubVectorVector() throws Exception {
         Var actualVar = parser.calc("{18,6}-{3,2}");
         String actual = actualVar.toString();
         String expected = "{15.0, 4.0}";
@@ -57,6 +66,16 @@ public class ParserTestVector {
         String expected = "50.0";
         assertEquals(expected, actual);
     }
+
+
+    @Test
+    public void calcMulVectorScalar() throws Exception {
+        Var actualVar = parser.calc("{10,4}*6");
+        String actual = actualVar.toString();
+        String expected = "{60.0, 24.0}";
+        assertEquals(expected, actual);
+    }
+
 
     @Test
     public void calcDivVectorScalar()throws Exception{
