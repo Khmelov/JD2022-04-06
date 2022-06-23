@@ -10,8 +10,8 @@ public class Native2Ascii {
     private static final String PREFIX = "\\u";
 
     public static void main(String[] args) {
-        for (int i = 0; i < args.length; i++) {
-            convertFile(args[i]);
+        for (String arg : args) {
+            convertFile(arg);
         }
     }
 

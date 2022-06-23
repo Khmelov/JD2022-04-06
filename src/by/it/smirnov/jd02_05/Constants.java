@@ -5,4 +5,11 @@ public interface Constants {
     String QUESTION = "message.question";
     String FIRST_NAME = "user.firstname";
     String LAST_NAME = "user.lastname";
+    String COMMAND = "command.chooselang";
+    String END = "end";
+    String EN = "en";
+    String FR = "fr";
+    String JP = "jp";
+    String RU = "ru";
+    String BE = "be";
 }
