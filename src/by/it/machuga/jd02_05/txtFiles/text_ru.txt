@@ -1,0 +1,4 @@
+message.welcome=Привет!
+message.myNameIs=Меня зовут
+user.firstName=Александр
+user.lastName=Мачуга
