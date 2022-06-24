@@ -1,6 +1,5 @@
-package by.it.ragach.jd02_01.entity;
+package by.it.ragach.jd02_03.entity;
 
-import by.it.ragach.jd02_01.entity.Customer;
 
 public class Pensioner extends Customer {
 

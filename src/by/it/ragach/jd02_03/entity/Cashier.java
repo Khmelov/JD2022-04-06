@@ -1,4 +1,4 @@
-package by.it.ragach.jd02_02.entity;
+package by.it.ragach.jd02_03.entity;
 
 public class Cashier {
     public final String name;

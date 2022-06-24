@@ -1,7 +1,7 @@
-package by.it.ragach.jd02_02.entity;
+package by.it.ragach.jd02_03.entity;
 
 
-import by.it.ragach.jd02_02.util.RandomGenerator;
+import by.it.ragach.jd02_03.util.RandomGenerator;
 
 public class Customer {
 

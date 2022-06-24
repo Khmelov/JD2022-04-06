@@ -10,31 +10,38 @@ import by.it.ragach.jd02_01.entity.Student;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopWorker extends Thread{
+public class ShopWorker extends Thread {
     private final Shop shop;
-    int number=0;
+    int number = 0;
 
 
-    public ShopWorker (Shop shop){
+    public ShopWorker(Shop shop) {
         this.shop = shop;
     }
-    
+
     @Override
     public void run() {
-        System.out.println(shop+" opened");
-        List<CustomerWorker>customerWorkerList = new ArrayList<>();
+        System.out.println(shop + " opened");
 
+        List<CustomerWorker> customerWorkerList = new ArrayList<>();
+
+        int customerPerSecond;
 
 
         for (int time = 0; time < 120; time++) {
-            int countCustomerPerSecond = RandomGenerator.get(2);
-            for (int i = 0; i < countCustomerPerSecond; i++) {
+            int numberCustomerPerSecond = CustomerWorker.countBuyers();
+            int second = time % 60;
+            customerPerSecond = getCustomerPerSecond(numberCustomerPerSecond, second);
+            for (int i = 0; i < customerPerSecond; i++) {
                 Customer customer = customerCreator();
                 CustomerWorker customerWorker = new CustomerWorker(customer, shop);
                 customerWorker.start();
                 customerWorkerList.add(customerWorker);
-                Timer.sleep(1000);
             }
+                Timer.sleep(1000);
+                System.out.println("\tQuantity of buyers " + numberCustomerPerSecond);
+                System.out.println(second);
+
         }
         for (CustomerWorker customerWorker : customerWorkerList) {
             try {
@@ -43,19 +50,32 @@ public class ShopWorker extends Thread{
                 throw new RuntimeException(e);
             }
 
+
         }
-        System.out.println(shop+" closed");
+        System.out.println(shop + " closed");
+    }
+
+    private int getCustomerPerSecond(int countCustomerPerSecond, int second) {
+        int customerPerSecond;
+        if (second<30){
+            customerPerSecond = RandomGenerator.get(10+second/3);
+        }else if (second>=30&&countCustomerPerSecond<=(40+(30-second))){
+            customerPerSecond = RandomGenerator.get(40+(30-second)-countCustomerPerSecond);
+        }else {
+            customerPerSecond = 0;
+        }
+        return customerPerSecond;
     }
 
     private Customer customerCreator() {
 
-        int customerType = RandomGenerator.get(0,99);
+        int customerType = RandomGenerator.get(0, 99);
         Customer customer;
-        if (customerType<25){
+        if (customerType < 25) {
             customer = new Pensioner(++number);
-        }else if (customerType>=75){
+        } else if (customerType >= 75) {
             customer = new Customer(++number);
-        }else {
+        } else {
             customer = new Student(++number);
         }
         return customer;

@@ -1,9 +1,9 @@
-package by.it.ragach.jd02_02.service;
+package by.it.ragach.jd02_03.service;
 
 
-import by.it.ragach.jd02_02.entity.*;
-import by.it.ragach.jd02_02.util.RandomGenerator;
-import by.it.ragach.jd02_02.util.Timer;
+import by.it.ragach.jd02_03.entity.*;
+import by.it.ragach.jd02_03.util.RandomGenerator;
+import by.it.ragach.jd02_03.util.Timer;
 
 import java.util.Map;
 import java.util.Objects;
