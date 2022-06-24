@@ -185,7 +185,10 @@ public class Matrix extends Var {
 
     @Override
     public Var div(Var other) throws CalcException {
-        if (other instanceof Scalar scalar && scalar.getValue()!=0) {
+        if (other instanceof Scalar scalar) {
+            if(scalar.getValue()==0){
+                throw new CalcException("division by zero %s / %s",value,scalar);
+            }
             if (!checkMatrix(new Matrix(value))) {
                 throw new CalcException("Incorrect matrix size");
             }

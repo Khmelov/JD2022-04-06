@@ -47,7 +47,10 @@ public class Vector extends Var {
                 result[i] = result[i] + scalar.getValue();
             }
             return new Vector(result);
-        } else if (other instanceof Vector vector && value.length == ((Vector) other).value.length) {
+        } else if (other instanceof Vector vector) {
+            if (!(value.length == ((Vector) other).value.length)) {
+                throw new CalcException("Incorrect vector size");
+            }
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
                 result[i] = result[i] + vector.value[i];
@@ -66,7 +69,10 @@ public class Vector extends Var {
                 result[i] = result[i] - scalar.getValue();
             }
             return new Vector(result);
-        } else if (other instanceof Vector vector && value.length == ((Vector) other).value.length) {
+        } else if (other instanceof Vector vector) {
+            if (!(value.length == ((Vector) other).value.length)) {
+                throw new CalcException("Incorrect vector size");
+            }
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
                 result[i] = result[i] - vector.value[i];
@@ -85,7 +91,10 @@ public class Vector extends Var {
                 result[i] = result[i] * scalar.getValue();
             }
             return new Vector(result);
-        } else if (other instanceof Vector vector && value.length == ((Vector) other).value.length) {
+        } else if (other instanceof Vector vector) {
+            if (!(value.length == ((Vector) other).value.length)) {
+                throw new CalcException("Incorrect vector size");
+            }
             double[] result = value.clone();
             double scalarResult = 0;
             for (int i = 0; i < result.length; i++) {
@@ -99,7 +108,10 @@ public class Vector extends Var {
 
     @Override
     public Var div(Var other) throws CalcException {
-        if (other instanceof Scalar scalar && scalar.getValue()!=0) {
+        if (other instanceof Scalar scalar) {
+            if(scalar.getValue()==0){
+                throw new CalcException("division by zero %s / %s",value,scalar);
+            }
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
                 result[i] = result[i] / scalar.getValue();
