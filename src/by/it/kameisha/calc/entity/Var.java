@@ -9,7 +9,7 @@ public abstract class Var implements Operation {
     private ResMan resMan= ResMan.INSTANCE;
     @Override
     public String toString() {
-        return "abstract Var{}";
+        return "Var{}";
     }
 
     @Override
