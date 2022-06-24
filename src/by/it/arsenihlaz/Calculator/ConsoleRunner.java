@@ -17,7 +17,6 @@ public class ConsoleRunner {
 
     public static void main(String[] args) {
         Printer printer = new Printer(System.out);
-       // Repository repository = new PersistentRepository();
         Repository repository = new VarMapRepository();
         VarCreator varCreator = new VarCreator(repository);
         Parser parser = new Parser(repository, varCreator);

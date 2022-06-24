@@ -1,0 +1,4 @@
+message.welcome=Прывітанне!
+message.question=Як цябе клічуць?
+user.firstname=Арсеній
+user.lastname=Глаз
