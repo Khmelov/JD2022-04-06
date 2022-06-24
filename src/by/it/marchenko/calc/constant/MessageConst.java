@@ -1,4 +1,6 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.constant;
+
+import by.it.marchenko.calc.entity.Scalar;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -47,10 +49,6 @@ public class MessageConst {
             "\n  Reason: it is necessary to have any Var for assign.";
 
 
-
-
-
-
     public static final String ASSIGNMENT_VARIABLE_EXCEPTION =
             "No unknown variable in the expression%n  Expression: %s";
     public static final String ASSIGNMENT_VARIABLE_COMMENT =
@@ -66,19 +64,23 @@ public class MessageConst {
     public static final String COMMAND_SORT_VARIABLE = "sortvar";
 
     public static final String SPACES_REGEX = "\s*";
-    public static final String OPERATOR_REGEX = "[-=+*/]";
+    public static final String OPERATORS = "[-=+*/]";
+    public static final String OPERATOR_REGEX = "(?<=[^{,/*+-])" + OPERATORS;
 
     public static final String SCALAR_PATTERN = "-?[0-9]+\\.?[0-9]*";
-    public static final String VARIABLE_PATTERN = "([A-Z_a-zА-Яа-яЁё])([А-Яа-яЁё\\w]*)";
+    public static final String VARIABLE_PATTERN = "-?\s*([A-Z_a-zА-Яа-яЁё])([А-Яа-яЁё\\w]*)";
     public static final String VECTOR_PATTERN =
-            "\\{\s*" + SCALAR_PATTERN + "\s*(,\s*" + SCALAR_PATTERN + "\s*)*}";
+            "-?\s*\\{\s*" + SCALAR_PATTERN + "\s*(,\s*" + SCALAR_PATTERN + "\s*)*}";
     public static final String MATRIX_PATTERN =
-            "\\{\s*" + VECTOR_PATTERN + "\s*(,\s*" + VECTOR_PATTERN + "\s*)*}";
+            "-?\s*\\{\s*" + VECTOR_PATTERN + "\s*(,\s*" + VECTOR_PATTERN + "\s*)*}";
 
+    public static final String OPEN_CURVE_BRACKET = "\\(";
+    public static final String CLOSE_CURVE_BRACKET = "\\)";
+    //public static final String CURVE_EXPRESSION_REGEX = "(\\()([^\\(]+?)(\\))";
+    public static final String CURVE_EXPRESSION_REGEX =
+            OPEN_CURVE_BRACKET + "([^" + OPEN_CURVE_BRACKET + "]+?)" + CLOSE_CURVE_BRACKET;
 
     public static final String EMPTY_STRING = "";
-
-    public static final int MAXIMUM_ALLOWED_OPERANDS = 2;
 
     public static final String ADD_OPERATOR = "+";
     public static final String SUB_OPERATOR = "-";
@@ -91,5 +93,4 @@ public class MessageConst {
     //public static final String SUB_STRING_OPERATOR = "sub";
     public static final String MUL_STRING_OPERATOR = "mul";
     public static final String DIV_STRING_OPERATOR = "div";
-
 }

@@ -4,9 +4,9 @@ public class Timer {
     private Timer() {
     }
 
-    public static void sleep(int timeout){
+    public static void sleep(int timeout) {
         try {
-            Thread.sleep(timeout/1000);
+            Thread.sleep(timeout / 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

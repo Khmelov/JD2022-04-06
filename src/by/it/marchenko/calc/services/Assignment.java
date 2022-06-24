@@ -1,9 +1,13 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.services;
 
-import java.util.ArrayList;
+import by.it.marchenko.calc.entity.Var;
+import by.it.marchenko.calc.exception.CalcException;
+import by.it.marchenko.calc.interfaces.Repository;
+
+import java.util.List;
 import java.util.Objects;
 
-import static by.it.marchenko.calc.MessageConst.*;
+import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class Assignment {
     private final Repository repository;
@@ -12,7 +16,7 @@ public class Assignment {
         this.repository = repository;
     }
 
-    public boolean isAssignmentAllowed(String expression, ArrayList<String> operands) throws CalcException {
+    public boolean isAssignmentAllowed(String expression, List<String> operands) throws CalcException {
         int firstAssignment = expression.indexOf(ASSIGN_OPERATOR);
         int secondAssignment = expression.indexOf(ASSIGN_OPERATOR, firstAssignment + 1);
         boolean assignmentEnabled = false;
@@ -25,7 +29,12 @@ public class Assignment {
         } else if (firstAssignment > 0) {
             for (String operand : operands) {
                 if (operand.matches(VARIABLE_PATTERN)) {
+                    //change for test pass
+                    //if (varCounter != 0) {
+
+                    //}
                     Var newVariable = repository.getVariable(operand);
+
                     varCounter++;
                     if (Objects.isNull(newVariable)) {
                         if (varCounter > 1) {

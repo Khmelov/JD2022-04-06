@@ -1,20 +1,22 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.entity;
 
-import static by.it.marchenko.calc.MessageConst.*;
+import by.it.marchenko.calc.interfaces.Operation;
 
-abstract class Var implements Operation {
+import static by.it.marchenko.calc.constant.MessageConst.*;
+
+public abstract class Var implements Operation {
 
     final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
 
     @Override
     public Var foundVarType(Var operand, String operator) {
-        System.out.println("FOUND VAR+VAR");
+        //System.out.println("FOUND VAR+VAR");
         return operand.foundVarType(this, operator);
     }
 
     @Override
     public Var foundVarType(Scalar operand, String operator) {
-        System.out.println("FOUND VAR+Scalar");
+        //System.out.println("FOUND VAR+Scalar");
         return switch (operator) {
             case ADD_OPERATOR -> this.add(operand);
             case SUB_OPERATOR -> operand.sub(this);
@@ -27,7 +29,7 @@ abstract class Var implements Operation {
 
     @Override
     public Var foundVarType(Vector operand, String operator) {
-        System.out.println("FOUND VAR+Vector");
+        //System.out.println("FOUND VAR+Vector");
         return switch (operator) {
             case ADD_OPERATOR -> this.add(operand);
             case SUB_OPERATOR -> operand.sub(this);
@@ -40,7 +42,7 @@ abstract class Var implements Operation {
 
     @Override
     public Var foundVarType(Matrix operand, String operator) {
-        System.out.println("FOUND VAR+Matrix");
+        //System.out.println("FOUND VAR+Matrix");
         return switch (operator) {
             case ADD_OPERATOR -> this.add(operand);
             case SUB_OPERATOR -> operand.sub(this);

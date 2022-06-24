@@ -1,4 +1,4 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.entity;
 
 import java.util.Arrays;
 
@@ -55,7 +55,7 @@ public class Vector extends Var {
     }
 
     public Var add(Scalar other) {
-        System.out.println("Vector Vector+Scalar");
+        //System.out.println("Vector Vector+Scalar");
         double[] tempVector = getVectorValues();
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] += other.getValue();
@@ -65,7 +65,7 @@ public class Vector extends Var {
     }
 
     public Var add(Vector other) {
-        System.out.println("Vector Vector+Vector");
+        //System.out.println("Vector Vector+Vector");
         double[] tempVector = getVectorValues();
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] += other.vectorValues[i];
@@ -74,7 +74,7 @@ public class Vector extends Var {
     }
 
     public Var add(Matrix other) {
-        System.out.println("Vector Vector+Matrix");
+        //System.out.println("Vector Vector+Matrix");
         return super.add((Var)other);
     }
 
@@ -117,7 +117,7 @@ public class Vector extends Var {
 
     @Override
     public Var div(Var other) {
-        System.out.println("Зашли сюда как Vector/Var");
+        //System.out.println("Зашли сюда как Vector/Var");
         return other.div(this);
        /*
         Object tempResult = this;
@@ -135,7 +135,7 @@ public class Vector extends Var {
     }
 
     public Var div(Scalar other) {
-        System.out.println("Зашли сюда как Vector/Scalar");
+        //System.out.println("Зашли сюда как Vector/Scalar");
         double[] tempVector = getVectorValues();
         for (int i = 0; i < tempVector.length; i++) {
             tempVector[i] /= other.getValue();

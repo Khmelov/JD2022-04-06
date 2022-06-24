@@ -1,18 +1,15 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.repository;
+
+import by.it.marchenko.calc.entity.Var;
+import by.it.marchenko.calc.interfaces.Repository;
 
 import java.util.HashMap;
-import java.util.Scanner;
-
-import static by.it.marchenko.calc.MessageConst.*;
 
 
 public class VarRepositoryMap implements Repository {
     private final static HashMap<String, Var> varMap = new HashMap<>();
 
-    private final Scanner console;
-
-    public VarRepositoryMap(Scanner console) {
-        this.console = console;
+    public VarRepositoryMap() {
     }
 
     @Override
@@ -21,15 +18,16 @@ public class VarRepositoryMap implements Repository {
         if (varMap.containsKey(name)) {
             //TODO implement Printer method invocation
             //TODO change variable name as option
-            String answer;
-            do {
+            @SuppressWarnings("unused") String answer;
+            /*do {
                 System.out.printf(MESSAGE_OVERWRITE_VALUE, name);
                 answer = console.nextLine().toLowerCase().trim();
             } while (!YES_ANSWER.contains(answer) && !NO_ANSWER.contains(answer));
             if (NO_ANSWER.contains(answer)) {
                 result = false;
-            }
+            }*/
         }
+        //noinspection ConstantConditions
         if (result) {
             varMap.put(name, variable);
         }
@@ -44,5 +42,10 @@ public class VarRepositoryMap implements Repository {
     @Override
     public HashMap<String, Var> getAllVariables() {
         return new HashMap<>(varMap);
+    }
+
+    @Override
+    public void clearRepository() {
+        varMap.clear();
     }
 }

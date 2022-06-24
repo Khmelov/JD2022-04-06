@@ -1,4 +1,4 @@
-package by.it.marchenko.calc;
+package by.it.marchenko.calc.entity;
 
 public class Scalar extends Var {
     private final double value;
@@ -26,22 +26,22 @@ public class Scalar extends Var {
 
     @Override
     public Var foundVarType(Var operand, String operator) {
-        System.out.println("FOUND Scalar+VAR");
+        //System.out.println("FOUND Scalar+VAR");
         return operand.foundVarType(this,operator);
     }
 
     public Var add(Scalar other) {
-        System.out.println("Scalar Var+Scalar");
+        //System.out.println("Scalar Var+Scalar");
         return new Scalar(this.value + other.getValue());
     }
 
     public Var add(Vector other) {
-        System.out.println("Scalar Scalar+Vector");
+        //System.out.println("Scalar Scalar+Vector");
         return other.add(this);
     }
 
     public Var add(Matrix other) {
-        System.out.println("Scalar Scalar+Matrix");
+        //System.out.println("Scalar Scalar+Matrix");
         return other.add(this);
     }
 
@@ -77,7 +77,7 @@ public class Scalar extends Var {
 
     @Override
     public Var div(Var other) {
-        System.out.println("Зашли сюда как Scalar/Var");
+        //System.out.println("Зашли сюда как Scalar/Var");
         return other.div(this);
         /*
         //
@@ -94,7 +94,7 @@ public class Scalar extends Var {
     }
 
     public Var div(Scalar other) {
-        System.out.println("Зашли сюда как Scalar/Scalar");
+        //System.out.println("Зашли сюда как Scalar/Scalar");
         return new Scalar(other.getValue() / this.value);
     }
 
