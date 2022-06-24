@@ -1,5 +1,6 @@
 package by.it.kameisha.calc.service;
 
+import by.it.kameisha.calc.constants.Errors;
 import by.it.kameisha.calc.entity.Var;
 import by.it.kameisha.calc.constants.Patterns;
 import by.it.kameisha.calc.entity.Matrix;
@@ -30,7 +31,7 @@ public class VarCreator {
             result = repository.get(stringVar);
         }
         if (Objects.isNull(result)) {
-            throw new CalcException("Incorrect string %s", stringVar);
+            throw new CalcException(Errors.INCORRECT_STRING +" %s", stringVar);
         }
         return result;
     }

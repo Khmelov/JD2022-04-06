@@ -1,5 +1,6 @@
 package by.it.kameisha.calc.service;
 
+import by.it.kameisha.calc.constants.Errors;
 import by.it.kameisha.calc.entity.Var;
 import by.it.kameisha.calc.constants.Patterns;
 import by.it.kameisha.calc.exception.CalcException;
@@ -85,7 +86,7 @@ public class Parser {
             case "/":
                 return left.div(right);
         }
-        throw new CalcException("not found operation '%s'", operation);
+        throw new CalcException(Errors.NOT_FOUND_OPERATION +" '%s'", operation);
     }
 
     private int getPriority(List<String> operations) {

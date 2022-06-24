@@ -1,5 +1,6 @@
 package by.it.kameisha.calc.service;
 
+import by.it.kameisha.calc.constants.Errors;
 import by.it.kameisha.calc.entity.Var;
 import by.it.kameisha.calc.exception.CalcException;
 
@@ -13,6 +14,6 @@ public class Printer {
     }
 
     public void print(CalcException e) {
-        System.out.println("ERROR: " + e.getMessage());
+        System.out.println(Errors.MESSAGE_ERROR +" " + e.getMessage());
     }
 }
