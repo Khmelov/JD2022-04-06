@@ -1,0 +1,4 @@
+message.welcome=Welcome!
+message.question=How are your?
+user.firstname=Oksana
+user.lastname=Ragach

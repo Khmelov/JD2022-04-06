@@ -1,0 +1,4 @@
+massage.welcome=Прывітанне!
+massage.question=Як справы?
+user.firstname=Аксана
+user.lastname=Рагач
