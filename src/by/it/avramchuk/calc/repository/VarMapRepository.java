@@ -1,12 +1,15 @@
-package by.it.avramchuk.calc;
+package by.it.avramchuk.calc.repository;
+
+import by.it.avramchuk.calc.entity.Var;
+import by.it.avramchuk.calc.interfaces.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class VarMapRepository implements Repository{
+public class VarMapRepository implements Repository {
 
 
-    private  final Map<String,Var> vars = new HashMap<>();
+    private  final Map<String, Var> vars = new HashMap<>();
 
     @Override
     public  Var save(String name, Var value) {

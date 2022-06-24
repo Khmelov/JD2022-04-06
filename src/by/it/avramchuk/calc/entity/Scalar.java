@@ -1,6 +1,8 @@
-package by.it.avramchuk.calc;
+package by.it.avramchuk.calc.entity;
 
-class Scalar extends Var {
+import by.it.avramchuk.calc.exception.CalcException;
+
+public class Scalar extends Var {
 
     private final double value;
 
@@ -26,7 +28,7 @@ class Scalar extends Var {
     }
 
     @Override
-    public Var add(Var other) throws CalcException{
+    public Var add(Var other) throws CalcException {
         if (other instanceof Scalar otherScalar) {
             return new Scalar(this.value + otherScalar.value);
         } else {
