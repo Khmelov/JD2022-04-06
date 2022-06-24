@@ -1,4 +1,7 @@
-package by.it.kameisha.calc;
+package by.it.kameisha.calc.entity;
+
+import by.it.kameisha.calc.exception.CalcException;
+import by.it.kameisha.calc.interfaces.Operation;
 
 public abstract class Var implements Operation {
 

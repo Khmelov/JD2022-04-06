@@ -1,4 +1,4 @@
-package by.it.kameisha.calc;
+package by.it.kameisha.calc.constants;
 
 public class Patterns {
     public static final String OPERATIONS = "(?<=[^{,+-/*=])[-+*/=]";

@@ -1,4 +1,9 @@
-package by.it.kameisha.calc;
+package by.it.kameisha.calc.service;
+
+import by.it.kameisha.calc.entity.Var;
+import by.it.kameisha.calc.constants.Patterns;
+import by.it.kameisha.calc.exception.CalcException;
+import by.it.kameisha.calc.interfaces.Repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;

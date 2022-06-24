@@ -1,4 +1,6 @@
-package by.it.kameisha.calc;
+package by.it.kameisha.calc.entity;
+
+import by.it.kameisha.calc.exception.CalcException;
 
 public class Vector extends Var {
     private final double[] value;
