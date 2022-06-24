@@ -1,3 +1,4 @@
+message.start=выберите язык.
 message.welcome=Привет!
 message.question=Как дела?
 user.firstname=Сергей
