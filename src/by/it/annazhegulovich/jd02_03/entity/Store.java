@@ -1,4 +1,4 @@
-package by.it.annazhegulovich.jd02_02.entity;
+package by.it.annazhegulovich.jd02_03.entity;
 
 public class Store {
 

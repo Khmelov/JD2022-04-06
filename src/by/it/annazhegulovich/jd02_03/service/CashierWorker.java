@@ -1,8 +1,8 @@
-package by.it.annazhegulovich.jd02_02.service;
+package by.it.annazhegulovich.jd02_03.service;
 
-import by.it.annazhegulovich.jd02_02.entity.*;
-import by.it.annazhegulovich.jd02_02.util.RandomGenerator;
-import by.it.annazhegulovich.jd02_02.util.Timer;
+import by.it.annazhegulovich.jd02_03.entity.*;
+import by.it.annazhegulovich.jd02_03.util.RandomGenerator;
+import by.it.annazhegulovich.jd02_03.util.Timer;
 
 import java.util.Objects;
 
@@ -31,7 +31,16 @@ public class CashierWorker implements Runnable {
                        customer.setWaiting(false);
                        customer.notify();
                    }
-                } else Thread.onSpinWait();
+                } else {
+                    synchronized (queue){
+                        try {
+                            queue.wait(100);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+
         }
         System.out.println(cashier+"closed");
     }
