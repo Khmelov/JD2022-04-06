@@ -50,7 +50,6 @@ public class CashierWorker extends Thread {
                 Thread.onSpinWait();
             }
         }
-        System.out.println("We are here2: ");
         out.printf("%s%s finished work. Serviced customer: %d. Not serviced by all cashiers: %d%n" +
                         "customer count in the queue: %d%n%s",
                 ANSI_RED, cashier, cashier.getServicedCustomerCount(),

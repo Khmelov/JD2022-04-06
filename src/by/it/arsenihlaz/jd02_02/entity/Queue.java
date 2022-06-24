@@ -19,5 +19,9 @@ public class Queue {
     public synchronized Customer extract() {
         return deque.poll();
     }
+
+    public int getSize(){
+        return deque.size();
+    }
 }
 
