@@ -1,9 +1,6 @@
 package by.it.annazhegulovich.jd02_05;
 
-import by.it.annazhegulovich.jd02_05.txtFiles.answer;
-
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class Runner {
     public static void main(String[] args) {
