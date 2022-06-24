@@ -28,12 +28,12 @@ public class CashierWorker implements Runnable {
                 int timeout = RandomGenerator.get(2000, 5000);
                 Timer.sleep(timeout);
                 System.out.println(cashier + " finished service " + customer);
-                synchronized (customer.getMonitor()){
+                synchronized (customer.getMonitor()) {
                     customer.setWaiting(false);
                     customer.notify();
                 }
             } else {
-                synchronized (queue){
+                synchronized (queue) {
                     try {
                         queue.wait(100);
                     } catch (InterruptedException e) {

@@ -19,7 +19,7 @@ public class Customer {
         this.waiting = waiting;
     }
 
-    public Object getMonitor(){
+    public Object getMonitor() {
         return this;
     }
 

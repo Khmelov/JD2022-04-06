@@ -1,7 +1,7 @@
 package by.it.kameisha.calc;
 
 public class Matrix extends Var {
-    private double[][] value;
+    private final double[][] value;
 
     public Matrix(double[][] value) {
         double[][] array = new double[value.length][];
@@ -9,6 +9,10 @@ public class Matrix extends Var {
             array[i] = value[i].clone();
         }
         this.value = array;
+    }
+
+    public double[][] getValue() {
+        return value;
     }
 
     public Matrix(Matrix matrix) {
@@ -67,13 +71,9 @@ public class Matrix extends Var {
     }
 
     private boolean checkTwoMatrix(Matrix first, Matrix second) {
-        boolean result = true;
-        if (!checkMatrix(first) || !checkMatrix(second)
-                || first.value.length != second.value.length
-                || first.value[0].length != second.value[0].length) {
-            result = false;
-        }
-        return result;
+        return checkMatrix(first) && checkMatrix(second)
+                && first.value.length == second.value.length
+                && first.value[0].length == second.value[0].length;
     }
 
     @Override
@@ -153,7 +153,7 @@ public class Matrix extends Var {
             }
             return new Matrix(newMatrix);
         } else if (other instanceof Vector vector) {
-            if (!checkMatrix(new Matrix(value)) || vector.getValue().length != value.length) {
+            if (!checkMatrix(new Matrix(value)) || vector.getValue().length != value[0].length) {
                 throw new CalcException("Incorrect vector or matrix size");
             }
             double[] newVector = new double[vector.getValue().length];
@@ -183,7 +183,7 @@ public class Matrix extends Var {
 
     @Override
     public Var div(Var other) throws CalcException {
-        if (other instanceof Scalar scalar) {
+        if (other instanceof Scalar scalar && scalar.getValue()!=0) {
             if (!checkMatrix(new Matrix(value))) {
                 throw new CalcException("Incorrect matrix size");
             }
