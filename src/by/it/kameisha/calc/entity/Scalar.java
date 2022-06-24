@@ -1,10 +1,12 @@
 package by.it.kameisha.calc.entity;
 
+import by.it.kameisha.calc.ResMan;
 import by.it.kameisha.calc.constants.Errors;
 import by.it.kameisha.calc.exception.CalcException;
 
 public class Scalar extends Var {
     private final double value;
+    private ResMan resMan = ResMan.INSTANCE;
 
     public Scalar(double value) {
         this.value = value;
@@ -61,7 +63,7 @@ public class Scalar extends Var {
     public Var div(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             if (scalar.value == 0) {
-                throw new CalcException(Errors.DIVISION_ZERO +" %s / %s", value, scalar);
+                throw new CalcException(resMan.get(Errors.DIVISION_ZERO) +" %s / %s", value, scalar);
             }
             double result = this.value / scalar.value;
             return new Scalar(result);

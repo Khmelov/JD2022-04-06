@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 public enum ResMan {
     INSTANCE;
-    private static final String baseName = "by.it.kameisha.cals.language.text";
+    private static final String baseName = "by.it.kameisha.calc.language.text";
     private ResourceBundle resourceBundle;
 
     ResMan() {

@@ -1,10 +1,12 @@
 package by.it.kameisha.calc.entity;
 
+import by.it.kameisha.calc.ResMan;
 import by.it.kameisha.calc.constants.Errors;
 import by.it.kameisha.calc.exception.CalcException;
 
 public class Matrix extends Var {
     private final double[][] value;
+    private ResMan resMan= ResMan.INSTANCE;
 
     public Matrix(double[][] value) {
         double[][] array = new double[value.length][];
@@ -83,7 +85,7 @@ public class Matrix extends Var {
     public Var add(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             if (!checkMatrix(new Matrix(value))) {
-                throw new CalcException(Errors.MATRIX_SIZE);
+                throw new CalcException(resMan.get(Errors.MATRIX_SIZE));
             }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
@@ -95,7 +97,7 @@ public class Matrix extends Var {
             return new Matrix(newMatrix);
         } else if (other instanceof Matrix matrix) {
             if (!checkTwoMatrix((new Matrix(value)), matrix)) {
-                throw new CalcException(Errors.MATRIX_SIZE);
+                throw new CalcException(resMan.get(Errors.MATRIX_SIZE));
             }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
@@ -114,7 +116,7 @@ public class Matrix extends Var {
     public Var sub(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             if (!checkMatrix(new Matrix(value))) {
-                throw new CalcException(Errors.MATRIX_SIZE);
+                throw new CalcException(resMan.get(Errors.MATRIX_SIZE));
             }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
@@ -126,7 +128,7 @@ public class Matrix extends Var {
             return new Matrix(newMatrix);
         } else if (other instanceof Matrix matrix) {
             if (!checkTwoMatrix((new Matrix(value)), matrix)) {
-                throw new CalcException(Errors.MATRIX_SIZE);
+                throw new CalcException(resMan.get(Errors.MATRIX_SIZE));
             }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
@@ -145,7 +147,7 @@ public class Matrix extends Var {
     public Var mul(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             if (!checkMatrix(new Matrix(value))) {
-                throw new CalcException(Errors.MATRIX_SIZE);
+                throw new CalcException(resMan.get(Errors.MATRIX_SIZE));
             }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {
@@ -157,7 +159,7 @@ public class Matrix extends Var {
             return new Matrix(newMatrix);
         } else if (other instanceof Vector vector) {
             if (!checkMatrix(new Matrix(value)) || vector.getValue().length != value[0].length) {
-                throw new CalcException(Errors.MATRIX_SIZE);
+                throw new CalcException(resMan.get(Errors.MATRIX_SIZE));
             }
             double[] newVector = new double[vector.getValue().length];
             for (int i = 0; i < vector.getValue().length; i++) {
@@ -168,7 +170,7 @@ public class Matrix extends Var {
             return new Vector(newVector);
         } else if (other instanceof Matrix matrix) {
             if (!checkTwoMatrix((new Matrix(value)), matrix)) {
-                throw new CalcException(Errors.MATRIX_SIZE);
+                throw new CalcException(resMan.get(Errors.MATRIX_SIZE));
             }
             double[][] newMatrix = new double[value.length][matrix.value[0].length];
             for (int i = 0; i < value.length; i++) {
@@ -188,10 +190,10 @@ public class Matrix extends Var {
     public Var div(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             if (scalar.getValue() == 0) {
-                throw new CalcException(Errors.DIVISION_ZERO +" %s / %s", value, scalar);
+                throw new CalcException(resMan.get(Errors.DIVISION_ZERO) +" %s / %s", value, scalar);
             }
             if (!checkMatrix(new Matrix(value))) {
-                throw new CalcException(Errors.MATRIX_SIZE);
+                throw new CalcException(resMan.get(Errors.MATRIX_SIZE));
             }
             double[][] newMatrix = new double[value.length][];
             for (int i = 0; i < value.length; i++) {

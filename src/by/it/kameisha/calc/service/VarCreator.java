@@ -1,5 +1,6 @@
 package by.it.kameisha.calc.service;
 
+import by.it.kameisha.calc.ResMan;
 import by.it.kameisha.calc.constants.Errors;
 import by.it.kameisha.calc.entity.Var;
 import by.it.kameisha.calc.constants.Patterns;
@@ -13,6 +14,7 @@ import java.util.Objects;
 
 public class VarCreator {
     private final Repository repository;
+    private ResMan resMan = ResMan.INSTANCE;
 
     public VarCreator(Repository repository) {
         this.repository = repository;
@@ -31,7 +33,7 @@ public class VarCreator {
             result = repository.get(stringVar);
         }
         if (Objects.isNull(result)) {
-            throw new CalcException(Errors.INCORRECT_STRING +" %s", stringVar);
+            throw new CalcException(resMan.get(Errors.INCORRECT_STRING) +" %s", stringVar);
         }
         return result;
     }
