@@ -1,7 +1,7 @@
 package by.it.kudelko.calc.contants;
 
 public class Patterns {
-    public static final String OPERATION = "[-+*/]";
+    public static final String OPERATION = "(?<=[^{,+=*/-])[-+*/=]";
     public static final String SPACES = "\\s+";
 
     public static final String SCALAR = "-?[0-9]+([\\.0-9]+)?";

@@ -2,34 +2,52 @@ package by.it.kudelko.calc.service;
 
 import by.it.kudelko.calc.contants.Patterns;
 import by.it.kudelko.calc.entity.Var;
+import by.it.kudelko.calc.exception.CalcException;
+import by.it.kudelko.calc.interfaces.Repository;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
 
-    public Var calc(String expression) {
-        expression.trim().replaceAll(Patterns.SPACES, "");
+    private final Repository repository;
+    private final VarCreator varCreator;
+
+    public Parser(Repository repository, VarCreator varCreator) {
+        this.repository = repository;
+        this.varCreator = varCreator;
+    }
+
+    public Var calc(String expression) throws CalcException {
+        expression = expression.trim().replaceAll(Patterns.SPACES, "");
         String[] parts = expression.split(Patterns.OPERATION, 2);
-        String LeftOperand = parts[0];
-        Var left = Var.createVar(LeftOperand);
         if (parts.length == 1) {
-            return left;
+            return varCreator.createVar(parts[0]);
         }
-        String RightOperand = parts[1];
-        Var right = Var.createVar(RightOperand);
+
+        String rightOperand = parts[1];
+        Var right = varCreator.createVar(rightOperand);
 
         Pattern pattern = Pattern.compile(Patterns.OPERATION);
         Matcher matcher = pattern.matcher(expression);
         if (matcher.find()) {
             String operation = matcher.group();
-            switch (operation){
-                case "+": return left.add(right);
-                case "-": return left.sub(right);
-                case "*": return left.mul(right);
-                case "/": return left.div(right);
+            if (operation.equals("=")) {
+                return repository.save(parts[0], right);
+            }
+            String leftOperand = parts[0];
+            Var left = varCreator.createVar(leftOperand);
+            switch (operation) {
+                case "+":
+                    return left.add(right);
+                case "-":
+                    return left.sub(right);
+                case "*":
+                    return left.mul(right);
+                case "/":
+                    return left.div(right);
             }
         }
-        return null;
+        throw new CalcException("unknown expression: %s", expression);
     }
 }

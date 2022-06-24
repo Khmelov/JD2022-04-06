@@ -1,10 +1,12 @@
 package by.it.kudelko.calc.entity;
 
+import by.it.kudelko.calc.exception.CalcException;
+
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Vector extends Var {
+public class Vector extends Var {
     private double[] values;
 
     public Vector(double[] values) {
@@ -36,7 +38,7 @@ class Vector extends Var {
     }
 
     @Override
-    public Var add(Var other) {
+    public Var add(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             double[] result = values.clone();
             for (int i = 0; i < result.length; i++) {
@@ -57,7 +59,7 @@ class Vector extends Var {
     }
 
     @Override
-    public Var sub(Var other) {
+    public Var sub(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             double[] result = values.clone();
             for (int i = 0; i < result.length; i++) {
@@ -78,7 +80,7 @@ class Vector extends Var {
     }
 
     @Override
-    public Var mul(Var other) {
+    public Var mul(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             double[] result = values.clone();
             for (int i = 0; i < result.length; i++) {
@@ -101,7 +103,7 @@ class Vector extends Var {
     }
 
     @Override
-    public Var div(Var other) {
+    public Var div(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             double[] result = values.clone();
             for (int i = 0; i < result.length; i++) {
