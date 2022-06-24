@@ -1,4 +1,6 @@
-package by.it.arsenihlaz.Calculator;
+package by.it.arsenihlaz.Calculator.entity;
+
+import by.it.arsenihlaz.Calculator.exception.CalcException;
 
 import java.util.Arrays;
 
@@ -104,6 +106,6 @@ public class Vector extends Var {
     }
 
     public double[] getValue() {
-        return value;
+        return value.clone();
     }
 }

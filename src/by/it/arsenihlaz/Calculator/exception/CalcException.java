@@ -1,4 +1,4 @@
-package by.it.arsenihlaz.Calculator;
+package by.it.arsenihlaz.Calculator.exception;
 
 public class CalcException extends Exception{
     public CalcException(String message) {

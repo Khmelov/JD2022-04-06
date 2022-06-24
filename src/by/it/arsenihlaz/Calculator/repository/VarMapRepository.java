@@ -1,4 +1,7 @@
-package by.it.arsenihlaz.Calculator;
+package by.it.arsenihlaz.Calculator.repository;
+
+import by.it.arsenihlaz.Calculator.entity.Var;
+import by.it.arsenihlaz.Calculator.interfaces.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
