@@ -1,4 +1,6 @@
-package by.it.smirnov.jd02_05;
+package by.it.smirnov.jd02_05.util;
+
+import by.it.smirnov.jd02_05.Runner;
 
 import java.io.*;
 import java.util.StringJoiner;
@@ -18,8 +20,8 @@ public class Native2Ascii {
     private static void convertFile(String lang) {
         String fileNameIn = String.format(FILE_NAME_INPUT, File.separator, lang);
         String fileNameOut = String.format(FILE_NAME_OUTPUT, File.separator, lang);
-        String pathIn = PathGetter.getPath(Native2Ascii.class, fileNameIn);
-        String pathOut = PathGetter.getPath(Native2Ascii.class, fileNameOut);
+        String pathIn = PathGetter.getPath(Runner.class, fileNameIn);
+        String pathOut = PathGetter.getPath(Runner.class, fileNameOut);
         File converted = new File(pathOut);
 
         try (var reader = new BufferedReader(new FileReader(pathIn));

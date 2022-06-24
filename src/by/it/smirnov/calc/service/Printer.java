@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.util.Objects;
 
 import static by.it.smirnov.calc.constants.Wordings.ERR;
+import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 
 public class Printer {
 
@@ -21,6 +22,6 @@ public class Printer {
     }
 
     public void print(CalcException e) {
-        out.printf(ERR, e.getMessage());
+        out.printf(INSTANCE.getString(ERR), e.getMessage());
     }
 }

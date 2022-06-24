@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 import static by.it.smirnov.calc.constants.Patterns.*;
 import static by.it.smirnov.calc.constants.Wordings.*;
+import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 
 public class Parser {
 
@@ -86,7 +87,7 @@ public class Parser {
             case SUB -> left.sub(right);
             case MUL -> left.mul(right);
             case DIV -> left.div(right);
-            default -> throw new CalcException(NOT_FOUND, operation);
+            default -> throw new CalcException(INSTANCE.getString(NOT_FOUND), operation);
         };
     }
 

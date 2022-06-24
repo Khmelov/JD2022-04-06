@@ -1,27 +1,25 @@
 package by.it.smirnov.calc.constants;
 
-public class Wordings {
+public interface Wordings {
 
-    public static final String END = "end";
+    String END = "end";
+    String EN = "en";
+    String FR = "fr";
+    String JP = "jp";
+    String RU = "ru";
+    String BE = "be";
+    String USER_DIR = "user.dir";
+    String FILE_REPO = "Vars.txt";
+    String BAD_STRING = "error.badstring";
+    String BAD_SIZE = "error.badsize";
+    String BAD_OPER = "error.badoper";
+    String DIV_ZERO = "error.zero";
+    String ERR = "error.error";
+    String NOT_FOUND = "error.notfound";
+    String VAR_UNKNOWN = "error.varunknown";
+    String NO_FILE = "error.nofile";
+    String ENDING = "message.ending";
+    String START = "message.start";
+    String CHANGE_LOCAL = "message.changelocale";
 
-    private Wordings() {
-    }
-
-    public static final String USER_DIR = "user.dir";
-    public static final String FILE_REPO = "Vars.txt";
-    public static final String BAD_STRING = "Incorrect string %s";
-    public static final String BAD_SIZE = "Incorrect size for %s + %s";
-    public static final String BAD_OPER = "Incorrect operation %s %s %s%n";
-    public static final String DIV_ZERO = "Division by zero impossible!";
-    public static final String ERR = "ERROR %s%n";
-    public static final String NOT_FOUND = "Not found operation '%s'";
-    public static final String VAR_UNKNOWN = "Unknown variable (abstract stub)";
-    public static final String ADD = "+";
-    public static final String SUB = "-";
-    public static final String MUL = "*";
-    public static final String DIV = "/";
-    public static final String EQ = "=";
-    public static final String NO_FILE = "File not found";
-    public static final String ENDING = "App work has successfully ended.\nYou're welcome to try again. Have a nice time!";
-    public static final String START = "Let's get started!\nType Your expression and have fun.\nfor exit type \"end\"";
 }

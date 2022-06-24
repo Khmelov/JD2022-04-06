@@ -1,4 +1,4 @@
-package by.it.smirnov.jd02_05;
+package by.it.smirnov.jd02_05.util;
 
 import by.it.smirnov.calc.constants.Wordings;
 

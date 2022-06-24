@@ -14,5 +14,10 @@ public class Patterns {
     public static final String DOUBLE_CURLY = "(\\{\\{|}})";
     public static final String MATRIX_INTER = "},\\{";
     public static final String SPACES = "\\s+";
+    public static final String SUB = "-";
+    public static final String ADD = "+";
+    public static final String MUL = "*";
+    public static final String DIV = "/";
+    public static final String EQ = "=";
 }
 

@@ -1,6 +1,6 @@
 package by.it.smirnov.calc.repository;
 
-import by.it.smirnov.calc.ConsoleRunner;
+import by.it.smirnov.calc.constants.Patterns;
 import by.it.smirnov.calc.entity.Var;
 import by.it.smirnov.calc.exception.CalcException;
 import by.it.smirnov.calc.interfaces.Repository;
@@ -11,14 +11,16 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static by.it.smirnov.calc.constants.Wordings.*;
+import static by.it.smirnov.calc.constants.Wordings.FILE_REPO;
+import static by.it.smirnov.calc.constants.Wordings.NO_FILE;
+import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 
 public class PersistentRepository implements Repository {
     private final Map<String, Var> vars = new HashMap<>();
     private final File path;
 
     public PersistentRepository() {
-        String fileName = PathGetter.getPath(ConsoleRunner.class, FILE_REPO);
+        String fileName = PathGetter.getPath(PersistentRepository.class, FILE_REPO);
         path = new File(fileName);
         initFromFile();
     }
@@ -29,13 +31,13 @@ public class PersistentRepository implements Repository {
             try (BufferedReader reader = new BufferedReader (new FileReader(path))){
                 while (reader.ready()){
                     String line = reader.readLine();
-                    String [] parts = line.split(EQ, 2);
+                    String [] parts = line.split(Patterns.EQ, 2);
                     String name = parts[0];
                     Var variable = varCreator.createVar(parts[1]);
                     vars.put(name, variable);
                 }
             } catch (IOException | CalcException e) {
-                throw new RuntimeException(NO_FILE, e);
+                throw new RuntimeException(INSTANCE.getString(NO_FILE), e);
             }
         }
     }

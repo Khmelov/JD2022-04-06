@@ -9,6 +9,7 @@ import static by.it.smirnov.calc.constants.Patterns.CURLY;
 import static by.it.smirnov.calc.constants.Patterns.SPACES;
 import static by.it.smirnov.calc.constants.Wordings.BAD_SIZE;
 import static by.it.smirnov.calc.constants.Wordings.DIV_ZERO;
+import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 
 public class Vector extends Var {
 
@@ -62,7 +63,7 @@ public class Vector extends Var {
         }
         else if (other instanceof Vector vector) {
             if (this.values.length != vector.values.length) {
-                throw new CalcException(BAD_SIZE, this, vector);
+                throw new CalcException(INSTANCE.getString(BAD_SIZE), this, vector);
             }
             double[] add = Arrays.copyOf(values, values.length);
             for (int i = 0; i < add.length; i++) {
@@ -114,7 +115,7 @@ public class Vector extends Var {
     public Var div(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             if(((Scalar) other).getValue() == 0)
-                throw new CalcException(DIV_ZERO);
+                throw new CalcException(INSTANCE.getString(DIV_ZERO));
             double[] div = Arrays.copyOf(values, values.length);
             for (int i = 0; i < this.values.length; i++) {
                 div[i] = div[i] / scalar.getValue();

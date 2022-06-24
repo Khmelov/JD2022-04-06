@@ -3,6 +3,7 @@ package by.it.smirnov.calc.entity;
 import by.it.smirnov.calc.exception.CalcException;
 
 import static by.it.smirnov.calc.constants.Wordings.DIV_ZERO;
+import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 
 public class Scalar extends Var {
 
@@ -60,7 +61,7 @@ private final double value;
     public Var div(Var other) throws CalcException {
         if(other instanceof Scalar scalar) {
             if(((Scalar) other).value == 0)
-                throw new CalcException(DIV_ZERO);
+                throw new CalcException(INSTANCE.getString(DIV_ZERO));
             double div = this.value / scalar.value;
             return new Scalar(div);
         }
