@@ -1,19 +1,14 @@
-package by.it.kadulin.calc;
+package by.it.kadulin.calc.entity;
 
-abstract class Var implements Operation {
-    public static Var createVar(String stringVar) {
-        Var result = null;
-        if (stringVar.matches(Patterns.SCALAR)) {
-            result = new Scalar(stringVar);
-        }
-        else if (stringVar.matches(Patterns.VECTOR)) {
-            result = new Vector(stringVar);
-        }
-        else if (stringVar.matches(Patterns.MATRIX)) {
-            result = new Matrix(stringVar);
-        }
-        return result;
-    }
+import by.it.kadulin.calc.interfaces.Operation;
+
+public abstract class Var implements Operation {
+
+
+
+
+
+
 
     @Override
     public Var add(Var other) {

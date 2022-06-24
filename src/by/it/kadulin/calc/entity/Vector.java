@@ -1,6 +1,6 @@
-package by.it.kadulin.calc;
+package by.it.kadulin.calc.entity;
 
-class Vector extends Var {
+public class Vector extends Var {
 
     public Vector(double[] values) {
         this.values = values.clone();
