@@ -118,7 +118,7 @@ public class ParserTestMatrix {
 
     @Test(expected = CalculatorException.class)
     public void calcDivMatrixScalarZero() throws CalculatorException {
-        Var actualVar = parser.calc("{{4,3},{5,2}}/0");
+        parser.calc("{{4,3},{5,2}}/0");
     }
 
     @Test(expected = CalculatorException.class)

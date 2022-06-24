@@ -14,8 +14,8 @@ public class Runner {
 
     public static void main(String[] args) {
         Locale locale = getLocale();
-        ResMan resMan = getResMan(locale);
-        communicate(locale, resMan);
+        ResourceManager resourceManager = getResourceManager(locale);
+        communicate(locale, resourceManager);
     }
 
     private static Locale getLocale() {
@@ -31,18 +31,18 @@ public class Runner {
         return locale;
     }
 
-    private static ResMan getResMan(Locale locale) {
-        ResMan resMan = ResMan.INSTANCE;
-        resMan.setLocale(locale);
-        return resMan;
+    private static ResourceManager getResourceManager(Locale locale) {
+        ResourceManager resourceManager = ResourceManager.INSTANCE;
+        resourceManager.setLocale(locale);
+        return resourceManager;
     }
 
-    private static void communicate(Locale locale, ResMan resMan) {
-        System.out.println(resMan.get(Message.WELCOME));
-        System.out.println(resMan.get(Message.MY_NAME_IS));
-        System.out.println(resMan.get(User.FIRST_NAME));
-        System.out.println(resMan.get(User.LAST_NAME));
-        System.out.println(resMan.get(Message.TODAY) + " " +
-                new SimpleDateFormat(resMan.get(Date.FORMAT), locale).format(Calendar.getInstance().getTime()));
+    private static void communicate(Locale locale, ResourceManager resourceManager) {
+        System.out.println(resourceManager.get(Message.WELCOME));
+        System.out.println(resourceManager.get(Message.MY_NAME_IS));
+        System.out.println(resourceManager.get(User.FIRST_NAME));
+        System.out.println(resourceManager.get(User.LAST_NAME));
+        System.out.println(resourceManager.get(Message.TODAY) + " " +
+                new SimpleDateFormat(resourceManager.get(Date.FORMAT), locale).format(Calendar.getInstance().getTime()));
     }
 }

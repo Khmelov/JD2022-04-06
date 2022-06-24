@@ -5,11 +5,13 @@ import by.it.machuga.calc.entity.Scalar;
 import by.it.machuga.calc.entity.Var;
 import by.it.machuga.calc.entity.Vector;
 import by.it.machuga.calc.exception.CalculatorException;
+import by.it.machuga.calc.interfaces.Message;
 import by.it.machuga.calc.repasitory.Repository;
 
 import java.util.Objects;
 
 import static by.it.machuga.calc.constans.ConstantStorage.*;
+import static by.it.machuga.calc.runner.ConsoleRunner.resourceManager;
 
 public class VarCreator {
     private final Repository repository;
@@ -31,7 +33,7 @@ public class VarCreator {
             result = repository.get(operand);
         }
         if (Objects.isNull(result)) {
-            throw new CalculatorException(String.format(INCORRECT_STRING_MSG, operand));
+            throw new CalculatorException(String.format(resourceManager.get(Message.INCORRECT_STRING_MSG), operand));
         }
         return result;
     }

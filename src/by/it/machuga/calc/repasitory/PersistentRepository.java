@@ -1,5 +1,6 @@
 package by.it.machuga.calc.repasitory;
 
+import by.it.machuga.calc.interfaces.Message;
 import by.it.machuga.calc.runner.ConsoleRunner;
 import by.it.machuga.calc.util.PathFinder;
 import by.it.machuga.calc.servise.VarCreator;
@@ -11,6 +12,8 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static by.it.machuga.calc.runner.ConsoleRunner.resourceManager;
 
 public class PersistentRepository implements Repository {
 
@@ -40,9 +43,9 @@ public class PersistentRepository implements Repository {
                     }
                 }
             } catch (IOException e) {
-                throw new RuntimeException(ConstantStorage.FILE_NOT_FOUND_MSG, e);
+                throw new RuntimeException(resourceManager.get(Message.FILE_NOT_FOUND_MSG), e);
             } catch (CalculatorException e) {
-                throw new RuntimeException(ConstantStorage.CAN_T_PARSE_VAR_MSG, e);
+                throw new RuntimeException(resourceManager.get(Message.CAN_T_PARSE_VAR_MSG), e);
             }
         }
     }
@@ -68,5 +71,4 @@ public class PersistentRepository implements Repository {
     public Var get(String name) {
         return vars.get(name);
     }
-
 }

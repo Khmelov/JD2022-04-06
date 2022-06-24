@@ -1,21 +1,20 @@
-package by.it.machuga.jd02_05;
+package by.it.machuga.calc.localization.resourseManager;
 
-import by.it.machuga.jd02_05.constants.Constants;
+import by.it.machuga.calc.constans.ConstantStorage;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public enum ResMan {
+public enum ResourceManager {
     INSTANCE;
 
     private Locale locale = Locale.ENGLISH;
     private ResourceBundle resourceBundle;
+    private static final String baseName = ConstantStorage.PATH;
 
-    ResMan() {
+    ResourceManager() {
         setLocale(locale);
     }
-
-    private static final String baseName = Constants.PATH;
 
     public void setLocale(Locale locale) {
         this.locale = locale;
