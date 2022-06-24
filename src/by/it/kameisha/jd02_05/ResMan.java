@@ -4,12 +4,12 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public enum ResMan {
-    INSTANSE;
+    INSTANCE;
     private static final String baseName = "by.it.kameisha.jd02_05.language.text";
     private ResourceBundle resourceBundle;
 
     ResMan() {
-        setLocale(Locale.ENGLISH);
+        setLocale(new Locale(""));
     }
 
     public void setLocale(Locale locale) {
