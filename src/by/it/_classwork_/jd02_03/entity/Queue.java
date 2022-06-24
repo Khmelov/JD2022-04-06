@@ -15,14 +15,14 @@ public class Queue {
     }
 
     public void add(Customer customer) {
-        try {
-            deque.put(customer);
-            synchronized (this) {
-                this.notifyAll();
+            try {
+                deque.put(customer);
+                synchronized (this){
+                    this.notifyAll();
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Customer extract() {

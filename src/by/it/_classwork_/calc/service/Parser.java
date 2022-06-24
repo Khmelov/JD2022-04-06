@@ -40,8 +40,6 @@ public class Parser {
         while (matcher.find()) {
             operations.add(matcher.group());
         }
-
-
         while (!operations.isEmpty()) {
             int index = getPriority(operations);
             String left = operands.remove(index);
@@ -78,9 +76,9 @@ public class Parser {
         int bestPriority = -1;
         for (int i = 0; i < operations.size(); i++) {
             String operation = operations.get(i);
-            if (priorityMap.get(operation) > bestPriority) {
-                indexOperation = i;
-                bestPriority = priorityMap.get(operation);
+            if (priorityMap.get(operation)>bestPriority){
+                indexOperation=i;
+                bestPriority=priorityMap.get(operation);
             }
         }
         return indexOperation;
