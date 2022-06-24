@@ -1,10 +1,12 @@
 package by.it.avramchuk.calc.repository;
+import by.it.avramchuk.calc.constants.Message;
 import by.it.avramchuk.calc.exception.CalcException;
 import by.it.avramchuk.calc.ConsoleRunner;
 import by.it.avramchuk.calc.entity.Var;
 import by.it.avramchuk.calc.interfaces.Repository;
 import by.it.avramchuk.calc.service.VarCreator;
 import by.it.avramchuk.calc.util.PathFinder;
+import by.it.avramchuk.calc.util.ResMan;
 
 import java.io.*;
 import java.util.HashMap;
@@ -13,6 +15,7 @@ import java.util.Map;
 public class PersistentRepository implements Repository {
 
 
+    private ResMan resMan = ResMan.INSTANCE;
     public static final String VARS_TXT = "vars.txt";
     private final File path;
 
@@ -36,7 +39,7 @@ public class PersistentRepository implements Repository {
                    vars.put(name, var);
                }
            } catch (IOException | CalcException e) {
-               throw new RuntimeException("not found file", e);
+               throw new RuntimeException(resMan.get(Message.FILE_NOT_FOUND_MESSAGE), e);
            }
         }
     }
@@ -54,7 +57,7 @@ public class PersistentRepository implements Repository {
                writer.printf("%s=%s%n", entry.getKey(), entry.getValue());
            }
         } catch (FileNotFoundException e) {
-           throw new CalcException("not found file", e);
+           throw new CalcException(resMan.get(Message.FILE_NOT_FOUND_MESSAGE), e);
        }
     }
 

@@ -1,13 +1,16 @@
 package by.it.avramchuk.calc.service;
 
+import by.it.avramchuk.calc.constants.Message;
 import by.it.avramchuk.calc.entity.Var;
 import by.it.avramchuk.calc.exception.CalcException;
+import by.it.avramchuk.calc.util.ResMan;
 
 import java.io.PrintStream;
 import java.util.Objects;
 
 public class Printer {
 
+    private final ResMan resMan = ResMan.INSTANCE;
     private final PrintStream out;
 
     public Printer(PrintStream out) {
@@ -21,6 +24,6 @@ public class Printer {
     }
 
     public void print(CalcException e) {
-        out.println("ERROR: "+e.getMessage());
+        out.println(resMan.get(Message.ERROR_MESSAGE)+" "+e.getMessage());
     }
 }

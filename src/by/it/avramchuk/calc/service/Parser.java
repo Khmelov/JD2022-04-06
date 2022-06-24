@@ -1,9 +1,11 @@
 package by.it.avramchuk.calc.service;
+import by.it.avramchuk.calc.constants.Message;
 import by.it.avramchuk.calc.exception.CalcException;
 
 import by.it.avramchuk.calc.constants.Patterns;
 import by.it.avramchuk.calc.entity.Var;
 import by.it.avramchuk.calc.interfaces.Repository;
+import by.it.avramchuk.calc.util.ResMan;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +16,7 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
+    private final ResMan resMan = ResMan.INSTANCE;
     private final Repository repository;
     private final VarCreator varCreator;
     private final  static Map<String, Integer> priorityMap= Map.of(
@@ -68,7 +71,7 @@ public class Parser {
                 case "*": return left.mul(right);
                 case "/": return left.div(right);
             }
-        throw new CalcException("not found operation '%s'", operation);
+        throw new CalcException(resMan.get(Message.INCORRECT_OPER_MESSAGE)+ " '%s'", operation);
     }
 
     private int getPriority(ArrayList<String> operations) {

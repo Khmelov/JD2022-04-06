@@ -1,4 +1,5 @@
 package by.it.avramchuk.calc.service;
+import by.it.avramchuk.calc.constants.Message;
 import by.it.avramchuk.calc.exception.CalcException;
 
 import by.it.avramchuk.calc.constants.Patterns;
@@ -7,11 +8,13 @@ import by.it.avramchuk.calc.entity.Scalar;
 import by.it.avramchuk.calc.entity.Var;
 import by.it.avramchuk.calc.entity.Vector;
 import by.it.avramchuk.calc.interfaces.Repository;
+import by.it.avramchuk.calc.util.ResMan;
 
 import java.util.Objects;
 
 public class VarCreator {
 
+    private final ResMan resMan = ResMan.INSTANCE;
     private final Repository repository;
 
     public VarCreator(Repository repository) {
@@ -31,7 +34,7 @@ public class VarCreator {
             result=repository.get(stringVar);
         }
         if (Objects.isNull(result)){
-            throw new CalcException("Incorrect string %s", stringVar);
+            throw new CalcException(resMan.get(Message.INCORRECT_INPUT_MESSAGE) + " %s", stringVar);
         }
         return  result;
     }
