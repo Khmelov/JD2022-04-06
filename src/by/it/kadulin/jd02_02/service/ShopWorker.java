@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopWorker extends Thread {
-    public static final int TIME_WORK = 120;
+//    public static final int TIME_WORK = 120;
     private final Shop shop;
     private static PriceListRepo priceListRepo = new PriceListRepo();
 
@@ -39,10 +39,16 @@ public class ShopWorker extends Thread {
             if (second <= 29) {
                 while (threadsList.size() <= (second + 10)) {
                     addCustomers(threadsList, manager);
+                    if (!manager.isShopOpened()) {
+                        break;
+                    }
                 }
             } else if (second > 30) {
                 while (threadsList.size() <= (40 + (30 - second))) {
                     addCustomers(threadsList, manager);
+                    if (!manager.isShopOpened()) {
+                        break;
+                    }
                 }
             }
             threadsList.removeIf(customerWorker -> customerWorker.getState() == State.TERMINATED);
@@ -84,6 +90,9 @@ public class ShopWorker extends Thread {
         manager.buyerEnter();
         buyerWorker.start();
         customerWorkerList.add(buyerWorker);
+        if (manager.getPlan() == manager.getCountIn()) {
+            manager.setShopOpened(false);
+        }
 
     }
 }

@@ -79,7 +79,7 @@ public class ShopWorker extends Thread {
     }
 
     private void addBuyer(List<Thread> customerWorkerList, Manager manager) {
-        Buyer buyer = createBuyer(manager);;
+        Buyer buyer = createBuyer(manager);
         BuyerWorker buyerWorker = new BuyerWorker(buyer, shop);
         manager.buyerEnter();
         buyerWorker.start();
