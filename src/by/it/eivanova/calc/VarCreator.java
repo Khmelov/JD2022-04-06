@@ -1,17 +1,8 @@
-package by.it.eivanova.calc.service;
-
-import by.it._classwork_.calc.contants.Patterns;
-import by.it._classwork_.calc.entity.Matrix;
-import by.it._classwork_.calc.entity.Scalar;
-import by.it._classwork_.calc.entity.Var;
-import by.it._classwork_.calc.entity.Vector;
-import by.it._classwork_.calc.exception.CalcException;
-import by.it._classwork_.calc.interfaces.Repository;
+package by.it.eivanova.calc;
 
 import java.util.Objects;
 
 public class VarCreator {
-
     private final Repository repository;
 
     public VarCreator(Repository repository) {
@@ -20,6 +11,7 @@ public class VarCreator {
 
     public Var createVar(String stringVar) throws CalcException {
         Var result;
+        stringVar = stringVar.trim().replace(" ","");
         if (stringVar.matches(Patterns.SCALAR)) {
             result = new Scalar(stringVar);
         } else if (stringVar.matches(Patterns.VECTOR)) {
@@ -34,4 +26,5 @@ public class VarCreator {
         }
         return result;
     }
+
 }

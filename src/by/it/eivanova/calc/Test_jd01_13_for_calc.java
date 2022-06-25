@@ -14,7 +14,7 @@ public class Test_jd01_13_for_calc extends HomeWork {
         run("3.8+26.2\n" +
                 "end\n")
                 .include("30.0")    //3.8+26.2=30.0
-                .exclude("ERROR:"); //9-0.9=8.1
+                .exclude("ERROR:"); //9-0.9=8.1 
         run("3.8/0\n" +
                 "end\n")
                 .include("ERROR:");

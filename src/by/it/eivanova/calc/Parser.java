@@ -1,9 +1,4 @@
-package by.it.eivanova.calc.service;
-
-import by.it._classwork_.calc.contants.Patterns;
-import by.it._classwork_.calc.entity.Var;
-import by.it._classwork_.calc.exception.CalcException;
-import by.it._classwork_.calc.interfaces.Repository;
+package by.it.eivanova.calc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,11 +26,17 @@ public class Parser {
 
     public Var calc(String expression) throws CalcException {
         expression = expression.trim().replaceAll(Patterns.SPACES, "");
-        //A=2+3*4
-        List<String> operands = new ArrayList<>(Arrays.asList(expression.split(Patterns.OPERATION)));
+        while (expression.contains("(") && expression.contains(")")) {
+            expression = calcInBracket(expression);
+        }
+        return calcVar(expression);
+    }
+
+    private Var calcVar(String expression) throws CalcException {
+        List<String> operands = new ArrayList<>(Arrays.asList(expression.split(Patterns.OPERATIONS)));
         List<String> operations = new ArrayList<>();
 
-        Pattern pattern = Pattern.compile(Patterns.OPERATION);
+        Pattern pattern = Pattern.compile(Patterns.OPERATIONS);
         Matcher matcher = pattern.matcher(expression);
         while (matcher.find()) {
             operations.add(matcher.group());
@@ -49,7 +50,18 @@ public class Parser {
             operands.add(index, result.toString());
         }
         return varCreator.createVar(operands.get(0));
+    }
 
+    private String calcInBracket(String expression) throws CalcException {
+        Pattern pattern = Pattern.compile(Patterns.OPERAND_IN_BRACKETS);
+        Matcher matcher = pattern.matcher(expression);
+        if (matcher.find()) {
+            String result = matcher.group();
+            Var var = calcVar(result.replace("(","").replace(")",""));
+            expression = expression.replace(result, var.toString());
+            return expression;
+        }
+        return expression;
     }
 
     private Var calcOneOperation(String leftOperand, String operation, String rightOperand) throws CalcException {
@@ -76,9 +88,9 @@ public class Parser {
         int bestPriority = -1;
         for (int i = 0; i < operations.size(); i++) {
             String operation = operations.get(i);
-            if (priorityMap.get(operation)>bestPriority){
-                indexOperation=i;
-                bestPriority=priorityMap.get(operation);
+            if (priorityMap.get(operation) > bestPriority) {
+                indexOperation = i;
+                bestPriority = priorityMap.get(operation);
             }
         }
         return indexOperation;
