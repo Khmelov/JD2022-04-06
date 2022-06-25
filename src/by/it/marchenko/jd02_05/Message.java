@@ -5,4 +5,7 @@ public interface Message {
     String PERSON = "message.person";
     String FIRSTNAME = "message.firstname";
     String LASTNAME = "message.lastname";
+    String INCORRECT_LANGUAGE = "message.incorrectLanguage";
+    String INSTRUCTION = "message.instruction";
+
 }

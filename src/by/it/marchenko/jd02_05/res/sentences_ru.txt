@@ -1,4 +1,6 @@
 message.greeting=Привет!
-message.person=господин
+message.person=Господин
 message.firstname=Игорь
 message.lastname=Марченко
+message.incorrectLanguage=Указанный язык отсутсвует. Установлен системный язык.
+message.instruction=Выберите язык (be/en/ru) или введите <end> для выхода:

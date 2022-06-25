@@ -2,3 +2,5 @@ message.greeting=Прывiтанне!
 message.person=Шаноўны спадар
 message.firstname=Iгар
 message.lastname=Марчанка
+message.incorrectLanguage=Уведзеная мова адсутнiчае. Усталявана cicтэмная мова.
+message.instruction=Выберыце мову (be/en/ru) альбо увядзiце <end> для выхаду:
