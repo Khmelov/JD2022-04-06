@@ -20,6 +20,7 @@ public class Runner {
         Locale locale;
         ZonedDateTime zdt;
         DateTimeFormatter dtf;
+
         while (!localStr.equals("end")) {
              localStr = sc.nextLine();
             switch (localStr) {
@@ -27,32 +28,33 @@ public class Runner {
                     locale = new Locale("ru", "RU");
                     resMan.setLocale(locale);
                     printText(resMan);
-                    zdt = ZonedDateTime.now();
-                    dtf = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm", locale);
-                    System.out.println(dtf.format(zdt));
-
+                    printDate(locale);
                     break;
                 case "en":
                     locale = new Locale("en", "EN");
                     resMan.setLocale(locale);
                     printText(resMan);
-                    zdt = ZonedDateTime.now();dtf = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm", locale);
-                    System.out.println(dtf.format(zdt));
-
+                    printDate(locale);
                     break;
                 case "pl":
                     locale = new Locale("pl", "PL");
                     resMan.setLocale(locale);
                     printText(resMan);
-                    zdt = ZonedDateTime.now();dtf = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm", locale);
-                    System.out.println(dtf.format(zdt));
-
+                    printDate(locale);
                     break;
             }
         }
 //        Locale locale = args.length == 2 ? new Locale(args[0], args[1]) : Locale.ENGLISH;
 //        resMan.setLocale(locale);
 
+    }
+
+    private static void printDate(Locale locale) {
+        ZonedDateTime zdt;
+        DateTimeFormatter dtf;
+        zdt = ZonedDateTime.now();
+        dtf = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm", locale);
+        System.out.println(dtf.format(zdt));
     }
 
     private static void printText(ResMan resMan) {
