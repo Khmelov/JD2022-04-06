@@ -1,5 +1,13 @@
 package by.it.kadulin.jd02_05;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -8,18 +16,37 @@ public class Runner {
     public static void main(String[] args) {
         ResMan resMan = ResMan.INSTANCE;
         Scanner sc = new Scanner(System.in);
-        String localeStr = "";
-        while (!localeStr.equals("end")) {
-             localeStr = sc.nextLine();
-            switch (localeStr) {
-                case "ru": resMan.setLocale(new Locale("ru", "RU"));
+        String localStr = "";
+        Locale locale;
+        ZonedDateTime zdt;
+        DateTimeFormatter dtf;
+        while (!localStr.equals("end")) {
+             localStr = sc.nextLine();
+            switch (localStr) {
+                case "ru":
+                    locale = new Locale("ru", "RU");
+                    resMan.setLocale(locale);
                     printText(resMan);
+                    zdt = ZonedDateTime.now();
+                    dtf = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm", locale);
+                    System.out.println(dtf.format(zdt));
+
                     break;
-                case "en": resMan.setLocale(new Locale("en", "EN"));
+                case "en":
+                    locale = new Locale("en", "EN");
+                    resMan.setLocale(locale);
                     printText(resMan);
+                    zdt = ZonedDateTime.now();dtf = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm", locale);
+                    System.out.println(dtf.format(zdt));
+
                     break;
-                case "pl": resMan.setLocale(new Locale("pl", "PL"));
+                case "pl":
+                    locale = new Locale("pl", "PL");
+                    resMan.setLocale(locale);
                     printText(resMan);
+                    zdt = ZonedDateTime.now();dtf = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm", locale);
+                    System.out.println(dtf.format(zdt));
+
                     break;
             }
         }
