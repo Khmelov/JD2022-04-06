@@ -1,0 +1,4 @@
+message.greeting=Hello!
+message.person=Mister
+message.firstname=Igor
+message.lastname=Marchenko

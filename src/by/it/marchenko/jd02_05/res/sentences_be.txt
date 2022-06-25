@@ -1,0 +1,4 @@
+message.greeting=Прывiтанне!
+message.person=Шаноўны спадар
+message.firstname=Iгар
+message.lastname=Марчанка

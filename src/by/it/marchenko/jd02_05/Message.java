@@ -1,0 +1,8 @@
+package by.it.marchenko.jd02_05;
+
+public interface Message {
+    String GREETING = "message.greeting";
+    String PERSON = "message.person";
+    String FIRSTNAME = "message.firstname";
+    String LASTNAME = "message.lastname";
+}
