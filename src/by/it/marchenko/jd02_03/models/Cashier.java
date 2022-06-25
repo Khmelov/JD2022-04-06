@@ -3,46 +3,32 @@ package by.it.marchenko.jd02_03.models;
 import by.it.marchenko.jd02_03.constants.CashierConstant;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Cashier {
     private static int startID = CashierConstant.DEFAULT_START_ID;
 
     private final String name;
     private final AtomicInteger servicedCustomerCount;
-
-    private double receipts;
-    //private boolean waitEnabled;
+    private final AtomicReference<Double> atomicReceipts;
 
     private volatile boolean onWork;
-    //int id;
 
     public Cashier() {
         //this.id = startID++;
         this.name = CashierConstant.CASHIER_DEFAULT_NAME + startID++;
-        this.receipts = 0;
         this.servicedCustomerCount = new AtomicInteger(0);
         this.onWork = true;
-
-        //  this.waitEnabled = false;
+        this.atomicReceipts = new AtomicReference<>(0d);
     }
 
     public double getReceipts() {
-        return receipts;
+        return atomicReceipts.get();
     }
 
     public void setReceipts(double receipts) {
-        this.receipts = receipts;
+        atomicReceipts.getAndSet(receipts);
     }
-
-    /*
-    public boolean isWaitEnabled() {
-        return waitEnabled;
-    }
-
-    public void setWaitEnabled(boolean waitEnabled) {
-        this.waitEnabled = waitEnabled;
-    }
- */
 
     public void increaseServicedCustomerCount() {
         servicedCustomerCount.getAndIncrement();

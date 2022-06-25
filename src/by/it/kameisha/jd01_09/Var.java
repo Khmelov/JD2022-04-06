@@ -2,7 +2,7 @@ package by.it.kameisha.jd01_09;
 
 abstract class Var implements Operation {
 
-    public static Var crateVar(String stringVar) {
+    public static Var createVar(String stringVar) {
         Var result = null;
         if (stringVar.matches(Patterns.SCALAR)) {
             result = new Scalar(stringVar);

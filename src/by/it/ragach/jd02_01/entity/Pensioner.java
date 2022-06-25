@@ -6,14 +6,19 @@ public class Pensioner extends Customer {
 
     public final String name;
 
-    public Pensioner(int number) {
+    public Pensioner(long number) {
         super(number);
         this.name = "Customer (Pensioner) №" + number;
     }
 
     @Override
-    public int speedOfOperation(int millis) {
-        return millis/10*15;
+    public double speedOfOperation() {
+        return 1.5;
+    }
+
+    @Override
+    public int numberOfGoods() {
+        return super.numberOfGoods();
     }
 
     @Override

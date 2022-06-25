@@ -16,8 +16,7 @@ public class Vector extends Var {
     }
 
     public Vector(String strVector) {
-        strVector = strVector.replace("{", "");
-        strVector = strVector.replace("}", "");
+        strVector = strVector.replace("{", "").replace("}", "");
         String[] strings = strVector.split(",");
         double[] value = new double[strings.length];
         for (int i = 0; i < strings.length; i++) {
@@ -98,7 +97,7 @@ public class Vector extends Var {
 
     @Override
     public Var div(Var other) throws CalcException {
-        if (other instanceof Scalar scalar) {
+        if (other instanceof Scalar scalar && scalar.getValue()!=0) {
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
                 result[i] = result[i] / scalar.getValue();

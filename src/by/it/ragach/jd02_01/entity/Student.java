@@ -14,7 +14,7 @@ public class Student extends Customer {
     }
 
     @Override
-    public int quantityOfGoods() {
+    public int numberOfGoods() {
         return RandomGenerator.get(0,2);
     }
 
