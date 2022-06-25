@@ -45,7 +45,7 @@ public class TaskC {
 //            e.printStackTrace();
 //        }
 //
-//        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Util.getPath(TaskB.class, "resultTaskC.txt")))) {
+//        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PathFinder.getPath(TaskB.class, "resultTaskC.txt")))) {
 //            for (String listOfFile : listOfFiles) {
 //                System.out.printf("file:%s%n", listOfFile);
 //                writer.write(String.format("file:%s%n", listOfFile));
