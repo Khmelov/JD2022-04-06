@@ -39,7 +39,7 @@ public Parser(Repository repository, VarCreator varCreator){
         while (matcher.find()){
             operations.add(matcher.group());
         }
-        while (operations.isEmpty()){
+        while (!operations.isEmpty()){
             int index = getPriority(operations);
             String left = operands.remove(index);
         String operation = operations.remove(index);

@@ -1,22 +1,22 @@
-package by.it.annazhegulovich.calc.service;
+package by.it.annazhegulovich.jd02_04.calc.service;
 
-import by.it.annazhegulovich.calc.constans.Patterns;
-import by.it.annazhegulovich.calc.entity.Matrix;
-import by.it.annazhegulovich.calc.entity.Scalar;
-import by.it.annazhegulovich.calc.entity.Var;
-import by.it.annazhegulovich.calc.entity.Vector;
-import by.it.annazhegulovich.calc.exception.CalcException;
-import by.it.annazhegulovich.calc.interfaces.Repository;
+import by.it.annazhegulovich.jd02_04.calc.constans.Patterns;
+import by.it.annazhegulovich.jd02_04.calc.entity.Matrix;
+import by.it.annazhegulovich.jd02_04.calc.entity.Scalar;
+import by.it.annazhegulovich.jd02_04.calc.entity.Var;
+import by.it.annazhegulovich.jd02_04.calc.entity.Vector;
+import by.it.annazhegulovich.jd02_04.calc.exception.CalcException;
+import by.it.annazhegulovich.jd02_04.calc.interfaces.Repository;
 
 import java.util.Objects;
 
 public class VarCreator {
 
-    private  final  Repository repository;
+    private  final Repository repository;
     public VarCreator(Repository repository){
         this.repository = repository;
     }
-    public Var createVar(String stringVar) throws CalcException{
+    public Var createVar(String stringVar) throws CalcException {
         Var result;
         if(stringVar.matches(Patterns.SCALAR)){
             result = new Scalar(stringVar);

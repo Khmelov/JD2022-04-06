@@ -1,7 +1,9 @@
-package by.it.annazhegulovich.jd02_04;
+package by.it.annazhegulovich.jd02_04.calc.entity;
 
 
-class Matrix extends Var {
+import by.it.annazhegulovich.jd02_04.calc.exception.CalcException;
+
+public class Matrix extends Var {
 
     private final double[][] value2;
 
@@ -16,6 +18,7 @@ class Matrix extends Var {
     public Matrix(Matrix matrix){
         this.value2= matrix.value2;
     }
+
     public Matrix(String strMatrix){
 
         String [] res= strMatrix.split("},");
@@ -34,7 +37,7 @@ class Matrix extends Var {
     }
 
     @Override
-    public Var add(Var other) {
+    public Var add(Var other) throws CalcException {
         double[][] res = new double[value2.length][value2[0].length];
         for (int i = 0; i < value2.length; i++) {
             for (int j = 0; j < value2[i].length; j++) {
@@ -59,7 +62,7 @@ class Matrix extends Var {
         return super.add(other);
     }
     @Override
-    public Var mul(Var other) {
+    public Var mul(Var other) throws CalcException {
         if (other instanceof Matrix) {
             double[][] result = new double[value2.length][((Matrix) other).value2[0].length];
             for (int i = 0; i < result.length; i++) {
@@ -96,7 +99,7 @@ class Matrix extends Var {
     }
 
     @Override
-    public Var div(Var other) {
+    public Var div(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double[][] result = new double[value2.length][value2[0].length];
             for (int i = 0; i < result.length; i++) {
@@ -110,7 +113,7 @@ class Matrix extends Var {
     }
 
     @Override
-    public Var sub(Var other) {
+    public Var sub(Var other) throws CalcException {
         double[][] res = new double[value2.length][value2[0].length];
         for (int i = 0; i < value2.length; i++) {
             for (int j = 0; j < value2[i].length; j++) {

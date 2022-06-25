@@ -1,4 +1,9 @@
-package by.it.annazhegulovich.jd02_04;
+package by.it.annazhegulovich.jd02_04.calc.service;
+
+import by.it.annazhegulovich.jd02_04.calc.constans.Patterns;
+import by.it.annazhegulovich.jd02_04.calc.entity.Var;
+import by.it.annazhegulovich.jd02_04.calc.exception.CalcException;
+import by.it.annazhegulovich.jd02_04.calc.interfaces.Repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
+    private  final Repository repository;
+    private final VarCreator varCreator;
 private final static Map<String, Integer> priorityMap = Map.of(
         "=", 0,
         "+", 1,
@@ -17,7 +24,11 @@ private final static Map<String, Integer> priorityMap = Map.of(
 
 );
 
-    public Var calc(String expression) {
+public Parser(Repository repository, VarCreator varCreator){
+    this.repository = repository;
+    this.varCreator = varCreator;
+}
+    public Var calc(String expression) throws CalcException {
         expression=expression.trim().replaceAll(Patterns.SPACES, "");
         List<String> operands = new ArrayList<>(Arrays.asList(expression.split(Patterns.OPERATION)));
         List<String> operations = new ArrayList<>();
@@ -28,27 +39,24 @@ private final static Map<String, Integer> priorityMap = Map.of(
         while (matcher.find()){
             operations.add(matcher.group());
         }
-        while (operations.isEmpty()){
+        while (!operations.isEmpty()){
             int index = getPriority(operations);
             String left = operands.remove(index);
         String operation = operations.remove(index);
         String right = operands.remove(index);
         Var result = calcOneOperation(left, operation, right);
-            assert result != null;
-            operands.add(index, result.toString());
+        operands.add(index, result.toString());
         }
-
-
-
-
-        return Var.createVar(operands.get(0));
-
+        return varCreator.createVar(operands.get(0));
     }
 
-    private Var calcOneOperation(String leftOperand, String operation, String rightOperand) {
+    private Var calcOneOperation(String leftOperand, String operation, String rightOperand) throws CalcException {
 
-        Var right = Var.createVar(rightOperand);
-        Var left = Var.createVar(leftOperand);
+        Var right = varCreator.createVar(rightOperand);
+        if (operation.equals("=")){
+            return  repository.save(leftOperand, right);
+        }
+        Var left = varCreator.createVar(leftOperand);
 
             switch (operation){
                 case "+": return left.add(right);
@@ -56,9 +64,7 @@ private final static Map<String, Integer> priorityMap = Map.of(
                 case "*": return left.mul(right);
                 case "/": return left.div(right);
             }
-
-
-        return Var.createVar(operation);
+            throw new CalcException("not found operation '%s'", operation);
     }
 
     private int getPriority(List<String> operations) {
@@ -70,7 +76,6 @@ private final static Map<String, Integer> priorityMap = Map.of(
                 indexOperation = i;
                 bestPriority = priorityMap.get(operation);
             }
-            
         }
         return indexOperation;
     }

@@ -1,9 +1,8 @@
-package by.it.annazhegulovich.calc.entity;
+package by.it.annazhegulovich.jd02_04.calc.entity;
 
 
-import by.it.annazhegulovich.calc.constans.Patterns;
-import by.it.annazhegulovich.calc.exception.CalcException;
-import by.it.annazhegulovich.calc.interfaces.Operation;
+import by.it.annazhegulovich.jd02_04.calc.exception.CalcException;
+import by.it.annazhegulovich.jd02_04.calc.interfaces.Operation;
 
 public abstract class Var implements Operation {
 

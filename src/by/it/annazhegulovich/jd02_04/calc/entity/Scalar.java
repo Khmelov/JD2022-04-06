@@ -1,6 +1,6 @@
-package by.it.annazhegulovich.calc.entity;
+package by.it.annazhegulovich.jd02_04.calc.entity;
 
-import by.it.annazhegulovich.calc.exception.CalcException;
+import by.it.annazhegulovich.jd02_04.calc.exception.CalcException;
 
 public class Scalar extends Var {
     private final double value;

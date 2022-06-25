@@ -1,12 +1,12 @@
-package by.it.annazhegulovich.calc;
+package by.it.annazhegulovich.jd02_04.calc;
 
-import by.it.annazhegulovich.calc.entity.Var;
-import by.it.annazhegulovich.calc.exception.CalcException;
-import by.it.annazhegulovich.calc.interfaces.Repository;
-import by.it.annazhegulovich.calc.repository.PersistentRepository;
-import by.it.annazhegulovich.calc.service.Parser;
-import by.it.annazhegulovich.calc.service.Printer;
-import by.it.annazhegulovich.calc.service.VarCreator;
+import by.it.annazhegulovich.jd02_04.calc.entity.Var;
+import by.it.annazhegulovich.jd02_04.calc.exception.CalcException;
+import by.it.annazhegulovich.jd02_04.calc.interfaces.Repository;
+import by.it.annazhegulovich.jd02_04.calc.repository.PersistentRepository;
+import by.it.annazhegulovich.jd02_04.calc.service.Parser;
+import by.it.annazhegulovich.jd02_04.calc.service.Printer;
+import by.it.annazhegulovich.jd02_04.calc.service.VarCreator;
 
 import java.util.Scanner;
 

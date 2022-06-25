@@ -1,7 +1,7 @@
-package by.it.annazhegulovich.jd02_04;
+package by.it.annazhegulovich.jd02_04.calc.constans;
 
 public class Patterns {
-    public static final String OPERATION = "[-+*/]";
+    public static final String OPERATION = "(?<=[^{,+=*/-])[-+*/=]";
     public static final String SPACES = "\\s+";
     public static final String SCALAR = "-?[0-9]+(\\.[0-9]+)?";
     public static final String VECTOR = "\\{" + SCALAR + "(," + SCALAR + ")*}";

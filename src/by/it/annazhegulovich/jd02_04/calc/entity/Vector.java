@@ -1,4 +1,6 @@
-package by.it.annazhegulovich.jd02_04;
+package by.it.annazhegulovich.jd02_04.calc.entity;
+
+import by.it.annazhegulovich.jd02_04.calc.exception.CalcException;
 
 import java.util.StringTokenizer;
 
@@ -27,19 +29,22 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var add(Var other) {
-        if(other instanceof Scalar){
-            Scalar otherScalar = (Scalar) other;
+    public Var add(Var other) throws CalcException {
+        if(other instanceof Scalar scalar){
+            //Scalar otherScalar = (Scalar) other;
             double [] result = values.clone();
             for (int i = 0; i < result.length; i++) {
-                result [i]= result[i]+otherScalar.getValue();
+                result [i]= result[i]+scalar.getValue();
             }
             return new Vector(result);
-        } else if(other instanceof Vector){
-            Vector otherVector = (Vector) other;
+        } else if(other instanceof Vector vector){
+            //Vector otherVector = (Vector) other;
+            if (this.values.length!= vector.values.length){
+                throw new CalcException("Incorrect size for %s + %s", this, vector);
+            }
             double [] result = values.clone();
             for (int i = 0; i < result.length; i++) {
-                result [i]= result[i]+otherVector.values[i];
+                result [i]= result[i]+vector.values[i];
             }
             return new Vector(result);
         } else{
@@ -48,20 +53,20 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var sub(Var other) {
+    public Var sub(Var other) throws CalcException {
         //{4, 5, 6} -3 = {1, 2, 3}   {4, 5, 6}-{1, 2, 3}={3, 3, 3}
-        if (other instanceof Scalar){
-            Scalar otherScalar = (Scalar) other;
+        if (other instanceof Scalar scalar){
+            //Scalar otherScalar = (Scalar) other;
             double [] result = values.clone();
             for (int i = 0; i < result.length; i++) {
-                result [i]= result[i]-otherScalar.getValue();
+                result [i]= result[i]-scalar.getValue();
             }
             return new Vector(result);
-        }else if (other instanceof Vector){
-            Vector otherVector = (Vector) other;
+        }else if (other instanceof Vector vector){
+          //  Vector otherVector = (Vector) other;
             double [] result = values.clone();
             for (int i = 0; i < result.length; i++) {
-                result [i]= result[i]-otherVector.values[i];
+                result [i]= result[i]-vector.values[i];
             }
             return new Vector(result);
 
@@ -70,13 +75,13 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var mul(Var other) {
+    public Var mul(Var other) throws CalcException {
         //{1,2}*3   {1,2}*{3,4}
-        if (other instanceof Scalar) {
-            Scalar otherScalar = (Scalar) other;
+        if (other instanceof Scalar scalar) {
+            //Scalar otherScalar = (Scalar) other;
             double[] result = values.clone();
             for (int i = 0; i < result.length; i++) {
-                result[i] = result[i] * otherScalar.getValue();
+                result[i] = result[i] * scalar.getValue();
             }
             return new Vector(result);
         } else if (other instanceof Vector otherVector ) {
@@ -96,12 +101,12 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var div(Var other) {
-        if (other instanceof Scalar) {
-            Scalar otherScalar = (Scalar) other;
+    public Var div(Var other) throws CalcException {
+        if (other instanceof Scalar scalar) {
+            //Scalar otherScalar = (Scalar) other;
             double[] result =values.clone();
             for (int i = 0; i < result.length; i++) {
-               result[i]=result[i]/otherScalar.getValue();
+               result[i]=result[i]/scalar.getValue();
             }
             return new Vector(result);
         } else
