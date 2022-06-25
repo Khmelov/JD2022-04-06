@@ -1,8 +1,8 @@
-package by.it.selvanovich.jd02_02.service;
+package by.it.selvanovich.jd02_03.service;
 
-import by.it.selvanovich.jd02_02.entity.*;
-import by.it.selvanovich.jd02_02.util.RandomGenerator;
-import by.it.selvanovich.jd02_02.util.Timer;
+import by.it.selvanovich.jd02_03.entity.*;
+import by.it.selvanovich.jd02_03.util.RandomGenerator;
+import by.it.selvanovich.jd02_03.util.Timer;
 
 import java.util.Objects;
 
@@ -29,21 +29,23 @@ public class CashierWorker implements Runnable {
                 Timer.sleep(timeout);
                 System.out.println();
                 customer.showCart();
+                cashier.addGain(customer.checkTotalPrice());
+                cashier.addGoods(customer.checkTotalGoods());
                 System.out.println(cashier + " finished service " + customer);
-                synchronized (customer.getMonitor()){
+                synchronized (customer.getMonitor()) {
                     customer.setWaiting(false);
                     customer.notify();
                 }
             } else {
-                Thread.onSpinWait(); //good
-                try {
-                    //noinspection BusyWait
-                    Thread.sleep(10); //bad
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                synchronized (queue) {
+                    try {
+                        queue.wait(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
-        System.out.println(cashier + " closed");
+        System.out.println(cashier + " closed. Gain: " + cashier.getTotalGain() + "BYN, goods sold: " + cashier.getTotalGoods());
     }
 }

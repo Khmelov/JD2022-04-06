@@ -1,27 +1,23 @@
-package by.it.selvanovich.jd02_02.service;
+package by.it.selvanovich.jd02_03.service;
 
-import by.it.selvanovich.jd02_02.entity.Customer;
-import by.it.selvanovich.jd02_02.entity.Good;
-import by.it.selvanovich.jd02_02.entity.Queue;
-import by.it.selvanovich.jd02_02.entity.Shop;
-import by.it.selvanovich.jd02_02.interfaces.CustomerAction;
-import by.it.selvanovich.jd02_02.interfaces.ShoppingCardAction;
-import by.it.selvanovich.jd02_02.util.RandomGenerator;
-import by.it.selvanovich.jd02_02.util.Timer;
-
-import java.util.ArrayList;
+import by.it.selvanovich.jd02_03.interfaces.CustomerAction;
+import by.it.selvanovich.jd02_03.interfaces.ShoppingCardAction;
+import by.it.selvanovich.jd02_03.entity.Customer;
+import by.it.selvanovich.jd02_03.entity.Good;
+import by.it.selvanovich.jd02_03.entity.Queue;
+import by.it.selvanovich.jd02_03.entity.Shop;
+import by.it.selvanovich.jd02_03.util.RandomGenerator;
+import by.it.selvanovich.jd02_03.util.Timer;
 
 public class CustomerWorker extends Thread
         implements CustomerAction, ShoppingCardAction {
 
     private final Customer customer;
     private final Shop shop;
-    private final ArrayList<Good> cart = new ArrayList<>();
 
     public CustomerWorker(Customer customer, Shop shop) {
         this.customer = customer;
         this.shop = shop;
-
         shop.getManager().customerEnter();
     }
 
@@ -67,7 +63,6 @@ public class CustomerWorker extends Thread
                     throw new RuntimeException(e);
                 }
             }
-
             System.out.println(customer + " leaves the Queue");
         }
     }
@@ -77,9 +72,9 @@ public class CustomerWorker extends Thread
         System.out.println(customer + " leaves the " + shop);
     }
 
-
     @Override
     public void takeCart() {
+        customer.takeCart();
         System.out.println(customer + " take a cart");
     }
 
@@ -87,9 +82,8 @@ public class CustomerWorker extends Thread
     public int putToCart(Good good) {
         int timeout = RandomGenerator.get(100, 300);
         Timer.sleep(timeout);
-        cart.add(good);
         customer.putToCart(good);
-        System.out.println(customer + " put to cart " + cart.size() + " goods");
-        return cart.size();
+        System.out.println(customer + " put to cart " + customer.checkTotalGoods() + " goods");
+        return customer.checkTotalGoods();
     }
 }
