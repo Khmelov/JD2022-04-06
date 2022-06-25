@@ -5,8 +5,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Manager {
 
     private final int plan; //100
-    private final AtomicInteger countIn = new AtomicInteger(0);
-    private final AtomicInteger countOut = new AtomicInteger(0);
+    private final AtomicInteger countIn=new AtomicInteger(0);
+    private final AtomicInteger countOut=new AtomicInteger(0);
 
     public Manager(int plan) {
         this.plan = plan;
@@ -20,11 +20,11 @@ public class Manager {
         return countOut.get() == plan;
     }
 
-    public void customerEnter() {
+    public void customerEnter(){
         countIn.getAndIncrement();
     }
 
-    public void customerOut() {
+    public void customerOut(){
         countOut.getAndIncrement();
     }
 }
