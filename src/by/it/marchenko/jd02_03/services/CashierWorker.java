@@ -36,7 +36,8 @@ public class CashierWorker extends Thread {
         out.println(ANSI_YELLOW + cashier + " start operation in the " + store +
                 ". Queue size: " + storeQueue.getSize() + ANSI_RESET);
         //System.out.println("We are here. cashiers: "+ managerWorker.storeOpened());
-        while (storeQueue.getSize() > 0 /*&& managerWorker.storeOpened()*/ && cashier.isOnWork()) {
+        //while (storeQueue.getSize() > 0 && cashier.isOnWork()) {
+        while (cashier.isOnWork() && storeQueue.getSize() > 0) {
             Customer customer = storeQueue.remove();
             if (Objects.nonNull(customer)) {
                 performOperation(customer);

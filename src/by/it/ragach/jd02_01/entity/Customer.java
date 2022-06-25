@@ -11,13 +11,15 @@ public class Customer {
     public String toString() { return name;
     }
 
-    public int speedOfOperation (int millis){
-        return millis;
-    }
-
-    public int quantityOfGoods(){
+    public int numberOfGoods(){
         return RandomGenerator.get(2,5);
     }
+
+    public double speedOfOperation(){
+        return 1.0;
+
+    }
+
 
 
 

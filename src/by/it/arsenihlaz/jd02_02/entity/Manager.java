@@ -27,8 +27,7 @@ public class Manager {
 
 
     public int cashierNeeded(int queueSize) {
-
-        if (queueSize > 0 && queueSize <= 5) {
+        if (queueSize >= 0 && queueSize <= 5) {
            return 1;
         } else if (queueSize > 5 && queueSize <= 10) {
             return 2;

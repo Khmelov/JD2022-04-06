@@ -17,11 +17,11 @@ public class ConsoleRunner {
         System.out.println(MESSAGE_START_APP);
         while (scanner.hasNext()) {
             String expression = scanner.nextLine();
-            if (expression.toLowerCase().equals(COMMAND_END)) {
+            if (expression.equalsIgnoreCase(COMMAND_END)) {
                 break;
             } else {
                 try {
-                   Var result = parser.calc(expression);
+                    Var result = parser.calc(expression);
                     printer.print(result);
                 } catch (CalcException e) {
                     printer.print(e);

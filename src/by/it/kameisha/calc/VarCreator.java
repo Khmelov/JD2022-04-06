@@ -11,6 +11,7 @@ public class VarCreator {
 
     public Var createVar(String stringVar) throws CalcException {
         Var result;
+        stringVar = stringVar.trim().replace(" ","");
         if (stringVar.matches(Patterns.SCALAR)) {
             result = new Scalar(stringVar);
         } else if (stringVar.matches(Patterns.VECTOR)) {
