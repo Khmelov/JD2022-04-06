@@ -1,17 +1,19 @@
-package by.it.arsenihlaz.Calculator.services;
+package by.it.arsenihlaz.calculator.services;
 
-import by.it.arsenihlaz.Calculator.constants.Patterns;
-import by.it.arsenihlaz.Calculator.entity.Matrix;
-import by.it.arsenihlaz.Calculator.entity.Scalar;
-import by.it.arsenihlaz.Calculator.entity.Var;
-import by.it.arsenihlaz.Calculator.entity.Vector;
-import by.it.arsenihlaz.Calculator.exception.CalcException;
-import by.it.arsenihlaz.Calculator.interfaces.Repository;
+import by.it.arsenihlaz.calculator.constants.Exception;
+import by.it.arsenihlaz.calculator.constants.Patterns;
+import by.it.arsenihlaz.calculator.entity.Matrix;
+import by.it.arsenihlaz.calculator.entity.Scalar;
+import by.it.arsenihlaz.calculator.entity.Var;
+import by.it.arsenihlaz.calculator.entity.Vector;
+import by.it.arsenihlaz.calculator.exception.CalcException;
+import by.it.arsenihlaz.calculator.interfaces.Repository;
+import by.it.arsenihlaz.jd02_05.ResourceManager;
 
 import java.util.Objects;
 
 public class VarCreator {
-
+    private final ResourceManager resourceManager = ResourceManager.INSTANSE;
     private final Repository repository;
 
     public VarCreator(Repository repository) {
@@ -31,7 +33,7 @@ public class VarCreator {
             result = repository.get(stringVar);
         }
         if (Objects.isNull(result)) {
-            throw new CalcException("Incorrect string %s", stringVar);
+            throw new CalcException(resourceManager.getValue(Exception.INCORRECT_STRING) + " %s", stringVar);
         }
         return result;
     }

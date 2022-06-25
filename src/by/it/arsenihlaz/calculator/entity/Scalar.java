@@ -1,8 +1,12 @@
-package by.it.arsenihlaz.Calculator.entity;
+package by.it.arsenihlaz.calculator.entity;
 
-import by.it.arsenihlaz.Calculator.exception.CalcException;
+import by.it.arsenihlaz.calculator.constants.Exception;
+import by.it.arsenihlaz.calculator.exception.CalcException;
+import by.it.arsenihlaz.jd02_05.ResourceManager;
+
 
 public class Scalar extends Var {
+    private final ResourceManager resourceManager = ResourceManager.INSTANSE;
     private double value;
 
     @Override
@@ -56,7 +60,7 @@ public class Scalar extends Var {
     public Var div(Var other) throws CalcException {
         if (other instanceof Scalar otherScalar) {
             if (otherScalar.value == 0) {
-                throw new CalcException("division by zero %s / %s", this, otherScalar);
+                throw new CalcException(resourceManager.getValue(Exception.DIVISION_BY_ZERO) + " %s / %s", this, otherScalar);
             }
             double result = this.value / otherScalar.value;
             return new Scalar(result);

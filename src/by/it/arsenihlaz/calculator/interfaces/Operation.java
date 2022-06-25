@@ -1,7 +1,7 @@
-package by.it.arsenihlaz.Calculator.interfaces;
+package by.it.arsenihlaz.calculator.interfaces;
 
-import by.it.arsenihlaz.Calculator.exception.CalcException;
-import by.it.arsenihlaz.Calculator.entity.Var;
+import by.it.arsenihlaz.calculator.exception.CalcException;
+import by.it.arsenihlaz.calculator.entity.Var;
 
 public interface Operation {
     Var add(Var other) throws CalcException;

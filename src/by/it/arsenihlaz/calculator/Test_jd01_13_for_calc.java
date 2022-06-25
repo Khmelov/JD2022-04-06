@@ -1,4 +1,4 @@
-package by.it.arsenihlaz.Calculator;
+package by.it.arsenihlaz.calculator;
 
 
 import by.it.HomeWork;

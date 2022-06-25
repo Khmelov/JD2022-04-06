@@ -1,11 +1,11 @@
-package by.it.arsenihlaz.Calculator.tests;
+package by.it.arsenihlaz.calculator.tests;
 
-import by.it.arsenihlaz.Calculator.entity.Var;
-import by.it.arsenihlaz.Calculator.exception.CalcException;
-import by.it.arsenihlaz.Calculator.interfaces.Repository;
-import by.it.arsenihlaz.Calculator.repository.VarMapRepository;
-import by.it.arsenihlaz.Calculator.services.Parser;
-import by.it.arsenihlaz.Calculator.services.VarCreator;
+import by.it.arsenihlaz.calculator.entity.Var;
+import by.it.arsenihlaz.calculator.exception.CalcException;
+import by.it.arsenihlaz.calculator.interfaces.Repository;
+import by.it.arsenihlaz.calculator.repository.VarMapRepository;
+import by.it.arsenihlaz.calculator.services.Parser;
+import by.it.arsenihlaz.calculator.services.VarCreator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

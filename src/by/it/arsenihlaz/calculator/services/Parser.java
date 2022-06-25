@@ -1,9 +1,11 @@
-package by.it.arsenihlaz.Calculator.services;
+package by.it.arsenihlaz.calculator.services;
 
-import by.it.arsenihlaz.Calculator.constants.Patterns;
-import by.it.arsenihlaz.Calculator.entity.Var;
-import by.it.arsenihlaz.Calculator.exception.CalcException;
-import by.it.arsenihlaz.Calculator.interfaces.Repository;
+import by.it.arsenihlaz.calculator.constants.Exception;
+import by.it.arsenihlaz.calculator.constants.Patterns;
+import by.it.arsenihlaz.calculator.entity.Var;
+import by.it.arsenihlaz.calculator.exception.CalcException;
+import by.it.arsenihlaz.calculator.interfaces.Repository;
+import by.it.arsenihlaz.jd02_05.ResourceManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +16,7 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
+    private final ResourceManager resourceManager = ResourceManager.INSTANSE;
     private final Repository repository;
     private final VarCreator varCreator;
     private final static Map<String, Integer> priorityMap = Map.of(
@@ -55,11 +58,12 @@ public class Parser {
         }
         return varCreator.createVar(operands.get(0));
     }
- // D=((C-0.15)-20)/(7-5)
+
+    // D=((C-0.15)-20)/(7-5)
     private String deleteBrackets(String expression) throws CalcException {
         Pattern pattern = Pattern.compile("\\([^()]+\\)");
         Matcher matcher = pattern.matcher(expression);
-        if(matcher.find()) {
+        if (matcher.find()) {
             String group = matcher.group();
             String replaceBrackets = group.replace("(", "")
                     .replace(")", "");
@@ -67,7 +71,6 @@ public class Parser {
         }
         return expression;
     }
-
 
 
     private Var calcOneOperation(String leftOperand, String operation, String rightOperand) throws CalcException {
@@ -87,7 +90,7 @@ public class Parser {
             case "/":
                 return left.div(right);
         }
-        throw new CalcException("unknown operation '%s'", operation);
+        throw new CalcException(resourceManager.getValue(Exception.UNKNOWN_OPERATION) + " %s", operation);
     }
 
     private int getPriority(List<String> operations) {

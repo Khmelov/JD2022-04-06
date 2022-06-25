@@ -1,7 +1,7 @@
-package by.it.arsenihlaz.Calculator.entity;
+package by.it.arsenihlaz.calculator.entity;
 
-import by.it.arsenihlaz.Calculator.exception.CalcException;
-import by.it.arsenihlaz.Calculator.constants.Patterns;
+import by.it.arsenihlaz.calculator.exception.CalcException;
+import by.it.arsenihlaz.calculator.constants.Patterns;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;

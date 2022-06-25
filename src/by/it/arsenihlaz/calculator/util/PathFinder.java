@@ -1,4 +1,4 @@
-package by.it.arsenihlaz.Calculator.util;
+package by.it.arsenihlaz.calculator.util;
 
 import by.it.arsenihlaz.jd01_14.TaskC;
 

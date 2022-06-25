@@ -1,21 +1,24 @@
-package by.it.arsenihlaz.Calculator.repository;
+package by.it.arsenihlaz.calculator.repository;
 
-import by.it.arsenihlaz.Calculator.ConsoleRunner;
-import by.it.arsenihlaz.Calculator.entity.Var;
-import by.it.arsenihlaz.Calculator.exception.CalcException;
-import by.it.arsenihlaz.Calculator.interfaces.Repository;
-import by.it.arsenihlaz.Calculator.services.VarCreator;
-import by.it.arsenihlaz.Calculator.util.PathFinder;
+import by.it.arsenihlaz.calculator.ConsoleRunner;
+import by.it.arsenihlaz.calculator.constants.Exception;
+import by.it.arsenihlaz.calculator.entity.Var;
+import by.it.arsenihlaz.calculator.exception.CalcException;
+import by.it.arsenihlaz.calculator.interfaces.Repository;
+import by.it.arsenihlaz.calculator.services.VarCreator;
+import by.it.arsenihlaz.calculator.util.PathFinder;
+import by.it.arsenihlaz.jd02_05.ResourceManager;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static by.it.arsenihlaz.calculator.constants.Patterns.VARS_TXT;
+
 public class PersistentRepository implements Repository {
 
-    public static final String VARS_TXT = "vars.txt";
     private final File path;
-
+    private final ResourceManager resourceManager = ResourceManager.INSTANSE;
     private final Map<String, Var> vars = new HashMap<>();
 
     public PersistentRepository() {
@@ -36,7 +39,7 @@ public class PersistentRepository implements Repository {
                     vars.put(name, var);
                 }
             } catch (IOException | CalcException e) {
-                throw new RuntimeException("not found file", e);
+                throw new RuntimeException(resourceManager.getValue(Exception.NOT_FOUND_FILE), e);
             }
         }
     }
@@ -54,7 +57,7 @@ public class PersistentRepository implements Repository {
                 writer.printf("%s=%s%n", entry.getKey(), entry.getValue());
             }
         } catch (FileNotFoundException e) {
-            throw new CalcException("not found file", e);
+            throw new CalcException(resourceManager.getValue(Exception.NOT_FOUND_FILE), e);
         }
     }
 

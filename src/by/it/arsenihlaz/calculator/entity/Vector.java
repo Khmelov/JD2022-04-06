@@ -1,6 +1,6 @@
-package by.it.arsenihlaz.Calculator.entity;
+package by.it.arsenihlaz.calculator.entity;
 
-import by.it.arsenihlaz.Calculator.exception.CalcException;
+import by.it.arsenihlaz.calculator.exception.CalcException;
 
 import java.util.Arrays;
 
@@ -16,8 +16,8 @@ public class Vector extends Var {
     }
 
     public Vector(String strVector) {
-        String strVectornew = strVector.replaceAll("[{}]", "");
-        String[] arrayStrVector = strVectornew.split(",");
+        String strVectorNew = strVector.replaceAll("[{}]", "");
+        String[] arrayStrVector = strVectorNew.split(",");
         this.value = new double[arrayStrVector.length].clone();
         for (int i = 0; i < arrayStrVector.length; i++) {
             this.value[i] = Double.parseDouble(arrayStrVector[i]);
