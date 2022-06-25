@@ -10,12 +10,12 @@ public class Parser {
         expression.trim().replaceAll(Patterns.SPACES, "");
         String[] parts = expression.split(Patterns.OPERATIONS, 2);
         String leftOperand = parts[0];
-        Var left = Var.crateVar(leftOperand);
+        Var left = Var.createVar(leftOperand);
         if (parts.length == 1) {
             return left;
         }
         String rightOperand = parts[1];
-        Var right = Var.crateVar(rightOperand);
+        Var right = Var.createVar(rightOperand);
 
         Pattern pattern = Pattern.compile(Patterns.OPERATIONS);
         Matcher matcher = pattern.matcher(expression);

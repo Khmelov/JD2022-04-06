@@ -31,9 +31,7 @@ public class CashierWorker implements Runnable {
                        customer.setWaiting(false);
                        customer.notify();
                    }
-                } else {
-                    Thread.onSpinWait();
-                }
+                } else Thread.onSpinWait();
         }
         System.out.println(cashier+"closed");
     }

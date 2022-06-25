@@ -16,7 +16,7 @@ public class Scalar extends Var {
     }
 
     public double getValue() {
-        return value;
+        return this.value;
     }
 
     @Override
