@@ -4,14 +4,20 @@ public class Shop {
 
     private final String name;
     private final ShopQueue queue;
+    private final Manager manager;
 
-    public Shop(String name, ShopQueue queue) {
+    public Shop(String name, ShopQueue queue, Manager manager) {
+        this.manager= manager;
         this.name = name;
         this.queue=queue;
     }
 
     public ShopQueue getQueue(){
         return this.queue;
+    }
+
+    public Manager getManager(){
+        return this.manager;
     }
 
     @Override

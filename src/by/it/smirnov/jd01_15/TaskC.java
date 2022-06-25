@@ -1,66 +1,57 @@
 package by.it.smirnov.jd01_15;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
+import java.util.Objects;
 import java.util.Scanner;
+
+import static java.lang.System.in;
+import static java.lang.System.out;
+import static by.it.smirnov.jd01_15.Constants.*;
 
 public class TaskC {
 
-    private static Scanner scanner = new Scanner(System.in);
-    private static String dir = "";
-    private static String command = "";
-    private static final String ERR = "не является внутренней или внешней\n" +
-            "командой, исполняемой программой или пакетным файлом.";
-    private static final String NO_DIR = "Системе не удается найти указанный путь.";
-    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH);
-
     public static void main(String[] args) {
-        dir = TaskA.getDir(TaskC.class);
-        while (!command.equals("end")) {
-            System.out.print(dir+">");
-            command = enterCommand();
-            if (command.startsWith("cd ")) reSetDir(command);
-            else if (command.equals("dir")) printDirInfo(dir);
-            else if (command.equals("end")) break;
-            else System.out.printf("\"%s\" %s%n", command, ERR);
+        File dir = new File(TaskA.getDir(TaskC.class));
+        Scanner scanner = new Scanner(in);
+        String command = "";
+        while (!command.equals(END)) {
+            out.print(dir + ">");
+            command = scanner.nextLine();
+            if (command.equals(PARENT)) dir = dir.getParentFile();
+            else if (command.startsWith(THIS_DIR)) dir = reSetDir(command, dir);
+            else if (command.equals(DIR)) printDirInfo(dir);
+            else if (command.equals(END)) break;
+            else out.printf(ERR, command);
         }
     }
 
-    private static void reSetDir(String command) {
+    private static File reSetDir(String command, File dir) {
         String[] dePath = command.split(" ");
-        Path path = Paths.get(dePath[1]);
-        if (path.isAbsolute() && Files.exists(path)) dir = path.toString();
-        else if (!path.isAbsolute()) {
-            path = Paths.get(dir, dePath[1]);
-            if (Files.exists(path)) dir = path.toString();
-            else System.out.println(NO_DIR);
-        }
+        String path = dePath[1];
+        String newPath = dir.getAbsolutePath() + File.separator + path;
+        File newFile = new File(newPath);
+        if (newFile.exists()) dir = newFile;
+        else out.println(NO_DIR);
+        return dir;
     }
 
-    private static void printDirInfo(String dir) {
-        System.out.printf(" Содержимое папки %s%n%n", dir);
+    private static void printDirInfo(File file) {
+        out.printf(DIR_TITLE, file);
         String name;
         Date date;
-        String dirOrFile = "<DIR>";
-        File file = new File(dir);
+        String dirOrFile = DIR_FLAG;
         File[] allFiles = file.listFiles();
-        for (int i = 0; i < allFiles.length; i++) {
+        out.printf(DIR_LINES, FORMATTER.format(file.lastModified()), dirOrFile, "", DOT_1);
+        out.printf(DIR_LINES, FORMATTER.format(file.getParentFile().lastModified()), dirOrFile, "", DOT_2);
+        for (int i = 0; i < Objects.requireNonNull(allFiles).length; i++) {
             long space = allFiles[i].length();
             name = allFiles[i].getName();
             date = new Date(allFiles[i].lastModified());
             String dateF = FORMATTER.format(date);
-            if(allFiles[i].isDirectory()) System.out.printf("%s    %s          %s%n", dateF, dirOrFile, name);
-            else if(allFiles[i].isFile()) System.out.printf("%s         %9d %s%n", dateF, space, name);
+            if (allFiles[i].isDirectory()) out.printf(DIR_LINES, dateF, dirOrFile, "", name);
+            else if (allFiles[i].isFile()) out.printf(DIR_LINES, dateF, "", space, name);
         }
-        System.out.println();
-    }
-
-    private static String enterCommand() {
-        return scanner.nextLine();
+        out.println();
     }
 }

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class VarMapRepository implements Repository{
 
-public Map<String,Var> vars =  new HashMap<>();
+public final Map<String,Var> vars =  new HashMap<>();
 
     @Override
     public Var save(String name, Var value) {

@@ -3,11 +3,9 @@ package by.it.ragach.jd02_02.entity;
 //считает кол-во вошедших/вышедших, план
 
 public class Manager {
-
     private final int plan;
     private volatile int countIn;
     private volatile int countOut;
-
 
     public Manager(int plan) {
         this.plan = plan;
@@ -21,12 +19,14 @@ public class Manager {
         return countOut == plan;
     }
 
-
-    public synchronized void customerEnter(){
+    public synchronized void customerEnter() {
         countIn++;
     }
 
-    public synchronized void customerOut(){
+    public synchronized void customerOut() {
         countOut++;
     }
+
+
+
 }
