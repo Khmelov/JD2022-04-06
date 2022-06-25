@@ -1,7 +1,0 @@
-message.incorrect_string=Incorrect string
-message.unknown_operation=unknown operation
-message.not_found_file=not found file
-message.incorrect_operation=Incorrect operation
-message.unknown_variable=unknown variable
-message.zero=division by zero
-message.error=ERROR:

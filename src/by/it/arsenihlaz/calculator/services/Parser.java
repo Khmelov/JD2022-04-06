@@ -1,11 +1,11 @@
 package by.it.arsenihlaz.calculator.services;
 
-import by.it.arsenihlaz.calculator.constants.Exception;
+import by.it.arsenihlaz.calculator.constants.Message;
 import by.it.arsenihlaz.calculator.constants.Patterns;
 import by.it.arsenihlaz.calculator.entity.Var;
 import by.it.arsenihlaz.calculator.exception.CalcException;
 import by.it.arsenihlaz.calculator.interfaces.Repository;
-import by.it.arsenihlaz.jd02_05.ResourceManager;
+import by.it.arsenihlaz.calculator.ResourceManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -90,7 +90,7 @@ public class Parser {
             case "/":
                 return left.div(right);
         }
-        throw new CalcException(resourceManager.getValue(Exception.UNKNOWN_OPERATION) + " %s", operation);
+        throw new CalcException(resourceManager.getValue(Message.UNKNOWN_OPERATION) + " %s", operation);
     }
 
     private int getPriority(List<String> operations) {

@@ -1,9 +1,9 @@
 package by.it.arsenihlaz.calculator.services;
 
-import by.it.arsenihlaz.calculator.constants.Exception;
+import by.it.arsenihlaz.calculator.constants.Message;
 import by.it.arsenihlaz.calculator.entity.Var;
 import by.it.arsenihlaz.calculator.exception.CalcException;
-import by.it.arsenihlaz.jd02_05.ResourceManager;
+import by.it.arsenihlaz.calculator.ResourceManager;
 
 import java.io.PrintStream;
 import java.util.Objects;
@@ -24,6 +24,6 @@ public class Printer {
     }
 
     public void print(CalcException e) {
-        out.println(resourceManager.getValue(Exception.ERROR) + e.getMessage());
+        out.println(resourceManager.getValue(Message.ERROR) + e.getMessage());
     }
 }

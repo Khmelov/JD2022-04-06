@@ -1,13 +1,13 @@
 package by.it.arsenihlaz.calculator.repository;
 
 import by.it.arsenihlaz.calculator.ConsoleRunner;
-import by.it.arsenihlaz.calculator.constants.Exception;
+import by.it.arsenihlaz.calculator.constants.Message;
 import by.it.arsenihlaz.calculator.entity.Var;
 import by.it.arsenihlaz.calculator.exception.CalcException;
 import by.it.arsenihlaz.calculator.interfaces.Repository;
 import by.it.arsenihlaz.calculator.services.VarCreator;
 import by.it.arsenihlaz.calculator.util.PathFinder;
-import by.it.arsenihlaz.jd02_05.ResourceManager;
+import by.it.arsenihlaz.calculator.ResourceManager;
 
 import java.io.*;
 import java.util.HashMap;
@@ -39,7 +39,7 @@ public class PersistentRepository implements Repository {
                     vars.put(name, var);
                 }
             } catch (IOException | CalcException e) {
-                throw new RuntimeException(resourceManager.getValue(Exception.NOT_FOUND_FILE), e);
+                throw new RuntimeException(resourceManager.getValue(Message.NOT_FOUND_FILE), e);
             }
         }
     }
@@ -57,7 +57,7 @@ public class PersistentRepository implements Repository {
                 writer.printf("%s=%s%n", entry.getKey(), entry.getValue());
             }
         } catch (FileNotFoundException e) {
-            throw new CalcException(resourceManager.getValue(Exception.NOT_FOUND_FILE), e);
+            throw new CalcException(resourceManager.getValue(Message.NOT_FOUND_FILE), e);
         }
     }
 

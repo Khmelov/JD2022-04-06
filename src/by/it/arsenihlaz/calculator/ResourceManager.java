@@ -7,7 +7,7 @@ public enum ResourceManager {
     INSTANSE;
 
     private ResourceBundle resourceBundle;
-    private static final String path = "by.it.arsenihlaz.calculator.language.exception";
+    private static final String path = "by.it.arsenihlaz.calculator.language.message";
 
     ResourceManager() {
         setLocale(Locale.getDefault());

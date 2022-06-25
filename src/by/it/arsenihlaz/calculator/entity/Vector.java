@@ -1,11 +1,15 @@
 package by.it.arsenihlaz.calculator.entity;
 
+import by.it.arsenihlaz.calculator.ResourceManager;
+import by.it.arsenihlaz.calculator.constants.Message;
 import by.it.arsenihlaz.calculator.exception.CalcException;
 
 import java.util.Arrays;
 
+
 public class Vector extends Var {
     private double[] value;
+    private final ResourceManager resourceManager = ResourceManager.INSTANSE;
 
     public Vector(double[] value) {
         this.value = value.clone();
@@ -34,7 +38,7 @@ public class Vector extends Var {
             return new Vector(result);
         } else if (other instanceof Vector vector) {
             if (this.value.length != vector.value.length) {
-                throw new CalcException("Incorrect size for %s + %s", this, vector);
+                throw new CalcException(resourceManager.getValue(Message.INCORRECT_SIZE_FOR) +" %s + %s", this, vector);
             }
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
