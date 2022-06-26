@@ -1,19 +1,21 @@
 package by.it.marchenko.calc.constant;
 
-import by.it.marchenko.calc.entity.Scalar;
+import by.it.marchenko.calc.ConsoleRunner;
+import by.it.marchenko.calc.utility.ResourceManager;
 
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class MessageConst {
+public class MessageConst implements LanguageConst {
+    private final ResourceManager resourceManager = ConsoleRunner.getResourceManager();
+    private final int invitationSymbolLength = resourceManager.getString(MESSAGE_PRINT_RESULT).length();
+
     public static final HashSet<String> YES_ANSWER = new HashSet<>(Arrays.asList("yes", "y", "н", "нуы"));
     public static final HashSet<String> NO_ANSWER = new HashSet<>(Arrays.asList("no", "n", "т", "тщ"));
 
-    public static final String MESSAGE_GREETING = "Application started. Type expression or END for exit.";
-    public static final String MESSAGE_EMPTY_EXPRESSION = "Incorrect input. Empty expression entered";
     public static final String MESSAGE_OVERWRITE_VALUE =
             "The variable %s is already assigned. Do you want to overwrite value? (Y/N) ";
-    public static final String MESSAGE_FAREWELL = "Application finished.";
+    //public static final String MESSAGE_FAREWELL = "Application finished.";
 
     public static final String INPUT_EXCEPTION = "Incorrect input: ";
     public static final String EMPTY_OPERAND_EXCEPTION = "Empty operand entered";
@@ -54,14 +56,19 @@ public class MessageConst {
     public static final String ASSIGNMENT_VARIABLE_COMMENT =
             "\n  Reason: it is necessary to have variable in the expression.";
 
+    public final String MESSAGE_DATA_INVITATION = ">".repeat(invitationSymbolLength);
 
-    public static final String MESSAGE_PRINT_RESULT = "Result";
-    public static final String MESSAGE_DATA_INVITATION = ">"
-            .repeat(MESSAGE_PRINT_RESULT.length());
+    public String getMESSAGE_DATA_INVITATION() {
+        return MESSAGE_DATA_INVITATION;
+    }
 
     public static final String COMMAND_APP_EXIT = "end";
     public static final String COMMAND_PRINT_VARIABLE = "printvar";
     public static final String COMMAND_SORT_VARIABLE = "sortvar";
+    public static final String COMMAND_SET_LANGUAGE_EN = "en";
+    public static final String COMMAND_SET_LANGUAGE_BE = "be";
+    public static final String COMMAND_SET_LANGUAGE_RU = "ru";
+
 
     public static final String SPACES_REGEX = "\s*";
     public static final String OPERATORS = "[-=+*/]";
@@ -93,4 +100,11 @@ public class MessageConst {
     //public static final String SUB_STRING_OPERATOR = "sub";
     public static final String MUL_STRING_OPERATOR = "mul";
     public static final String DIV_STRING_OPERATOR = "div";
+
+    public final static String INCORRECT_MATRIX_INPUT_MESSAGE = "Incorrect matrix input";
+    public final static String EMPTY_MATRIX_MESSAGE = "Matrix is empty";
+    public static final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
+    public static final String INCORRECT_VECTOR_INPUT_MESSAGE = "Incorrect vector input";
+    public static final String EMPTY_EXPRESSION_ENTERED = "Empty expression entered";
+    public static final String AVAILABLE_VARIABLES = "Available variables:";
 }

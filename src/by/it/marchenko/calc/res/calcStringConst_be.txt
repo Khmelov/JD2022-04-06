@@ -1,0 +1,7 @@
+message.greeting = Прывiтанне. Праграмма пачала працу. Увядзiце, калiласка , матэматычны выраз альбо END для выхаду.
+message.farewell = Праграмма скончыла працу. Да пабачэння.
+message.printResult = Вынiк
+message.changeLanguage = Мова праграммы зменена на беларускую.
+message.availableVariables = Вядомыя пераменныя:
+message.emptyExpression = Памылковы ўвод: уведзены пусты выраз.
+message.overwriteValue = Пераменная %s ужо iснуе. Цi жадаеце Вы перапiсаць яе? (Y/N)

@@ -7,5 +7,6 @@ public interface Message {
     String LASTNAME = "message.lastname";
     String INCORRECT_LANGUAGE = "message.incorrectLanguage";
     String INSTRUCTION = "message.instruction";
+    //String TESTER = "message.tester";
 
 }

@@ -6,8 +6,6 @@ import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public abstract class Var implements Operation {
 
-    final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
-
     @Override
     public Var foundVarType(Var operand, String operator) {
         //System.out.println("FOUND VAR+VAR");

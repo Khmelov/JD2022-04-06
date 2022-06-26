@@ -45,8 +45,6 @@ public class TaskB implements Message {
                 resourceManager.changeResource(locale);
                 LocalDate currentLocalDate = LocalDate.now();
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyy", locale);
-                //System.out.println(dateTimeFormatter.format(currentLocalDate));
-
                 System.out.printf(MESSAGE_FORMAT,
                         dateTimeFormatter.format(currentLocalDate),
                         resourceManager.getString(GREETING),
@@ -54,6 +52,7 @@ public class TaskB implements Message {
                         resourceManager.getString(FIRSTNAME),
                         resourceManager.getString(LASTNAME)
                 );
+                //System.out.printf(resourceManager.getString(TESTER), "qwe");
             } else {
                 System.out.println(resourceManager.getString(INCORRECT_LANGUAGE));
                 resourceManager.changeResource(Locale.getDefault());

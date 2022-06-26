@@ -1,0 +1,8 @@
+message.greeting = Application started. Type expression or END for exit.
+message.farewell = Application finished.
+message.printResult = Result
+message.changeLanguage = Application language changed to English.
+message.availableVariables = Available variables:
+    #exception messages
+message.emptyExpression = Incorrect input. Empty expression entered.
+message.overwriteValue = The variable %s is already assigned. Do you want to overwrite value? (Y/N)

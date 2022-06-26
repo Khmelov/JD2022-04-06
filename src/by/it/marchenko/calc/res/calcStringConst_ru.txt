@@ -1,0 +1,7 @@
+message.greeting = Приложение запущено. Введите выражение или END для выхода.
+message.farewell = Приложение остановлено.
+message.printResult = Результат
+message.changeLanguage = Язык приложения изменен на русский.
+message.availableVariables = Известные переменные:
+message.emptyExpression = Неправильный ввод: введено пустое выражение.
+message.overwriteValue = Переменная %s уже сущесвует. Присвоить новое значение переменной? (Д/Н)
