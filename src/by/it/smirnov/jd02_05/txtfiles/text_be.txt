@@ -1,0 +1,6 @@
+message.welcome=Вітаю цябе, шаноўны спадар!
+message.question=Як у цябе справы?
+user.firstname=Антон
+user.lastname=Смирноў
+command.chooselang=\nУвядзіце каманду, каб змяніць мову або выйсці: \nen | fr | jp | be | ru | end
+message.date=%nСёння ў нас %s (але гэта не дакладна!)%n%n

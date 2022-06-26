@@ -1,6 +1,6 @@
 package by.it.kameisha.calc;
 
-abstract class Var implements Operation {
+public abstract class Var implements Operation {
 
 
     @Override

@@ -8,7 +8,8 @@ import by.it.avramchuk.jd02_02.services.ShopWorker;
 public class ConsoleRunner {
     public static void main(String[] args) {
         ShopQueue marketQueue = new ShopQueue();
-        Shop shop = new Shop("Market", marketQueue);
+        Manager manager = new Manager(100);
+        Shop shop = new Shop("Market", marketQueue, manager);
         ShopWorker shopWorker = new ShopWorker(shop);
         shopWorker.start();
     }
