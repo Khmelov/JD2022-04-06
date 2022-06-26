@@ -1,12 +1,18 @@
 package by.it.marchenko.calc;
 
+import by.it.marchenko.calc.entity.Var;
+import by.it.marchenko.calc.exception.CalcException;
+import by.it.marchenko.calc.interfaces.Repository;
+import by.it.marchenko.calc.repository.VarRepositoryMap;
+import by.it.marchenko.calc.services.*;
+
 import java.util.Scanner;
 
 public class ConsoleRunner {
     public static void main(String[] args) throws CalcException {
 
         Scanner console = new Scanner(System.in);           //  input data source
-        Repository repo = new VarRepositoryMap(console);    //  repository for variable saving
+        Repository repo = new VarRepositoryMap();    //  repository for variable saving
         //VarCreator creator = new VarCreator(repo);          //  variable creator method
         Operands operands = new Operands(repo);             //  create/check String/Var operands and operators
         Assignment assignment = new Assignment(repo);       //  check and perform assignment

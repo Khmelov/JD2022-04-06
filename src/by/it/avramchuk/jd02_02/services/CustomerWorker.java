@@ -17,6 +17,7 @@ implements CustomerAction, ShoppingCardAction {
     private ShoppingCart myCart;
 
     public CustomerWorker(Customer customer, Shop shop) {
+        shop.getManager().customerEnter();
         this.customer = customer;
         this.shop = shop;
     }
