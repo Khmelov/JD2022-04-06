@@ -1,25 +1,36 @@
 package by.it.eivanova.jd02_03.entity;
 
+import by.it.eivanova.jd02_03.util.RandomGenerator;
+
 public class Customer {
 
+    public final String name;
+    private ShoppingCart myCart;
+    private final int speedFactor;
+    public boolean isWaiting;
 
-    private final String name;
-    private boolean waiting;
-
-    public Customer(long number) {
-        this.name = "Customer №" + number;
+    public Customer(long number){
+        this.name = "Customer №"+number;
+        this.speedFactor = 1;
     }
 
-
-    public boolean isWaiting() {
-        return waiting;
+    public  void setMyCart(ShoppingCart myCart){
+        this.myCart = myCart;
     }
 
-    public void setWaiting(boolean waiting) {
-        this.waiting = waiting;
+    public ShoppingCart getMyCart() {
+        return myCart;
     }
 
-    public Object getMonitor(){
+    public int getSpeedFactor(){
+        return speedFactor;
+    }
+
+    public int mayToBuy (){
+        return RandomGenerator.get(2,5);
+    }
+
+    public Customer getMonitor(){
         return this;
     }
 

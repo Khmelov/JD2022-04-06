@@ -6,7 +6,7 @@ public class Timer {
 
     public static void sleep(int timeout){
         try {
-            Thread.sleep(timeout/1000);
+            Thread.sleep(timeout/100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

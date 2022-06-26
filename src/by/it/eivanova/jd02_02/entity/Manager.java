@@ -1,27 +1,47 @@
 package by.it.eivanova.jd02_02.entity;
 
+import by.it.eivanova.jd02_02.service.CashierWorker;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Manager {
-    private final int plan; //100
-    private volatile int countIn;
-    private volatile int countOut;
+    private final int plan;
+    private final AtomicInteger countIN = new AtomicInteger(0);
+    private final Deque<CashierWorker> openCashierCount;
 
     public Manager(int plan) {
         this.plan = plan;
+        openCashierCount = new ArrayDeque<>();
     }
 
-    public boolean shopOpened() {
-        return countIn != plan;
+    public  void customerEnter (){
+        countIN.getAndIncrement();
     }
 
-    public boolean shopClosed() {
-        return countOut == plan;
+    public boolean shopOpened(){
+        return countIN.get()!=plan;
     }
 
-    public synchronized void customerEnter(){
-        countIn++;
-    }
+    public void regulateCountCashier (int cashierNeeded, Shop shop){
 
-    public synchronized void customerOut(){
-        countOut++;
+        if (openCashierCount.size()<cashierNeeded){
+            int index = openCashierCount.size();
+            Cashier cashier = new Cashier(index+1);
+            CashBox[] cashBoxes = CashBox.values();
+            CashierWorker cashierWorker = new CashierWorker(cashier, cashBoxes[index], shop);
+            openCashierCount.push(cashierWorker);
+            cashierWorker.start();
+            regulateCountCashier(cashierNeeded, shop);
+        } else if (openCashierCount.size()>cashierNeeded && openCashierCount.size()!=1){
+            openCashierCount.poll().setNeedToClose(true);
+            regulateCountCashier(cashierNeeded, shop);
+        }
+    }
+    public void closeAllCashier(){
+        while (openCashierCount.size()>0){
+            openCashierCount.poll().setNeedToClose(true);
+        }
     }
 }

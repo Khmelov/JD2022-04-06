@@ -1,70 +1,96 @@
 package by.it.eivanova.jd02_02.service;
 
-import by.it.eivanova.jd02_02.entity.Customer;
-import by.it.eivanova.jd02_02.entity.Good;
-import by.it.eivanova.jd02_02.entity.Queue;
-import by.it.eivanova.jd02_02.entity.Shop;
+import by.it.eivanova.jd02_02.entity.*;
+import by.it.eivanova.jd02_02.entity.ShopQueue;
 import by.it.eivanova.jd02_02.interfaces.CustomerAction;
+import by.it.eivanova.jd02_02.interfaces.ShoppingCardAction;
+import by.it.eivanova.jd02_02.respository.PriceListRepository;
 import by.it.eivanova.jd02_02.util.RandomGenerator;
 import by.it.eivanova.jd02_02.util.Timer;
 
-public class CustomerWorker extends Thread
-        implements CustomerAction {
+import java.util.Set;
+
+public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
 
     private final Customer customer;
     private final Shop shop;
+    private by.it.eivanova.jd02_02.entity.ShoppingCart myCart;
 
     public CustomerWorker(Customer customer, Shop shop) {
+        shop.getManager().customerEnter();
         this.customer = customer;
         this.shop = shop;
-        shop.getManager().customerEnter();
     }
 
     @Override
     public void run() {
         enteredStore();
-        chooseGood();
-        goToQueue();
+        takeCart();
+        int goodsMayToBuy= customer.mayToBuy();
+        System.out.println(customer+" starts to choose goods");
+        for (int i = 0; i < goodsMayToBuy; i++) {
+            Good nextGood = chooseGood();
+            putToCart(nextGood);
+        }
+        System.out.println(customer+" finished. He choosed "+myCart.goodsInCart.size()+" goods");
+        if (myCart.goodsInCart.size()!=0) goToQueue();
         goOut();
-        shop.getManager().customerOut();
     }
 
     @Override
     public void enteredStore() {
-        System.out.println(customer + " enter to the " + shop);
+        System.out.println(customer+" enter to the "+shop);
     }
 
     @Override
     public Good chooseGood() {
-        System.out.println(customer + " started to choose goods");
-        int timeout = RandomGenerator.get(500, 2000);
+        int timeout = RandomGenerator.get(500, 2000) * customer.getSpeedFactor();
         Timer.sleep(timeout);
-        Good good = new Good();
-        System.out.println(customer + " choose " + good);
-        System.out.println(customer + " finished to choose goods");
+        Set<String> goodList = PriceListRepository.priceList.keySet();
+        String[] strings = goodList.toArray(String[]::new);
+        int randomIndex = RandomGenerator.get(strings.length-1);
+        Good good = new Good(strings[randomIndex]);
+        System.out.println(customer+" choosed "+good);
         return good;
     }
 
     @Override
+    public void goOut() {
+        System.out.println(customer+" leaves the "+shop);
+    }
+
+    @Override
+    public void takeCart() {
+        int timeout = RandomGenerator.get(100,300) * customer.getSpeedFactor();
+        Timer.sleep(timeout);
+        myCart = new ShoppingCart();
+        System.out.println(customer+" took the cart");
+    }
+
+    @Override
+    public int putToCart(Good good) {
+        int timeout = RandomGenerator.get(100,300) * customer.getSpeedFactor();
+        Timer.sleep(timeout);
+        System.out.println(customer+" put "+good+ " to his cart");
+        return myCart.addGoodToCart(good);
+    }
+
+    @Override
     public void goToQueue() {
-        Queue queue = shop.getQueue();
-        synchronized (customer.getMonitor()) {
-            System.out.println(customer + " go to Queue");
+        ShopQueue queue = shop.getQueue();
+        synchronized (customer.getMonitor()){
+            System.out.println(customer+" go to the queue");
+            customer.setMyCart(myCart);
             queue.add(customer);
-            customer.setWaiting(true);
-            while (customer.isWaiting()) {
+            customer.isWaiting=true;
+            while (customer.isWaiting){
                 try {
-                    customer.wait(); //wait notify
+                    customer.wait();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
-            System.out.println(customer + " leaves the Queue");
+            System.out.println(customer+" leaves the queue");
         }
-    }
-
-    @Override
-    public void goOut() {
-        System.out.println(customer + " leaves the " + shop);
     }
 }

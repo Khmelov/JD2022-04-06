@@ -1,20 +1,27 @@
 package by.it.eivanova.jd02_03.service;
 
-import by.it._classwork_.jd02_03.entity.Customer;
-import by.it._classwork_.jd02_03.entity.Good;
 import by.it._classwork_.jd02_03.entity.Queue;
-import by.it._classwork_.jd02_03.entity.Shop;
-import by.it._classwork_.jd02_03.interfaces.CustomerAction;
-import by.it._classwork_.jd02_03.util.RandomGenerator;
-import by.it._classwork_.jd02_03.util.Timer;
+import by.it.eivanova.jd02_03.entity.*;
+import by.it.eivanova.jd02_03.interfaces.CashierAction;
+import by.it.eivanova.jd02_03.interfaces.CustomerAction;
+import by.it.eivanova.jd02_03.interfaces.ShoppingCardAction;
+import by.it.eivanova.jd02_03.respository.PriceListRepository;
+import by.it.eivanova.jd02_03.util.RandomGenerator;
+import by.it.eivanova.jd02_03.util.Timer;
 
-public class CustomerWorker extends Thread
-        implements CustomerAction {
+import java.util.Set;
+import java.util.concurrent.Semaphore;
+
+public class CustomerWorker extends Thread implements CustomerAction, ShoppingCardAction {
 
     private final Customer customer;
     private final Shop shop;
+    private ShoppingCart myCart;
+    private static final Semaphore semaphoreChoseGood = new Semaphore(20);
+    private static final Semaphore semaphoreCart = new Semaphore(50);
 
-    public CustomerWorker(Customer customer, Shop shop) {
+
+    public CustomerWorker(Customer customer, Shop shop){
         this.customer = customer;
         this.shop = shop;
         shop.getManager().customerEnter();
@@ -23,48 +30,91 @@ public class CustomerWorker extends Thread
     @Override
     public void run() {
         enteredStore();
-        chooseGood();
-        goToQueue();
-        goOut();
-        shop.getManager().customerOut();
-    }
-
-    @Override
-    public void enteredStore() {
-        System.out.println(customer + " enter to the " + shop);
-    }
-
-    @Override
-    public Good chooseGood() {
-        System.out.println(customer + " started to choose goods");
-        int timeout = RandomGenerator.get(500, 2000);
-        Timer.sleep(timeout);
-        Good good = new Good();
-        System.out.println(customer + " choose " + good);
-        System.out.println(customer + " finished to choose goods");
-        return good;
-    }
-
-    @Override
-    public void goToQueue() {
-        Queue queue = shop.getQueue();
-        synchronized (customer.getMonitor()) {
-            System.out.println(customer + " go to Queue");
-            queue.add(customer);
-            customer.setWaiting(true);
-            while (customer.isWaiting()) {
-                try {
-                    customer.wait(); //wait notify
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            System.out.println(customer + " leaves the Queue");
+        try {
+            semaphoreCart.acquire();
+            takeCart();
+            chooseGood();
+            goToQueue();
+            goOut();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+          semaphoreCart.release();
         }
     }
 
     @Override
-    public void goOut() {
-        System.out.println(customer + " leaves the " + shop);
+    public void enteredStore(){
+        System.out.println(customer+" enter to the "+shop);
+    }
+
+    @Override
+    public void chooseGood() {
+        try {
+            semaphoreChoseGood.acquire();
+            int goodsMayToBuy = customer.mayToBuy();
+            System.out.println(customer + " starts to choose goods");
+            for (int i = 0; i < goodsMayToBuy; i++) {
+                int timeout = RandomGenerator.get(500, 2000) * customer.getSpeedFactor();
+                Timer.sleep(timeout);
+                Set<String> goodList = PriceListRepository.priceList.keySet();
+
+                String[] strings = goodList.toArray(String[]::new);
+                int randomIndex = RandomGenerator.get(strings.length - 1);
+                Good good = new Good(strings[randomIndex]);
+                System.out.println(customer + " choosed " + good);
+                putToCart(good);
+            }
+
+            System.out.println(customer + " finished. He choosed " + myCart.goodsInCart.size() + " goods");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+        semaphoreChoseGood.release();
+        }
+    }
+
+
+    @Override
+    public void goOut(){
+        System.out.println(customer+" leaves the "+shop);
+    }
+
+    @Override
+    public void takeCart() {
+        int timeout = RandomGenerator.get(100,300) * customer.getSpeedFactor();
+        Timer.sleep(timeout);
+        myCart = new ShoppingCart();
+        System.out.println(customer+" took the cart");
+    }
+
+    @Override
+    public int putToCart(Good good){
+        int timeout = RandomGenerator.get(100, 300) * customer.getSpeedFactor();
+        Timer.sleep(timeout);
+        System.out.println(customer+" put "+good+ " to his cart");
+        return myCart.addGoodToCart(good);
+    }
+
+    @Override
+    public void goToQueue(){
+        if (myCart.goodsInCart.size() != 0){
+          ShopQueue queue = shop.getQueue();
+          synchronized (customer.getMonitor()){
+
+                System.out.println(customer + " go to the queue");
+                customer.setMyCart(myCart);
+                queue.add(customer);
+                customer.isWaiting = true;
+                while (customer.isWaiting){
+                    try {
+                        customer.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                System.out.println(customer + " leaves the queue");
+            }
+        }
     }
 }
