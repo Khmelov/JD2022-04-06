@@ -1,4 +1,4 @@
-package by.it.eivanova.jd02_05.txtfiles;
+package by.it.eivanova.jd02_05;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
