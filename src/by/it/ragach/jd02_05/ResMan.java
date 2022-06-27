@@ -4,9 +4,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public enum ResMan {
-    INSTANSE;
+    INSTANCE;
 
-    private Locale locale = new Locale("ru","RU");
     private ResourceBundle resourceBundle;
 
     ResMan() {

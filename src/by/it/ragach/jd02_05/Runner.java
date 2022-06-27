@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Runner {
     public static void main(String[] args) {
-        ResMan resMan = ResMan.INSTANSE;
+        ResMan resMan = ResMan.INSTANCE;
 
         Locale locale = args.length == 2
                 ? new Locale(args[0], args[1])
