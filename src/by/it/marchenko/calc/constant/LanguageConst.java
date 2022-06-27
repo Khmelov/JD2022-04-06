@@ -6,7 +6,7 @@ public interface LanguageConst {
     String MESSAGE_PRINT_RESULT = "message.printResult";
     String MESSAGE_CHANGE_LANGUAGE = "message.changeLanguage";
 
-    String AVAILABLE_VARIABLES = "message.availableVariables:";
+    String AVAILABLE_VARIABLES = "message.availableVariables";
     String MESSAGE_EMPTY_EXPRESSION = "message.emptyExpression";
 
     /*

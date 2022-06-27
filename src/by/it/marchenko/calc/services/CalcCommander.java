@@ -53,7 +53,8 @@ public class CalcCommander implements CalcAppCommand, LanguageConst {
     }
 
     private static String printVariable() {
-        StringBuilder out = new StringBuilder(AVAILABLE_VARIABLES);
+        StringBuilder out = new StringBuilder(
+                ResourceManager.INSTANCE.getString(AVAILABLE_VARIABLES));
         for (Map.Entry<String, Var> element : variables.entrySet()) {
             out.append("\n").append(element.getKey()).
                     append(ASSIGN_OPERATOR).append(element.getValue());
@@ -64,7 +65,8 @@ public class CalcCommander implements CalcAppCommand, LanguageConst {
 
     private static String sortVariable() {
         TreeMap<String, Var> sortedVariables = new TreeMap<>(variables);
-        StringBuilder out = new StringBuilder(AVAILABLE_VARIABLES);
+        StringBuilder out = new StringBuilder(
+                ResourceManager.INSTANCE.getString(AVAILABLE_VARIABLES));
         for (Map.Entry<String, Var> element : sortedVariables.entrySet()) {
             out.append("\n").append(element.getKey()).
                     append(ASSIGN_OPERATOR).append(element.getValue());
