@@ -4,6 +4,7 @@ import by.it.kadulin.calc.entity.Var;
 import by.it.kadulin.calc.interfaces.Repository;
 import by.it.kadulin.calc.repository.PersistentRepository;
 import by.it.kadulin.calc.repository.VarMapRepository;
+import by.it.kadulin.calc.service.Logger;
 import by.it.kadulin.calc.service.Parser;
 import by.it.kadulin.calc.service.Printer;
 import by.it.kadulin.calc.service.VarCreator;
@@ -30,6 +31,8 @@ public class ConsoleRunner {
             }
             else {
                 Var result = parser.startCalc(expression);
+                Logger logger = Logger.INSTANCE;
+                logger.log(result.toString());
                 printer.print(result);
             }
         }
