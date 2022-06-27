@@ -5,6 +5,7 @@ import by.it.marchenko.calc.exception.CalcException;
 import by.it.marchenko.calc.exception.CalcExceptionHandler;
 import by.it.marchenko.calc.interfaces.Repository;
 import by.it.marchenko.calc.log.EnumLogger;
+import by.it.marchenko.calc.log.LazyLogger;
 import by.it.marchenko.calc.repository.VarRepositoryMap;
 import by.it.marchenko.calc.services.*;
 import by.it.marchenko.calc.utility.Converter;
@@ -34,6 +35,7 @@ public class ConsoleRunner {
         Printer printer = new Printer(resourceManager);
         EnumLogger enumLogger = EnumLogger.get();
 
+
         printer.greeting();
         Input inputString = new Input(console);
         Parser parseString = new Parser(repo/*, creator*/, operands, assignment);
@@ -43,6 +45,7 @@ public class ConsoleRunner {
                 inputString.setExpression();
                 String tempString = inputString.getExpression();
                 enumLogger.info(tempString);
+                LazyLogger.get().info(tempString);
 
                 CalcCommander commander = new CalcCommander(repo);  //  command creator method
                 String resultString = commander.performCommand(tempString);
