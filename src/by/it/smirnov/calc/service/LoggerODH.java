@@ -1,28 +1,29 @@
 package by.it.smirnov.calc.service;
 
+import by.it.smirnov.calc.ConsoleRunner;
 import by.it.smirnov.calc.interfaces.Log;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import static by.it.smirnov.calc.constants.Wordings.LOG_TXT;
 import static by.it.smirnov.calc.util.PathGetter.getPath;
 
-public enum Logger implements Log {
+public class LoggerODH implements Log {
 
-    LOG_INSTANCE;
+    private LoggerODH() {
+    }
+    private static class OnDemandHolder{
+        public static final LoggerODH loggerODH = new LoggerODH();
+    }
 
-    private static volatile Logger logger;
-
-    public static final String LOG_TXT = "log.txt";
-
-
-    public static Logger getLogInstance() {
-        return LOG_INSTANCE;
+    public static LoggerODH getLogInstance() {
+        return OnDemandHolder.loggerODH;
     }
 
     public void log(String message) {
-        String path = getPath(Logger.class, LOG_TXT);
+        String path = getPath(ConsoleRunner.class, LOG_TXT);
         try (PrintWriter writer = new PrintWriter(new FileWriter(path, true))) {
             writer.println(message);
         } catch (IOException e) {

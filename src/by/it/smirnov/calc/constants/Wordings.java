@@ -1,5 +1,7 @@
 package by.it.smirnov.calc.constants;
 
+import java.io.File;
+
 public interface Wordings {
 
     String END = "end";
@@ -9,7 +11,8 @@ public interface Wordings {
     String RU = "ru";
     String BE = "be";
     String USER_DIR = "user.dir";
-    String FILE_REPO = "Vars.txt";
+    String FILE_REPO = "txtfiles" + File.separator + "Vars.txt";
+    String LOG_TXT = "txtfiles" + File.separator + "log.txt";
     String BAD_STRING = "error.badstring";
     String BAD_SIZE = "error.badsize";
     String BAD_OPER = "error.badoper";

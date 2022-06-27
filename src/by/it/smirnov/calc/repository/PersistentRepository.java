@@ -1,5 +1,6 @@
 package by.it.smirnov.calc.repository;
 
+import by.it.smirnov.calc.ConsoleRunner;
 import by.it.smirnov.calc.constants.Patterns;
 import by.it.smirnov.calc.entity.Var;
 import by.it.smirnov.calc.exception.CalcException;
@@ -20,7 +21,7 @@ public class PersistentRepository implements Repository {
     private final File path;
 
     public PersistentRepository() {
-        String fileName = PathGetter.getPath(PersistentRepository.class, FILE_REPO);
+        String fileName = PathGetter.getPath(ConsoleRunner.class, FILE_REPO);
         path = new File(fileName);
         initFromFile();
     }

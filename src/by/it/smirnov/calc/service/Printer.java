@@ -13,7 +13,7 @@ import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 public class Printer {
 
     private final PrintStream out;
-    private final Logger logger = LOG_INSTANCE;
+    private final LoggerODH logger = LoggerODH.getLogInstance();
 
 
     public Printer(PrintStream out) {
