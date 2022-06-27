@@ -9,6 +9,8 @@ import by.it.kameisha.calc.service.Parser;
 import by.it.kameisha.calc.service.Printer;
 import by.it.kameisha.calc.service.VarCreator;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ConsoleRunner {
@@ -19,6 +21,7 @@ public class ConsoleRunner {
         Locale locale = args.length == 2 ? new Locale(args[0], args[1]) : new Locale("en");
         List<String> locales = new ArrayList<>(Arrays.asList("ru", "en", "be"));
         resMan.setLocale(locale);
+        Logger logger = Logger.INSTANCE;
 
         Printer printer = new Printer();
         Repository repository = new VarMapRepository();
@@ -27,9 +30,11 @@ public class ConsoleRunner {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println(resMan.get(MessageApp.MESSAGE_START_APP));
+        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss  dd.MM.yyyy")));
         while (scanner.hasNext()) {
             String expression = scanner.nextLine();
             if (expression.equalsIgnoreCase(COMMAND_END)) {
+                System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy")));
                 break;
             } else if (locales.contains(expression)) {
                 locale = new Locale(expression.trim());
@@ -38,8 +43,13 @@ public class ConsoleRunner {
                 try {
                     Var result = parser.calc(expression);
                     printer.print(result);
+                    logger.log(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss  dd.MM.yyyy")) + "\n\t" + " created "
+                            + result.getClass().getSimpleName() + " " + result);
+
                 } catch (CalcException e) {
                     printer.print(e);
+                    logger.log(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy")) + "\n\t"
+                            + e.getClass().getSimpleName() + " " + e.getMessage());
                 }
             }
         }

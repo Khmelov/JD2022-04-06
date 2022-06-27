@@ -2,10 +2,10 @@ package by.it.kameisha.calc.service;
 
 import by.it.kameisha.calc.ResMan;
 import by.it.kameisha.calc.constants.Errors;
-import by.it.kameisha.calc.entity.Var;
 import by.it.kameisha.calc.constants.Patterns;
 import by.it.kameisha.calc.entity.Matrix;
 import by.it.kameisha.calc.entity.Scalar;
+import by.it.kameisha.calc.entity.Var;
 import by.it.kameisha.calc.entity.Vector;
 import by.it.kameisha.calc.exception.CalcException;
 import by.it.kameisha.calc.interfaces.Repository;
@@ -22,7 +22,7 @@ public class VarCreator {
 
     public Var createVar(String stringVar) throws CalcException {
         Var result;
-        stringVar = stringVar.trim().replace(" ","");
+        stringVar = stringVar.trim().replace(" ", "");
         if (stringVar.matches(Patterns.SCALAR)) {
             result = new Scalar(stringVar);
         } else if (stringVar.matches(Patterns.VECTOR)) {
@@ -33,7 +33,7 @@ public class VarCreator {
             result = repository.get(stringVar);
         }
         if (Objects.isNull(result)) {
-            throw new CalcException(resMan.get(Errors.INCORRECT_STRING) +" %s", stringVar);
+            throw new CalcException(resMan.get(Errors.INCORRECT_STRING) + " '%s'", stringVar);
         }
         return result;
     }

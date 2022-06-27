@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Objects;
 
-public class Logger {
+public class Logger{
     public static final String LOG_TXT = "log.txt";
     private static volatile Logger logger;
 
