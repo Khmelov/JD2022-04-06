@@ -40,8 +40,6 @@ public class Parser {
         while (matcher.find()) {
             operations.add(matcher.group());
         }
-
-
         while (!operations.isEmpty()) {
             int index = getPriority(operations);
             String left = operands.remove(index);
