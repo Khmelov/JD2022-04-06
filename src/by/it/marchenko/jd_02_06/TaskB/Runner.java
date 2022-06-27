@@ -1,4 +1,6 @@
-package by.it.marchenko.jd_02_06;
+package by.it.marchenko.jd_02_06.TaskB;
+
+import by.it.marchenko.jd_02_06.TaskB.Logger;
 
 public class Runner {
 

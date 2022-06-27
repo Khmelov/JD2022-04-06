@@ -1,6 +1,6 @@
-package by.it.marchenko.jd_02_06;
+package by.it.marchenko.jd_02_06.TaskA;
 
-import by.it.marchenko.jd_02_06.utility.FilePathFounder;
+import by.it.marchenko.jd_02_06.TaskA.utility.FilePathFounder;
 
 import java.io.FileWriter;
 import java.io.IOException;
