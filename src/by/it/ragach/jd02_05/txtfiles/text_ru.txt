@@ -1,3 +1,4 @@
+message.start=Выберите язык:
 massage.welcome=Привет!
 massage.question=Как дела?
 user.firstname=Оксана
