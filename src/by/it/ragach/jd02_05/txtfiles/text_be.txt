@@ -1,5 +1,5 @@
 message.start=Выберыце мову:
-massage.welcome=Прывітанне!
-massage.question=Як справы?
+message.welcome=Прывітанне!
+message.question=Як справы?
 user.firstname=Аксана
 user.lastname=Рагач
