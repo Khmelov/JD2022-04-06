@@ -1,7 +1,5 @@
 package by.it.marchenko.calc.services;
 
-//import java.util.Objects;
-
 import by.it.marchenko.calc.entity.Matrix;
 import by.it.marchenko.calc.entity.Scalar;
 import by.it.marchenko.calc.entity.Var;
@@ -32,7 +30,8 @@ public class VarCreator {
             createdVar = repository.getVariable(operand);
         }
         if (Objects.isNull(createdVar)) {
-            throw new CalcException("Incorrect variable");
+            throw new CalcException(
+                    INPUT_EXCEPTION + WRONG_OPERAND_EXCEPTION + WRONG_OPERAND_COMMENT, operand);
         }
         return createdVar;
     }

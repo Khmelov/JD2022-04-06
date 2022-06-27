@@ -10,7 +10,5 @@ public interface OperandProcessing {
 
     List<String> createOperators(String expression);
 
-    Var createVar(String operand) throws CalcException;
-
     List<Var> createVar(List<String> operands) throws CalcException;
 }

@@ -29,7 +29,7 @@ public class ConsoleRunner {
         Operands operands = new Operands(repo);         //  create/check String/Var operands and operators
         Assignment assignment = new Assignment(repo);   //  check and perform assignment
         Converter.createResourceFromText();
-        resourceManager.changeResource(new Locale("ru"));
+        resourceManager.changeResource(Locale.getDefault());
         Printer printer = new Printer(resourceManager);
 
         printer.greeting();
