@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import static by.it.smirnov.jd02_06.PathGetter.getPath;
 
-public class Logger {
+public class Logger implements Log {
     private static volatile Logger logger;
 
     public static final String LOG_TXT = "log.txt";
@@ -32,9 +32,19 @@ public class Logger {
     public void log(String message) {
         String path = getPath(Logger.class, LOG_TXT);
         try (PrintWriter writer = new PrintWriter(new FileWriter(path, true))) {
-writer.println(message);
+            writer.println(message);
         } catch (IOException e) {
             throw new AssertionError(e);
         }
+    }
+
+    @Override
+    public void error(String message) {
+        log(message);
+    }
+
+    @Override
+    public void info(String message) {
+        log(message);
     }
 }

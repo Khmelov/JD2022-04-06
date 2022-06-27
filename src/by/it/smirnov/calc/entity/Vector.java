@@ -115,7 +115,7 @@ public class Vector extends Var {
     public Var div(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             if(((Scalar) other).getValue() == 0)
-                throw new CalcException(INSTANCE.getString(DIV_ZERO));
+                throw new CalcException(INSTANCE.getString(DIV_ZERO), this);
             double[] div = Arrays.copyOf(values, values.length);
             for (int i = 0; i < this.values.length; i++) {
                 div[i] = div[i] / scalar.getValue();

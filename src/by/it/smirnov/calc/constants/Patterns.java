@@ -19,5 +19,7 @@ public class Patterns {
     public static final String MUL = "*";
     public static final String DIV = "/";
     public static final String EQ = "=";
+
+    public static final String DATE_PATTERN = "dd.MM.yyyy, HH:mm:ss";
 }
 

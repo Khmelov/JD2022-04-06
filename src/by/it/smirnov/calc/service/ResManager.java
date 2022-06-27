@@ -1,8 +1,11 @@
 package by.it.smirnov.calc.service;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static by.it.smirnov.calc.constants.Patterns.DATE_PATTERN;
 import static by.it.smirnov.calc.constants.Wordings.CHANGE_LOCAL;
 import static java.lang.System.out;
 
@@ -16,12 +19,19 @@ public enum ResManager {
     }
 
     public void setLocale(Locale locale) {
+        Printer printer = new Printer(out);
         resourceBundle = ResourceBundle.getBundle(basename, locale);
-        out.println(getString((CHANGE_LOCAL)));
+        printer.println(getString((CHANGE_LOCAL)));
     }
 
     public String getString(String key){
         return resourceBundle.getString(key);
+    }
+
+    public static String getDate() {
+        ZonedDateTime now = ZonedDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN, Locale.getDefault());
+        return now.format(formatter);
     }
 
 }

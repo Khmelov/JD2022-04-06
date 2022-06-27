@@ -29,7 +29,7 @@ public class CommandManager {
         while (scanner.hasNext()) {
             line = scanner.nextLine();
             if (line.equalsIgnoreCase(END)) {
-                out.println(INSTANCE.getString(ENDING));
+                printer.println(INSTANCE.getString(ENDING));
                 break;
             } else if (line.equalsIgnoreCase(EN)) manager.setLocale(Locale.ENGLISH);
             else if (line.equalsIgnoreCase(RU)) manager.setLocale(new Locale("ru", "RU"));
@@ -41,7 +41,7 @@ public class CommandManager {
                     Var result = parser.calc(line);
                     printer.print(result);
                 } catch (CalcException e) {
-                    out.println(e.getMessage());
+                    printer.print(e);
                 }
             }
         }
