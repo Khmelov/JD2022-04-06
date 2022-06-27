@@ -6,7 +6,7 @@ import by.it.kameisha.calc.exception.CalcException;
 
 public class Matrix extends Var {
     private final double[][] value;
-    private ResMan resMan= ResMan.INSTANCE;
+    private final ResMan resMan= ResMan.INSTANCE;
 
     public Matrix(double[][] value) {
         double[][] array = new double[value.length][];

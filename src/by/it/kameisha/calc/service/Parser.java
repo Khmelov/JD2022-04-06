@@ -18,7 +18,7 @@ public class Parser {
 
     private final Repository repository;
     private final VarCreator varCreator;
-    private ResMan resMan = ResMan.INSTANCE;
+    private final ResMan resMan = ResMan.INSTANCE;
     private final static Map<String, Integer> priorityMap = Map.of(
             "=", 0,
             "+", 1,

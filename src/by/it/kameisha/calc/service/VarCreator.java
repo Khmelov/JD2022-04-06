@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class VarCreator {
     private final Repository repository;
-    private ResMan resMan = ResMan.INSTANCE;
+    private final ResMan resMan = ResMan.INSTANCE;
 
     public VarCreator(Repository repository) {
         this.repository = repository;

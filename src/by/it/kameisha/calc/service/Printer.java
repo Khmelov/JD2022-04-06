@@ -8,7 +8,7 @@ import by.it.kameisha.calc.exception.CalcException;
 import java.util.Objects;
 
 public class Printer {
-    private ResMan resMan = ResMan.INSTANCE;
+    private final ResMan resMan = ResMan.INSTANCE;
 
     public void print(Var result) {
         if (Objects.nonNull(result)) {

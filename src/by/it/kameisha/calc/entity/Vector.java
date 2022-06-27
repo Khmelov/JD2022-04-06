@@ -6,7 +6,7 @@ import by.it.kameisha.calc.exception.CalcException;
 
 public class Vector extends Var {
     private final double[] value;
-    private ResMan resMan= ResMan.INSTANCE;
+    private final ResMan resMan= ResMan.INSTANCE;
 
     public Vector(double[] value) {
         this.value = value.clone();

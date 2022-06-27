@@ -6,7 +6,7 @@ import by.it.kameisha.calc.exception.CalcException;
 import by.it.kameisha.calc.interfaces.Operation;
 
 public abstract class Var implements Operation {
-    private ResMan resMan= ResMan.INSTANCE;
+    private final ResMan resMan= ResMan.INSTANCE;
     @Override
     public String toString() {
         return "Var{}";
