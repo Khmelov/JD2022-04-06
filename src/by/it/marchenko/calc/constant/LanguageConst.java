@@ -9,6 +9,7 @@ public interface LanguageConst {
     String AVAILABLE_VARIABLES = "message.availableVariables";
     String MESSAGE_EMPTY_EXPRESSION = "message.emptyExpression";
 
+
     /*
     String MESSAGE_OVERWRITE_VALUE = "message.overwriteValue";
     public static final String MESSAGE_FAREWELL = "Application finished.";
@@ -36,4 +37,7 @@ public interface LanguageConst {
     public static final String ASSIGNMENT_OPERATOR_COMMENT =
             "\n  Reason: it is necessary to have only one assignment operator in the expression.";
 */
+    String REPORT_MODE_QUESTION = "report.checkMode";
+    String REPORT_DETAILED_HEADER = "report.detailedHeader";
+    String REPORT_CLIPPED_HEADER = "report.clippedHeader";
 }

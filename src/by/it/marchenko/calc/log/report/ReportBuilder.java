@@ -1,5 +1,7 @@
 package by.it.marchenko.calc.log.report;
 
+import java.time.LocalDateTime;
+
 public abstract class ReportBuilder {
     Report report;
 
@@ -16,4 +18,5 @@ public abstract class ReportBuilder {
     public abstract void buildBody();
 
     public abstract void buildFooter();
+
 }

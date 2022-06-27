@@ -1,11 +1,15 @@
 
 package by.it.marchenko.calc.log.report;
 
-public class ClippedReportBuilder extends ReportBuilder {
+import by.it.marchenko.calc.constant.LanguageConst;
+import by.it.marchenko.calc.utility.ResourceManager;
+
+public class ClippedReportBuilder extends ReportBuilder
+        implements LanguageConst {
 
     @Override
     public void buildHeader() {
-        report.setHeader("Мой короткий заголовок");
+        report.setHeader(ResourceManager.INSTANCE.getString(REPORT_CLIPPED_HEADER));
     }
 
     @Override

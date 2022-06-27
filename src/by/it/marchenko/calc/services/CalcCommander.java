@@ -14,7 +14,9 @@ import java.util.*;
 import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class CalcCommander implements CalcAppCommand, LanguageConst {
+    private final Repository repository;
     private static HashMap<String, Var> variables;
+
     private final ResourceManager resourceManager;
     private final ReportGenerator reportGenerator;
     private static final Set<String> commands = new HashSet<>(Arrays.asList(
@@ -23,7 +25,8 @@ public class CalcCommander implements CalcAppCommand, LanguageConst {
     ));
 
     public CalcCommander(Repository repository) {
-        variables = repository.getAllVariables();
+        this.repository = repository;
+        //variables = repository.getAllVariables();
         resourceManager = ConsoleRunner.getResourceManager();
         reportGenerator = ConsoleRunner.getReportGenerator();
     }
@@ -51,9 +54,9 @@ public class CalcCommander implements CalcAppCommand, LanguageConst {
     }
 
     private String generateReportAndEndApplication() {
-        return reportGenerator.generateReport() +
-                NEW_LINE +
-                resourceManager.getString(MESSAGE_FAREWELL);
+        String report = reportGenerator.generateReport();
+        System.out.println(report);
+        return resourceManager.getString(MESSAGE_FAREWELL);
     }
 
     private String setLanguage(String languageCode) {
@@ -62,7 +65,8 @@ public class CalcCommander implements CalcAppCommand, LanguageConst {
         return resourceManager.getString(MESSAGE_CHANGE_LANGUAGE);
     }
 
-    private static String printVariable() {
+    private String printVariable() {
+        variables = repository.getAllVariables();
         StringBuilder out = new StringBuilder(
                 ResourceManager.INSTANCE.getString(AVAILABLE_VARIABLES));
         for (Map.Entry<String, Var> element : variables.entrySet()) {
@@ -73,7 +77,8 @@ public class CalcCommander implements CalcAppCommand, LanguageConst {
         return out.toString();
     }
 
-    private static String sortVariable() {
+    private String sortVariable() {
+        variables = repository.getAllVariables();
         TreeMap<String, Var> sortedVariables = new TreeMap<>(variables);
         StringBuilder out = new StringBuilder(
                 ResourceManager.INSTANCE.getString(AVAILABLE_VARIABLES));

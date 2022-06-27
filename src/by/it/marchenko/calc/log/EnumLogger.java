@@ -67,4 +67,9 @@ public enum EnumLogger implements Log {
             throw new AssertionError(e);
         }
     }
+
+    public String getTimeStamp() {
+        return LocalDateTime.now().format(formatDate);
+
+    }
 }
