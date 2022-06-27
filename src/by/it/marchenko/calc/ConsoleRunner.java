@@ -6,6 +6,7 @@ import by.it.marchenko.calc.exception.CalcExceptionHandler;
 import by.it.marchenko.calc.interfaces.Repository;
 import by.it.marchenko.calc.log.EnumLogger;
 import by.it.marchenko.calc.log.LazyLogger;
+import by.it.marchenko.calc.log.report.*;
 import by.it.marchenko.calc.repository.VarRepositoryMap;
 import by.it.marchenko.calc.services.*;
 import by.it.marchenko.calc.utility.Converter;
@@ -17,10 +18,15 @@ import java.util.Scanner;
 
 public class ConsoleRunner {
     private static final ResourceManager resourceManager = ResourceManager.INSTANCE;
+    private static final ReportGenerator reportGenerator = ReportGenerator.INSTANCE;
     private static final CalcExceptionHandler calcExceptionHandler = new CalcExceptionHandler();
 
     public static ResourceManager getResourceManager() {
         return resourceManager;
+    }
+
+    public static ReportGenerator getReportGenerator() {
+        return reportGenerator;
     }
 
     public static void main(String[] args) throws CalcException {
@@ -30,10 +36,12 @@ public class ConsoleRunner {
         //VarCreator creator = new VarCreator(repo);    //  variable creator method
         Operands operands = new Operands(repo);         //  create/check String/Var operands and operators
         Assignment assignment = new Assignment(repo);   //  check and perform assignment
+
         Converter.createResourceFromText();
         resourceManager.changeResource(Locale.getDefault());
         Printer printer = new Printer(resourceManager);
         EnumLogger enumLogger = EnumLogger.get();
+        LazyLogger lazyLogger = LazyLogger.get();
 
 
         printer.greeting();
@@ -44,12 +52,12 @@ public class ConsoleRunner {
             try {
                 inputString.setExpression();
                 String tempString = inputString.getExpression();
+
                 enumLogger.info(tempString);
-                LazyLogger.get().info(tempString);
+                lazyLogger.info(tempString);
 
                 CalcCommander commander = new CalcCommander(repo);  //  command creator method
                 String resultString = commander.performCommand(tempString);
-
                 if (resultString == null) {
                     Var result = parseString.calc(tempString);
                     printer.print(inputString, result);

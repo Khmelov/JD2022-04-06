@@ -6,6 +6,7 @@ import by.it.marchenko.calc.entity.Var;
 import by.it.marchenko.calc.exception.CalcException;
 import by.it.marchenko.calc.interfaces.CalcAppCommand;
 import by.it.marchenko.calc.interfaces.Repository;
+import by.it.marchenko.calc.log.report.ReportGenerator;
 import by.it.marchenko.calc.utility.ResourceManager;
 
 import java.util.*;
@@ -14,7 +15,8 @@ import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class CalcCommander implements CalcAppCommand, LanguageConst {
     private static HashMap<String, Var> variables;
-    private final ResourceManager resourceManager = ConsoleRunner.getResourceManager();
+    private final ResourceManager resourceManager;
+    private final ReportGenerator reportGenerator;
     private static final Set<String> commands = new HashSet<>(Arrays.asList(
             COMMAND_APP_EXIT, COMMAND_PRINT_VARIABLE, COMMAND_SORT_VARIABLE,
             COMMAND_SET_LANGUAGE_EN, COMMAND_SET_LANGUAGE_BE, COMMAND_SET_LANGUAGE_RU
@@ -22,6 +24,8 @@ public class CalcCommander implements CalcAppCommand, LanguageConst {
 
     public CalcCommander(Repository repository) {
         variables = repository.getAllVariables();
+        resourceManager = ConsoleRunner.getResourceManager();
+        reportGenerator = ConsoleRunner.getReportGenerator();
     }
 
     @Override
@@ -39,11 +43,17 @@ public class CalcCommander implements CalcAppCommand, LanguageConst {
                 case COMMAND_SET_LANGUAGE_BE -> setLanguage(COMMAND_SET_LANGUAGE_BE);
                 case COMMAND_SET_LANGUAGE_RU -> setLanguage(COMMAND_SET_LANGUAGE_RU);
                 case COMMAND_SET_LANGUAGE_EN -> setLanguage(COMMAND_SET_LANGUAGE_EN);
-                case COMMAND_APP_EXIT -> resourceManager.getString(MESSAGE_FAREWELL);
+                case COMMAND_APP_EXIT -> generateReportAndEndApplication();
                 default -> null;
             };
         }
         return null;
+    }
+
+    private String generateReportAndEndApplication() {
+        return reportGenerator.generateReport() +
+                NEW_LINE +
+                resourceManager.getString(MESSAGE_FAREWELL);
     }
 
     private String setLanguage(String languageCode) {

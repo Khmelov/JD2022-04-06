@@ -106,5 +106,7 @@ public class MessageConst implements LanguageConst {
     public static final String VAR_TO_STRING_MESSAGE = "Unknown variable(abstract stub)";
     public static final String INCORRECT_VECTOR_INPUT_MESSAGE = "Incorrect vector input";
     public static final String EMPTY_EXPRESSION_ENTERED = "Empty expression entered";
-    public static final String AVAILABLE_VARIABLES = "Available variables:";
+
+
+    public static final String NEW_LINE = "\n";
 }
