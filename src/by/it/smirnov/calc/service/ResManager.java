@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static by.it.smirnov.calc.constants.Patterns.DATE_PATTERN;
+import static by.it.smirnov.calc.constants.Patterns.TIME_PATTERN;
 import static by.it.smirnov.calc.constants.Wordings.CHANGE_LOCAL;
 import static java.lang.System.out;
 
@@ -31,6 +32,12 @@ public enum ResManager {
     public static String getDate() {
         ZonedDateTime now = ZonedDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN, Locale.getDefault());
+        return now.format(formatter);
+    }
+
+    public static String getTime() {
+        ZonedDateTime now = ZonedDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_PATTERN, Locale.getDefault());
         return now.format(formatter);
     }
 

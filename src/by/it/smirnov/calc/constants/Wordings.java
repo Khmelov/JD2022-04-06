@@ -13,6 +13,11 @@ public interface Wordings {
     String USER_DIR = "user.dir";
     String FILE_REPO = "txtfiles" + File.separator + "Vars.txt";
     String LOG_TXT = "txtfiles" + File.separator + "log.txt";
+    String REPORT_TXT = "txtfiles" + File.separator + "Report.txt";
+    String TITLE_SHORT = "SHORT REPORT:";
+    String TITLE_LONG = "LONG REPORT:";
+    String REPORT_END = " - Calculator work end";
+    String REPORT_START = " - Calculator work start";
     String BAD_STRING = "error.badstring";
     String BAD_SIZE = "error.badsize";
     String BAD_OPER = "error.badoper";
