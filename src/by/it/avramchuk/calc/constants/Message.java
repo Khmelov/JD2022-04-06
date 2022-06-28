@@ -8,5 +8,6 @@ public interface Message {
     String ERROR_MESSAGE="message.error";
     String INCORRECT_INPUT_MESSAGE="message.incorrectinput";
     String LANGUAGE_MESSAGE="message.language";
+    String CHOOSE_REPORT_MESSAGE="message.choose_report";
 
 }

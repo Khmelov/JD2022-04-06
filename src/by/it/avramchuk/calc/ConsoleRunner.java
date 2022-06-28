@@ -5,7 +5,7 @@ import by.it.avramchuk.calc.constants.Patterns;
 import by.it.avramchuk.calc.entity.Var;
 import by.it.avramchuk.calc.exception.CalcException;
 import by.it.avramchuk.calc.interfaces.Repository;
-import by.it.avramchuk.calc.logger.Logger;
+import by.it.avramchuk.calc.logger.*;
 import by.it.avramchuk.calc.repository.VarMapRepository;
 import by.it.avramchuk.calc.service.Parser;
 import by.it.avramchuk.calc.service.Printer;
@@ -29,6 +29,7 @@ public class ConsoleRunner {
         VarCreator varCreator = new VarCreator(repository);
         ResMan resMan = ResMan.INSTANCE;
         Logger logger = Logger.getInstance();
+        ReportMan reportMan = new ReportMan();
 
         Parser parser = new Parser(repository, varCreator);
         Scanner scanner = new Scanner(System.in);
@@ -47,6 +48,13 @@ public class ConsoleRunner {
             }
             if (expression.equals(COMMAND_END)) {
                 logger.writeTo(Patterns.REPORT_PATH, DateFormatter.getDateTime());
+                System.out.println(resMan.get(Message.CHOOSE_REPORT_MESSAGE));
+                String input = scanner.nextLine();
+                ReportBuilder reportBuilder = input.equals("1")?new ShortReportBuilder()
+                        : new DetailReportBuilder();
+                reportMan.setReportBuilder(reportBuilder);
+                reportMan.constructReport();
+                System.out.println(reportMan.getReport());
                 break;
             } else {
                 try {

@@ -26,7 +26,7 @@ public class Logger implements Log {
     public String logError(String message) {
         String newMessage = DateFormatter.getDateTime()+ "Error: "+message;
         writeTo(Patterns.LOG_PATH, newMessage);
-        writeTo(Patterns.REPORT_PATH, DateFormatter.getTime()+message);
+        writeTo(Patterns.REPORT_PATH, DateFormatter.getTime()+">"+message);
         return message;
     }
 
@@ -34,7 +34,7 @@ public class Logger implements Log {
     public String logInfo(String message) {
         String newMessage = DateFormatter.getDateTime() + "Info: "+message;
         writeTo(Patterns.LOG_PATH, newMessage);
-        writeTo(Patterns.REPORT_PATH, DateFormatter.getTime()+message);
+        writeTo(Patterns.REPORT_PATH, DateFormatter.getTime()+">"+message);
         return message;
     }
 
