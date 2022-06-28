@@ -4,7 +4,7 @@ message.printResult = Результат
 message.changeLanguage = Язык приложения изменен на русский.
 message.availableVariables = Известные переменные:
 message.emptyExpression = Неправильный ввод: введено пустое выражение.
-message.overwriteValue = Переменная %s уже сущесвует. Присвоить новое значение переменной? (Д/Н)
+#message.overwriteValue = Переменная %s уже сущесвует. Присвоить новое значение переменной? (Д/Н)
 
 report.checkMode = Выберите тип отчета: %s - детализированный, %s - отчет об ошибках:
 report.detailedHeader = Детализированный отчет о работе приложения

@@ -50,6 +50,11 @@ public class LazyLogger implements Log {
         logToFile("RESULT: " + resultMessage);
     }
 
+    @Override
+    public void answer(String answerMessage) {
+        logToFile("ANSWER: " + answerMessage);
+    }
+
     private void logToFile(String message) {
         try (PrintWriter printWriter = new PrintWriter(new FileWriter(logFile, APPEND_MODE))) {
             String[] lines = message.split(NEW_LINE);

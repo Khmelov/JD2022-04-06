@@ -2,6 +2,8 @@ package by.it.marchenko.calc.log.report;
 
 import by.it.marchenko.calc.ConsoleRunner;
 import by.it.marchenko.calc.constant.LanguageConst;
+import by.it.marchenko.calc.log.LazyLogger;
+import by.it.marchenko.calc.log.Log;
 import by.it.marchenko.calc.services.Printer;
 import by.it.marchenko.calc.utility.FilePathFounder;
 import by.it.marchenko.calc.utility.ResourceManager;
@@ -16,7 +18,8 @@ import static by.it.marchenko.calc.constant.MessageConst.EMPTY_STRING;
 
 public enum ReportGenerator implements LanguageConst {
     INSTANCE;
-    private final static ResourceManager resourceManager = ResourceManager.INSTANCE;
+    private static final ResourceManager resourceManager = ResourceManager.INSTANCE;
+    private static final Log logger = LazyLogger.get();
     private static final String REPORT_FILE_NAME = "report.txt";
     public static final String REPORT_GENERATED_FORMAT = "%s%n%s";
     private Scanner console;
@@ -72,10 +75,16 @@ public enum ReportGenerator implements LanguageConst {
     private boolean getAnswer(String question) {
         String translatedQuestion = resourceManager.getString(question);
         String questionWithAnswers = String.format(translatedQuestion, POSITIVE_ANSWER, NEGATIVE_ANSWER);
-        printer.print(questionWithAnswers + " ");
-        // TODO implement answer check
-        int mode = console.nextInt();
-
-        return mode % 2 == 1;
+        while (true) {
+            printer.print(questionWithAnswers + " ");
+            String answer = console.next().trim();
+            logger.answer(answer);
+            if (POSITIVE_ANSWER.equals(answer)) {
+                return true;
+            }
+            if (NEGATIVE_ANSWER.equals(answer)) {
+                return false;
+            }
+        }
     }
 }

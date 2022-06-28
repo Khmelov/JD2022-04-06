@@ -5,7 +5,7 @@ message.changeLanguage = Application language changed to English.
 message.availableVariables = Available variables:
     #exception messages
 message.emptyExpression = Incorrect input. Empty expression entered.
-message.overwriteValue = The variable %s is already assigned. Do you want to overwrite value? (Y/N)
+#message.overwriteValue = The variable %s is already assigned. Do you want to overwrite value? (Y/N)
 
 report.checkMode = Check mode: %s - detailed report, %s - error report:
 report.detailedHeader = Detailed operation report

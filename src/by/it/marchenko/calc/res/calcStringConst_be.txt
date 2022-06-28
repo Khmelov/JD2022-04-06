@@ -4,7 +4,7 @@ message.printResult = Вынiк
 message.changeLanguage = Мова праграммы зменена на беларускую.
 message.availableVariables = Вядомыя пераменныя:
 message.emptyExpression = Памылковы ўвод: уведзены пусты выраз.
-message.overwriteValue = Пераменная %s ужо iснуе. Цi жадаеце Вы перапiсаць яе? (Y/N)
+#message.overwriteValue = Пераменная %s ужо iснуе. Цi жадаеце Вы перапiсаць яе? (Y/N)
 
 report.checkMode = Вызначыце тып пратаколу: %s - дэталiзаваны пратакол, %s - пратакол аб памылках:
 report.detailedHeader = Дэталiзаваны пратакол працы праграммы
