@@ -1,9 +1,6 @@
 package by.it.machuga.calc.servise;
 
-import by.it.machuga.calc.entity.Matrix;
-import by.it.machuga.calc.entity.Scalar;
 import by.it.machuga.calc.entity.Var;
-import by.it.machuga.calc.entity.Vector;
 import by.it.machuga.calc.exception.CalculatorException;
 import by.it.machuga.calc.interfaces.Message;
 import by.it.machuga.calc.interfaces.VarCreator;
@@ -13,11 +10,12 @@ import by.it.machuga.calc.repasitory.Repository;
 import java.util.Objects;
 
 import static by.it.machuga.calc.constans.ConstantStorage.*;
+import static by.it.machuga.calc.runner.ConsoleRunner.reporter;
 import static by.it.machuga.calc.runner.ConsoleRunner.resourceManager;
 
 public class VarBuilder implements VarCreator {
     private final Repository repository;
-    private static Logger logger=Logger.INSTANCE;
+    private static Logger logger = Logger.getInstance();
 
     public VarBuilder(Repository repository) {
         this.repository = repository;
@@ -41,8 +39,11 @@ public class VarBuilder implements VarCreator {
     private Var getVarFromRepository(String operand) throws CalculatorException {
         Var var = repository.get(operand);
         if (Objects.isNull(var)) {
+            CalculatorException calculatorException = new CalculatorException(String.format(resourceManager
+                    .get(Message.INCORRECT_STRING_MSG), operand));
             logger.error(String.format(resourceManager.get(Message.INCORRECT_STRING_MSG), operand));
-            throw new CalculatorException(String.format(resourceManager.get(Message.INCORRECT_STRING_MSG), operand));
+            reporter.collectReportError(INCORRECT_STRING, calculatorException);
+            throw calculatorException;
         } else {
             return var;
         }

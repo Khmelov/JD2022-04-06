@@ -13,8 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static by.it.machuga.calc.runner.ConsoleRunner.logger;
-import static by.it.machuga.calc.runner.ConsoleRunner.resourceManager;
+import static by.it.machuga.calc.runner.ConsoleRunner.*;
 
 public class PersistentRepository implements Repository {
 
@@ -45,9 +44,11 @@ public class PersistentRepository implements Repository {
                 }
             } catch (IOException e) {
                 logger.error(resourceManager.get(Message.FILE_NOT_FOUND_MSG));
+                reporter.collectReportError(ConstantStorage.FILE_NOT_FOUND, e);
                 throw new RuntimeException(resourceManager.get(Message.FILE_NOT_FOUND_MSG), e);
             } catch (CalculatorException e) {
                 logger.error(resourceManager.get(Message.CAN_T_PARSE_VAR_MSG));
+                reporter.collectReportError(ConstantStorage.CAN_T_PARSE_VAR, e);
                 throw new RuntimeException(resourceManager.get(Message.CAN_T_PARSE_VAR_MSG), e);
             }
         }
@@ -63,11 +64,12 @@ public class PersistentRepository implements Repository {
     private void saveToFile() throws CalculatorException {
         try (PrintWriter writer = new PrintWriter(path)) {
             for (Map.Entry<String, Var> entry : vars.entrySet()) {
-                writer.printf("%s=%s%n", entry.getKey(), entry.getValue());
+                writer.printf(ConstantStorage.VAR_FORMAT, entry.getKey(), entry.getValue());
             }
         } catch (FileNotFoundException e) {
-            logger.error("not found file");
-            throw new CalculatorException("not found file", e);
+            logger.error(ConstantStorage.FILE_NOT_FOUND);
+            reporter.collectReportError(ConstantStorage.FILE_NOT_FOUND, e);
+            throw new CalculatorException(ConstantStorage.FILE_NOT_FOUND, e);
         }
     }
 

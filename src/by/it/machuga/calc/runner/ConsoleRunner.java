@@ -8,6 +8,7 @@ import by.it.machuga.calc.localization.resourseManager.ResourceManager;
 import by.it.machuga.calc.logger.Logger;
 import by.it.machuga.calc.repasitory.PersistentRepository;
 import by.it.machuga.calc.repasitory.Repository;
+import by.it.machuga.calc.reporter.Reporter;
 import by.it.machuga.calc.servise.Parser;
 import by.it.machuga.calc.servise.Printer;
 import by.it.machuga.calc.servise.VarBuilder;
@@ -17,15 +18,13 @@ import java.util.Scanner;
 
 public class ConsoleRunner {
 
-    public static final String APPLICATION_STARTED_MSG = "Application started";
-    public static final String APPLICATION_STOPPED_MSG = "Application stopped";
-    public static final String USER_ENTERED_EXPRESSION = "User entered expression ";
-    public static final String CALCULATION_RESULT = "Calculation result ";
     public static ResourceManager resourceManager;
-    public static Logger logger=Logger.INSTANCE;
+    public static Logger logger = Logger.getInstance();
+    public static Reporter reporter = Reporter.getInstance();
 
     public static void main(String[] args) {
-        logger.info(APPLICATION_STARTED_MSG);
+        logger.info(ConstantStorage.APPLICATION_STARTED_MSG);
+        reporter.collectReportInfo(ConstantStorage.APPLICATION_STARTED_MSG);
         Locale locale = getLocale();
         resourceManager = getResourceManager(locale);
         System.out.println(resourceManager.get(Message.CALCULATOR_STARTED_MESSAGE));
@@ -36,21 +35,29 @@ public class ConsoleRunner {
         Scanner scanner = new Scanner(System.in);
         System.out.println(resourceManager.get(Message.ENTER_EXPRESSION_MESSAGE));
         String expression = scanner.nextLine();
-        logger.info(USER_ENTERED_EXPRESSION +expression);
+        logger.info(ConstantStorage.USER_ENTERED_EXPRESSION + expression);
+        reporter.collectReportInfo(ConstantStorage.USER_ENTERED_EXPRESSION + expression);
         while (!expression.equalsIgnoreCase(resourceManager.get(Message.END))) {
             try {
                 Var result = parser.calc(expression);
-                logger.info(CALCULATION_RESULT +result);
+                logger.info(ConstantStorage.CALCULATION_RESULT + result);
+                reporter.collectReportInfo(ConstantStorage.CALCULATION_RESULT + result);
                 printer.print(result);
             } catch (CalculatorException e) {
                 printer.print(e);
                 logger.error(e.getMessage());
+                reporter.collectReportError(ConstantStorage.CALCULATION_FAILED, e);
             }
             expression = scanner.nextLine();
-            logger.info(USER_ENTERED_EXPRESSION +expression);
+            logger.info(ConstantStorage.USER_ENTERED_EXPRESSION + expression);
+            reporter.collectReportInfo(ConstantStorage.USER_ENTERED_EXPRESSION + expression);
         }
         System.out.println(resourceManager.get(Message.CALCULATOR_STOPPED_MESSAGE));
-        logger.info(APPLICATION_STOPPED_MSG);
+        reporter.collectReportInfo(ConstantStorage.APPLICATION_STOPPED_MSG);
+        logger.info(ConstantStorage.APPLICATION_STOPPED_MSG);
+        reporter.printReport();
+        reporter.printReport();
+        reporter.printReport();
     }
 
     private static Locale getLocale() {
@@ -65,7 +72,8 @@ public class ConsoleRunner {
                     ConstantStorage.BY_COUNTRY);
             default -> locale = new Locale(ConstantStorage.EN_LANGUAGE, ConstantStorage.US_COUNTRY);
         }
-        logger.info("Used locale "+locale);
+        logger.info(ConstantStorage.USED_LOCALE + locale);
+        reporter.collectReportInfo(ConstantStorage.USED_LOCALE + locale);
         return locale;
     }
 
