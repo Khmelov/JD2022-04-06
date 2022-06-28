@@ -8,7 +8,7 @@ import by.it.arsenihlaz.calculator.entity.Var;
 import by.it.arsenihlaz.calculator.entity.Vector;
 import by.it.arsenihlaz.calculator.exception.CalcException;
 import by.it.arsenihlaz.calculator.interfaces.Repository;
-import by.it.arsenihlaz.calculator.ResourceManager;
+import by.it.arsenihlaz.calculator.util.ResourceManager;
 
 import java.util.Objects;
 

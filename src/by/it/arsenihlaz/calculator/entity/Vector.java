@@ -1,6 +1,6 @@
 package by.it.arsenihlaz.calculator.entity;
 
-import by.it.arsenihlaz.calculator.ResourceManager;
+import by.it.arsenihlaz.calculator.util.ResourceManager;
 import by.it.arsenihlaz.calculator.constants.Message;
 import by.it.arsenihlaz.calculator.exception.CalcException;
 

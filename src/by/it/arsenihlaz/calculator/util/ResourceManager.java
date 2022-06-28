@@ -1,4 +1,4 @@
-package by.it.arsenihlaz.calculator;
+package by.it.arsenihlaz.calculator.util;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

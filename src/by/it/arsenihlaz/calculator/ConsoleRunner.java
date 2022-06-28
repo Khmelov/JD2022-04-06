@@ -4,10 +4,12 @@ import by.it.arsenihlaz.calculator.constants.Message;
 import by.it.arsenihlaz.calculator.entity.Var;
 import by.it.arsenihlaz.calculator.exception.CalcException;
 import by.it.arsenihlaz.calculator.interfaces.Repository;
+import by.it.arsenihlaz.calculator.logger.LoggerEnum;
 import by.it.arsenihlaz.calculator.repository.VarMapRepository;
 import by.it.arsenihlaz.calculator.services.Parser;
 import by.it.arsenihlaz.calculator.services.Printer;
 import by.it.arsenihlaz.calculator.services.VarCreator;
+import by.it.arsenihlaz.calculator.util.ResourceManager;
 
 
 import java.util.Locale;
@@ -17,10 +19,10 @@ public class ConsoleRunner {
 
     public static void main(String[] args) {
         Locale locale;
+        LoggerEnum logger = LoggerEnum.INSTANCE;
         ResourceManager resourceManager = ResourceManager.INSTANSE;
         System.out.println(resourceManager.getValue(Message.START));
         System.out.println(resourceManager.getValue(Message.SET_TO_LANGUAGE));
-
         Printer printer = new Printer(System.out);
         Repository repository = new VarMapRepository();
         VarCreator varCreator = new VarCreator(repository);
@@ -28,7 +30,6 @@ public class ConsoleRunner {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
             String command = scanner.nextLine();
-
 
             if (command.equals(resourceManager.getValue(Message.COMMAND_END))) {
                 break;
@@ -48,10 +49,14 @@ public class ConsoleRunner {
                 try {
                     Var result = parser.calc(command);
                     printer.print(result);
+                    logger.info("successfully completed operation" + result);
+
                 } catch (CalcException e) {
                     printer.print(e);
+                    logger.error(" " + e.getMessage());
                 }
             }
+
         }
     }
 }

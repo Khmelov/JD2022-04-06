@@ -3,7 +3,7 @@ package by.it.arsenihlaz.calculator.services;
 import by.it.arsenihlaz.calculator.constants.Message;
 import by.it.arsenihlaz.calculator.entity.Var;
 import by.it.arsenihlaz.calculator.exception.CalcException;
-import by.it.arsenihlaz.calculator.ResourceManager;
+import by.it.arsenihlaz.calculator.util.ResourceManager;
 
 import java.io.PrintStream;
 import java.util.Objects;

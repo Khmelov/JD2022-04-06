@@ -7,7 +7,7 @@ import by.it.arsenihlaz.calculator.exception.CalcException;
 import by.it.arsenihlaz.calculator.interfaces.Repository;
 import by.it.arsenihlaz.calculator.services.VarCreator;
 import by.it.arsenihlaz.calculator.util.PathFinder;
-import by.it.arsenihlaz.calculator.ResourceManager;
+import by.it.arsenihlaz.calculator.util.ResourceManager;
 
 import java.io.*;
 import java.util.HashMap;
