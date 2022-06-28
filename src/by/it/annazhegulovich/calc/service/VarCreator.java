@@ -12,11 +12,11 @@ import java.util.Objects;
 
 public class VarCreator {
 
-    private  final  Repository repository;
+    private  final Repository repository;
     public VarCreator(Repository repository){
         this.repository = repository;
     }
-    public Var createVar(String stringVar) throws CalcException{
+    public Var createVar(String stringVar) throws CalcException {
         Var result;
         if(stringVar.matches(Patterns.SCALAR)){
             result = new Scalar(stringVar);

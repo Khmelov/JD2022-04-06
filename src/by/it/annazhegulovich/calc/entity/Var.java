@@ -1,7 +1,6 @@
 package by.it.annazhegulovich.calc.entity;
 
 
-import by.it.annazhegulovich.calc.constans.Patterns;
 import by.it.annazhegulovich.calc.exception.CalcException;
 import by.it.annazhegulovich.calc.interfaces.Operation;
 

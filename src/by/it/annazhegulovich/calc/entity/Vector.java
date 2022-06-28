@@ -53,7 +53,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var sub(Var other) throws CalcException{
+    public Var sub(Var other) throws CalcException {
         //{4, 5, 6} -3 = {1, 2, 3}   {4, 5, 6}-{1, 2, 3}={3, 3, 3}
         if (other instanceof Scalar scalar){
             //Scalar otherScalar = (Scalar) other;
@@ -75,7 +75,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var mul(Var other) throws CalcException{
+    public Var mul(Var other) throws CalcException {
         //{1,2}*3   {1,2}*{3,4}
         if (other instanceof Scalar scalar) {
             //Scalar otherScalar = (Scalar) other;
@@ -101,7 +101,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var div(Var other) throws CalcException{
+    public Var div(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             //Scalar otherScalar = (Scalar) other;
             double[] result =values.clone();

@@ -61,6 +61,14 @@ public class ParserTest {
         double expected = 2.65;
         assertEquals(expected, actual, DELTA);
     }
+    @Test
+    public void calcMatrixAddMatrix() throws CalcException {
+
+        Var actualVar = parser.calc("{{1,2},{8,3}}+{{1,2},{8,3}}");
+        String actual = actualVar.toString();
+        String expected = "{{2.0, 4.0}, {16.0, 6.0}}";
+        assertEquals(expected, actual);
+    }
 
     @After
     public void tearDown() throws Exception {

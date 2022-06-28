@@ -1,7 +1,6 @@
 package by.it.annazhegulovich.calc.repository;
 
 import by.it.annazhegulovich.calc.entity.Var;
-import by.it.annazhegulovich.calc.exception.CalcException;
 import by.it.annazhegulovich.calc.interfaces.Repository;
 
 import java.util.HashMap;

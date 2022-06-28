@@ -99,7 +99,7 @@ public class Matrix extends Var {
     }
 
     @Override
-    public Var div(Var other) throws  CalcException{
+    public Var div(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double[][] result = new double[value2.length][value2[0].length];
             for (int i = 0; i < result.length; i++) {
