@@ -18,3 +18,4 @@ report.errorEvents = Агульная колькасць памылковых в
 report.saveToFile = Жадаеце захаваць пратакол у файл? %s - да, %s - не:
 report.generatedMessage = Пратакол створаны. Праглядзець пратакол магчыма па спасылке:
 report.printScreen = Вывесцi пратакол на экран? %s - да, %s - не:
+report.emptyBody = Няма паведамленняў для прагляду.

@@ -49,5 +49,6 @@ public interface LanguageConst {
     String REPORT_SAVE_TO_FILE_QUESTION = "report.saveToFile";
     String REPORT_GENERATED_MESSAGE = "report.generatedMessage";
     String REPORT_PRINT_TO_SCREEN_QUESTION = "report.printScreen";
+    String REPORT_EMPTY_BODY = "report.emptyBody";
 
 }

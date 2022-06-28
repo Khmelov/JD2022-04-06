@@ -18,3 +18,4 @@ report.errorEvents = Количество ошибочных выражений:
 report.saveToFile = Сохранить отчет в файл? %s - да, %s - нет:
 report.generatedMessage = Отчет сгенерирован. Просмотреть отчет можно по ссылке:
 report.printScreen = Вывести отчет на экран? %s - да, %s - нет:
+report.emptyBody = Нет сообщений для просмотра.

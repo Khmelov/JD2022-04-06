@@ -19,3 +19,4 @@ report.errorEvents = Total count of errors:
 report.saveToFile = Do you want save report to file? %s - yes, %s - no:
 report.generatedMessage = Report created. You can find report via link:
 report.printScreen = Show report on the screen? %s - yes, %s - no:
+report.emptyBody = There are no messages to display.

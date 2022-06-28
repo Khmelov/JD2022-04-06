@@ -6,7 +6,9 @@ import by.it.marchenko.calc.utility.ResourceManager;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
+import static by.it.marchenko.calc.constant.MessageConst.EMPTY_STRING;
 import static by.it.marchenko.calc.constant.MessageConst.NEW_LINE;
 
 public class Report implements LanguageConst {
@@ -27,6 +29,7 @@ public class Report implements LanguageConst {
     }
 
     public void setBody(String body) {
+        body = body.equals(EMPTY_STRING) ? resourceManager.getString(REPORT_EMPTY_BODY) : body;
         this.body = body + NEW_LINE + LINE_HIGHLIGHT;
     }
 
