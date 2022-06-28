@@ -15,17 +15,17 @@ public class Logger {
     }
 
     public static Logger getInstance(){
-        Logger locflLogger = logger;
-        if (Objects.isNull(locflLogger)){
+        Logger localLogger = logger;
+        if (Objects.isNull(localLogger)){
             synchronized (Logger.class){
-                locflLogger = logger;
-                if (Objects.isNull(locflLogger)){
-                    locflLogger = new Logger();
-                    logger = locflLogger;
+                localLogger = logger;
+                if (Objects.isNull(localLogger)){
+                    localLogger = new Logger();
+                    logger = localLogger;
                 }
             }
         }
-        return locflLogger;
+        return localLogger;
     }
 
     public void log(String message){

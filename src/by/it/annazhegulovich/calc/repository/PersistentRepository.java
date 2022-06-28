@@ -1,11 +1,13 @@
 package by.it.annazhegulovich.calc.repository;
 
-import by.it.annazhegulovich.calc.ConsoleRunner;
+import by.it.annazhegulovich.calc.SingletonEnum;
 import by.it.annazhegulovich.calc.entity.Var;
 import by.it.annazhegulovich.calc.exception.CalcException;
 import by.it.annazhegulovich.calc.interfaces.Repository;
 import by.it.annazhegulovich.calc.service.VarCreator;
 import by.it.annazhegulovich.calc.util.PathFinder;
+import by.it.annazhegulovich.jd02_06_100.calc.ConsoleRunner;
+
 
 import java.io.*;
 import java.util.HashMap;
@@ -20,10 +22,10 @@ public class PersistentRepository implements Repository {
     public PersistentRepository(){
         String filename = PathFinder.getPath(ConsoleRunner.class, VARS_TXT);
         path = new File(filename);
-        initFromFile();
+        //initFromFile();
     }
 
-    private void initFromFile() {
+    /*private void initFromFile() {
         if (path.exists()){
             VarCreator creator = new VarCreator(this);
             try (BufferedReader reader = new BufferedReader(new FileReader(path))){
@@ -42,16 +44,16 @@ public class PersistentRepository implements Repository {
                 throw  new RuntimeException("not found file", e);
             }
         }
-    }
+    }*/
 
     @Override
     public Var save(String name, Var value) throws CalcException {
-        vars.put(name, value);
-        saveToFile();
+       // vars.put(name, value);
+        //saveToFile();
         return value;
     }
 
-    private void saveToFile() throws CalcException {
+    /*private void saveToFile() throws CalcException {
         try (PrintWriter writer = new PrintWriter(path)){
             for (Map.Entry<String, Var> entry: vars.entrySet()){
                 writer.printf("%s=%s%n", entry.getKey(), entry.getValue());
@@ -59,7 +61,7 @@ public class PersistentRepository implements Repository {
         }catch (FileNotFoundException e){
             throw  new CalcException("not found file", e);
         }
-    }
+    }*/
 
     @Override
     public Var get(String name) {

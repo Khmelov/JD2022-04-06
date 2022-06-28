@@ -1,7 +1,7 @@
-package by.it.annazhegulovich.jd02_06_b.calc.repository;
+package by.it.annazhegulovich.jd02_06_100.calc.repository;
 
-import by.it.annazhegulovich.jd02_06_b.calc.entity.Var;
-import by.it.annazhegulovich.jd02_06_b.calc.interfaces.Repository;
+import by.it.annazhegulovich.jd02_06_100.calc.entity.Var;
+import by.it.annazhegulovich.jd02_06_100.calc.interfaces.Repository;
 
 import java.util.HashMap;
 import java.util.Map;

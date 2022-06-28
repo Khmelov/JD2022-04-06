@@ -1,4 +1,4 @@
-package by.it.annazhegulovich.jd02_06_b.calc.util;
+package by.it.annazhegulovich.jd02_06_100.calc.util;
 
 import by.it.annazhegulovich.jd01_14.TaskA;
 

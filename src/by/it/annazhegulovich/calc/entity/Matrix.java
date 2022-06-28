@@ -10,9 +10,7 @@ public class Matrix extends Var {
     public Matrix(double[][] value) {
         value2 = new double[value.length][value.length];
         for (int i = 0; i < value.length; i++) {
-            for (int j = 0; j < value.length; j++) {
-                value2 [i][j] = value [i][j];
-            }
+            System.arraycopy(value[i], 0, value2[i], 0, value.length);
         }
     }
     public Matrix(Matrix matrix){
@@ -40,9 +38,7 @@ public class Matrix extends Var {
     public Var add(Var other) throws CalcException {
         double[][] res = new double[value2.length][value2[0].length];
         for (int i = 0; i < value2.length; i++) {
-            for (int j = 0; j < value2[i].length; j++) {
-                res[i][j] = value2[i][j];
-            }
+            System.arraycopy(value2[i], 0, res[i], 0, value2[i].length);
         }
         if (other instanceof Scalar) {
             for (int i = 0; i < res.length; i++) {
@@ -116,9 +112,7 @@ public class Matrix extends Var {
     public Var sub(Var other) throws CalcException {
         double[][] res = new double[value2.length][value2[0].length];
         for (int i = 0; i < value2.length; i++) {
-            for (int j = 0; j < value2[i].length; j++) {
-                res[i][j] = value2[i][j];
-            }
+            System.arraycopy(value2[i], 0, res[i], 0, value2[i].length);
         }
         if (other instanceof Scalar) {
             for (int i = 0; i < res.length; i++) {
@@ -144,20 +138,20 @@ public class Matrix extends Var {
 
     @Override
     public String toString() {
-        String strMatrix = new String();
+        StringBuilder strMatrix = new StringBuilder(new String());
         for (int i = 0; i < value2.length; i++) {
-            strMatrix += "{";
+            strMatrix.append("{");
             for (int j = 0; j < value2.length; j++) {
-                strMatrix += Double.toString(value2[i][j]);
+                strMatrix.append(value2[i][j]);
                 if (j != value2.length - 1) {
-                    strMatrix += ", ";
+                    strMatrix.append(", ");
                 }
             }
-            strMatrix = strMatrix + "}";
+            strMatrix.append("}");
             if (i != value2.length - 1) {
-                strMatrix += ", ";
+                strMatrix.append(", ");
             }
         }
-        return  "{"+strMatrix.toString()+"}";
+        return "{" + strMatrix + "}";
     }
 }

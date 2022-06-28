@@ -1,9 +1,9 @@
-package by.it.annazhegulovich.jd02_06_b.calc.service;
+package by.it.annazhegulovich.jd02_06_100.calc.service;
 
-import by.it.annazhegulovich.jd02_06_b.calc.constans.Patterns;
-import by.it.annazhegulovich.jd02_06_b.calc.entity.Var;
-import by.it.annazhegulovich.jd02_06_b.calc.exception.CalcException;
-import by.it.annazhegulovich.jd02_06_b.calc.interfaces.Repository;
+import by.it.annazhegulovich.jd02_06_100.calc.constans.Patterns;
+import by.it.annazhegulovich.jd02_06_100.calc.entity.Var;
+import by.it.annazhegulovich.jd02_06_100.calc.exception.CalcException;
+import by.it.annazhegulovich.jd02_06_100.calc.interfaces.Repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;

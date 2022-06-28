@@ -1,4 +1,4 @@
-package by.it.annazhegulovich.jd02_06_b.calc.exception;
+package by.it.annazhegulovich.jd02_06_100.calc.exception;
 
 public class CalcException extends Exception {
     public  CalcException(String message){

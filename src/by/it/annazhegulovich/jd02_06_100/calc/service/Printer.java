@@ -1,7 +1,7 @@
-package by.it.annazhegulovich.jd02_06_b.calc.service;
+package by.it.annazhegulovich.jd02_06_100.calc.service;
 
-import by.it.annazhegulovich.jd02_06_b.calc.entity.Var;
-import by.it.annazhegulovich.jd02_06_b.calc.exception.CalcException;
+import by.it.annazhegulovich.jd02_06_100.calc.entity.Var;
+import by.it.annazhegulovich.jd02_06_100.calc.exception.CalcException;
 
 import java.io.PrintStream;
 import java.util.Objects;

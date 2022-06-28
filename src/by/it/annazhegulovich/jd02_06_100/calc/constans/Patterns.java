@@ -1,4 +1,4 @@
-package by.it.annazhegulovich.jd02_06_b.calc.constans;
+package by.it.annazhegulovich.jd02_06_100.calc.constans;
 
 public class Patterns {
     public static final String OPERATION = "(?<=[^{,+=*/-])[-+*/=]";

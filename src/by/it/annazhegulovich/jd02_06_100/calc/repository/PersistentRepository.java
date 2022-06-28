@@ -1,12 +1,12 @@
-package by.it.annazhegulovich.jd02_06_b.calc.repository;
+package by.it.annazhegulovich.jd02_06_100.calc.repository;
 
-import by.it.annazhegulovich.jd02_06_b.calc.ConsoleRunner;
-import by.it.annazhegulovich.jd02_06_b.calc.SingletonEnum;
-import by.it.annazhegulovich.jd02_06_b.calc.entity.Var;
-import by.it.annazhegulovich.jd02_06_b.calc.exception.CalcException;
-import by.it.annazhegulovich.jd02_06_b.calc.interfaces.Repository;
-import by.it.annazhegulovich.jd02_06_b.calc.service.VarCreator;
-import by.it.annazhegulovich.jd02_06_b.calc.util.PathFinder;
+import by.it.annazhegulovich.jd02_06_100.calc.ConsoleRunner;
+import by.it.annazhegulovich.jd02_06_100.calc.SingletonEnum;
+import by.it.annazhegulovich.jd02_06_100.calc.entity.Var;
+import by.it.annazhegulovich.jd02_06_100.calc.exception.CalcException;
+import by.it.annazhegulovich.jd02_06_100.calc.interfaces.Repository;
+import by.it.annazhegulovich.jd02_06_100.calc.service.VarCreator;
+import by.it.annazhegulovich.jd02_06_100.calc.util.PathFinder;
 
 import java.io.*;
 import java.util.HashMap;
@@ -14,14 +14,14 @@ import java.util.Map;
 import java.util.Objects;
 
 public class PersistentRepository implements Repository {
-    //public  static  final  String VARS_TXT = "vars.txt";
+    public  static  final  String VARS_TXT = "vars.txt";
     private final File path;
     private  final Map<String, Var> vars = new HashMap<>();
 
     public PersistentRepository(){
-        String filename = PathFinder.getPath(ConsoleRunner.class, SingletonEnum.INSTANCE.getRESULT_TXT());
+        String filename = PathFinder.getPath(ConsoleRunner.class, VARS_TXT);
         path = new File(filename);
-        initFromFile();
+       initFromFile();
     }
 
     private void initFromFile() {
@@ -47,12 +47,12 @@ public class PersistentRepository implements Repository {
 
     @Override
     public Var save(String name, Var value) throws CalcException {
-        vars.put(name, value);
-        saveToFile();
+        //vars.put(name, value);
+        //saveToFile();
         return value;
     }
 
-    private void saveToFile() throws CalcException {
+    /*private void saveToFile() throws CalcException {
         try (PrintWriter writer = new PrintWriter(path)){
             for (Map.Entry<String, Var> entry: vars.entrySet()){
                 writer.printf("%s=%s%n", entry.getKey(), entry.getValue());
@@ -60,7 +60,7 @@ public class PersistentRepository implements Repository {
         }catch (FileNotFoundException e){
             throw  new CalcException("not found file", e);
         }
-    }
+    }*/
 
     @Override
     public Var get(String name) {

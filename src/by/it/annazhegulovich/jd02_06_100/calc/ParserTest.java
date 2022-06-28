@@ -1,11 +1,11 @@
-package by.it.annazhegulovich.jd02_06_b.calc;
+package by.it.annazhegulovich.jd02_06_100.calc;
 
-import by.it.annazhegulovich.jd02_06_b.calc.entity.Var;
-import by.it.annazhegulovich.jd02_06_b.calc.exception.CalcException;
-import by.it.annazhegulovich.jd02_06_b.calc.interfaces.Repository;
-import by.it.annazhegulovich.jd02_06_b.calc.repository.VarMapRepository;
-import by.it.annazhegulovich.jd02_06_b.calc.service.Parser;
-import by.it.annazhegulovich.jd02_06_b.calc.service.VarCreator;
+import by.it.annazhegulovich.jd02_06_100.calc.entity.Var;
+import by.it.annazhegulovich.jd02_06_100.calc.exception.CalcException;
+import by.it.annazhegulovich.jd02_06_100.calc.interfaces.Repository;
+import by.it.annazhegulovich.jd02_06_100.calc.repository.VarMapRepository;
+import by.it.annazhegulovich.jd02_06_100.calc.service.Parser;
+import by.it.annazhegulovich.jd02_06_100.calc.service.VarCreator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
