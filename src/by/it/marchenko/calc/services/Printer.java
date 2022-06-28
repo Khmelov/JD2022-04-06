@@ -1,11 +1,9 @@
 package by.it.marchenko.calc.services;
 
 
-import by.it.marchenko.calc.ConsoleRunner;
 import by.it.marchenko.calc.constant.LanguageConst;
 import by.it.marchenko.calc.entity.Var;
 import by.it.marchenko.calc.log.Log;
-import by.it.marchenko.calc.log.report.ReportLogger;
 import by.it.marchenko.calc.utility.ResourceManager;
 
 public class Printer implements LanguageConst {
@@ -17,13 +15,19 @@ public class Printer implements LanguageConst {
         this.logger = logger;
     }
 
-    public String print(String out) {
+    public String println(String out) {
         System.out.println(out);
         logger.info(out);
         return out;
     }
 
-    public String print(Input inputString, Var result) {
+    public String print(String out) {
+        System.out.print(out);
+        logger.info(out);
+        return out;
+    }
+
+    public String println(Input inputString, Var result) {
         String message = null;
         if (inputString.getExpression() != null) {
             if (inputString.runEnabled()) {

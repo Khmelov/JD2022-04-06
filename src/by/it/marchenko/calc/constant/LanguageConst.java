@@ -46,5 +46,8 @@ public interface LanguageConst {
     String REPORT_TIME_UNIT = "report.timeUnit";
     String REPORT_TOTAL_EVENTS = "report.totalEvents";
     String REPORT_ERROR_EVENTS = "report.errorEvents";
+    String REPORT_SAVE_TO_FILE_QUESTION = "report.saveToFile";
+    String REPORT_GENERATED_MESSAGE = "report.generatedMessage";
+    String REPORT_PRINT_TO_SCREEN_QUESTION = "report.printScreen";
 
 }

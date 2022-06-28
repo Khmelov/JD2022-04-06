@@ -23,6 +23,7 @@ public class ConsoleRunner {
     private static final Log logger = LazyLogger.get();
     public static final boolean ERROR_MODE = true;
     private static Scanner console;
+    private static Printer printer = new Printer(resourceManager, logger);
 
     public static ResourceManager getResourceManager() {
         return resourceManager;
@@ -40,6 +41,10 @@ public class ConsoleRunner {
         return console;
     }
 
+    public static Printer getPrinter() {
+        return printer;
+    }
+
     public static void main(String[] args) throws CalcException {
         console = new Scanner(System.in);               //  input data source
         Repository repo = new VarRepositoryMap();       //  repository for variable saving
@@ -49,7 +54,7 @@ public class ConsoleRunner {
                 new CalcExceptionHandler(logger);
         Converter.createResourceFromText();
         resourceManager.changeResource(Locale.getDefault());
-        Printer printer = new Printer(resourceManager, logger);
+        printer = new Printer(resourceManager, logger);
         Input inputString = new Input(console);
         Parser parseString = new Parser(repo/*, creator*/, operands, assignment);
 
@@ -65,8 +70,8 @@ public class ConsoleRunner {
                 CalcCommander commander = new CalcCommander(repo);  //  command creator method
                 String resultString = commander.performCommand(tempString);
                 String message = Objects.isNull(resultString) ?
-                        printer.print(inputString, parseString.calc(tempString)) :
-                        printer.print(resultString);
+                        printer.println(inputString, parseString.calc(tempString)) :
+                        printer.println(resultString);
                 reportLogger.setResultText(message);
             } catch (CalcException e) {
                 String message = calcExceptionHandler.handleCalcException(e);

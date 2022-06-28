@@ -15,3 +15,6 @@ report.appProcess = Агульгны час працы праграммы:
 report.timeUnit = c
 report.totalEvents = Агульная колькасць уведзеных выразаў:
 report.errorEvents = Агульная колькасць памылковых выразаў:
+report.saveToFile = Жадаеце захаваць пратакол у файл? %s - да, %s - не:
+report.generatedMessage = Пратакол створаны. Праглядзець пратакол магчыма па спасылке:
+report.printScreen = Вывесцi пратакол на экран? %s - да, %s - не:

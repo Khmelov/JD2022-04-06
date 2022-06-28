@@ -15,3 +15,6 @@ report.appProcess = Общее времы работы приложения:
 report.timeUnit = c
 report.totalEvents = Общее количество введенных выражений:
 report.errorEvents = Количество ошибочных выражений:
+report.saveToFile = Сохранить отчет в файл? %s - да, %s - нет:
+report.generatedMessage = Отчет сгенерирован. Просмотреть отчет можно по ссылке:
+report.printScreen = Вывести отчет на экран? %s - да, %s - нет:

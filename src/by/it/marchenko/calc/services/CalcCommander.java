@@ -26,7 +26,6 @@ public class CalcCommander implements CalcAppCommand, LanguageConst {
 
     public CalcCommander(Repository repository) {
         this.repository = repository;
-        //variables = repository.getAllVariables();
         resourceManager = ConsoleRunner.getResourceManager();
         reportGenerator = ConsoleRunner.getReportGenerator();
     }

@@ -16,3 +16,6 @@ report.appProcess = Application total working time:
 report.timeUnit = s
 report.totalEvents = Total count of input expression:
 report.errorEvents = Total count of errors:
+report.saveToFile = Do you want save report to file? %s - yes, %s - no:
+report.generatedMessage = Report created. You can find report via link:
+report.printScreen = Show report on the screen? %s - yes, %s - no:
