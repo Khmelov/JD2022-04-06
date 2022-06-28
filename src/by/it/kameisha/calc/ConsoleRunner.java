@@ -9,8 +9,6 @@ import by.it.kameisha.calc.service.Parser;
 import by.it.kameisha.calc.service.Printer;
 import by.it.kameisha.calc.service.VarCreator;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ConsoleRunner {
@@ -30,11 +28,11 @@ public class ConsoleRunner {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println(resMan.get(MessageApp.MESSAGE_START_APP));
-        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss  dd.MM.yyyy")));
+        System.out.println(DataTime.showDateTime());
         while (scanner.hasNext()) {
             String expression = scanner.nextLine();
             if (expression.equalsIgnoreCase(COMMAND_END)) {
-                System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy")));
+                System.out.println(DataTime.showDateTime());
                 break;
             } else if (locales.contains(expression)) {
                 locale = new Locale(expression.trim());
@@ -43,13 +41,11 @@ public class ConsoleRunner {
                 try {
                     Var result = parser.calc(expression);
                     printer.print(result);
-                    logger.log(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss  dd.MM.yyyy")) + "\n\t" + " created "
-                            + result.getClass().getSimpleName() + " " + result);
+                    logger.info(result,expression);
 
                 } catch (CalcException e) {
                     printer.print(e);
-                    logger.log(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy")) + "\n\t"
-                            + e.getClass().getSimpleName() + " " + e.getMessage());
+                    logger.error(e,expression);
                 }
             }
         }
