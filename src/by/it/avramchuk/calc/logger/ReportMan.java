@@ -3,14 +3,15 @@ package by.it.avramchuk.calc.logger;
 public class ReportMan {
     private ReportBuilder reportBuilder;
 
-    public void setReportBuilder(ReportBuilder rb){
-        reportBuilder=rb;
+    public void setReportBuilder(ReportBuilder rb) {
+        reportBuilder = rb;
     }
-    public Report getReport(){
+
+    public Report getReport() {
         return reportBuilder.getReport();
     }
 
-    public void constructReport(){
+    public void constructReport() {
         reportBuilder.createNewReport();
         reportBuilder.addTitle();
         reportBuilder.addBody();

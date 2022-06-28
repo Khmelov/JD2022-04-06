@@ -50,7 +50,7 @@ public class ConsoleRunner {
                 logger.writeTo(Patterns.REPORT_PATH, DateFormatter.getDateTime());
                 System.out.println(resMan.get(Message.CHOOSE_REPORT_MESSAGE));
                 String input = scanner.nextLine();
-                ReportBuilder reportBuilder = input.equals("1")?new ShortReportBuilder()
+                ReportBuilder reportBuilder = input.equals("1") ? new ShortReportBuilder()
                         : new DetailReportBuilder();
                 reportMan.setReportBuilder(reportBuilder);
                 reportMan.constructReport();

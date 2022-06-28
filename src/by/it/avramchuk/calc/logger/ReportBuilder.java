@@ -8,21 +8,25 @@ import java.io.IOException;
 
 public abstract class ReportBuilder {
     Report report;
+
     Report getReport() {
         return report;
     }
 
-    void createNewReport(){
+    void createNewReport() {
         report = new Report();
     }
 
     public abstract void addTitle();
+
     public abstract void addBody();
+
     public abstract void addEnding();
-    public String[] getText(){
+
+    public String[] getText() {
         StringBuilder text = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(Patterns.REPORT_PATH))){
-            while (reader.ready()){
+        try (BufferedReader reader = new BufferedReader(new FileReader(Patterns.REPORT_PATH))) {
+            while (reader.ready()) {
                 text.append(reader.readLine());
                 text.append("!");
             }
