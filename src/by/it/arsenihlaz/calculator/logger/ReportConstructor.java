@@ -16,6 +16,6 @@ public class ReportConstructor {
         reportBuilder.createNewReport();
         reportBuilder.buildHeader();
         reportBuilder.buildWorkingTime();
-        reportBuilder.buildOperationResult();
+        reportBuilder.buildEvents();
     }
 }

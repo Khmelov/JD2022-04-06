@@ -7,7 +7,7 @@ import java.io.*;
 public class Report {
     private String header = "";
     private String workingTime = "";
-    private String operationResult = "";
+    private String events = "";
 
     public void setHeader(String header) {
         this.header = header;
@@ -17,15 +17,16 @@ public class Report {
         this.workingTime = workingTime;
     }
 
-    public void setOperationResult(String operationResult) {
-        this.operationResult = operationResult;
+    public void setEvents(String events) {
+        this.events = events;
     }
+
 
     @Override
     public String toString() {
         return header + "\n"
                 + workingTime + "\n"
-                + operationResult + "\n";
+                + events + "\n";
     }
 
     public void writeReport(Report report) {

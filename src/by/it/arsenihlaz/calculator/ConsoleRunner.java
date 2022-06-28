@@ -40,12 +40,16 @@ public class ConsoleRunner {
             if (command.equals(resourceManager.getValue(Message.COMMAND_END))) {
                 String dataTimeEnd = DataTimeWorking.getDataTime();
                 DataTimeWorking.setDataTimeEnd(dataTimeEnd);
-                ReportBuilder reportBuilder = new SimpleReportBuilder();
+
+                System.out.println("select report type: 's' key to select simple or 'd' key to select detail");
+                String choice = scanner.nextLine();
+                ReportBuilder reportBuilder = choice.equals("s") ? new SimpleReportBuilder()
+                        : new DetailedReportBuilder();
+
                 reportConstructor.setReportBuilder(reportBuilder);
                 reportConstructor.constructReport();
-                Report simpleReport = reportConstructor.getReportBuilder();
-                System.out.println(simpleReport);
-                report.writeReport(simpleReport);
+                Report chosenReport = reportConstructor.getReportBuilder();
+                report.writeReport(chosenReport);
                 break;
             } else if (command.equals("be")) {
                 locale = new Locale("be", "BY");
@@ -68,10 +72,10 @@ public class ConsoleRunner {
 
                 } catch (CalcException e) {
                     printer.print(e);
+                    ReportBuilder.setErrorsList(e.getMessage());
                     logger.error(" " + e.getMessage());
                 }
             }
         }
-
     }
 }

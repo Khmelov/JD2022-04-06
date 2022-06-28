@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 public abstract class ReportBuilder {
     Report report;
-    static ArrayList<String> calcOperations = new ArrayList<String>();
+    static ArrayList<String> calcOperationsList = new ArrayList<String>();
+    static ArrayList<String> errorsList = new ArrayList<String>();
+
 
     public Report getReport() {
         return report;
@@ -18,13 +20,22 @@ public abstract class ReportBuilder {
 
     public abstract void buildWorkingTime();
 
-    public abstract void buildOperationResult();
+    public abstract void buildEvents();
+
 
     public static void setCalcOperation(String operation) {
-        calcOperations.add(operation);
+        calcOperationsList.add(operation);
     }
 
     public ArrayList<String> getCalcOperation() {
-        return calcOperations;
+        return calcOperationsList;
+    }
+
+    public static void setErrorsList(String error) {
+        errorsList.add(error);
+    }
+
+    public ArrayList<String> getErrors() {
+        return errorsList;
     }
 }

@@ -2,10 +2,10 @@ package by.it.arsenihlaz.calculator.logger;
 
 import java.util.ArrayList;
 
-public class SimpleReportBuilder extends ReportBuilder {
+public class DetailedReportBuilder extends ReportBuilder {
 
     public void buildHeader() {
-        report.setHeader("Simple report:");
+        report.setHeader("Detailed report:");
     }
 
     public void buildWorkingTime() {
@@ -17,12 +17,20 @@ public class SimpleReportBuilder extends ReportBuilder {
 
     public void buildEvents() {
         int countOperation = 0;
+        int countErrors = 0;
         ArrayList<String> calcOperations = getCalcOperation();
+        ArrayList<String> errorList = getErrors();
         StringBuilder stringBuilder = new StringBuilder();
         for (String operation : calcOperations) {
             stringBuilder.append("Operation №" + ++countOperation + ": " + operation);
             stringBuilder.append("\n");
         }
+        for (String error : errorList) {
+            stringBuilder.append("Error №" + ++countErrors + ": " + error);
+            stringBuilder.append("\n");
+        }
         report.setEvents(String.valueOf(stringBuilder));
     }
+
+
 }
