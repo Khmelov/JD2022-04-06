@@ -2,7 +2,6 @@ package by.it.edeborg.jd01_06;
 
 
 import by.it.HomeWork;
-import by.it._tasks_.jd01_06.Poem;
 import org.junit.Test;
 
 import java.lang.reflect.Method;
@@ -444,12 +443,12 @@ public class Test_jd01_06 extends HomeWork {
         Method mSlow = ok.checkMethod(ok.aClass.getSimpleName(), "slow", String.class);
         Method mFast = ok.checkMethod(ok.aClass.getSimpleName(), "fast", String.class);
         long t = System.nanoTime();
-        String s1 = (String) mSlow.invoke(null, by.it._tasks_.jd01_06.Poem.text);
+        String s1 = (String) mSlow.invoke(null, by.it.edeborg.jd01_06.Poem.text);
         long dtSlow = (System.nanoTime() - t) / 1000;
         System.out.println("slow dt=" + dtSlow);
 
         t = System.nanoTime();
-        String s2 = (String) mFast.invoke(null, by.it._tasks_.jd01_06.Poem.text);
+        String s2 = (String) mFast.invoke(null, by.it.edeborg.jd01_06.Poem.text);
         long dtFast = (System.nanoTime() - t) / 1000;
         System.out.println("fast dt=" + dtFast);
         System.out.println("Отличие в скорости dtSlow/dtFast=" + dtSlow / dtFast);
@@ -457,7 +456,7 @@ public class Test_jd01_06 extends HomeWork {
             fail("Ошибка: Скорость метода fast должна быть выше, чем slow хотя бы в три раза!");
         if (!s1.equals(s2))
             fail("Ошибка: Методы slow и fast выводят разные последовательности слов!");
-        String[] word = Poem.text.split("[^а-яА-ЯёЁ]+");
+        String[] word = by.it.edeborg.jd01_06.Poem.text.split("[^а-яА-ЯёЁ]+");
         for (int i = 0; i < 10; i++) {
             String testWord = word[new Random().nextInt(word.length)];
             if (!s1.contains(testWord))
