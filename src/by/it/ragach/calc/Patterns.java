@@ -10,4 +10,6 @@ public class Patterns {
     public static final String VECTOR = "\\{" + SCALAR + "(," + SCALAR + ")*}";
     public static final String MATRIX = "\\{"+VECTOR+"(,"+VECTOR+")*}";
     public static final String SIMPLE_EXP = "\\([^()]*\\)";
+    public static final String RESULT_TXT = "Result.txt";
+
 }

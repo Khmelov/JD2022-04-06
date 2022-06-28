@@ -1,9 +1,6 @@
 package by.it.ragach.calc;
 
 
-
-import java.util.Arrays;
-
 public class Matrix extends Var {
     private final double[][] value;
 

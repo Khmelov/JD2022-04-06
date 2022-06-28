@@ -11,8 +11,8 @@ public class ConsoleRunner {
     public static final String MESSAGE_STOP_APP = "App finished";
 
     public static void main(String[] args) {
-        Printer printer = new Printer();
-        Repository repository = new VarMapRepository();
+        Printer printer = new Printer(System.out);
+        Repository repository = new PersistentRepository();
         VarCreator varCreator = new VarCreator(repository);
         Parser parser = new Parser(repository, varCreator);
         Scanner scanner = new Scanner(System.in);

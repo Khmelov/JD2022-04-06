@@ -39,7 +39,7 @@ public class Scalar extends Var {
     }
 
     @Override
-    public Var mul(Var other) throws CalcException{
+    public Var mul(Var other) throws CalcException {
         if (other instanceof Scalar otherScalar) {
             return new Scalar(this.value * otherScalar.value);
         } else {
