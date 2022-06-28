@@ -1,4 +1,4 @@
-package by.it.ragach.calc;
+package by.it.ragach.calc.exception;
 
 public class CalcException extends Exception{
 

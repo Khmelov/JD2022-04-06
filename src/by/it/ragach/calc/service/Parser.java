@@ -1,4 +1,11 @@
-package by.it.ragach.calc;
+package by.it.ragach.calc.service;
+
+import by.it.ragach.calc.ResMan;
+import by.it.ragach.calc.constants.Message;
+import by.it.ragach.calc.constants.Patterns;
+import by.it.ragach.calc.entity.Var;
+import by.it.ragach.calc.exception.CalcException;
+import by.it.ragach.calc.interfaces.Repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +15,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
+
+    private final ResMan resMan = ResMan.INSTANCE;
 
 
     private final Repository repository;
@@ -77,7 +86,7 @@ public class Parser {
 
 
         }
-        throw new CalcException("non found operation %s", operation);
+        throw new CalcException(resMan.get(Message.INCORRECT_OPER_MESSAGE)+" '%s'",operation);
 
     }
 

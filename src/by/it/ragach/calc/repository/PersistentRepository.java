@@ -1,4 +1,13 @@
-package by.it.ragach.calc;
+package by.it.ragach.calc.repository;
+
+import by.it.ragach.calc.ConsoleRunner;
+import by.it.ragach.calc.PathFinder;
+import by.it.ragach.calc.ResMan;
+import by.it.ragach.calc.constants.Message;
+import by.it.ragach.calc.service.VarCreator;
+import by.it.ragach.calc.entity.Var;
+import by.it.ragach.calc.exception.CalcException;
+import by.it.ragach.calc.interfaces.Repository;
 
 import java.io.*;
 import java.util.HashMap;
@@ -7,13 +16,17 @@ import java.util.Objects;
 
 public class PersistentRepository implements Repository {
 
+    private ResMan resMan = ResMan.INSTANCE;
+
+    public static final String VARS_TXT = "vars.txt";
+
     private final File path;
 
     private final Map<String, Var> vars = new HashMap<>();
 
 
     public PersistentRepository() {
-        String filename = PathFinder.getPath(ConsoleRunner.class, SingletonEnum.INSTANCE.getRESULT_TXT());
+        String filename = PathFinder.getPath(ConsoleRunner.class, VARS_TXT);
         path = new File(filename);
         initFromFile();
 
@@ -23,21 +36,18 @@ public class PersistentRepository implements Repository {
         if (path.exists()) {
             VarCreator creator = new VarCreator(this);
             try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-                while (true) {
+                while (reader.ready()) {
                     String line = reader.readLine();
-                    if (!Objects.isNull(line)) {
-                        String[] parts = line.split("=", 2);
-                        String name = parts[0];
-                        Var var = creator.createVar(parts[1]);
-                        vars.put(name, var);
-                    } else {
-                        break;
-                    }
+                    String[] parts = line.split("=", 2);
+                    String name = parts[0];
+                    Var var = creator.createVar(parts[1]);
+                    vars.put(name, var);
+
 
                 }
 
             } catch (IOException | CalcException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException(resMan.get(Message.FILE_NOT_FOUND_MESSAGE),e);
 
             }
         }
@@ -60,7 +70,7 @@ public class PersistentRepository implements Repository {
 
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("not found file", e);
+            throw new CalcException(resMan.get(Message.FILE_NOT_FOUND_MESSAGE), e);
         }
 
 
@@ -68,7 +78,7 @@ public class PersistentRepository implements Repository {
 
 
     @Override
-    public Var get(String name) throws CalcException {
+    public Var get(String name)  {
         return vars.get(name);
     }
 }

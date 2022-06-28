@@ -1,4 +1,7 @@
-package by.it.ragach.calc;
+package by.it.ragach.calc.entity;
+
+import by.it.ragach.calc.exception.CalcException;
+import by.it.ragach.calc.interfaces.Operation;
 
 public abstract class Var implements Operation {
 

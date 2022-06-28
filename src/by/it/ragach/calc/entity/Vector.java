@@ -1,4 +1,6 @@
-package by.it.ragach.calc;
+package by.it.ragach.calc.entity;
+
+import by.it.ragach.calc.exception.CalcException;
 
 public class Vector extends Var {
 

@@ -1,4 +1,8 @@
-package by.it.ragach.calc;
+package by.it.ragach.calc.repository;
+
+import by.it.ragach.calc.entity.Var;
+import by.it.ragach.calc.exception.CalcException;
+import by.it.ragach.calc.interfaces.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
