@@ -1,0 +1,6 @@
+message.welcome=ようこそ、はじめましてを願いします!
+message.question=お元気ですか？
+user.firstname=アントン
+user.lastname=スミルノフ
+command.chooselang=\n言語を変更または終了するコマンドを入力します。 \nen | fr | jp | be | ru | end
+message.date=%n今日は %s (定かではありません!)%n%n
