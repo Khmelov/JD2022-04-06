@@ -14,7 +14,8 @@ public class TaskC {
         scanner = new Scanner(System.in);
         try {
             readData();
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
@@ -22,13 +23,16 @@ public class TaskC {
     private static void readData() throws Exception {
         while (scanner.hasNext()) {
             String text = scanner.next();
-            try {
+            try
+            {
                 Double number = Double.parseDouble(text);
                 numbers.addFirst(number);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException e)
+            {
                 countException++;
                 Thread.sleep(100);
-                for (Double number : numbers) {
+                for (Double number : numbers)
+                {
                     System.out.print(number + SPACE);
                 }
                 System.out.println();

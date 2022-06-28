@@ -4,7 +4,8 @@ import java.util.*;
 
 public class TaskB2 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         Scanner scanner = new Scanner(System.in);
         String[] peoples = getNames(scanner);
 
@@ -17,11 +18,13 @@ public class TaskB2 {
 
     }
 
-    private static String[] getNames(Scanner scanner) {
+    private static String[] getNames(Scanner scanner)
+    {
         System.out.println("Введите количество игроков");
         int N = scanner.nextInt();
         String[] names = new String[N];
-        for (int i = 0; i < names.length; i++) {
+        for (int i = 0; i < names.length; i++)
+        {
             names[i] = scanner.next();
 
         }

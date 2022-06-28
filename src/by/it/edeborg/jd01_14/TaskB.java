@@ -12,7 +12,8 @@ public class TaskB {
     public static final String RESULT_TASK_B_TXT = "resultTaskB.txt";
     public static final String POEM_TXT = "Poem.txt";
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
         String pathPoem = Util.getPath(TaskB.class, POEM_TXT);
         StringBuilder poem= getText(pathPoem);
@@ -33,7 +34,8 @@ public class TaskB {
             while(bufferedReader.ready()){
                 poem.append(bufferedReader.readLine()).append("\n");
             }
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             throw new RuntimeException(e);
         }
         return poem;
@@ -50,7 +52,8 @@ public class TaskB {
     }
 
     private static void printTxtFile(int words, int punctuationMarks, String pathResultTaskB) {
-        try(PrintWriter out = new PrintWriter(pathResultTaskB)){
+        try(PrintWriter out = new PrintWriter(pathResultTaskB))
+        {
             out.println("words="+ words +", punctuation marks="+ punctuationMarks);
 
         } catch (FileNotFoundException e) {

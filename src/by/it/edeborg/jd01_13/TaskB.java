@@ -2,7 +2,8 @@ package by.it.edeborg.jd01_13;
 
 import java.util.Scanner;
 
-public class TaskB {
+public class TaskB
+{
     public static final String END = "end";
     static Scanner scanner;
 
@@ -11,10 +12,12 @@ public class TaskB {
         double sum = 0;
         while (scanner.hasNext()) {
             String text = scanner.next();
-            if (text.equalsIgnoreCase(END)) {
+            if (text.equalsIgnoreCase(END))
+            {
                 break;
             }
-            try {
+            try
+            {
                 double number = Double.parseDouble(text);
                 sum += number;
                 Double sqrt = Math.sqrt(sum);

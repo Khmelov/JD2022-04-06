@@ -4,7 +4,8 @@ package by.it.edeborg.jd01_12;
 import java.util.*;
 
 public class TaskB1 {
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
         Scanner scanner = new Scanner(System.in);
 

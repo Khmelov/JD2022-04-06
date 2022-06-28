@@ -6,14 +6,16 @@ import java.io.*;
 
 public class TaskB {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         String pathFile = Util.getPath(TaskB.class, "TaskB.java");
         File thisFile = new File(pathFile);
         StringBuilder stringBuilder = new StringBuilder();
         try (RandomAccessFile fileReader = new RandomAccessFile(thisFile, "r")) {
             fileReader.seek(0);
             printText(fileReader, stringBuilder);
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             throw new RuntimeException(e);
         }
         String txtFile = Util.getPath(TaskB.class, "TaskB.txt");
