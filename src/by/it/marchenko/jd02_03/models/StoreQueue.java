@@ -19,9 +19,9 @@ public class StoreQueue implements StoreQueueAction {
 
     @Override
     public int getSize() {
-        //    synchronized (storeQueue) {
-        return QUEUE_LIMIT - storeQueue.remainingCapacity();
-        //    }
+        synchronized (storeQueue) {
+            return QUEUE_LIMIT - storeQueue.remainingCapacity();
+        }
     }
 
     @Override

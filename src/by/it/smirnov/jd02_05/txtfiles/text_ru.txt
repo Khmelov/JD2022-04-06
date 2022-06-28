@@ -1,0 +1,6 @@
+message.welcome=Добрый день!
+message.question=Как дела?
+user.firstname=Антон
+user.lastname=Смирнов
+command.chooselang=\nВведите команду для смены языка или выхода: \nen | fr | jp | be | ru | end
+message.date=%nСегодня у нас %s (но это не точно!)%n%n
