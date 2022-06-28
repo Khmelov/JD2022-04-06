@@ -10,7 +10,7 @@ import by.it.machuga.calc.repasitory.PersistentRepository;
 import by.it.machuga.calc.repasitory.Repository;
 import by.it.machuga.calc.servise.Parser;
 import by.it.machuga.calc.servise.Printer;
-import by.it.machuga.calc.servise.VarCreator;
+import by.it.machuga.calc.servise.VarBuilder;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -31,8 +31,8 @@ public class ConsoleRunner {
         System.out.println(resourceManager.get(Message.CALCULATOR_STARTED_MESSAGE));
         Printer printer = new Printer();
         Repository repository = new PersistentRepository();
-        VarCreator varCreator = new VarCreator(repository);
-        Parser parser = new Parser(repository, varCreator);
+        VarBuilder varBuilder = new VarBuilder(repository);
+        Parser parser = new Parser(repository, varBuilder);
         Scanner scanner = new Scanner(System.in);
         System.out.println(resourceManager.get(Message.ENTER_EXPRESSION_MESSAGE));
         String expression = scanner.nextLine();

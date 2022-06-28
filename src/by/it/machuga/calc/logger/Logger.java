@@ -1,7 +1,7 @@
 package by.it.machuga.calc.logger;
 
 import by.it.machuga.calc.interfaces.Log;
-import by.it.machuga.calc.util.FileUtil;
+import by.it.machuga.calc.util.PathFinder;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +13,7 @@ public enum Logger implements Log {
 
 
     private void log(String message) {
-        String path = FileUtil.getPath(Logger.class, "log.txt");
+        String path = PathFinder.getPath(Logger.class, "log.txt");
         try (PrintWriter printWriter = new PrintWriter(new FileWriter(path, true))) {
             printWriter.println(message);
         } catch (IOException e) {

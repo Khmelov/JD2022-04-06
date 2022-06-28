@@ -3,7 +3,7 @@ package by.it.machuga.calc.repasitory;
 import by.it.machuga.calc.interfaces.Message;
 import by.it.machuga.calc.runner.ConsoleRunner;
 import by.it.machuga.calc.util.PathFinder;
-import by.it.machuga.calc.servise.VarCreator;
+import by.it.machuga.calc.servise.VarBuilder;
 import by.it.machuga.calc.constans.ConstantStorage;
 import by.it.machuga.calc.entity.Var;
 import by.it.machuga.calc.exception.CalculatorException;
@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static by.it.machuga.calc.runner.ConsoleRunner.logger;
 import static by.it.machuga.calc.runner.ConsoleRunner.resourceManager;
 
 public class PersistentRepository implements Repository {
@@ -29,7 +30,7 @@ public class PersistentRepository implements Repository {
 
     private void initFromFile() {
         if (path.exists()) {
-            VarCreator creator = new VarCreator(this);
+            VarBuilder creator = new VarBuilder(this);
             try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
                 while (true) {
                     String line = reader.readLine();
@@ -43,8 +44,10 @@ public class PersistentRepository implements Repository {
                     }
                 }
             } catch (IOException e) {
+                logger.error(resourceManager.get(Message.FILE_NOT_FOUND_MSG));
                 throw new RuntimeException(resourceManager.get(Message.FILE_NOT_FOUND_MSG), e);
             } catch (CalculatorException e) {
+                logger.error(resourceManager.get(Message.CAN_T_PARSE_VAR_MSG));
                 throw new RuntimeException(resourceManager.get(Message.CAN_T_PARSE_VAR_MSG), e);
             }
         }
@@ -63,6 +66,7 @@ public class PersistentRepository implements Repository {
                 writer.printf("%s=%s%n", entry.getKey(), entry.getValue());
             }
         } catch (FileNotFoundException e) {
+            logger.error("not found file");
             throw new CalculatorException("not found file", e);
         }
     }

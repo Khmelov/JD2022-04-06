@@ -16,7 +16,7 @@ import static by.it.machuga.calc.constans.ConstantStorage.*;
 
 public class Parser {
     private final Repository repository;
-    private final VarCreator varCreator;
+    private final VarBuilder varBuilder;
     private final static Map<String, Integer> priorityMap = Map.of(
             "=", 0,
             "+", 1,
@@ -25,9 +25,9 @@ public class Parser {
             "/", 2
     );
 
-    public Parser(Repository repository, VarCreator varCreator) {
+    public Parser(Repository repository, VarBuilder varBuilder) {
         this.repository = repository;
-        this.varCreator = varCreator;
+        this.varBuilder = varBuilder;
     }
 
     public Var calc(String expression) throws CalculatorException {
@@ -70,7 +70,7 @@ public class Parser {
             Var result = executeOperation(left, operation, right);
             operands.add(index, result.toString());
         }
-        return varCreator.createVar(operands.get(0));
+        return varBuilder.createVar(operands.get(0));
     }
 
     private int getOperation(List<String> operations) {
@@ -87,11 +87,11 @@ public class Parser {
     }
 
     private Var executeOperation(String leftOperand, String operation, String rightOperand) throws CalculatorException {
-        Var right = varCreator.createVar(rightOperand);
+        Var right = varBuilder.createVar(rightOperand);
         if (operation.equals("=")) {
             return repository.save(leftOperand, right);
         }
-        Var left = varCreator.createVar(leftOperand);
+        Var left = varBuilder.createVar(leftOperand);
         return switch (operation) {
             case "+" -> left.add(right);
             case "-" -> left.sub(right);
