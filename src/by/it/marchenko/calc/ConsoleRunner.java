@@ -41,45 +41,37 @@ public class ConsoleRunner {
     }
 
     public static void main(String[] args) throws CalcException {
-
-
         console = new Scanner(System.in);               //  input data source
         Repository repo = new VarRepositoryMap();       //  repository for variable saving
         Operands operands = new Operands(repo);         //  create/check String/Var operands and operators
         Assignment assignment = new Assignment(repo);   //  check and perform assignment
         CalcExceptionHandler calcExceptionHandler =
                 new CalcExceptionHandler(logger);
-
         Converter.createResourceFromText();
         resourceManager.changeResource(Locale.getDefault());
         Printer printer = new Printer(resourceManager, logger);
-
         Input inputString = new Input(console);
         Parser parseString = new Parser(repo/*, creator*/, operands, assignment);
 
         printer.greeting();
-
         while (inputString.runEnabled()) {
             try {
+                reportLogger.setTimeStamp();
                 inputString.setExpression();
                 String tempString = inputString.getExpression();
-                logger.info(tempString);
+                reportLogger.getTime(LocalDateTime.now());
                 reportLogger.setInputText(tempString);
-                reportLogger.getCurrentTime(LocalDateTime.now());
-
+                logger.info(tempString);
                 CalcCommander commander = new CalcCommander(repo);  //  command creator method
                 String resultString = commander.performCommand(tempString);
                 String message = Objects.isNull(resultString) ?
                         printer.print(inputString, parseString.calc(tempString)) :
                         printer.print(resultString);
-
                 reportLogger.setResultText(message);
             } catch (CalcException e) {
                 String message = calcExceptionHandler.handleCalcException(e);
                 reportLogger.setResultText(message, ERROR_MODE);
             }
         }
-
     }
-
 }

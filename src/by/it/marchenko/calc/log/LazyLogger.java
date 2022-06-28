@@ -13,9 +13,8 @@ import java.time.format.DateTimeFormatter;
 
 public class LazyLogger implements Log {
     private static final String LOGGER_FILE_NAME = "lazyLog.txt";
-    //private static final String REPORT_FILE_NAME = "report.txt";
     private static final boolean APPEND_MODE = true;
-    private static final String DATE_TIME_PATTERN = "yyyy/MM/dd: HH:mm:ss";
+    private static final String DATE_TIME_PATTERN = "yyyy/MM/dd - HH:mm:ss";
     private static final String LOG_MESSAGE_FORMAT = "%-25s %s%n";
     private static final DateTimeFormatter formatDate = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
     public static final int INDENT_SIZE = 34;
@@ -23,14 +22,9 @@ public class LazyLogger implements Log {
     public static final String NEW_LINE = "\n";
 
     private final String logFile;
-    //  private final String reportFile;
-    // private final ReportGenerator reportGenerator;
 
     private LazyLogger() {
         logFile = FilePathFounder.getFilePath(LOGGER_FILE_NAME);
-//        reportFile = FilePathFounder.getFilePath(REPORT_FILE_NAME);
-
-        //   reportGenerator = ConsoleRunner.getReportGenerator();
     }
 
     private static class NestedLoggerHolder {
@@ -56,11 +50,8 @@ public class LazyLogger implements Log {
         logToFile("RESULT: " + resultMessage);
     }
 
-
     private void logToFile(String message) {
-        try (PrintWriter printWriter = new PrintWriter(new FileWriter(logFile, APPEND_MODE))//;
-             //    PrintWriter reportWriter = new PrintWriter(new FileWriter(reportFile, APPEND_MODE))
-        ) {
+        try (PrintWriter printWriter = new PrintWriter(new FileWriter(logFile, APPEND_MODE))) {
             String[] lines = message.split(NEW_LINE);
             StringBuilder formattedMessage = new StringBuilder(lines[0] + NEW_LINE);
             if (lines.length > 1) {
@@ -76,9 +67,6 @@ public class LazyLogger implements Log {
             printWriter.printf(LOG_MESSAGE_FORMAT,
                     LocalDateTime.now().format(formatDate),
                     message);
-            /*reportWriter.printf(LOG_MESSAGE_FORMAT,
-                    LocalDateTime.now().format(formatDate),
-                    message);*/
         } catch (IOException e) {
             throw new AssertionError(e);
         }

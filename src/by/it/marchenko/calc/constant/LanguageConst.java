@@ -40,4 +40,11 @@ public interface LanguageConst {
     String REPORT_MODE_QUESTION = "report.checkMode";
     String REPORT_DETAILED_HEADER = "report.detailedHeader";
     String REPORT_CLIPPED_HEADER = "report.clippedHeader";
+    String REPORT_APP_START_AT = "report.appStartAt";
+    String REPORT_APP_FINISH_AT = "report.appFinishAt";
+    String REPORT_APP_PROCESS = "report.appProcess";
+    String REPORT_TIME_UNIT = "report.timeUnit";
+    String REPORT_TOTAL_EVENTS = "report.totalEvents";
+    String REPORT_ERROR_EVENTS = "report.errorEvents";
+
 }

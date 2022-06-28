@@ -8,6 +8,4 @@ public interface Log {
     void info(String infoMessage);
 
     void result(String resultMessage);
-
-    //void getTimeStamp();
 }

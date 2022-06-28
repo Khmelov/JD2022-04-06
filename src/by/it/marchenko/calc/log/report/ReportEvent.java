@@ -7,14 +7,21 @@ public class ReportEvent {
     public static final int INDENT_LENGTH = 22;
     public static final String RESULT_LINE_INDENT = " ".repeat(INDENT_LENGTH);
 
-    private enum EventType {
+    public enum EventType {
         ERROR, INFO
     }
 
     private String timeStamp;
     private String inputExpression;
     private String operationResult;
-    private EventType type = EventType.INFO;
+    private EventType type;
+
+    public ReportEvent() {
+        this.timeStamp = "";
+        this.inputExpression = "";
+        this.operationResult = "";
+        this.type = EventType.INFO;
+    }
 
     public void setInputExpression(String inputExpression) {
         this.inputExpression = inputExpression;
