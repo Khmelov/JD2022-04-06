@@ -3,6 +3,7 @@ package by.it.kudelko.calc;
 import by.it.kudelko.calc.entity.Var;
 import by.it.kudelko.calc.exception.CalcException;
 import by.it.kudelko.calc.interfaces.Repository;
+import by.it.kudelko.calc.logger.Logger;
 import by.it.kudelko.calc.repository.PersistentRepository;
 import by.it.kudelko.calc.service.Parser;
 import by.it.kudelko.calc.service.Printer;
@@ -17,6 +18,7 @@ public class ConsoleRunner {
     public static final String COMMAND_END = "end";
 
     public static void main(String[] args) {
+        Logger logger = Logger.INSTANCE;
         Printer printer = new Printer(System.out);
         Repository repository = new PersistentRepository();
         VarCreator varCreator = new VarCreator(repository);
@@ -31,8 +33,10 @@ public class ConsoleRunner {
                 try {
                 Var result = parser.calc(expression);
                 printer.print(result);
+                logger.info("Сalculation result: " + result);
             } catch (CalcException e){
                 printer.print(e);
+                logger.error(e.getMessage());
                 }
             }
         }
