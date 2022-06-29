@@ -1,4 +1,4 @@
-package by.it.arsenihlaz.jd02_07;
+package by.it.arsenihlaz.jd02_07.util;
 
 import java.util.concurrent.ThreadLocalRandom;
 
