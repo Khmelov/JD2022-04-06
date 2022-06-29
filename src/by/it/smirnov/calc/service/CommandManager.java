@@ -44,7 +44,7 @@ public class CommandManager {
                 try {
                     Var result = parser.calc(line);
                     printer.print(result);
-                    toReport(INSTANCE.getString(REPORT_RESULT) + line);
+                    toReport(INSTANCE.getString(REPORT_RESULT) + result);
                 } catch (CalcException e) {
                     printer.print(e);
                     toReport(e);
