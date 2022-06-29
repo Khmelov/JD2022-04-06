@@ -18,7 +18,7 @@ public class PlayerGeneratorTask extends Thread {
     public void run() {
         addPlayers();
         writeToFile();
-        System.out.println(players.size());
+//        System.out.println(players.size());
 //        for (Player player : players) {
 //            System.out.println(player);
 //        }

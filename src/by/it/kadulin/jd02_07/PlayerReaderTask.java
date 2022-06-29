@@ -22,9 +22,9 @@ public class PlayerReaderTask extends Thread {
         String relationPath = PlayerReaderTask.class.getName()
                 .replace(PlayerReaderTask.class.getSimpleName(), "")
                 .replace(".", File.separator);
-        String filePathName = root + relationPath + thread.getName() + ".txt";
+        String filePathName = root + File.separator + "src" + File.separator + relationPath + thread.getName() + ".txt";
 
-        System.out.println(thread.getName() + " " + filePathName);
+//        System.out.println(thread.getName() + " " + filePathName);
         try (BufferedReader reader = new BufferedReader(new FileReader(filePathName))) {
             String line = reader.readLine();
             String[] parameters = line.split(" ");
