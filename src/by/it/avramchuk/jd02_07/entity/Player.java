@@ -1,6 +1,8 @@
 package by.it.avramchuk.jd02_07.entity;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     private String name;
     private Integer age;
     private boolean isActive;
@@ -9,6 +11,11 @@ public class Player {
         this.age = age;
         this.name= name;
         this.isActive = isActive;
+    }
+
+    @Override
+    public String toString() {
+        return "name: "+ name+" age "+ age+ " condition - "+isActive;
     }
 
     public String getName(){
