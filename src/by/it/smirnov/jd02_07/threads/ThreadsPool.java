@@ -1,8 +1,7 @@
 package by.it.smirnov.jd02_07.threads;
 
-import by.it.smirnov.jd02_07.entity.Player;
+import by.it.smirnov.jd02_07.utils.Filter;
 
-import java.util.Comparator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -25,14 +24,7 @@ public class ThreadsPool extends Thread {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Object[] first5 = PlayerReaderTask.playersChosen.stream()
-                .sorted(Comparator.comparing(Player::getAge))
-                .limit(5)
-                .toArray();
-        for (Object o : first5) {
-            Player player = (Player) o;
-            System.out.println(player.name);
-        }
+        Filter.printFiltered(PlayerReaderTask.playersChosen);
     }
 
     private void waitTermination() {

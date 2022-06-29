@@ -1,27 +1,49 @@
 package by.it.smirnov.jd02_07.threads;
 
+import by.it.smirnov.jd02_07.ConsoleRunner;
 import by.it.smirnov.jd02_07.entity.Player;
+import by.it.smirnov.jd02_07.utils.PathGetter;
 import by.it.smirnov.jd02_07.utils.Randomizer;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.it.smirnov.jd02_07.constants.Constants.FILE_TXT;
 import static by.it.smirnov.jd02_07.constants.Constants.PLAYER_NAME;
 
 public class PlayerGeneratorTask extends Thread {
-    List<Player> players;
+    public volatile List<Player> players;
 
+    public static volatile int fileNumber = 0;
+
+    private static volatile int count = 0;
 
     @Override
-    public void run() {
+    public synchronized void run() {
         players = new ArrayList<>();
         while (players.size()<=10) {
-            String playerNumber = String.valueOf(Randomizer.get(1,100));
+            String playerNumber = String.valueOf(++count);
             Integer playerAge = Randomizer.get(20,40);
             boolean playerIsActive = Randomizer.get(0, 1) == 1;
             players.add(new Player(PLAYER_NAME + playerNumber, playerAge, playerIsActive));
-            PlayerReaderTask playerReaderTask = new PlayerReaderTask(players);
-            playerReaderTask.start();
         }
+        PlayerReaderTask playerReaderTask = new PlayerReaderTask(writeToFile(players));
+        playerReaderTask.start();
+    }
+
+    public static synchronized String writeToFile(List<Player> list){
+        fileNumber++;
+        String path = PathGetter.getPath(ConsoleRunner.class, FILE_TXT+fileNumber);
+        try(PrintWriter printWriter = new PrintWriter(new FileWriter(path))){
+            for (Player player : list) {
+                printWriter.println(player.name + " " + player.getAge() + " " + player.isActive);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return path;
     }
 }
