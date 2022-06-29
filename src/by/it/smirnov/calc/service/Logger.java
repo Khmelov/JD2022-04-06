@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import static by.it.smirnov.calc.constants.Wordings.LOG_ERROR_FORMAT;
+import static by.it.smirnov.calc.constants.Wordings.LOG_INFO_FORMAT;
 import static by.it.smirnov.calc.util.PathGetter.getPath;
 
 public enum Logger implements Log {
@@ -32,12 +34,12 @@ public enum Logger implements Log {
 
     @Override
     public void error(String message, Throwable e) {
-        String errorMessage = String.format("%s:%n%s%n%s%n%s", message, ResManager.getDate(), e.getClass().getSimpleName(), e.getMessage());
+        String errorMessage = String.format(LOG_ERROR_FORMAT, message, ResManager.getDate(), e.getClass().getSimpleName(), e.getMessage());
         log(errorMessage);
     }
 
     @Override
     public void info(String message) {
-        log(message + "\nMessage date: " + ResManager.getDate());
+        log(String.format(LOG_INFO_FORMAT, message, ResManager.getDate()));
     }
 }

@@ -14,10 +14,11 @@ public interface Wordings {
     String FILE_REPO = "txtfiles" + File.separator + "Vars.txt";
     String LOG_TXT = "txtfiles" + File.separator + "log.txt";
     String REPORT_TXT = "txtfiles" + File.separator + "Report.txt";
-    String TITLE_SHORT = "SHORT REPORT:";
-    String TITLE_LONG = "LONG REPORT:";
-    String REPORT_END = " - Calculator work end";
-    String REPORT_START = " - Calculator work start";
+    String BASENAME = "by.it.smirnov.calc.language.text";
+    String TITLE_SHORT = "report.titleshort";
+    String TITLE_LONG = "report.titlelong";
+    String REPORT_END = "report.end";
+    String REPORT_START = "report.start";
     String BAD_STRING = "error.badstring";
     String BAD_SIZE = "error.badsize";
     String BAD_OPER = "error.badoper";
@@ -29,5 +30,11 @@ public interface Wordings {
     String ENDING = "message.ending";
     String START = "message.start";
     String CHANGE_LOCAL = "message.changelocale";
-
+    String CHOOSE_REPORT = "message.choosereport";
+    String LOG_ERROR_FORMAT = "%s:%n%s%n%s%n%s";
+    String LOG_INFO_FORMAT = "%s%nMessage date: %s";
+    String REPO_FORMAT = "%s=%s%n";
+    String REPORT_RESULT = "report.result";
+    String REPORT_EXPRESSION = "report.expression";
+    String REPORT_ERROR = "report.error";
 }

@@ -7,21 +7,22 @@ import java.util.ResourceBundle;
 
 import static by.it.smirnov.calc.constants.Patterns.DATE_PATTERN;
 import static by.it.smirnov.calc.constants.Patterns.TIME_PATTERN;
+import static by.it.smirnov.calc.constants.Wordings.BASENAME;
 import static by.it.smirnov.calc.constants.Wordings.CHANGE_LOCAL;
 import static java.lang.System.out;
 
 public enum ResManager {
     INSTANCE;
     public ResourceBundle resourceBundle;
-    private static final String basename = "by.it.smirnov.calc.language.text";
+
 
     ResManager() {
-        resourceBundle = ResourceBundle.getBundle(basename, Locale.getDefault());
+        resourceBundle = ResourceBundle.getBundle(BASENAME, Locale.getDefault());
     }
 
     public void setLocale(Locale locale) {
         Printer printer = new Printer(out);
-        resourceBundle = ResourceBundle.getBundle(basename, locale);
+        resourceBundle = ResourceBundle.getBundle(BASENAME, locale);
         printer.println(getString((CHANGE_LOCAL)));
     }
 

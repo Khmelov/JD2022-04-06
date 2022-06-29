@@ -7,7 +7,6 @@ import java.io.PrintStream;
 import java.util.Objects;
 
 import static by.it.smirnov.calc.constants.Wordings.ERR;
-import static by.it.smirnov.calc.service.Logger.LOG_INSTANCE;
 import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 
 public class Printer {

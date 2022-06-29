@@ -12,8 +12,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static by.it.smirnov.calc.constants.Wordings.FILE_REPO;
-import static by.it.smirnov.calc.constants.Wordings.NO_FILE;
+import static by.it.smirnov.calc.constants.Wordings.*;
 import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 
 public class PersistentRepository implements Repository {
@@ -53,11 +52,11 @@ public class PersistentRepository implements Repository {
     private void writeToFile() throws CalcException {
         try (PrintWriter printWriter = new PrintWriter(path)){
             for (Map.Entry<String, Var> entry : vars.entrySet()) {
-                printWriter.printf("%s=%s%n", entry.getKey(), entry.getValue());
+                printWriter.printf(REPO_FORMAT, entry.getKey(), entry.getValue());
             }
 
         } catch (FileNotFoundException e) {
-            throw new CalcException("File not found", e);
+            throw new CalcException(INSTANCE.getString(NO_FILE), e);
         }
     }
 

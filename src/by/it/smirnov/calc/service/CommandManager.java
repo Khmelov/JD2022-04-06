@@ -4,9 +4,7 @@ import by.it.smirnov.calc.entity.Var;
 import by.it.smirnov.calc.exception.CalcException;
 import by.it.smirnov.calc.interfaces.Repository;
 import by.it.smirnov.calc.report.BuilderManager;
-import by.it.smirnov.calc.report.ReportPart;
 import by.it.smirnov.calc.repository.PersistentRepository;
-
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -32,7 +30,7 @@ public class CommandManager {
         while (scanner.hasNext()) {
             line = scanner.nextLine();
             if (line.equalsIgnoreCase(END)) {
-                out.println("Type 'S' for Short report, type 'L' for Long one or any other button for No report:");
+                out.println(INSTANCE.getString(CHOOSE_REPORT));
                 BuilderManager.chooseReport(scanner.nextLine());
                 printer.println(INSTANCE.getString(ENDING));
                 break;
@@ -42,11 +40,11 @@ public class CommandManager {
             else if (line.equalsIgnoreCase(FR)) manager.setLocale(Locale.CANADA_FRENCH);
             else if (line.equalsIgnoreCase(JP)) manager.setLocale(new Locale("jp", "JP"));
             else {
-                toReport("Expression: " + line);
+                toReport(INSTANCE.getString(REPORT_EXPRESSION) + line);
                 try {
                     Var result = parser.calc(line);
                     printer.print(result);
-                    toReport("Result:     " + line);
+                    toReport(INSTANCE.getString(REPORT_RESULT) + line);
                 } catch (CalcException e) {
                     printer.print(e);
                     toReport(e);

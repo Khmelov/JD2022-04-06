@@ -1,7 +1,5 @@
 package by.it.smirnov.calc.report;
 
-import java.time.ZonedDateTime;
-
 public class ReportPart {
     String dateTime;
     String message;

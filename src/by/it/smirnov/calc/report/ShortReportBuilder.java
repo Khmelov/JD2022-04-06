@@ -7,6 +7,7 @@ import java.util.StringJoiner;
 
 import static by.it.smirnov.calc.constants.Wordings.*;
 import static by.it.smirnov.calc.report.BuilderManager.data;
+import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 
 public class ShortReportBuilder extends Builder {
 
@@ -17,15 +18,15 @@ public class ShortReportBuilder extends Builder {
     @Override
     void fillReport() {
         StringJoiner joiner = new StringJoiner("\n");
-        joiner.add(TITLE_SHORT);
+        joiner.add(INSTANCE.getString(TITLE_SHORT));
         for (ReportPart part : data) {
             if (Objects.nonNull(part.message)) {
-                if(part.message.equals(REPORT_START)) joiner.add(ResManager.getDate() + part.message);
+                if(part.message.equals("start")) joiner.add(ResManager.getDate() + " - " + INSTANCE.getString(REPORT_START));
                 else joiner.add(part.message);
             }
-            if (Objects.nonNull(part.exception)) joiner.add("Error: " + part.exception.getClass().getSimpleName());
+            if (Objects.nonNull(part.exception)) joiner.add(INSTANCE.getString(REPORT_ERROR) + part.exception.getClass().getSimpleName());
         }
-        joiner.add(ResManager.getDate() + REPORT_END);
+        joiner.add(ResManager.getDate() + " - " + INSTANCE.getString(REPORT_END));
         Report.reportText = joiner.toString();
     }
 }
