@@ -15,7 +15,7 @@ public class Logger {
     private Logger() {
     }
 
-    public Logger getInstance() {
+    public static Logger getInstance() {
         Logger localLogger = logger;
         if (Objects.isNull(localLogger)) {
             synchronized (Logger.class) {
