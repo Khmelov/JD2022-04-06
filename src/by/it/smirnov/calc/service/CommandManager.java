@@ -3,13 +3,14 @@ package by.it.smirnov.calc.service;
 import by.it.smirnov.calc.entity.Var;
 import by.it.smirnov.calc.exception.CalcException;
 import by.it.smirnov.calc.interfaces.Repository;
+import by.it.smirnov.calc.report.BuilderManager;
 import by.it.smirnov.calc.repository.PersistentRepository;
-
 
 import java.util.Locale;
 import java.util.Scanner;
 
 import static by.it.smirnov.calc.constants.Wordings.*;
+import static by.it.smirnov.calc.report.BuilderManager.toReport;
 import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 import static java.lang.System.in;
 import static java.lang.System.out;
@@ -29,7 +30,9 @@ public class CommandManager {
         while (scanner.hasNext()) {
             line = scanner.nextLine();
             if (line.equalsIgnoreCase(END)) {
-                out.println(INSTANCE.getString(ENDING));
+                out.println(INSTANCE.getString(CHOOSE_REPORT));
+                BuilderManager.chooseReport(scanner.nextLine());
+                printer.println(INSTANCE.getString(ENDING));
                 break;
             } else if (line.equalsIgnoreCase(EN)) manager.setLocale(Locale.ENGLISH);
             else if (line.equalsIgnoreCase(RU)) manager.setLocale(new Locale("ru", "RU"));
@@ -37,11 +40,14 @@ public class CommandManager {
             else if (line.equalsIgnoreCase(FR)) manager.setLocale(Locale.CANADA_FRENCH);
             else if (line.equalsIgnoreCase(JP)) manager.setLocale(new Locale("jp", "JP"));
             else {
+                toReport(INSTANCE.getString(REPORT_EXPRESSION) + line);
                 try {
                     Var result = parser.calc(line);
                     printer.print(result);
+                    toReport(INSTANCE.getString(REPORT_RESULT) + result);
                 } catch (CalcException e) {
-                    out.println(e.getMessage());
+                    printer.print(e);
+                    toReport(e);
                 }
             }
         }
