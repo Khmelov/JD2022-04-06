@@ -1,8 +1,9 @@
 package by.it.machuga.calc.repasitory;
 
+import by.it.machuga.calc.interfaces.Message;
 import by.it.machuga.calc.runner.ConsoleRunner;
 import by.it.machuga.calc.util.PathFinder;
-import by.it.machuga.calc.servise.VarCreator;
+import by.it.machuga.calc.servise.VarBuilder;
 import by.it.machuga.calc.constans.ConstantStorage;
 import by.it.machuga.calc.entity.Var;
 import by.it.machuga.calc.exception.CalculatorException;
@@ -11,6 +12,8 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static by.it.machuga.calc.runner.ConsoleRunner.*;
 
 public class PersistentRepository implements Repository {
 
@@ -26,7 +29,7 @@ public class PersistentRepository implements Repository {
 
     private void initFromFile() {
         if (path.exists()) {
-            VarCreator creator = new VarCreator(this);
+            VarBuilder creator = new VarBuilder(this);
             try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
                 while (true) {
                     String line = reader.readLine();
@@ -40,9 +43,13 @@ public class PersistentRepository implements Repository {
                     }
                 }
             } catch (IOException e) {
-                throw new RuntimeException(ConstantStorage.FILE_NOT_FOUND_MSG, e);
+                logger.error(resourceManager.get(Message.FILE_NOT_FOUND_MSG));
+                reporter.collectReportError(ConstantStorage.FILE_NOT_FOUND, e);
+                throw new RuntimeException(resourceManager.get(Message.FILE_NOT_FOUND_MSG), e);
             } catch (CalculatorException e) {
-                throw new RuntimeException(ConstantStorage.CAN_T_PARSE_VAR_MSG, e);
+                logger.error(resourceManager.get(Message.CAN_T_PARSE_VAR_MSG));
+                reporter.collectReportError(ConstantStorage.CAN_T_PARSE_VAR, e);
+                throw new RuntimeException(resourceManager.get(Message.CAN_T_PARSE_VAR_MSG), e);
             }
         }
     }
@@ -57,10 +64,12 @@ public class PersistentRepository implements Repository {
     private void saveToFile() throws CalculatorException {
         try (PrintWriter writer = new PrintWriter(path)) {
             for (Map.Entry<String, Var> entry : vars.entrySet()) {
-                writer.printf("%s=%s%n", entry.getKey(), entry.getValue());
+                writer.printf(ConstantStorage.VAR_FORMAT, entry.getKey(), entry.getValue());
             }
         } catch (FileNotFoundException e) {
-            throw new CalculatorException("not found file", e);
+            logger.error(ConstantStorage.FILE_NOT_FOUND);
+            reporter.collectReportError(ConstantStorage.FILE_NOT_FOUND, e);
+            throw new CalculatorException(ConstantStorage.FILE_NOT_FOUND, e);
         }
     }
 
@@ -68,5 +77,4 @@ public class PersistentRepository implements Repository {
     public Var get(String name) {
         return vars.get(name);
     }
-
 }

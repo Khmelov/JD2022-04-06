@@ -5,7 +5,7 @@ import by.it.machuga.calc.exception.CalculatorException;
 import by.it.machuga.calc.repasitory.Repository;
 import by.it.machuga.calc.repasitory.VarMapRepository;
 import by.it.machuga.calc.servise.Parser;
-import by.it.machuga.calc.servise.VarCreator;
+import by.it.machuga.calc.servise.VarBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,8 +18,8 @@ public class ParserTestMatrix {
     @Before
     public void setUp() {
         Repository repository = new VarMapRepository();
-        VarCreator varCreator = new VarCreator(repository);
-        parser = new Parser(repository, varCreator);
+        VarBuilder varBuilder = new VarBuilder(repository);
+        parser = new Parser(repository, varBuilder);
     }
 
     @Test
@@ -118,7 +118,7 @@ public class ParserTestMatrix {
 
     @Test(expected = CalculatorException.class)
     public void calcDivMatrixScalarZero() throws CalculatorException {
-        Var actualVar = parser.calc("{{4,3},{5,2}}/0");
+        parser.calc("{{4,3},{5,2}}/0");
     }
 
     @Test(expected = CalculatorException.class)

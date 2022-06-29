@@ -11,6 +11,6 @@ public class PathFinder {
         String relationPath = aClass.getName()
                 .replace(aClass.getSimpleName(), "")
                 .replace(".", File.separator);
-        return root + File.separator + "src" + File.separator + relationPath + filename;
+        return root + File.separator + ConstantStorage.SRC + File.separator + relationPath + filename;
     }
 }
