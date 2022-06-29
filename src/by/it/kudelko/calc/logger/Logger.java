@@ -1,5 +1,6 @@
-package by.it.kudelko.jd02_06;
+package by.it.kudelko.calc.logger;
 
+import by.it.kudelko.calc.interfaces.Log;
 import by.it.kudelko.jd01_14.Util;
 
 import java.io.FileWriter;
@@ -7,28 +8,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
-public class Logger implements Log {
+public enum Logger implements Log {
+    INSTANCE;
     public static final String LOG_TXT = "log.txt";
-    private static volatile Logger logger;
 
-    private Logger() {
-
-    }
-
-    public static Logger getInstance() {
-        Logger localLogger = logger;
-        if (Objects.isNull(localLogger)) {
-            synchronized (Logger.class) {
-                localLogger = logger;
-                if (Objects.isNull(localLogger)) {
-                    localLogger = new Logger();
-                    logger = localLogger;
-                }
-            }
-        }
-        return localLogger;
+        public Logger getValue(){
+        return INSTANCE;
     }
 
     public void log(String message) {
