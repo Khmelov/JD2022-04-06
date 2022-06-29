@@ -6,8 +6,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public enum Logger {
-    INSTANCE;
+public class Logger {
+
+    public static class LoggerHolder {
+        public static final Logger LOGGER_INSTANCE = new Logger();
+    }
+
+    public static Logger getInstance() {
+        return LoggerHolder.LOGGER_INSTANCE;
+    }
 
     public static final String LOG_TXT = "log.txt";
 
