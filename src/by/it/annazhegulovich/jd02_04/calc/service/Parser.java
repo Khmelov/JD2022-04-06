@@ -12,7 +12,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class Parser {
+
     private  final Repository repository;
     private final VarCreator varCreator;
 private final static Map<String, Integer> priorityMap = Map.of(
@@ -30,6 +32,14 @@ public Parser(Repository repository, VarCreator varCreator){
 }
     public Var calc(String expression) throws CalcException {
         expression=expression.trim().replaceAll(Patterns.SPACES, "");
+        while (expression.contains("(")) {
+            expression = getPrioritySimple(expression);
+        }
+
+        return getVar(expression);
+    }
+
+    private Var getVar(String expression) throws CalcException {
         List<String> operands = new ArrayList<>(Arrays.asList(expression.split(Patterns.OPERATION)));
         List<String> operations = new ArrayList<>();
 
@@ -78,5 +88,16 @@ public Parser(Repository repository, VarCreator varCreator){
             }
         }
         return indexOperation;
+    }
+    private String getPrioritySimple (String expression) throws CalcException {
+    Pattern pattern= Pattern.compile(Patterns.PRIORITY_SIMPLE);
+    Matcher matcher = pattern.matcher(expression);
+    if (matcher.find()){
+        String res = matcher.group();
+        String result = res.replace("(", "").replace(")", "");
+        expression = expression.replace(res, getVar(result).toString());
+        }
+    return expression;
+
     }
 }

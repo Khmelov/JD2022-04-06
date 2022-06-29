@@ -42,6 +42,7 @@ public class ParserTest {
         double actual = Double.parseDouble(actualVar.toString());
         double expected = 25.55;
         assertEquals(expected, actual, DELTA);
+
     }
     @Test
     public void calcScalarOperationB1() throws CalcException {
@@ -61,14 +62,47 @@ public class ParserTest {
         double expected = 2.65;
         assertEquals(expected, actual, DELTA);
     }
+
     @Test
+    public void calcOperationCTaskB() throws CalcException {
+        parser.calc("A=2+5.3");
+        parser.calc("B=A*3.5");
+        Var actualVar = parser.calc("C=B+(A*2)");
+        double actual = Double.parseDouble(actualVar.toString());
+        double expected = 40.15;
+        assertEquals(expected, actual, DELTA);
+    }
+    @Test
+    public void calcOperationDTaskB() throws CalcException {
+        parser.calc("A=2+5.3");
+        parser.calc("B=A*3.5");
+        parser.calc("C=B+(A*2)");
+        Var actualVar = parser.calc("D=((C-0.15)-20)/(7-5)");
+        double actual = Double.parseDouble(actualVar.toString());
+        double expected = 10;
+        assertEquals(expected, actual, DELTA);
+    }
+    @Test
+    public void calcOperationETaskB() throws CalcException {
+        parser.calc("A=2+5.3");
+        parser.calc("B=A*3.5");
+        parser.calc("C=B+(A*2)");
+        parser.calc("D=((C-0.15)-20)/(7-5)");
+        Var actualVar = parser.calc("E={2,3}*(D/2)");
+        String actual =actualVar.toString();
+        String exp = "{10.0, 15.0}";
+        assertEquals(exp, actual);
+    }
+
+
+    /*@Test
     public void calcMatrixAddMatrix() throws CalcException {
 
         Var actualVar = parser.calc("{{1,2},{8,3}}+{{1,2},{8,3}}");
         String actual = actualVar.toString();
         String expected = "{{2.0, 4.0}, {16.0, 6.0}}";
         assertEquals(expected, actual);
-    }
+    }*/
 
     @After
     public void tearDown() throws Exception {
