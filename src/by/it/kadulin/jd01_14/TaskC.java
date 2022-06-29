@@ -33,8 +33,6 @@ public class TaskC {
         Path dirForProcess = Path.of(mainDir);
         File fileProcess = dirForProcess.toFile();
         searchingFiles(fileProcess);
-        printContent(listOfDirs, "dir:");
-        printContent(listOfFiles, "file:");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(Util.getPath(TaskB.class, "resultTaskC.txt")))) {
             for (String listOfFile : listOfFiles) {
                 System.out.printf("file:%s%n", listOfFile);
@@ -48,6 +46,8 @@ public class TaskC {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        printContent(listOfDirs, "dir:");
+        printContent(listOfFiles, "file:");
 
 
 //        setMainDirectory(mainDir);
