@@ -1,4 +1,4 @@
-package by.it.kameisha.calc;
+package by.it.kameisha.calc.exception;
 
 public class CalcException extends Exception {
     public CalcException(String message) {

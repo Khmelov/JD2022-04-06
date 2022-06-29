@@ -1,4 +1,11 @@
-package by.it.kameisha.calc;
+package by.it.kameisha.calc.service;
+
+import by.it.kameisha.calc.ResMan;
+import by.it.kameisha.calc.constants.Errors;
+import by.it.kameisha.calc.entity.Var;
+import by.it.kameisha.calc.constants.Patterns;
+import by.it.kameisha.calc.exception.CalcException;
+import by.it.kameisha.calc.interfaces.Repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +18,7 @@ public class Parser {
 
     private final Repository repository;
     private final VarCreator varCreator;
+    private final ResMan resMan = ResMan.INSTANCE;
     private final static Map<String, Integer> priorityMap = Map.of(
             "=", 0,
             "+", 1,
@@ -80,7 +88,7 @@ public class Parser {
             case "/":
                 return left.div(right);
         }
-        throw new CalcException("not found operation '%s'", operation);
+        throw new CalcException(resMan.get(Errors.NOT_FOUND_OPERATION) +" '%s'", operation);
     }
 
     private int getPriority(List<String> operations) {
