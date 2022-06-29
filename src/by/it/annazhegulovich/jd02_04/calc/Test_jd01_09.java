@@ -1,4 +1,4 @@
-package by.it.annazhegulovich.jd02_04;
+package by.it.annazhegulovich.jd02_04.calc;
 
 
 import by.it.HomeWork;
