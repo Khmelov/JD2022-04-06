@@ -1,67 +1,55 @@
 package by.it.marchenko.calc.services;
 
+import by.it.marchenko.calc.ConsoleRunner;
+import by.it.marchenko.calc.constant.MessageConst;
+import by.it.marchenko.calc.exception.CalcException;
+import by.it.marchenko.calc.utility.ResourceManager;
+
 import java.util.Scanner;
 
 import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class Input {
     private final Scanner console;
-    private int expressionNumber;
+    private int expressionID;
     private String expression;
+    private final MessageConst messageConst = new MessageConst();
+    private static final ResourceManager resourceManager = ConsoleRunner.getResourceManager();
 
     public Input(Scanner console) {
         this.console = console;
         this.expression = EMPTY_STRING;
-        this.expressionNumber = 0;
+        this.expressionID = 0;
     }
 
     public String getExpression() {
         return this.expression;
     }
 
-    public int getExpressionNumber() {
-        return expressionNumber;
+    public int getExpressionID() {
+        return expressionID;
     }
 
-    public void setExpressionNumber(int expressionNumber) {
-        this.expressionNumber = expressionNumber;
+    public void increaseExpressionID() {
+        this.expressionID++;// = expressionID;
     }
 
-    public void setExpression() {
-        int number = this.getExpressionNumber();
+    public void setExpression() throws CalcException {
         System.out.printf("% -3d %s ",
-                ++number,
-                MESSAGE_DATA_INVITATION);
-        String tempExpression = console.nextLine();
-        this.expression = Input.toStdPresentation(tempExpression);
-        if (this.expression != null) {
-            this.setExpressionNumber(number);
-        }
+                getExpressionID() + 1,
+                messageConst.getMESSAGE_DATA_INVITATION());
+        expression = toStdPresentation(console.nextLine());
+        this.increaseExpressionID();
     }
 
     public boolean runEnabled() {
         return !COMMAND_APP_EXIT.equalsIgnoreCase(this.expression);
     }
 
-    private static String toStdPresentation(String expression) {
-        // check empty or \s expression string
+    private static String toStdPresentation(String expression) throws CalcException {
         if (expression.matches(SPACES_REGEX)) {
-            System.out.println(MESSAGE_EMPTY_EXPRESSION);
-            return null;
+            throw new CalcException(resourceManager.getString(MESSAGE_EMPTY_EXPRESSION));
         }
-        //TODO check if expression have spaces between variables or Vars
-        // we can replace spaces only between operand and operator or in the begin and and expression
-        // find all variables in expression
-//        Pattern variablePattern = Pattern.compile(VARIABLE_PATTERN);
-//        Matcher variableMatcher = variablePattern.matcher(expression);
- //       HashSet<String> expressionVariable = new HashSet<>();
- //       while (variableMatcher.find()) {
- //           expressionVariable.add(variableMatcher.group());
- //       }
- //       System.out.println("Var: " + expressionVariable);
-
-
-        //return expression.trim().replaceAll(SPACES_REGEX, EMPTY_STRING);
-        return expression.trim();
+        return expression.trim().replaceAll(SPACES_REGEX, EMPTY_STRING);
     }
 }

@@ -1,11 +1,11 @@
 package by.it.marchenko.calc.entity;
 
+import by.it.marchenko.calc.constant.MessageConst;
+
 import java.util.Arrays;
 
 
 public class Matrix extends Var {
-    final String INCORRECT_INPUT_MESSAGE = "Incorrect matrix input";
-    final String EMPTY_MATRIX_MESSAGE = "Matrix is empty";
     final String ROW_SEPARATOR = "},\\{";
     final String ELEMENT_SEPARATOR = ",";
     final int MATRIX_MEASURE = 2;
@@ -65,7 +65,7 @@ public class Matrix extends Var {
                         tempArray[i][j] = Double.parseDouble(stringValueArray[j]);
                     }
                 } else {
-                    System.out.println(INCORRECT_INPUT_MESSAGE);
+                    System.out.println(MessageConst.INCORRECT_MATRIX_INPUT_MESSAGE);
                     isTheSameLength = false;
                     break;
                 }
@@ -77,7 +77,7 @@ public class Matrix extends Var {
                 this.matrixValue = null;
             }
         } else {
-            System.out.println(INCORRECT_INPUT_MESSAGE);
+            System.out.println(MessageConst.INCORRECT_MATRIX_INPUT_MESSAGE);
             this.matrixValue = null;
         }
     }
@@ -204,13 +204,13 @@ public class Matrix extends Var {
 
     private boolean checkInputMatrix(double[][] array) {
         if (array.length == 0 || array[0].length == 0) {
-            System.out.println(EMPTY_MATRIX_MESSAGE);
+            System.out.println(MessageConst.EMPTY_MATRIX_MESSAGE);
             return false;
         }
         int tempHeight = array[0].length;
         for (double[] row : array) {
             if (tempHeight != row.length) {
-                System.out.println(INCORRECT_INPUT_MESSAGE);
+                System.out.println(MessageConst.INCORRECT_MATRIX_INPUT_MESSAGE);
                 return false;
             }
         }
