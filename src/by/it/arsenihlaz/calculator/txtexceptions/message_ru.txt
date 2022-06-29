@@ -1,0 +1,11 @@
+message.incorrect_string=некорректная строка
+message.unknown_operation=неизвестная операция
+message.not_found_file=файл не найден
+message.incorrect_operation=некорректная операция
+message.unknown_variable=неизвестная переменная
+message.zero=деление на ноль
+message.error=ОШИБКА:
+message.incorrect_size=неправильный размер для
+message.set_language=установлен русский язык
+message.end=конец
+message.start=приложение запущено

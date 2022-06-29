@@ -61,7 +61,7 @@ private final double value;
     public Var div(Var other) throws CalcException {
         if(other instanceof Scalar scalar) {
             if(((Scalar) other).value == 0)
-                throw new CalcException(INSTANCE.getString(DIV_ZERO));
+                throw new CalcException(INSTANCE.getString(DIV_ZERO), this);
             double div = this.value / scalar.value;
             return new Scalar(div);
         }

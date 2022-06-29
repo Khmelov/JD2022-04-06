@@ -1,7 +1,8 @@
 package by.it.kadulin.jd02_02.entity;
 
 public class Manager {
-    private final long timeToWork = 120_000;
+    private final int plan = 101;
+//    private final long timeToWork = 120_000;
     private final long openedTime = System.currentTimeMillis();
     private volatile int countIn = 1;
     private volatile int countOut = 0;
@@ -19,9 +20,8 @@ public class Manager {
         isShopOpened = shopOpened;
     }
 
-
     public boolean isShopOpened() {
-        return (System.currentTimeMillis() - openedTime) < timeToWork;
+        return isShopOpened;
     }
 
     public int getCountIn() {
@@ -38,6 +38,10 @@ public class Manager {
 
     public synchronized void buyerOut() {
         countOut++;
+    }
+
+    public int getPlan() {
+        return plan;
     }
 
 }

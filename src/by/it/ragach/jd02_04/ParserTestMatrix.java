@@ -1,6 +1,11 @@
 package by.it.ragach.jd02_04;
 
-import by.it.ragach.calc.*;
+import by.it.ragach.calc.entity.Var;
+import by.it.ragach.calc.exception.CalcException;
+import by.it.ragach.calc.interfaces.Repository;
+import by.it.ragach.calc.repository.VarMapRepository;
+import by.it.ragach.calc.service.Parser;
+import by.it.ragach.calc.service.VarCreator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,12 @@
 package by.it.kameisha.jd02_04;
 
-import by.it.kameisha.calc.*;
+import by.it.kameisha.calc.entity.Var;
+import by.it.kameisha.calc.entity.Vector;
+import by.it.kameisha.calc.exception.CalcException;
+import by.it.kameisha.calc.interfaces.Repository;
+import by.it.kameisha.calc.repository.VarMapRepository;
+import by.it.kameisha.calc.service.Parser;
+import by.it.kameisha.calc.service.VarCreator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

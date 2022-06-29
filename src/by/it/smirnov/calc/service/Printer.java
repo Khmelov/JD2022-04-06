@@ -12,6 +12,8 @@ import static by.it.smirnov.calc.service.ResManager.INSTANCE;
 public class Printer {
 
     private final PrintStream out;
+    private final LoggerODH logger = LoggerODH.getLogInstance();
+
 
     public Printer(PrintStream out) {
         this.out = out;
@@ -21,7 +23,13 @@ public class Printer {
         if (Objects.nonNull(result)) out.println(result);
     }
 
+    public void println(String message) {
+        logger.info(message);
+        out.println(message);
+    }
+
     public void print(CalcException e) {
+        logger.error(INSTANCE.getString(ERR), e);
         out.printf(INSTANCE.getString(ERR), e.getMessage());
     }
 }

@@ -27,7 +27,7 @@ public class CustomerWorker extends Thread implements CustomerAction, ShoppingCa
         shop.getManager().customerEnter();
     }
 
-    private static final Semaphore semaphore = new Semaphore(10);
+    private static final Semaphore semaphore = new Semaphore(20);
 
     @Override
     public void run() {

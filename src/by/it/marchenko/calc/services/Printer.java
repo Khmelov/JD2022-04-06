@@ -1,32 +1,50 @@
 package by.it.marchenko.calc.services;
 
 
+import by.it.marchenko.calc.constant.LanguageConst;
 import by.it.marchenko.calc.entity.Var;
+import by.it.marchenko.calc.log.Log;
+import by.it.marchenko.calc.utility.ResourceManager;
 
-import static by.it.marchenko.calc.constant.MessageConst.*;
+public class Printer implements LanguageConst {
+    private final ResourceManager resourceManager;
+    private final Log logger;
 
-public class Printer {
-
-    public static void print(String out) {
-        System.out.println(out);
+    public Printer(ResourceManager resourceManager, Log logger) {
+        this.resourceManager = resourceManager;
+        this.logger = logger;
     }
 
-    public static void print(Input inputString, Var result) {
+    public String println(String out) {
+        System.out.println(out);
+        logger.info(out);
+        return out;
+    }
 
+    public String print(String out) {
+        System.out.print(out);
+        logger.info(out);
+        return out;
+    }
+
+    public String println(Input inputString, Var result) {
+        String message = null;
         if (inputString.getExpression() != null) {
             if (inputString.runEnabled()) {
-                System.out.printf("%s % 2d: %s%n",
-                        MESSAGE_PRINT_RESULT,
-                        inputString.getExpressionNumber(),
-                        //inputString.getExpression(),
+                message = String.format("%s % 2d: %s%n",
+                        resourceManager.getString(MESSAGE_PRINT_RESULT),
+                        inputString.getExpressionID(),
                         result);
-            } else {
-                System.out.println(MESSAGE_FAREWELL);
+                System.out.print(message);
+                logger.result(message);
             }
         }
+        return message;
     }
 
-    public static void greeting() {
-        System.out.println(MESSAGE_GREETING);
+    public void greeting() {
+        String message = resourceManager.getString(MESSAGE_GREETING);
+        System.out.println(message);
+        logger.info(message);
     }
 }

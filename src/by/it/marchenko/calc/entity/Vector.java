@@ -1,9 +1,10 @@
 package by.it.marchenko.calc.entity;
 
+import by.it.marchenko.calc.constant.MessageConst;
+
 import java.util.Arrays;
 
 public class Vector extends Var {
-    final String INCORRECT_INPUT_MESSAGE = "Incorrect vector input";
 
     private final String OPEN_CURVE_BRACKET = "{";
     private final String CLOSE_CURVE_BRACKET = "}";
@@ -32,7 +33,7 @@ public class Vector extends Var {
             }
             this.vectorValues = Arrays.copyOf(tempDoubleArray, tempDoubleArray.length);
         } else {
-            System.out.println(INCORRECT_INPUT_MESSAGE);
+            System.out.println(MessageConst.INCORRECT_VECTOR_INPUT_MESSAGE);
             this.vectorValues = null;
         }
     }

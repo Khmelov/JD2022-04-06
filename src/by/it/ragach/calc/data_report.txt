@@ -1,0 +1,14 @@
+2022.06.29 00:29:10 Info: App started
+2022.06.29 00:29:14 Info: 4.0
+2022.06.29 00:29:20 Error: ERROR: division by zero 2.0/0.0
+2022.06.29 00:34:49 Info: App started
+2022.06.29 00:34:53 Info: 10.0
+2022.06.29 00:34:59 Error: ERROR: Incorrect string end
+2022.06.29 00:36:31 Info: App started
+2022.06.29 00:37:12 Info: App started
+2022.06.29 00:37:16 Info: 16.0
+2022.06.29 00:37:19 Info: 24.0
+2022.06.29 00:37:37 Error: ERROR: division by zero 18.0/0.0
+2022.06.29 00:44:35 Info: Приложение запущено
+2022.06.29 00:44:38 Info: 10.0
+2022.06.29 00:44:41 Error: ОШИБКА: division by zero 5.0/0.0

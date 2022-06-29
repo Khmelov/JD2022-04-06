@@ -1,0 +1,5 @@
+message.welcome=Привет!
+message.question=Как дела?
+user.firstname=Данила
+user.lastname=Сельванович
+command.locale=ru

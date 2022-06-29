@@ -17,14 +17,13 @@ import java.util.regex.Pattern;
 import static by.it.marchenko.calc.constant.MessageConst.*;
 
 public class Operands implements OperandProcessing {
+    //Find operands in expression, remove spaces from operands if it is possible
+    private final VarCreator varCreator;
 
     public Operands(Repository repository) {
-        this.repository = repository;
+        this.varCreator = new VarCreator(repository);
     }
 
-    private final Repository repository;
-
-    //Find operands in expression, remove spaces from operands if it is possible
     @Override
     public List<String> createOperands(String expression) throws CalcException {
         String[] availableOperands;
@@ -47,21 +46,6 @@ public class Operands implements OperandProcessing {
         return operandList;
     }
 
-    public String removeOperandInnerSpaces(String operand) throws CalcException {
-        //TODO implement check correct operand for new type of Var...
-        boolean isCorrectOperand =
-                operand.matches(SCALAR_PATTERN) ||
-                        operand.matches(VECTOR_PATTERN) ||
-                        operand.matches(MATRIX_PATTERN) ||
-                        operand.matches(VARIABLE_PATTERN);
-        if (isCorrectOperand) {
-            return operand.replaceAll(SPACES_REGEX, EMPTY_STRING);
-        } else {
-            throw new CalcException(
-                    INPUT_EXCEPTION + MISSING_OPERATOR_EXCEPTION + MISSING_OPERATOR_COMMENT, operand);
-        }
-    }
-
     @Override
     public List<String> createOperators(String expression) {
         Pattern operatorPattern = Pattern.compile(OPERATOR_REGEX);
@@ -75,30 +59,29 @@ public class Operands implements OperandProcessing {
 
     @Override
     public List<Var> createVar(List<String> operands) throws CalcException {
-
         List<Var> operandList = new ArrayList<>(operands.size());
         for (String operand : operands) {
-            operandList.add(createVar(operand));
+            operandList.add(varCreator.createVar(operand));
         }
         return operandList;
     }
 
-    @Override
-    public Var createVar(String operand) throws CalcException {
-        Var createdVar = null;
-        if (operand.matches(SCALAR_PATTERN)) {
-            createdVar = new Scalar(operand);
-        } else if (operand.matches(VECTOR_PATTERN)) {
-            createdVar = new Vector(operand);
-        } else if (operand.matches(MATRIX_PATTERN)) {
-            createdVar = new Matrix(operand);
-        } else if (repository.getAllVariables().containsKey(operand)) {
-            createdVar = repository.getVariable(operand);
-        }
-        if (Objects.isNull(createdVar)) {
+    public String removeOperandInnerSpaces(String operand) throws CalcException {
+        boolean isCorrectOperand =
+                operand.matches(SCALAR_PATTERN) ||
+                        operand.matches(VECTOR_PATTERN) ||
+                        operand.matches(MATRIX_PATTERN) ||
+                        operand.matches(VARIABLE_PATTERN);
+        if (isCorrectOperand) {
+            return operand.replaceAll(SPACES_REGEX, EMPTY_STRING);
+        } else {
             throw new CalcException(
-                    INPUT_EXCEPTION + WRONG_OPERAND_EXCEPTION + WRONG_OPERAND_COMMENT, operand);
+                    INPUT_EXCEPTION + MISSING_OPERATOR_EXCEPTION + MISSING_OPERATOR_COMMENT, operand);
         }
-        return createdVar;
+    }
+
+    //  added for correct tests processing
+    public Var createVar(String operand) throws CalcException {
+        return varCreator.createVar(operand);
     }
 }
