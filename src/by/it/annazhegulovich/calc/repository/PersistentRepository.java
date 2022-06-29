@@ -1,18 +1,14 @@
 package by.it.annazhegulovich.calc.repository;
 
-import by.it.annazhegulovich.calc.SingletonEnum;
 import by.it.annazhegulovich.calc.entity.Var;
 import by.it.annazhegulovich.calc.exception.CalcException;
 import by.it.annazhegulovich.calc.interfaces.Repository;
-import by.it.annazhegulovich.calc.service.VarCreator;
 import by.it.annazhegulovich.calc.util.PathFinder;
 import by.it.annazhegulovich.jd02_06_100.calc.ConsoleRunner;
 
-
-import java.io.*;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class PersistentRepository implements Repository {
     public  static  final  String VARS_TXT = "vars.txt";
