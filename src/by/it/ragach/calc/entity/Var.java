@@ -1,8 +1,7 @@
-package by.it.ragach.calc;
+package by.it.ragach.calc.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import by.it.ragach.calc.exception.CalcException;
+import by.it.ragach.calc.interfaces.Operation;
 
 public abstract class Var implements Operation {
 
@@ -28,7 +27,7 @@ public abstract class Var implements Operation {
 
       @Override
       public Var div(Var other) throws CalcException {
-          throw new  CalcException("Incorrect operation %s / %s%n", this,other);
+          throw new CalcException("Incorrect operation %s / %s%n", this,other);
 
       }
   }

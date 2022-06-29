@@ -1,8 +1,7 @@
-package by.it.ragach.calc;
+package by.it.ragach.calc.entity;
 
 
-
-import java.util.Arrays;
+import by.it.ragach.calc.exception.CalcException;
 
 public class Matrix extends Var {
     private final double[][] value;

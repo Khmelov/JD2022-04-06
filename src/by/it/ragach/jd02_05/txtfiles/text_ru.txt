@@ -1,0 +1,5 @@
+message.start=Выберите язык:
+message.welcome=Привет!
+message.question=Как дела?
+user.firstname=Оксана
+user.lastname=Рагач

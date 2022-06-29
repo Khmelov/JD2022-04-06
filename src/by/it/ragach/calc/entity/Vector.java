@@ -1,4 +1,6 @@
-package by.it.ragach.calc;
+package by.it.ragach.calc.entity;
+
+import by.it.ragach.calc.exception.CalcException;
 
 public class Vector extends Var {
 
@@ -20,7 +22,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var add(Var other) throws CalcException{
+    public Var add(Var other) throws CalcException {
         if (other instanceof Scalar scalar) {
             double[] result = value.clone();
             for (int i = 0; i < result.length; i++) {
