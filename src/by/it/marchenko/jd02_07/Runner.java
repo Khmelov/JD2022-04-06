@@ -1,13 +1,13 @@
 package by.it.marchenko.jd02_07;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import by.it.marchenko.jd02_07.service.PlayerFounder;
+
+import java.util.List;
 
 public class Runner {
-
-    public static final int MAX_THREAD = 4;
-
     public static void main(String[] args) {
-        ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREAD);
+        PlayerFounder playerFounder = new PlayerFounder();
+        List<String> topYoungest = playerFounder.findTopPlayer();
+        System.out.println(topYoungest);
     }
 }

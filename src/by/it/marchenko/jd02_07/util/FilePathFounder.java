@@ -9,17 +9,6 @@ public class FilePathFounder {
     public static final String SOURCE_DIR = "src";
     public static final String USER_DIR = "user.dir";
 
-
-    public static String setResourceDirectory(String directoryName) {
-        File appUtilDirectory = getCurrentFolderPath();
-        String appMainDirectory = appUtilDirectory.getParent();
-        return appMainDirectory.concat(File.separator + directoryName);
-    }
-
-    public static File getCurrentFolderPath() {
-        return new File(getFilePath(EMPTY_STRING));
-    }
-
     public static String getFilePath(String fileName) {
         String relativePath = getRelativeFilePath();
         String packageDir = System.getProperty(USER_DIR);

@@ -1,5 +1,8 @@
-package by.it.marchenko.jd02_07;
+package by.it.marchenko.jd02_07.service;
 
+import by.it.marchenko.jd02_07.constant.MessageConstant;
+import by.it.marchenko.jd02_07.entity.Player;
+import by.it.marchenko.jd02_07.util.FileName;
 import by.it.marchenko.jd02_07.util.FilePathFounder;
 
 import java.io.File;
@@ -8,20 +11,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class PlayerGeneratorTask extends Thread {
-    public static final int MIN_AGE = 20;
-    public static final int MAX_AGE = 40;
-    public static final String PLAYERS_FILE = "players.txt";
-    private static int id = 0;
-    public static final int DEFAULT_COLLECTION_SIZE = 10;
-
-    private String streamName = "";
+public class PlayerGeneratorTask implements Callable<String>, MessageConstant {
+    private static final AtomicInteger id = new AtomicInteger(NAME_ID_START_VALUE);
     private final Set<Player> players = new HashSet<>();
 
-    public void setStreamName(String streamName) {
-        this.streamName = streamName;
+    private final FileName fileName = FileName.getInstance();
+
+    @Override
+    public String call() throws Exception {
+        generatePlayers();
+        return savePlayersToFile();
     }
 
     private void generatePlayers() {
@@ -32,14 +35,15 @@ public class PlayerGeneratorTask extends Thread {
     }
 
     private Player generatePlayer() {
-        String name = streamName + "Name" + ++id;
-        Integer age = ThreadLocalRandom.current().nextInt(MIN_AGE, MAX_AGE);
-        boolean status = Math.random() > 0.5;
+        String name = DEFAULT_PLAYER_NAME + String.format(ID_FORMAT, id.incrementAndGet());
+        Integer age = ThreadLocalRandom.current().nextInt(MIN_AGE, MAX_AGE + 1);
+        boolean status = Math.random() < 0.5;
         return new Player(name, age, status);
     }
 
     private String savePlayersToFile() {
-        String playersFile = FilePathFounder.getFilePath(PLAYERS_FILE);
+        String file = fileName.getFileName();
+        String playersFile = FilePathFounder.getFilePath(file);
         try (PrintWriter printWriter = new PrintWriter(new FileWriter(playersFile))) {
             for (Player player : players) {
                 printWriter.println(player);
@@ -49,15 +53,4 @@ public class PlayerGeneratorTask extends Thread {
         }
         return new File(playersFile).getName();
     }
-
-    public String taskStream(String streamName) {
-        setStreamName(streamName);
-        generatePlayers();
-        return savePlayersToFile();
-    }
-
-    /*@Override
-    public void run() {
-        taskStream("myStream");
-    }*/
 }
