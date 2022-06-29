@@ -25,16 +25,8 @@ public class Player {
         return age;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public boolean isActive() {
         return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 
     @Override
