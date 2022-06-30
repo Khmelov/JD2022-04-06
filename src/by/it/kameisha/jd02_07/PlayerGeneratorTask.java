@@ -1,12 +1,11 @@
 package by.it.kameisha.jd02_07;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
-public class PlayerGeneratorTask extends Thread {
+public class PlayerGeneratorTask implements Callable<String> {
     private final List<Player> playerList = new ArrayList<>();
     private final String path;
 
@@ -14,19 +13,23 @@ public class PlayerGeneratorTask extends Thread {
         this.path = path;
     }
 
+
+    public void writeInTxtFile() {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(path))) {
+            outputStream.writeObject(playerList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
-    public void run() {
+    public String call() {
         for (int i = 0; i < 10; i++) {
             Player player = PlayerGenerator.generatePlayer();
             playerList.add(player);
         }
         writeInTxtFile();
-    }
-    public void writeInTxtFile() {
-        try (PrintWriter printWriter = new PrintWriter(new FileWriter(path))) {
-            printWriter.print(playerList);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return path;
     }
 }
+
