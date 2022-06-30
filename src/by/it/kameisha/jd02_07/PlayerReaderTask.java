@@ -6,13 +6,16 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 public class PlayerReaderTask implements Callable<List<Player>> {
     public static String path;
 
-    public PlayerReaderTask() {
-        path = path;
+    public PlayerReaderTask(String path) {
+        this.path = path;
     }
+
+
 
     public List<Player> readFile(String path) {
         List<Player> playerList;
