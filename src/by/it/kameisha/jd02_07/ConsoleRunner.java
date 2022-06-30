@@ -5,6 +5,7 @@ import by.it.kameisha.jd02_07.util.Util;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,7 +35,9 @@ public class ConsoleRunner {
         for (Future<List<Player>> playerList : futurePlayerLists) {
             if (playerList.isDone()) {
                 try {
-                    newPlayerList.addAll(playerList.get());
+                    if (Objects.nonNull(playerList.get())) {
+                        newPlayerList.addAll(playerList.get());
+                    }
                 } catch (InterruptedException | ExecutionException e) {
                     throw new RuntimeException(e);
                 }
