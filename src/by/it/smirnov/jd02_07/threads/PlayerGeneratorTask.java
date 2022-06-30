@@ -11,8 +11,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.it.smirnov.jd02_07.constants.Constants.FILE_TXT;
-import static by.it.smirnov.jd02_07.constants.Constants.PLAYER_NAME;
+import static by.it.smirnov.jd02_07.constants.Constants.*;
 
 public class PlayerGeneratorTask extends Thread {
     public volatile List<Player> players;
@@ -24,9 +23,9 @@ public class PlayerGeneratorTask extends Thread {
     @Override
     public synchronized void run() {
         players = new ArrayList<>();
-        while (players.size()<=10) {
+        while (players.size()<=PLAYERS_LIST_SIZE) {
             String playerNumber = String.valueOf(++count);
-            Integer playerAge = Randomizer.get(20,40);
+            Integer playerAge = Randomizer.get(MIN_AGE,MAX_AGE);
             boolean playerIsActive = Randomizer.get(0, 1) == 1;
             players.add(new Player(PLAYER_NAME + playerNumber, playerAge, playerIsActive));
         }

@@ -7,7 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static by.it.smirnov.jd02_07.constants.Constants.CHOSEN_MAX_AGE;
+import static by.it.smirnov.jd02_07.constants.Constants.CHOSEN_MIN_AGE;
 
 public class PlayerReaderTask extends Thread {
 
@@ -27,12 +29,11 @@ public class PlayerReaderTask extends Thread {
     public void run() {
         synchronized (playersChosen) {
             List<Player> list = readFile(fileName);
-            playersChosen = list.stream()
-                    .filter(player -> player.isActive)
-                    .filter(player -> player.getAge() >= 25 && player.getAge() <= 30)
-                    .collect(Collectors.toList());
-            playersChosen.addAll(list);
-
+            for (Player player : list) {
+                if (player.isActive && player.getAge() >= CHOSEN_MIN_AGE && player.getAge() <= CHOSEN_MAX_AGE) {
+                    playersChosen.add(player);
+                }
+            }
         }
     }
 

@@ -6,13 +6,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import static by.it.smirnov.jd02_07.constants.Constants.MAX_POOL;
+
 public class ThreadsPool extends Thread {
 
     private ExecutorService threadPool;
 
     @Override
     public void run() {
-        threadPool = Executors.newFixedThreadPool(4);
+        threadPool = Executors.newFixedThreadPool(MAX_POOL);
         for (int i = 0; i < 20; i++) {
             PlayerGeneratorTask playerGeneratorTask = new PlayerGeneratorTask();
             playerGeneratorTask.start();
