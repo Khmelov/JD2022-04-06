@@ -1,4 +1,4 @@
-package by.it.kameisha.jd02_07;
+package by.it.kameisha.jd02_07.entity;
 
 import java.io.Serial;
 import java.io.Serializable;

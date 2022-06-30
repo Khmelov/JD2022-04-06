@@ -1,5 +1,8 @@
 package by.it.kameisha.jd02_07;
 
+import by.it.kameisha.jd02_07.entity.Player;
+import by.it.kameisha.jd02_07.service.PlayerGeneratorTask;
+import by.it.kameisha.jd02_07.service.PlayerReaderTask;
 import by.it.kameisha.jd02_07.util.Util;
 
 import java.io.File;

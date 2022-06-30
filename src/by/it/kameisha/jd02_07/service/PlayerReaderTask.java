@@ -1,4 +1,6 @@
-package by.it.kameisha.jd02_07;
+package by.it.kameisha.jd02_07.service;
+
+import by.it.kameisha.jd02_07.entity.Player;
 
 import java.io.FileInputStream;
 import java.io.IOException;
