@@ -1,4 +1,4 @@
-package by.it.arsenihlaz.jd02_07;
+package by.it.arsenihlaz.jd02_07.entity;
 
 public class Player {
     String name;
@@ -27,7 +27,7 @@ public class Player {
         this.age = age;
     }
 
-    public boolean getIsActive() {
+    public boolean getActive() {
         return isActive;
     }
 
@@ -37,8 +37,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return name + "\n"
-                + age + "\n"
-                + isActive + "\n";
+        return "name: " + name + ", " + "age: " + age + ", " + "isActive: " + isActive + "\n";
     }
 }
