@@ -1,4 +1,4 @@
-package by.it.kadulin.jd02_07;
+package by.it.kadulin.jd02_07.entity;
 
 import by.it.kadulin.jd02_07.util.RandomGenerator;
 
