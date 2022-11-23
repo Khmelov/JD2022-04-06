@@ -1,5 +1,0 @@
-message.start=Выберыце мову:
-message.welcome=Прывітанне!
-message.question=Як справы?
-user.firstname=Аксана
-user.lastname=Рагач

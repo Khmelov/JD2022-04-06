@@ -1,4 +1,0 @@
-message.welcome=Welcome!
-message.question=What is your name?
-user.firstname=Arseni
-user.lastname=Hlaz

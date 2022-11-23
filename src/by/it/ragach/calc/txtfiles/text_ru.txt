@@ -1,7 +1,0 @@
-message.start=Приложение запущено
-message.finish=Приложение остановлено
-message.incorrect=Некорректная операция
-message.notfound=файл не найден
-message.error=ОШИБКА:
-message.incorrectinput=некорректный стринг-формат
-message.language=выберите язык

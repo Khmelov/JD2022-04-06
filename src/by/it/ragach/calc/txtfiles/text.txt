@@ -1,7 +1,0 @@
-message.start=App started
-message.finish=App finished
-message.incorrect=Incorrect operation
-message.notfound=not found file
-message.error=ERROR:
-message.incorrectinput=Incorrect string
-message.language=changed language

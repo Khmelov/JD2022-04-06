@@ -1,3 +1,0 @@
-cola = 100
-bread = 75
-Gorilla = 125

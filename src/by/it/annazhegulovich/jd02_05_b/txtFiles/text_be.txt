@@ -1,5 +1,0 @@
-massage.welcome=Вітаю
-massage.question1=Як вас завуць?
-massage.question2=Дзе вы жывяце?
-answer.question1=Анна
-answer.question2=Мінск

@@ -1,7 +1,0 @@
-message.greeting=Hello!
-message.person=Mister
-message.firstname=Igor
-message.lastname=Marchenko
-message.incorrectLanguage=This language is absent. System default language set as current language.
-message.instruction=Check language (be/en/ru) or <end> for exit:
-#message.tester=insert %s string%n
